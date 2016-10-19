@@ -1,0 +1,22 @@
+{
+    "name": "webjump/magento2-module-braspagpagador",
+    "license": "OSL-3.0",
+    "type": "magento2-module",
+    "description": "Braspag Pagador integration for Magento 2",
+    "require": {
+    },
+    "authors":[
+        {
+            "name":"Webjump Core Team",
+            "email":"dev@webjump.com.br"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webjump\\BraspagPagador\\": ""
+        }
+    }
+}

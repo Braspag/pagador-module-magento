@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<braspag_pagador_billet>
+				<active>1</active>
+				<model>Webjump\BraspagPagador\Model\Payment\Billet</model>
+				<order_status>pending</order_status>
+				<title>Braspag Pagador Billet</title>
+				<allowspecific>0</allowspecific>
+				<group>braspag</group>
+			</braspag_pagador_billet>
+		</payment>
+	</default>
+</config>
