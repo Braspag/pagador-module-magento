@@ -11,7 +11,7 @@ define(
         rendererList.push(
             {
                 type: 'braspag_pagador_billet',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/billet-method'
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/billet'
             }
         );
         return Component.extend({});

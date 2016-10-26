@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="BraspagTransactionBilletSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBilletUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider">
+        <arguments>
+            <argument name="billetConfig" xsi:type="object">BraspagTransactionBilletSendRequestConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="braspag_pagador_billet_config_provider" xsi:type="object">BraspagTransactionBilletUiConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -4,6 +4,7 @@
     "type": "magento2-module",
     "description": "Braspag Pagador integration for Magento 2",
     "require": {
+        "webjump/braspagpagador-sdk-adapter":"dev-develop"
     },
     "authors":[
         {
