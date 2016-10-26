@@ -11,4 +11,8 @@ interface ConfigInterface
 	public function getPaymentDemonstrative();
 
 	public function getPaymentInstructions();
+
+	public function getPaymentAssignor();
+
+	public function getExpirationDays();
 }

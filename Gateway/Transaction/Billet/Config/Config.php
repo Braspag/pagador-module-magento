@@ -25,4 +25,14 @@ class Config implements ConfigInterface
 	{
 		return 'Aceitar somente até a data de vencimento, após essa data juros de 1% dia.';
 	}
+
+	public function getPaymentAssignor()
+	{
+		return 'ABC Businnes';
+	}
+
+	public function getExpirationDays()
+	{
+		return 3;
+	}
 }

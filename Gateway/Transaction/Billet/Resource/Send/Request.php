@@ -2,13 +2,14 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Sales\Model\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
 use Magento\Payment\Model\InfoInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as BraspaglibRequestInterface;
 
-class Request implements RequestInterface
+class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
 	const BRASPAG_PAYMENT_TYPE = 'Boleto';
 
@@ -72,12 +73,12 @@ class Request implements RequestInterface
 
 	public function getPaymentBoletoNumber()
 	{
-
+		return $this->getOrder()->getIncrementId();
 	}
 
 	public function getPaymentAssignor()
 	{
-		return $this->getConfig()->getPaymentDemonstrative();
+		return $this->getConfig()->getPaymentAssignor();
 	}
 
 	public function getPaymentDemonstrative()
@@ -87,12 +88,12 @@ class Request implements RequestInterface
 
 	public function getPaymentExpirationDate()
 	{
-
+		return date('Y-m-d', strtotime($this->getOrder()->getCreatedAt() . ' +' . (int) $this->getConfig()->getExpirationDays() . ' day'));
 	}
 
 	public function getPaymentIdentification()
 	{
-
+		return $this->getOrder()->getIncrementId();
 	}
 
 	public function getPaymentInstructions()
