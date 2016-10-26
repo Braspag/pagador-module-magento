@@ -3,12 +3,17 @@
 	<default>
 		<payment>
 			<braspag_pagador_billet>
-				<active>1</active>
-				<model>Webjump\BraspagPagador\Model\Payment\Billet</model>
-				<order_status>pending</order_status>
-				<title>Braspag Pagador Billet</title>
-				<allowspecific>0</allowspecific>
-				<group>braspag</group>
+                                <debug>1</debug>
+                                <active>1</active>
+                                <model>BraspagTransactionBilletRemoteMethodAdapter</model>
+                                <merchant_id backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                                <order_status>pending_payment</order_status>
+                                <payment_action>authorize</payment_action>
+                                <title>Braspag transaction Billet</title>
+                                <can_authorize>1</can_authorize>
+                                <can_use_checkout>1</can_use_checkout>
+                                <is_gateway>1</is_gateway>
+                                <sort_order>1</sort_order>
 			</braspag_pagador_billet>
 		</payment>
 	</default>
