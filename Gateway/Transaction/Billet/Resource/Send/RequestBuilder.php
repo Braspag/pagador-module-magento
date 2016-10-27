@@ -6,6 +6,15 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface;
 
+/**
+ * Braspag Transaction Billet Send Request Builder
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
 class RequestBuilder implements BuilderInterface
 {
 	protected $request;
@@ -22,9 +31,9 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
-        $payment = $buildSubject['payment'];
-        $this->request->setPayment($payment);
+        $paymentDataObject = $buildSubject['payment'];
+        $this->request->setPaymentDataObject($paymentDataObject);
 
-        return ['request' => $this->request];
+        return $this->request;
     }
 }

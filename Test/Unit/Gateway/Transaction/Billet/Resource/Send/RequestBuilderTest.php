@@ -31,11 +31,11 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
     	$buildSubject = ['payment' => $paymentDataObjectMock];
 
         $this->requestMock->expects($this->once())
-            ->method('setPayment')
+            ->method('setPaymentDataObject')
             ->with($paymentDataObjectMock);
 
     	$result = $this->requestBuilder->build($buildSubject);
 
-        static::assertSame($this->requestMock, $result['request']);
+        static::assertSame($this->requestMock, $result);
     }
 }

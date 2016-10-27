@@ -107,7 +107,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     	    ->method('getPayment')
     	    ->will($this->returnValue($paymentInfoMock));
 
-    	$this->request->setPayment($paymentDataObjectMock);
+    	$this->request->setPaymentDataObject($paymentDataObjectMock);
 
 		static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
 		static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());

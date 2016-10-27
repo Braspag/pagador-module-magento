@@ -3,12 +3,21 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
-use Magento\Sales\Model\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
-use Magento\Payment\Model\InfoInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as BraspaglibRequestInterface;
+use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
+use Magento\Payment\Model\InfoInterface;
+use Magento\Sales\Model\Order;
 
+/**
+ * Braspag Transaction Billet Send Request
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
 	const BRASPAG_PAYMENT_TYPE = 'Boleto';
@@ -23,7 +32,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 		$this->setConfig($config);
 	}
 
-    public function setPayment(PaymentDataObjectInterface $paymentDataObject)
+    public function setPaymentDataObject(PaymentDataObjectInterface $paymentDataObject)
     {
     	$this->setOrder($paymentDataObject->getOrder());
     	$this->setPaymentInfo($paymentDataObject->getPayment());

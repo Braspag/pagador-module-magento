@@ -34,9 +34,6 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionBilletValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
-    </virtualType>
-
     <virtualType name="BraspagTransactionBilletSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
@@ -55,19 +52,24 @@
         </arguments>
     </virtualType>    
 
-    <virtualType name="BraspagTransactionBilletSendGatewayCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="BraspagTransactionClient" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Http\Client">
+        <arguments>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\Resource\Facade</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBilletSendCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionBilletSendRequestBuilder</argument>
-            <argument name="handler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler</argument>
-            <argument name="transferFactory" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Http\Client</argument>
+            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler</argument>
+            <argument name="api" xsi:type="object">Webjump\Braspag\Pagador\Transaction\Resource\Facade\Facade</argument>
         </arguments>
     </virtualType>
 
     <virtualType name="BraspagTransactionBilletCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="authorize" xsi:type="string">BraspagTransactionBilletSendGatewayCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionBilletSendCommand</item>
             </argument>
         </arguments>
     </virtualType>
