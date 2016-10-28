@@ -58,7 +58,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 	{
 		$address = $this->getOrderAdapter()->getBillingAddress();
 
-		return sprintf("%s %s %s - %s", $address->getStreetLine1(), $address->getStreetLine2(), $address->getCity(), $address->getPostcode());
+		return sprintf("%s %s %s/%s - %s", $address->getStreetLine1(), $address->getStreetLine2(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
 	}
 
 	public function getPaymentProvider()

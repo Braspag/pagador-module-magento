@@ -37,8 +37,6 @@ class RequestBuilder implements BuilderInterface
         }
 
         $paymentDataObject = $buildSubject['payment'];
-
-        $paymentInfo = $paymentDataObject->getPayment();
         $orderAdapter = $paymentDataObject->getOrder();
 
         $this->getRequest()->setOrderAdapter($orderAdapter);

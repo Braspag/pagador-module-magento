@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-	<default>
-		<payment>
-			<braspag_pagador_billet>
-                                <debug>1</debug>
-                                <active>1</active>
-                                <model>BraspagTransactionBilletRemoteMethodAdapter</model>
-                                <merchant_id backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
-                                <order_status>pending_payment</order_status>
-                                <payment_action>authorize</payment_action>
-                                <title>Braspag transaction Billet</title>
-                                <can_authorize>1</can_authorize>
-                                <can_use_checkout>1</can_use_checkout>
-                                <is_gateway>1</is_gateway>
-                                <sort_order>1</sort_order>
-			</braspag_pagador_billet>
-		</payment>
-	</default>
+    <default>
+        <payment>
+            <braspag_pagador_billet>
+                <debug>1</debug>
+                <active>1</active>
+                <model>BraspagTransactionBilletRemoteMethodAdapter</model>
+                <merchant_id />
+                <order_status>pending_payment</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Braspag transaction Boleto</title>
+                <can_authorize>1</can_authorize>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </braspag_pagador_billet>
+        </payment>
+    </default>
 </config>

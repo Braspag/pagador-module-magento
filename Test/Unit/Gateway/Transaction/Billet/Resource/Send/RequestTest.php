@@ -58,9 +58,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     	$paymentMock = $this->getMock('Magento\Sales\Api\Data\OrderPaymentInterface');
 
 
-        $billingAddressMock = $this->getMockBuilder('Magento\Sales\Model\Order\Address')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $billingAddressMock = $this->getMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
 
         $billingAddressMock->expects($this->once())
             ->method('getFirstname')
@@ -70,12 +68,21 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ->method('getLastname')
             ->will($this->returnValue('Doe'));
 
+        $billingAddressMock->expects($this->once())
+            ->method('getStreetLine1')
+            ->will($this->returnValue('Avenida Paulista, 13'));
 
         $billingAddressMock->expects($this->once())
-            ->method('getStreet')
-            ->will($this->returnValue(array(
-                'Rua Teste',1, 'Casa 1', 'Centro'
-            )));
+            ->method('getStreetLine2')
+            ->will($this->returnValue('Bela Vista'));
+
+        $billingAddressMock->expects($this->once())
+            ->method('getCity')
+            ->will($this->returnValue('São Paulo'));
+
+        $billingAddressMock->expects($this->once())
+            ->method('getPostcode')
+            ->will($this->returnValue('01311-300'));
 
         $orderAdapterMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
@@ -103,7 +110,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		static::assertEquals('2016000001', $this->request->getMerchantOrderId());
 		static::assertEquals('John Doe', $this->request->getCustomerName());
 		static::assertEquals('15700', $this->request->getPaymentAmount());
-		static::assertEquals("Rua Teste\n1\nCasa 1\nCentro", $this->request->getPaymentAddress());
+		static::assertEquals("Avenida Paulista, 13 Bela Vista São Paulo - 01311-300", $this->request->getPaymentAddress());
 		static::assertEquals('Simulado', $this->request->getPaymentProvider());
 		static::assertEquals('2016000001', $this->request->getPaymentBoletoNumber());
 		static::assertEquals('Empresa Teste', $this->request->getPaymentAssignor());

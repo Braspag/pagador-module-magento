@@ -3,6 +3,8 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Stdlib\DateTime;
 
 /**
  * Braspag Transaction Billet Config
@@ -15,38 +17,86 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
  */
 class Config implements ConfigInterface
 {
+	protected $config;
+
+	protected $date;
+
+	public function __construct(
+		ScopeConfigInterface $config,
+		DateTime $date
+	){
+		$this->setConfig($config);
+		$this->setDate($date);
+	}
+
 	public function getMerchantId()
 	{
-		return 'BC5D3432-527F-40C6-84BF-C549285536BE';
+		return $this->_getConfig('merchant_id');
 	}
 
 	public function getMerchantKey()
 	{
-		return 'yv3hzQuDfcUnNxcgkUifz4EQVPeeAwfedilpROwn';
+		return $this->_getConfig('merchant_key');
 	}
 
 	public function getPaymentDemonstrative()
 	{
-		return 'Desmonstrative Teste';
+		return $this->_getConfig('demonstrative');
 	}
 
 	public function getPaymentInstructions()
 	{
-		return 'Aceitar somente até a data de vencimento, após essa data juros de 1% dia.';
+		return $this->_getConfig('instructions');
 	}
 
 	public function getPaymentAssignor()
 	{
-		return 'ABC Businnes';
+		return $this->_getConfig('assignor');
 	}
 
 	public function getExpirationDate()
 	{
-		return '2016-01-03';
+		return $this->getDate()->gmDate('Y-m-d', strtotime(sprintf('+%s day', (int) $this->_getConfig('expiration_days'))));
 	}
 
 	public function getPaymentProvider()
 	{
-		return 'Simulado';
+		return $this->_getConfig('provider');
 	}
+
+	protected function _getConfig($field)
+	{
+		return $this->getConfig()->getValue('payment/braspag_pagador_billet/' . $field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+	}
+
+    protected function getConfig()
+    {
+        return $this->config;
+    }
+
+    protected function setConfig(ScopeConfigInterface $config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    protected function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Sets the value of date.
+     *
+     * @param mixed $date the date
+     *
+     * @return self
+     */
+    protected function setDate(DateTime $date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
 }

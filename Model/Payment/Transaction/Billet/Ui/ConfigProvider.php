@@ -39,7 +39,8 @@ final class ConfigProvider implements ConfigProviderInterface
         ];
     }
 
-    public function getBilletConfig()
+    
+    protected function getBilletConfig()
     {
         return $this->billetConfig;
     }

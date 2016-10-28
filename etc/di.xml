@@ -8,8 +8,8 @@
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionBilletValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionBilletCommandPool</argument>
-            <argument name="formBlockType" xsi:type="object">Webjump\BraspagPagador\Block\Form\Billet</argument>
-            <argument name="infoBlockType" xsi:type="object">Magento\Payment\Block\Info\Cc</argument>
+            <argument name="formBlockType" xsi:type="object">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="object">Magento\Payment\Block\Info</argument>
         </arguments>
     </virtualType>
 
@@ -42,6 +42,7 @@
     <virtualType name="BraspagTransactionBilletSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request">
         <arguments>
             <argument name="config" xsi:type="object">BraspagTransactionBilletSendRequestConfig</argument>
+            <argument name="date" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
         </arguments>
     </virtualType>
 
