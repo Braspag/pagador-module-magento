@@ -12,7 +12,7 @@ class SendCommandTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-    	$this->apiMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Resource\Facade\FacadeInterface');
+    	$this->apiMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->getMock('Magento\Payment\Gateway\Request\BuilderInterface');
     	$this->responseHandlerMock = $this->getMock('Magento\Payment\Gateway\Response\HandlerInterface');
 

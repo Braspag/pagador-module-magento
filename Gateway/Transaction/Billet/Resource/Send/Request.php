@@ -7,8 +7,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as BraspaglibRequestInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
-use Magento\Sales\Model\Order;
-
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 /**
  * Braspag Transaction Billet Send Request
  *
@@ -20,10 +19,8 @@ use Magento\Sales\Model\Order;
  */
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
-	const BRASPAG_PAYMENT_TYPE = 'Boleto';
-
-	protected $order;
-	protected $paymentInfo;
+	protected $orderAdapter;
+	
 	protected $config;
 
 	public function __construct(
@@ -31,14 +28,6 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 	) { 
 		$this->setConfig($config);
 	}
-
-    public function setPaymentDataObject(PaymentDataObjectInterface $paymentDataObject)
-    {
-    	$this->setOrder($paymentDataObject->getOrder());
-    	$this->setPaymentInfo($paymentDataObject->getPayment());
-
-    	return $this;
-    }
 
 	public function getMerchantId()
 	{
@@ -52,37 +41,34 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
 	public function getMerchantOrderId()
 	{
-		return $this->getOrder()->getIncrementId();
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getCustomerName()
 	{
-        return $this->getOrder()->getCustomerName();
-	}
-
-	public function getPaymentType()
-	{
-		return self::BRASPAG_PAYMENT_TYPE;
+        return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
 	}
 
 	public function getPaymentAmount()
 	{
-		return str_replace('.', '', $this->getOrder()->getPayment()->getAmountAuthorized());
+		return str_replace('.', '', $this->getOrderAdapter()->getGrandTotalAmount());
 	}
 
 	public function getPaymentAddress()
 	{
-		return trim(implode(PHP_EOL, $this->getOrder()->getBillingAddress()->getStreet()));
+		$address = $this->getOrderAdapter()->getBillingAddress();
+
+		return sprintf("%s %s %s - %s", $address->getStreetLine1(), $address->getStreetLine2(), $address->getCity(), $address->getPostcode());
 	}
 
 	public function getPaymentProvider()
 	{
-		return $this->getPaymentInfo()->getData('billet_type');
+		return $this->getConfig()->getPaymentProvider();
 	}
 
 	public function getPaymentBoletoNumber()
 	{
-		return $this->getOrder()->getIncrementId();
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getPaymentAssignor()
@@ -97,12 +83,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
 	public function getPaymentExpirationDate()
 	{
-		return date('Y-m-d', strtotime($this->getOrder()->getCreatedAt() . ' +' . (int) $this->getConfig()->getExpirationDays() . ' day'));
+		return $this->getConfig()->getExpirationDate();
 	}
 
 	public function getPaymentIdentification()
 	{
-		return $this->getOrder()->getIncrementId();
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getPaymentInstructions()
@@ -110,12 +96,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 		return $this->getConfig()->getPaymentInstructions();
 	}
 
-    protected function getOrder()
+    protected function getOrderAdapter()
     {
         return $this->order;
     }
 
-    protected function setOrder(Order $order)
+    public function setOrderAdapter(OrderAdapterInterface $order)
     {
         $this->order = $order;
 
@@ -130,18 +116,6 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected function setConfig(ConfigInterface $config)
     {
         $this->config = $config;
-
-        return $this;
-    }
-
-    protected function getPaymentInfo()
-    {
-        return $this->paymentInfo;
-    }
-
-    protected function setPaymentInfo(InfoInterface $paymentInfo)
-    {
-        $this->paymentInfo = $paymentInfo;
 
         return $this;
     }

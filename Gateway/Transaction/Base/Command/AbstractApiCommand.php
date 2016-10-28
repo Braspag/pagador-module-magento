@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
 
 use Magento\Payment\Gateway\CommandInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Facade\FacadeInterface as BraspagApi;
+use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
 use Magento\Payment\Gateway\Response\HandlerInterface as ResponseHandler;
 

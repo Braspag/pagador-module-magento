@@ -17,12 +17,12 @@ class Config implements ConfigInterface
 {
 	public function getMerchantId()
 	{
-		return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+		return 'BC5D3432-527F-40C6-84BF-C549285536BE';
 	}
 
 	public function getMerchantKey()
 	{
-		return '0123456789012345678901234567890123456789';
+		return 'yv3hzQuDfcUnNxcgkUifz4EQVPeeAwfedilpROwn';
 	}
 
 	public function getPaymentDemonstrative()
@@ -40,8 +40,13 @@ class Config implements ConfigInterface
 		return 'ABC Businnes';
 	}
 
-	public function getExpirationDays()
+	public function getExpirationDate()
 	{
-		return 3;
+		return '2016-01-03';
+	}
+
+	public function getPaymentProvider()
+	{
+		return 'Simulado';
 	}
 }

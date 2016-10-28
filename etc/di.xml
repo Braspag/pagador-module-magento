@@ -7,7 +7,6 @@
         <arguments>
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionBilletValueHandlerPool</argument>
-            <argument name="validatorPool" xsi:type="object">BraspagTransactionBilletValidatorPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionBilletCommandPool</argument>
             <argument name="formBlockType" xsi:type="object">Webjump\BraspagPagador\Block\Form\Billet</argument>
             <argument name="infoBlockType" xsi:type="object">Magento\Payment\Block\Info\Cc</argument>
@@ -52,17 +51,11 @@
         </arguments>
     </virtualType>    
 
-    <virtualType name="BraspagTransactionClient" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Http\Client">
-        <arguments>
-            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\Resource\Facade</argument>
-        </arguments>
-    </virtualType>
-
     <virtualType name="BraspagTransactionBilletSendCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionBilletSendRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler</argument>
-            <argument name="api" xsi:type="object">Webjump\Braspag\Pagador\Transaction\Resource\Facade\Facade</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
         </arguments>
     </virtualType>
 

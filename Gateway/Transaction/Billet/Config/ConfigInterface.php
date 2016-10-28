@@ -23,5 +23,7 @@ interface ConfigInterface
 
 	public function getPaymentAssignor();
 
-	public function getExpirationDays();
+	public function getExpirationDate();
+
+	public function getPaymentProvider();
 }

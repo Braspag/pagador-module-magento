@@ -2,7 +2,8 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+use Magento\Payment\Model\InfoInterface;
 
 /**
  * Braspag Transaction Billet Send Request Interface
@@ -15,5 +16,5 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
  */
 interface RequestInterface
 {
-	public function setPaymentDataObject(PaymentDataObjectInterface $paymentDataObject);
+	public function setOrderAdapter(OrderAdapterInterface $order);
 }
