@@ -81,6 +81,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('São Paulo'));
 
         $billingAddressMock->expects($this->once())
+            ->method('getRegionCode')
+            ->will($this->returnValue('SP'));
+
+        $billingAddressMock->expects($this->once())
             ->method('getPostcode')
             ->will($this->returnValue('01311-300'));
 
@@ -110,7 +114,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		static::assertEquals('2016000001', $this->request->getMerchantOrderId());
 		static::assertEquals('John Doe', $this->request->getCustomerName());
 		static::assertEquals('15700', $this->request->getPaymentAmount());
-		static::assertEquals("Avenida Paulista, 13 Bela Vista São Paulo - 01311-300", $this->request->getPaymentAddress());
+		static::assertEquals("Avenida Paulista, 13 Bela Vista São Paulo/SP - 01311-300", $this->request->getPaymentAddress());
 		static::assertEquals('Simulado', $this->request->getPaymentProvider());
 		static::assertEquals('2016000001', $this->request->getPaymentBoletoNumber());
 		static::assertEquals('Empresa Teste', $this->request->getPaymentAssignor());
