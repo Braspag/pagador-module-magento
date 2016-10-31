@@ -18,6 +18,13 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionBilletLink" type="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet\Link">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="checkoutSession" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">

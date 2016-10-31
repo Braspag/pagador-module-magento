@@ -17,6 +17,8 @@ use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface;
  */
 class ResponseHandler implements HandlerInterface
 {
+    const ADDITIONAL_INFORMATION_BILLET_URL = 'billet_url';
+
     public function handle(array $handlingSubject, array $response)
     {
         if (!isset($handlingSubject['payment']) || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface) {
@@ -27,13 +29,14 @@ class ResponseHandler implements HandlerInterface
             throw new \InvalidArgumentException('Braspag Billet Send Response Lib object should be provided');
         }
 
+        /** @var ResponseInterface $response */
         $response = $response['response'];
         $paymentDO = $handlingSubject['payment'];
         $payment = $paymentDO->getPayment();
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
-
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BILLET_URL, $response->getPaymentUrl());
         return $this;
     }
 }
