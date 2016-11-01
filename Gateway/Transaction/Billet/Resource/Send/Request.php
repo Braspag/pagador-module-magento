@@ -8,6 +8,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as Bras
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+
 /**
  * Braspag Transaction Billet Send Request
  *

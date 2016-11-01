@@ -5,7 +5,6 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface;
-use Magento\Sales\Api\OrderRepositoryInterface;
 
 /**
  * Braspag Transaction Billet Send Request Builder
@@ -23,11 +22,9 @@ class RequestBuilder implements BuilderInterface
     protected $orderRepository;
 
 	public function __construct(
-		RequestInterface $request,
-        OrderRepositoryInterface $orderRepository
+		RequestInterface $request
 	) {
         $this->setRequest($request);
-        $this->setOrderRepository($orderRepository);
 	}
 
     public function build(array $buildSubject)
@@ -42,18 +39,6 @@ class RequestBuilder implements BuilderInterface
         $this->getRequest()->setOrderAdapter($orderAdapter);
 
         return $this->getRequest();
-    }
-
-    protected function getOrderRepository()
-    {
-        return $this->orderRepository;
-    }
-
-    protected function setOrderRepository(OrderRepositoryInterface $orderRepository)
-    {
-        $this->orderRepository = $orderRepository;
-
-        return $this;
     }
 
     protected function getRequest()

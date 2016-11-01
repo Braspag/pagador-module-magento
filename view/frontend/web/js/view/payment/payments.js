@@ -12,6 +12,10 @@ define(
             {
                 type: 'braspag_pagador_billet',
                 component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/billet'
+            },
+            {
+                type: 'braspag_pagador_creditcard',
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard'
             }
         );
         return Component.extend({});
