@@ -9,44 +9,89 @@
 namespace Webjump\BraspagPagador\Test\Unit\Block\Checkout\Onepage\Transaction\Billet;
 
 
-use \Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet\Link;
+use \Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
+use Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet\Link;
+use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Sales\Api\Data\OrderInterface as Order;
+use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
+use Magento\Checkout\Model\Session  as Session;
+use Magento\Framework\View\Element\Template\Context;
 
 class LinkTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var  Link */
-    protected $link;
+    const RETURN_URL = 'http://www.url-de-retorno.com.br/';
+    private $context;
 
     public function setUp()
     {
-        $context = $this->getMockBuilder(\Magento\Framework\View\Element\Template\Context::class)
+        $this->context = $this->getMockBuilder(Context::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-
-        $session = $this->getMockBuilder(\Magento\Checkout\Model\Session::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->link = new Link($context, $session);
-    }
-
-    public function testGetCheckoutSession()
-    {
-        $this->assertInstanceOf(\Magento\Checkout\Model\Session::class, $this->link->getCheckoutSession());
-    }
-    
-    public function testGetLastOrder()
-    {
-        $this->assertInstanceOf(\Magento\Sales\Model\Order::class, $this->link->getLastOrder());
-    }
-
-    public function testGetPayment()
-    {
-        $this->assertInstanceOf(\Magento\Sales\Model\Order\Payment::class, $this->link->getPayment());
     }
 
     public function testGetBilletUrl()
     {
-        $this->assertTrue(method_exists($this->link, 'getBilletUrl'));
+        $payment = $this->getMockBuilder(Payment::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $payment->expects($this->once())
+            ->method('getAdditionalInformation')
+            ->with(ResponseHandler::ADDITIONAL_INFORMATION_BILLET_URL)
+            ->will($this->returnValue(self::RETURN_URL));
+
+        $order = $this->getMockBuilder(Order::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $order->expects($this->exactly(2))
+            ->method('getPayment')
+            ->will($this->returnValue($payment));
+
+        $session = $this->getMockBuilder(Session::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $session->expects($this->exactly(4))
+            ->method('getLastRealOrder')
+            ->will($this->returnValue($order));
+
+        $link = new Link($this->context, $session);
+
+        $this->assertEquals(self::RETURN_URL, $link->getBilletUrl());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetBilletUrlWithoutOrderValid()
+    {
+        $session = $this->getMockBuilder(Session::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $link = new Link($this->context, $session);
+        $link->getBilletUrl();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetBilletUrlWithoutPaymentValid()
+    {
+        $order = $this->getMockBuilder(Order::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $session = $this->getMockBuilder(Session::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $session->expects($this->exactly(2))
+            ->method('getLastRealOrder')
+            ->will($this->returnValue($order));
+
+        $link = new Link($this->context, $session);
+        $link->getBilletUrl();
     }
 }

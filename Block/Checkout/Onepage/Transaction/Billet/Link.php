@@ -7,7 +7,8 @@ use \Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHan
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use \Magento\Checkout\Model\Session as CheckoutSession;
-use Magento\Sales\Model\Order;
+use Magento\Sales\Api\Data\OrderInterface as Order;
+use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
 
 class Link extends Template
 {
@@ -27,7 +28,7 @@ class Link extends Template
     /**
      * @return CheckoutSession
      */
-    public function getCheckoutSession()
+    protected function getCheckoutSession()
     {
        return $this->checkoutSession;
     }
@@ -35,7 +36,7 @@ class Link extends Template
     /**
      * @return Order
      */
-    public function getLastOrder()
+    protected function getLastOrder()
     {
         if (! ($this->checkoutSession->getLastRealOrder()) instanceof Order) {
             throw new \InvalidArgumentException;
@@ -45,10 +46,14 @@ class Link extends Template
     }
 
     /**
-     * @return \Magento\Sales\Api\Data\OrderPaymentInterface|mixed|null
+     * @return Payment
      */
-    public function getPayment()
+    protected function getPayment()
     {
+        if (! ($this->getLastOrder()->getPayment()) instanceof Payment) {
+            throw new \InvalidArgumentException;
+        }
+
         return $this->getLastOrder()->getPayment();
     }
 
