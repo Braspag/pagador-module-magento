@@ -25,9 +25,15 @@
                 <title>Braspag transaction Credit Card</title>
                 <can_authorize>1</can_authorize>
                 <can_use_checkout>1</can_use_checkout>
-                <cctypes>AE,VI,MC,DI,JCB</cctypes>
+                <cctypes>AE,VI,MC,DI,JCB, RIA</cctypes>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <installments_interest_by_issuer>1</installments_interest_by_issuer>
+                <installments_number>10</installments_number>
+                <installments_is_with_interest>1</installments_is_with_interest>
+                <installment_min_amount>15</installment_min_amount>
+                <installments_interest_rate>10</installments_interest_rate>
+                <installments_max_without_interest>5</installments_max_without_interest>
             </braspag_pagador_creditcard>
         </payment>
     </default>

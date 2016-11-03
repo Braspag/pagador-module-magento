@@ -86,13 +86,6 @@ class Config implements ConfigInterface
         return $this->date;
     }
 
-    /**
-     * Sets the value of date.
-     *
-     * @param mixed $date the date
-     *
-     * @return self
-     */
     protected function setDate(DateTime $date)
     {
         $this->date = $date;

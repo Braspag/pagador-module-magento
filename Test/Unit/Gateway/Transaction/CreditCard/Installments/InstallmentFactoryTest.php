@@ -58,7 +58,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('R$100,00'));
 
         $this->installmentsConfigMock->expects($this->once())
-            ->method('isWithInterest')
+            ->method('isInterestByIssuer')
             ->will($this->returnValue(false));
 
     	$result = $this->factory->create(1, 100.00, $this->installmentsConfigMock);
@@ -89,7 +89,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('R$120,00'));
 
         $this->installmentsConfigMock->expects($this->once())
-            ->method('isWithInterest')
+            ->method('isInterestByIssuer')
             ->will($this->returnValue(true));
 
         $this->installmentsConfigMock->expects($this->once())
@@ -99,5 +99,40 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
     	$result = $this->factory->create(1, 100.00, $this->installmentsConfigMock);
 
     	static::assertSame($installmentMock, $result);
+    }
+
+    public function testCreateWithInterestWithMaxWithouInterest()
+    {
+        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+
+        $installmentMock->expects($this->once())
+            ->method('setId')
+            ->with(3);
+
+        $installmentMock->expects($this->once())
+            ->method('setLabel')
+            ->with('3x R$33.33 without interest');
+
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', [])
+            ->willReturn($installmentMock);
+
+        $this->pricingHelper->expects($this->once())
+            ->method('currency')
+            ->with(33.333333333333336, true, false)
+            ->will($this->returnValue('R$33.33'));
+
+        $this->installmentsConfigMock->expects($this->once())
+            ->method('isInterestByIssuer')
+            ->will($this->returnValue(true));
+
+        $this->installmentsConfigMock->expects($this->once())
+            ->method('getinstallmentsMaxWithoutInterest')
+            ->will($this->returnValue(5));
+
+        $result = $this->factory->create(3, 100.00, $this->installmentsConfigMock);
+
+        static::assertSame($installmentMock, $result);
     }
 }

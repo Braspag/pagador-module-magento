@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Installments Builder/Config -->
     
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="pricingHelper" xsi:type="object">\Magento\Framework\Pricing\Helper\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </type>
+
+    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder">
+        <arguments>
+             <argument name="instalLmentfactory" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory</argument>
+             <argument name="installmentsConfig" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig</argument>
+             <argument name="cart" xsi:type="object">Magento\Checkout\Model\Cart</argument>
+        </arguments>
+    </type>
+
 	<!-- Braspag Pagador Transaction Payment Billet -->
 
     <virtualType name="BraspagTransactionBilletRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">

@@ -11,4 +11,9 @@ interface InstallmentsConfigInterface
 	public function getInstallmentMinAmount();
 
 	public function getInterestRate();
+
+	public function isInterestByIssuer();
+
+	public function getinstallmentsMaxWithoutInterest();
+
 }

@@ -22,15 +22,15 @@ class InstallmentFactory implements InstallmentFactoryInterface
 
     public function create($index, $total, InstallmentsConfigInterface $installmentsConfig)
     {
-        $isWithInterest = $installmentsConfig->isWithInterest();
         $installmentAmount = $total / $index;
+        $interestMessage = ' without interest';
 
-        if ($isWithInterest) {
+        if ($installmentsConfig->isInterestByIssuer() && ($index > $installmentsConfig->getinstallmentsMaxWithoutInterest())) {
             $installmentAmount = $this->calcPriceWithInterest($index, $total, $installmentsConfig->getInterestRate());
+            $interestMessage = ' with interest*';
         }
 
         $installmentAmount = $this->getPricingHelper()->currency($installmentAmount, true, false);
-        $interestMessage = $isWithInterest ? ' with interest*' : ' without interest';
         
     	$installment = $this->getNewInstallmentInstance();
     	$installment->setId($index);

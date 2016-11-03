@@ -34,6 +34,9 @@
     </virtualType>
 
     <virtualType name="BraspagTransactionCreditCardInstallmentsUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider">
+        <arguments>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder</argument>            
+        </arguments>
     </virtualType>
 
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
