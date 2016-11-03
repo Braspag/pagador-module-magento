@@ -6,7 +6,7 @@
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
         <arguments>
             <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
-            <argument name="pricingHelper" xsi:type="object">\Magento\Framework\Pricing\Helper\Data</argument>
+            <argument name="priceHelper" xsi:type="object">\Magento\Framework\Pricing\Helper\Data</argument>
         </arguments>
     </type>
 

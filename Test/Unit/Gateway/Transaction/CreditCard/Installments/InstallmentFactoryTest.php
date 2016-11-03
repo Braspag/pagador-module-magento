@@ -20,13 +20,12 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $this->pricingHelper = $this->getMockBuilder('Magento\Framework\Pricing\Helper\Data')
-        	->disableOriginalConstructor()
-            ->setMethods(array('currency'))
+            ->disableOriginalConstructor()
             ->getMock();
 
     	$this->factory = new InstallmentFactory(
     		$this->objectManagerMock,
-    		$this->pricingHelper
+            $this->pricingHelper
     	);
     }
 
@@ -40,22 +39,21 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
     	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
 
     	$installmentMock->expects($this->once())
-    	    ->method('setId')
+    	    ->method('setIndex')
     	    ->with(1);
 
     	$installmentMock->expects($this->once())
-    	    ->method('setLabel')
-    	    ->with('1x R$100,00 without interest');
+    	    ->method('setPrice')
+    	    ->with(100.00);
+
+        $installmentMock->expects($this->once())
+            ->method('setWithInterest')
+            ->with(false);
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', [])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
-
-        $this->pricingHelper->expects($this->once())
-            ->method('currency')
-            ->with(100.00, true, false)
-            ->will($this->returnValue('R$100,00'));
 
         $this->installmentsConfigMock->expects($this->once())
             ->method('isInterestByIssuer')
@@ -70,23 +68,22 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
     {
     	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
 
-    	$installmentMock->expects($this->once())
-    	    ->method('setId')
-    	    ->with(1);
+        $installmentMock->expects($this->once())
+            ->method('setIndex')
+            ->with(1);
 
-    	$installmentMock->expects($this->once())
-    	    ->method('setLabel')
-    	    ->with('1x R$120,00 with interest*');
+        $installmentMock->expects($this->once())
+            ->method('setPrice')
+            ->with(120.00);
+
+        $installmentMock->expects($this->once())
+            ->method('setWithInterest')
+            ->with(true);
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', [])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
-
-        $this->pricingHelper->expects($this->once())
-            ->method('currency')
-            ->with(120.00, true, false)
-            ->will($this->returnValue('R$120,00'));
 
         $this->installmentsConfigMock->expects($this->once())
             ->method('isInterestByIssuer')
@@ -106,22 +103,21 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
         $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
 
         $installmentMock->expects($this->once())
-            ->method('setId')
+            ->method('setIndex')
             ->with(3);
 
         $installmentMock->expects($this->once())
-            ->method('setLabel')
-            ->with('3x R$33.33 without interest');
+            ->method('setPrice')
+            ->with(33.333333333333336);
+
+        $installmentMock->expects($this->once())
+            ->method('setWithInterest')
+            ->with(false);
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', [])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
-
-        $this->pricingHelper->expects($this->once())
-            ->method('currency')
-            ->with(33.333333333333336, true, false)
-            ->will($this->returnValue('R$33.33'));
 
         $this->installmentsConfigMock->expects($this->once())
             ->method('isInterestByIssuer')

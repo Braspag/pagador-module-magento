@@ -10,7 +10,19 @@ class InstallmentTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-    	$this->installment = new Installment;
+        $this->pricingHelper = $this->getMockBuilder('Magento\Framework\Pricing\Helper\Data')
+            ->disableOriginalConstructor()
+            ->setMethods(array('currency'))
+            ->getMock();
+
+        $this->pricingHelper->expects($this->once())
+            ->method('currency')
+            ->with(10.00, true, false)
+            ->will($this->returnValue('R$10,00'));
+
+    	$this->installment = new Installment(
+            $this->pricingHelper
+        );
     }
 
     public function tearDown()
@@ -20,10 +32,21 @@ class InstallmentTest extends \PHPUnit_Framework_TestCase
 
     public function testSetData()
     {
-    	$this->installment->setId(1);
-    	$this->installment->setLabel('Cusom Label');
+    	$this->installment->setIndex(1);
+    	$this->installment->setPrice(10.00);
+        $this->installment->setWithInterest(true);
 
     	static::assertEquals(1, $this->installment->getId());
-    	static::assertEquals('Cusom Label', $this->installment->getLabel());
+    	static::assertEquals('1x R$10,00 with interest*', $this->installment->getLabel());
+    }
+
+    public function testSetDataWithoutInterest()
+    {
+        $this->installment->setIndex(1);
+        $this->installment->setPrice(10.00);
+        $this->installment->setWithInterest(false);
+
+        static::assertEquals(1, $this->installment->getId());
+        static::assertEquals('1x R$10,00 without interest', $this->installment->getLabel());
     }
 }

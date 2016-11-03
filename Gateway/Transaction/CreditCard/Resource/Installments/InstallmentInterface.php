@@ -8,7 +8,10 @@ interface InstallmentInterface
 
     public function getLabel();
 
-    public function setId($installmentId);
+    public function setIndex($index);
 
-    public function setLabel($label);
+    public function setPrice($price);
+
+    public function setWithInterest($isWithInterest);
+
 }

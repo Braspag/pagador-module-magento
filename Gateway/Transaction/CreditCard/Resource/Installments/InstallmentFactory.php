@@ -5,43 +5,47 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Install
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Pricing\Helper\Data;
-
 class InstallmentFactory implements InstallmentFactoryInterface
 {
 	protected $objectManager;
 
-	protected $pricingHelper;
+	protected $priceHelper;
 
 	public function __construct(
 		ObjectManagerInterface $objectManager,
-		Data $pricingHelper
+        Data $priceHelper
 	) {
 		$this->setObjectManager($objectManager);
-		$this->setPricingHelper($pricingHelper);
+        $this->setPriceHelper($priceHelper);
 	}
 
     public function create($index, $total, InstallmentsConfigInterface $installmentsConfig)
     {
         $installmentAmount = $total / $index;
-        $interestMessage = ' without interest';
+        $interest = false;
 
         if ($installmentsConfig->isInterestByIssuer() && ($index > $installmentsConfig->getinstallmentsMaxWithoutInterest())) {
             $installmentAmount = $this->calcPriceWithInterest($index, $total, $installmentsConfig->getInterestRate());
-            $interestMessage = ' with interest*';
+            $interest = true;
         }
-
-        $installmentAmount = $this->getPricingHelper()->currency($installmentAmount, true, false);
-        
+       
     	$installment = $this->getNewInstallmentInstance();
-    	$installment->setId($index);
-    	$installment->setLabel("{$index}x {$installmentAmount}{$interestMessage}");
+    	$installment->setIndex($index);
+        $installment->setPrice($installmentAmount);
+    	$installment->setWithInterest($interest);
 
     	return $installment;
     }
 
+    protected function calcPriceWithInterest($i, $total, $interestRate)
+    {
+        $price = $total * $interestRate / (1 - (1 / pow((1 + $interestRate), $i)));
+        return sprintf("%01.2f", $price);
+    }
+
     public function getNewInstallmentInstance()
     {
-    	return $this->getObjectManager()->create('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment');
+        return $this->getObjectManager()->create('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->getPriceHelper()]);
     }
 
     protected function getObjectManager()
@@ -56,21 +60,15 @@ class InstallmentFactory implements InstallmentFactoryInterface
         return $this;
     }
 
-    public function getPricingHelper()
+    public function getPriceHelper()
     {
-        return $this->pricingHelper;
+        return $this->priceHelper;
     }
 
-    protected function setPricingHelper(Data $pricingHelper)
+    protected function setPriceHelper(Data $priceHelper)
     {
-        $this->pricingHelper = $pricingHelper;
+        $this->priceHelper = $priceHelper;
 
         return $this;
-    }
-
-    protected function calcPriceWithInterest($i, $total, $interestRate)
-    {
-        $price = $total * $interestRate / (1 - (1 / pow((1 + $interestRate), $i)));
-        return sprintf("%01.2f", $price);
     }
 }
