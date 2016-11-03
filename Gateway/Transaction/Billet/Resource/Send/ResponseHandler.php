@@ -6,6 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface;
+
 /**
  * Braspag Transaction Billet Send Response Handler
  *

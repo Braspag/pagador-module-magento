@@ -20,31 +20,17 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
     		RequestInterface::class
     	);
 
-        $this->orderRepositoryMock = $this->getMock(
-            OrderRepositoryInterface::class
-        );
-
     	$this->requestBuilder = new RequestBuilder(
-    		$this->requestMock,
-            $this->orderRepositoryMock
+    		$this->requestMock
     	);	
     }
 
     public function testBuilder()
     {
-        $orderMock = $this->getMockBuilder('Magento\Sales\Api\Data\OrderInterface')
+        $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $this->orderRepositoryMock->expects($this->once())
-            ->method('get')
-            ->with(1)
-            ->will($this->returnValue($orderMock));
-
         $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
-
-        $orderAdapter->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue(1));
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -57,19 +43,11 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getOrder')
             ->will($this->returnValue($orderAdapter));
 
-        $paymentDataObjectMock->expects($this->once())
-            ->method('getPayment')
-            ->will($this->returnValue($infoMock));
-
     	$buildSubject = ['payment' => $paymentDataObjectMock];
 
         $this->requestMock->expects($this->once())
-            ->method('setOrder')
+            ->method('setOrderAdapter')
             ->with($orderMock);
-
-        $this->requestMock->expects($this->once())
-            ->method('setPaymentInfo')
-            ->with($infoMock);
 
     	$result = $this->requestBuilder->build($buildSubject);
 

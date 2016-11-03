@@ -25,10 +25,26 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardUiConfigProvider" type="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="braspag_pagador_creditcard" xsi:type="const">Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardInstallmentsUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider">
+        <arguments>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder</argument>            
+        </arguments>
+    </virtualType>
+
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
                 <item name="braspag_pagador_billet_config_provider" xsi:type="object">BraspagTransactionBilletUiConfigProvider</item>
+                <item name="braspag_pagador_creditcard_config_provider" xsi:type="object">BraspagTransactionCreditCardUiConfigProvider</item>
+                <item name="braspag_pagador_creditcard_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardInstallmentsUiConfigProvider</item>
             </argument>
         </arguments>
     </type>

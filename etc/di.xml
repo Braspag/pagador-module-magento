@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Installments Builder/Config -->
     
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="priceHelper" xsi:type="object">\Magento\Framework\Pricing\Helper\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </type>
+
+    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder">
+        <arguments>
+             <argument name="instalLmentfactory" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory</argument>
+             <argument name="installmentsConfig" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig</argument>
+             <argument name="cart" xsi:type="object">Magento\Checkout\Model\Cart</argument>
+        </arguments>
+    </type>
+
 	<!-- Braspag Pagador Transaction Payment Billet -->
 
     <virtualType name="BraspagTransactionBilletRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
@@ -8,8 +31,8 @@
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionBilletValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionBilletCommandPool</argument>
-            <argument name="formBlockType" xsi:type="object">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="object">Magento\Payment\Block\Info</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Info</argument>
         </arguments>
     </virtualType>
 
@@ -64,6 +87,54 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="authorize" xsi:type="string">BraspagTransactionBilletSendCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Braspag Pagador Transaction Payment Credit Card -->
+
+    <virtualType name="BraspagTransactionCreditCardsRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="object">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="object">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionCreditCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionCreditCardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionBilletSendRequestBuilder</argument>
+            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
             </argument>
         </arguments>
     </virtualType>
