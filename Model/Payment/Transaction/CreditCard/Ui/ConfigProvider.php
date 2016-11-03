@@ -3,6 +3,8 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Command
@@ -17,7 +19,15 @@ final class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'braspag_pagador_creditcard';
 
-    protected $installment = [];
+    protected $installments = [];
+
+    protected $builder;
+
+    public function __construct(
+        BuilderInterface $builder
+    ) {
+        $this->setBuilder($builder);
+    }
 
     public function getConfig()
     {
@@ -32,16 +42,29 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected function getInstallments()
     {
-    	if (!empty($this->installments)) {
-    		return $this->installments;
-    	}
-
-    	$installmentsMax = 10;
-
-    	for ($i=1; $i < $installmentsMax++; $i++) { 
-    		$this->installments[self::CODE][$i] = __('Installments ' . $i);
-    	}
+        foreach ($this->getBuilder()->build() as $installment) {
+            $this->addInstallment($installment);
+        }
 
     	return $this->installments;
+    }
+
+    protected function addInstallment(InstallmentInterface $installment)
+    {
+        $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
+
+        return $this;
+    }
+
+    protected function getBuilder()
+    {
+        return $this->builder;
+    }
+
+    protected function setBuilder(BuilderInterface $builder)
+    {
+        $this->builder = $builder;
+
+        return $this;
     }
 }

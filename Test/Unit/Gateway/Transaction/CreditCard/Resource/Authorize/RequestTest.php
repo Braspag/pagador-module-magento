@@ -6,9 +6,9 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Req
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-    protected $request;
+    private $request;
 
-    protected $creaditCardConfig;
+    private $creaditCardConfig;
 
     public function setUp()
     {
@@ -26,6 +26,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetData()
     {
+        static::markTestIncomplete();
+
         $this->config->expects($this->once())
             ->method('getMerchantId')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
