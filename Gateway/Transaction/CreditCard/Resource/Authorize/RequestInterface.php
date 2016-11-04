@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-
+use Magento\Payment\Model\InfoInterface;
 /**
  * Braspag Transaction CreditCard Authorize Request Interface
  *
@@ -16,4 +16,6 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 interface RequestInterface
 {
 	public function setOrderAdapter(OrderAdapterInterface $order);
+
+	public function setPaymentData(InfoInterface $payment);
 }

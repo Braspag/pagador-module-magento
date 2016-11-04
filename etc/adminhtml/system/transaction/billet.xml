@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_billet" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Billet</label>
+	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Enabled</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_billet/active</config_path>
+	    </field>
+	    <field id="provider" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Provider</label>
+	        <comment />
+	        <source_model>Webjump\BraspagPagador\Model\Config\Source\Transaction\Billet\Provider</source_model>
+	        <config_path>payment/braspag_pagador_billet/provider</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="demonstrative" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+	        <label>Demonstrative</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_billet/demonstrative</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+	        <label>Instructions</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_billet/instructions</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="assignor" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Assignor</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_billet/assignor</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="expiration_days" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Expirations Day</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_billet/expiration_days</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+    </group>
+</include>

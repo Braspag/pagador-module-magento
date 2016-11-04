@@ -26,8 +26,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetData()
     {
-        static::markTestIncomplete();
-
+        // static::markTestIncomplete();
+        
         $this->config->expects($this->once())
             ->method('getMerchantId')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
@@ -124,7 +124,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ->method('getOrderIncrementId')
             ->will($this->returnValue('2016000001'));
 
+        $infoMock = $this->getMockBuilder('Magento\Payment\Model\Info')
+            ->disableOriginalConstructor()
+            ->setMethods(['getCcType'])
+            ->getMock();
+
+        $infoMock->expects($this->once())
+            ->method('getCcType')
+            ->will($this->returnValue('SIM'));
+
         $this->request->setOrderAdapter($orderAdapterMock);
+        $this->request->setPaymentData($infoMock);
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
@@ -154,7 +164,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('BRL', $this->request->getPaymentCurrency());
         static::assertEquals('BRA', $this->request->getPaymentCountry());
         static::assertEquals('Simulado', $this->request->getPaymentProvider());
-        static::assertEquals('1000', $this->request->getPaymentServiceTaxAmount());
+        static::assertFalse($this->request->getPaymentServiceTaxAmount());
         static::assertEquals('3', $this->request->getPaymentInstallments());
         static::assertEquals('ByMerchant', $this->request->getPaymentInterest());
         static::assertTrue($this->request->getPaymentCapture());

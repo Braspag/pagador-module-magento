@@ -13,32 +13,26 @@
         <span><!-- ko i18n: 'Credit Card Information'--><!-- /ko --></span>
     </legend><br />
     <!-- /ko -->
-    <div class="field type">
+    <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
+        <label data-bind="attr: {for: getCode() + '_type'}" class="label">
+            <span><!-- ko i18n: 'type'--><!-- /ko --></span>
+        </label>
         <div class="control">
-            <ul class="credit-card-types">
-                <!-- ko foreach: {data: getCcAvailableTypesValues(), as: 'item'} -->
-                <li class="item" data-bind="css: {
-                                                 _active: $parent.selectedCardType() == item.value,
-                                                 _inactive: $parent.selectedCardType() != null && $parent.selectedCardType() != item.value
-                                                 } ">
-                    <!--ko if: $parent.getIcons(item.value) -->
-                    <img data-bind="attr: {
-                        'src': $parent.getIcons(item.value).url,
-                        'alt': item.type,
-                        'width': $parent.getIcons(item.value).width,
-                        'height': $parent.getIcons(item.value).height
-                        }">
-                    <!--/ko-->
-                </li>
-                <!--/ko-->
-            </ul>
-            <input type="hidden"
-                   name="payment[cc_type]"
-                   class="input-text"
-                   value=""
-                   data-bind="attr: {id: getCode() + '_cc_type', 'data-container': getCode() + '-cc-type'},
-                   value: creditCardType
-                   ">
+            <div class="fields">
+                <div class="field no-label type">
+                    <div class="control">
+                        <select  name="payment[type]"
+                                 class="select select-type"
+                                 data-bind="attr: {id: getCode() + '_type', 'data-container': getCode() + '-cc-type', 'data-validate': JSON.stringify({required:true, 'validate-cc-exp':'#' + getCode() + '_type'})},
+                                            enable: isActive($parents),
+                                            options: getCcInstallmentsValues(),
+                                            optionsValue: 'value',
+                                            optionsText: 'type',
+                                            value: creditCardInstallments">
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="field number required">

@@ -6,6 +6,8 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestInterface as BraspagMagentoRequestInterface;
+use Magento\Payment\Model\InfoInterface;
+
 /**
  * Braspag Transaction CreditCard Authorize Request
  *
@@ -18,6 +20,8 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Req
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
 	protected $orderAdapter;
+
+    protected $paymentData;
 
 	protected $config;
 
@@ -174,12 +178,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-
+        return $this->getPaymentData()->getCcType();
     }
 
     public function getPaymentServiceTaxAmount()
     {
-
+        
     }
 
     public function getPaymentInstallments()
@@ -269,5 +273,15 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         $this->orderAdapter = $orderAdapter;
 
         return $this;
+    }
+
+    public function setPaymentData(InfoInterface $payment)
+    {
+        $this->paymentData = $payment;
+    }
+
+    protected function getPaymentData()
+    {
+        return $this->paymentData;
     }
 }
