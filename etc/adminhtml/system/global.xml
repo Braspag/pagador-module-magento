@@ -6,12 +6,12 @@
 	    <field id="merchant_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 	        <label>Merchant ID</label>
 	        <comment>store identifier in Braspag. Leave empty to use demo account or contact Braspag to get your own merchant id.</comment>
-	        <config_path>payment/braspag_pagador_billet/merchant_id</config_path>
+	        <config_path>payment/braspag_pagador_global/merchant_id</config_path>
 	    </field>
 	    <field id="merchant_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 	        <label>Merchant Key</label>
 	        <comment>Public key for Double Authentication Braspag. Leave empty to use demo account or contact Braspag to get your own merchant id.</comment>
-	        <config_path>payment/braspag_pagador_billet/merchant_key</config_path>
+	        <config_path>payment/braspag_pagador_global/merchant_key</config_path>
 	    </field>
 	</group>	    
 </include>

@@ -1,13 +1,97 @@
 <?xml version="1.0" ?>
 <payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
-	<groups>
-		<group id="braspag">
-			<label>Braspag Payment Methods</label>
-		</group>
-	</groups>
-	<methods>
-		<method name="braspag_pagador_billet">
-			<allow_multiple_address>1</allow_multiple_address>
-		</method>
-	</methods>
+    <methods>
+        <method name="braspag_pagador_billet">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="braspag_pagador_creditcard">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+    </methods>
+    <credit_cards>
+        <type id="Simulado" order="0">
+            <label>Simulado*</label>
+        </type>
+        <type id="Cielo-Visa" order="1">
+            <label>Cielo Visa</label>
+        </type>
+        <type id="Cielo-Master" order="2">
+            <label>Cielo Master</label>
+        </type>
+        <type id="Cielo-Amex" order="3">
+            <label>Cielo Amex</label>
+        </type>
+        <type id="Cielo-Elo" order="4">
+            <label>Cielo Elo</label>
+        </type>
+        <type id="Cielo-Aura" order="4">
+            <label>Cielo Aura</label>
+        </type>
+        <type id="Cielo-Jcb" order="6">
+            <label>Cielo Jcb</label>
+        </type>
+        <type id="Cielo-Diners" order="7">
+            <label>Cielo Diners</label>
+        </type>
+        <type id="Cielo-Discover" order="8">
+            <label>Cielo Discover</label>
+        </type>
+        <type id="Redecard-Visa" order="9">
+            <label>Redecard Visa</label>
+        </type>
+        <type id="Redecard-Master" order="10">
+            <label>Redecard Master</label>
+        </type>
+        <type id="Redecard-Hipercard" order="11">
+            <label>Redecard Hipercard</label>
+        </type>
+        <type id="Redecard-Hiper" order="12">
+            <label>Redecard Hiper</label>
+        </type>
+        <type id="Redecard-Diners" order="13">
+            <label>Redecard Diners</label>
+        </type>
+        <type id="RedeSitef-Visa" order="14">
+            <label>RedeSitef Visa</label>
+        </type>
+        <type id="RedeSitef-Master" order="15">
+            <label>RedeSitef Master</label>
+        </type>
+        <type id="RedeSitef-Hipercard" order="16">
+            <label>RedeSitef Hipercard</label>
+        </type>
+        <type id="RedeSitef-Diners" order="17">
+            <label>RedeSitef Diners</label>
+        </type>
+        <type id="CieloSitef-Visa" order="18">
+            <label>CieloSitef Visa</label>
+        </type>
+        <type id="CieloSitef-Master" order="19">
+            <label>CieloSitef Master</label>
+        </type>
+        <type id="CieloSitef-Amex" order="20">
+            <label>CieloSitef Amex</label>
+        </type>
+        <type id="CieloSitef-Elo" order="21">
+            <label>CieloSitef Elo</label>
+        </type>
+        <type id="CieloSitef-Aura" order="22">
+            <label>CieloSitef Aura</label>
+        </type>
+        <type id="CieloSitef-Jcb" order="23">
+            <label>CieloSitef Jcb</label>
+        </type>
+        <type id="CieloSitef-Diners" order="24">
+            <label>CieloSitef Diners</label>
+        </type>
+        <type id="CieloSitef-Discover" order="25">
+            <label>CieloSitef Discover</label>
+        </type>
+        <type id="SantanderSitef-Visa" order="26">
+            <label>SantanderSitef Visa</label>
+        </type>
+        <type id="SantanderSitef-Master" order="27">
+            <label>SantanderSitef Master</label>
+        </type>
+    </credit_cards>
 </payment>

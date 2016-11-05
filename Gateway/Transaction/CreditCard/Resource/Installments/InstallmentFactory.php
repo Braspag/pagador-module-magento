@@ -43,7 +43,7 @@ class InstallmentFactory implements InstallmentFactoryInterface
         return sprintf("%01.2f", $price);
     }
 
-    public function getNewInstallmentInstance()
+    protected function getNewInstallmentInstance()
     {
         return $this->getObjectManager()->create('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->getPriceHelper()]);
     }
@@ -60,7 +60,7 @@ class InstallmentFactory implements InstallmentFactoryInterface
         return $this;
     }
 
-    public function getPriceHelper()
+    protected function getPriceHelper()
     {
         return $this->priceHelper;
     }

@@ -15,7 +15,7 @@
     <!-- /ko -->
     <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
         <label data-bind="attr: {for: getCode() + '_type'}" class="label">
-            <span><!-- ko i18n: 'type'--><!-- /ko --></span>
+            <span><!-- ko i18n: 'Type'--><!-- /ko --></span>
         </label>
         <div class="control">
             <div class="fields">
@@ -25,10 +25,10 @@
                                  class="select select-type"
                                  data-bind="attr: {id: getCode() + '_type', 'data-container': getCode() + '-cc-type', 'data-validate': JSON.stringify({required:true, 'validate-cc-exp':'#' + getCode() + '_type'})},
                                             enable: isActive($parents),
-                                            options: getCcInstallmentsValues(),
+                                            options: getCcAvailableTypesValues(),
                                             optionsValue: 'value',
                                             optionsText: 'type',
-                                            value: creditCardInstallments">
+                                            value: creditCardType">
                         </select>
                     </div>
                 </div>
@@ -50,6 +50,23 @@
                               enable: isActive($parents),
                               value: creditCardNumber,
                               valueUpdate: 'keyup' "/>
+        </div>
+    </div>
+    <div class="field owner required" data-bind="attr: {id: getCode() + '_cc_owner_div'}">
+        <label data-bind="attr: {for: getCode() + '_cc_owner'}" class="label">
+            <span><!-- ko i18n: 'Name on Card'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <input type="text"
+                   autocomplete="off"
+                   class="input-text owner"
+                   name="payment[cc_owner]"
+                   data-bind="attr: {id: getCode() + '_cc_owner',
+                        title: $t('Name on Card'),
+                        'data-container': getCode() + '-cc-owner',
+                        'data-validate': JSON.stringify({'required':true})},
+                        enable: isActive($parents),
+                        value: creditCardOwner" />
         </div>
     </div>
     <div class="field date required" data-bind="attr: {id: getCode() + '_cc_type_exp_div'}">
@@ -120,6 +137,7 @@
         </div>
     </div>
     <!-- /ko -->
+    <!-- ko if: (isInstallmentsActive())-->
     <div class="field installments required" data-bind="attr: {id: getCode() + '_cc_installments'}">
         <label data-bind="attr: {for: getCode() + '_installments'}" class="label">
             <span><!-- ko i18n: 'Installments'--><!-- /ko --></span>
@@ -128,13 +146,14 @@
             <div class="fields">
                 <div class="field no-label installments">
                     <div class="control">
-                        <select  name="payment[installments]"
+                        <select  name="payment[cc_installments]"
                                  class="select select-installments"
-                                 data-bind="attr: {id: getCode() + '_installments', 'data-container': getCode() + '-cc-installments', 'data-validate': JSON.stringify({required:true, 'validate-cc-exp':'#' + getCode() + '_installments'})},
+                                 data-bind="attr: {id: getCode() + '_installments', 'data-container': getCode() + '-cc-installments', 'data-validate': JSON.stringify({required:true})},
                                             enable: isActive($parents),
                                             options: getCcInstallmentsValues(),
                                             optionsValue: 'value',
                                             optionsText: 'installments',
+                                            optionsCaption: $t('Installments'),
                                             value: creditCardInstallments">
                         </select>
                     </div>
@@ -142,4 +161,5 @@
             </div>
         </div>
     </div>
+    <!-- /ko -->
 </fieldset>

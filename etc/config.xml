@@ -18,10 +18,10 @@
                 <model>BraspagTransactionCreditCardsRemoteMethodAdapter</model>
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize</payment_action>
-                <title>Braspag transaction Credit Card</title>
+                <title>Braspag Transaction Credit Card</title>
                 <can_authorize>1</can_authorize>
                 <can_use_checkout>1</can_use_checkout>
-                <cctypes>AE,VI,MC,DI,JCB, RIA</cctypes>
+                <cctypes>Simulado</cctypes>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
                 <installments_interest_by_issuer>1</installments_interest_by_issuer>

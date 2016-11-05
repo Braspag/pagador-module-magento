@@ -14,7 +14,22 @@
 	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 	        <config_path>payment/braspag_pagador_creditcard/active</config_path>
 	    </field>
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/providers.xml"/>
+	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Title</label>
+	        <config_path>payment/braspag_pagador_creditcard/title</config_path>
+	    </field>
+	    <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Payment Action</label>
+	        <comment />
+	        <source_model>Webjump\BraspagPagador\Model\Source\PaymentAction</source_model>
+	        <config_path>payment/braspag_pagador_creditcard/payment_action</config_path>
+	    </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+            <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+            <config_path>payment/braspag_pagador_creditcard/order_status</config_path>
+        </field>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/types.xml"/>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/installments.xml"/>
     </group>
 </include>

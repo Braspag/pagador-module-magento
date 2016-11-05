@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Config\Source\Transaction\Billet;
+namespace Webjump\BraspagPagador\Model\Source;
 
-class Provider implements \Magento\Framework\Option\ArrayInterface
+class BilletTypes implements \Magento\Framework\Option\ArrayInterface
 {
     public function toOptionArray()
     {
