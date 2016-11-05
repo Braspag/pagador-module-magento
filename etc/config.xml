@@ -24,12 +24,12 @@
                 <cctypes>Simulado</cctypes>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
-                <installments_interest_by_issuer>1</installments_interest_by_issuer>
-                <installments_number>10</installments_number>
+                <installments_interest_by_issuer>0</installments_interest_by_issuer>
+                <installments_number>12</installments_number>
                 <installments_is_with_interest>1</installments_is_with_interest>
-                <installment_min_amount>15</installment_min_amount>
+                <installment_min_amount>10.00</installment_min_amount>
                 <installments_interest_rate>10</installments_interest_rate>
-                <installments_max_without_interest>5</installments_max_without_interest>
+                <installments_max_without_interest>6</installments_max_without_interest>
             </braspag_pagador_creditcard>
         </payment>
     </default>
