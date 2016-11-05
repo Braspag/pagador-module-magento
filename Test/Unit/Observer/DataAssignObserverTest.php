@@ -23,7 +23,6 @@ class DataAssignObserverTest extends \PHPUnit_Framework_TestCase
         $paymentInfoModel = $this->getMock(InfoInterface::class);
         $dataObject = new DataObject(
             [
-                'cc_owner' => 'John Due',
                 'cc_installments' => 2,
             ]
         );
@@ -45,14 +44,7 @@ class DataAssignObserverTest extends \PHPUnit_Framework_TestCase
             ->method('getInfoInstance')
             ->willReturn($paymentInfoModel);
 
-        $paymentInfoModel->expects(static::at(0))
-            ->method('setAdditionalInformation')
-            ->with(
-                'cc_owner',
-                'John Due'
-            );
-
-        $paymentInfoModel->expects(static::at(1))
+        $paymentInfoModel->expects(static::once())
             ->method('setAdditionalInformation')
             ->with(
                 'cc_installments',

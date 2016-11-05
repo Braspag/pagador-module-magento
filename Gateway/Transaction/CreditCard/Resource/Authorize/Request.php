@@ -4,6 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authori
 
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as BraspaglibRequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
@@ -25,10 +26,18 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
 	protected $config;
 
+    protected $installmentsConfig;
+
+    protected $billingAddress;
+
+    protected $shippingAddress;
+
 	public function __construct(
-		ConfigInterface $config
+		ConfigInterface $config,
+        InstallmentsConfigInterface $installmentsConfig
 	) {
 		$this->setConfig($config);
+        $this->setInstallmentsConfig($installmentsConfig);
 	}
 
     public function getMerchantId()
@@ -48,7 +57,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerName()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
+        return $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
     }
 
     public function getCustomerIdentity()
@@ -63,7 +72,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerEmail()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getEmail();
+        return $this->getBillingAddress()->getEmail();
     }
 
     public function getCustomerBirthDate()
@@ -73,14 +82,14 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerAddressStreet()
     {
-        List($street,  $streetNumber) = explode(', ', $this->getOrderAdapter()->getBillingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = explode(', ', $this->getBillingAddress()->getStreetLine1());
 
         return $street;
     }
 
     public function getCustomerAddressNumber()
     {
-        List($street,  $streetNumber) = explode(', ', $this->getOrderAdapter()->getBillingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = explode(', ', $this->getBillingAddress()->getStreetLine1());
 
         return $streetNumber;
     }
@@ -92,39 +101,39 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerAddressZipCode()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getPostcode();
+        return $this->getBillingAddress()->getPostcode();
     }
 
     public function getCustomerAddressDistrict()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getStreetLine2();
+        return $this->getBillingAddress()->getStreetLine2();
     }
 
     public function getCustomerAddressCity()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getCity();
+        return $this->getBillingAddress()->getCity();
     }
 
     public function getCustomerAddressState()
     {
-        return $this->getOrderAdapter()->getBillingAddress()->getRegionCode();
+        return $this->getBillingAddress()->getRegionCode();
     }
 
     public function getCustomerAddressCountry()
     {
-        return 'BR';
+        return 'BRA';
     }
 
     public function getCustomerDeliveryAddressStreet()
     {
-        List($street,  $streetNumber) = explode(',', $this->getOrderAdapter()->getShippingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = explode(',', $this->getShippingAddress()->getStreetLine1());
 
         return trim($street);
     }
 
     public function getCustomerDeliveryAddressNumber()
     {
-        List($street,  $streetNumber) = explode(',', $this->getOrderAdapter()->getShippingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = explode(',', $this->getShippingAddress()->getStreetLine1());
 
         return trim($streetNumber);
     }
@@ -136,27 +145,27 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerDeliveryAddressZipCode()
     {
-        return $this->getOrderAdapter()->getShippingAddress()->getPostcode();
+        return $this->getShippingAddress()->getPostcode();
     }
 
     public function getCustomerDeliveryAddressDistrict()
     {
-        return $this->getOrderAdapter()->getShippingAddress()->getStreetLine2();
+        return $this->getShippingAddress()->getStreetLine2();
     }
 
     public function getCustomerDeliveryAddressCity()
     {
-        return $this->getOrderAdapter()->getShippingAddress()->getCity();
+        return $this->getShippingAddress()->getCity();
     }
 
     public function getCustomerDeliveryAddressState()
     {
-        return $this->getOrderAdapter()->getShippingAddress()->getRegionCode();
+        return $this->getShippingAddress()->getRegionCode();
     }
 
     public function getCustomerDeliveryAddressCountry()
     {
-        return 'BR';
+        return 'BRA';
     }
 
     public function getPaymentAmount()
@@ -178,77 +187,81 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-        return $this->getPaymentData()->getCcType();
+        List($provider, $brand) = explode('-', $this->getPaymentData()->getCcType());
+        
+        return $provider;
     }
 
     public function getPaymentServiceTaxAmount()
     {
-        
+        return 0;
     }
 
     public function getPaymentInstallments()
     {
-
+        return $this->getPaymentData()->getAdditionalInformation('cc_installments');
     }
 
     public function getPaymentInterest()
     {
-
+        return $this->getInstallmentsConfig()->isInterestByIssuer() ? 'ByIssuer' : 'ByMerchant';
     }
 
     public function getPaymentCapture()
     {
-
+        return $this->getConfig()->isAuthorizeAndCapture();
     }
 
     public function getPaymentAuthenticate()
     {
-
+        return false;
     }
 
     public function getPaymentSoftDescriptor()
     {
-
+        return $this->getConfig()->getSoftDescriptor();
     }
 
     public function getPaymentCreditCardCardNumber()
     {
-
+        return $this->getPaymentData()->getCcNumber();
     }
 
     public function getPaymentCreditCardHolder()
     {
-
+        return $this->getPaymentData()->getCcOwner();
     }
 
     public function getPaymentCreditCardExpirationDate()
     {
-
+        return $this->getPaymentData()->getCcExpMonth() . '/' . $this->getPaymentData()->getCcExpYear();
     }
 
     public function getPaymentCreditCardSecurityCode()
     {
-
+        return $this->getPaymentData()->getCcCid();
     }
 
     public function getPaymentCreditCardSaveCard()
     {
-
+        return false;
     }
 
     public function getPaymentCreditCardBrand()
     {
-
+        List($provider, $brand) = explode('-', $this->getPaymentData()->getCcType());
+        
+        return $brand;
     }
 
     public function getPaymentExtraDataCollection()
     {
-
+        return false;
     }
 
     public function getAntiFraudRequest()
     {
-
+        return false;
     }
 
     protected function getConfig()
@@ -283,5 +296,35 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected function getPaymentData()
     {
         return $this->paymentData;
+    }
+
+    protected function getInstallmentsConfig()
+    {
+        return $this->installmentsConfig;
+    }
+
+    protected function setInstallmentsConfig(InstallmentsConfigInterface $installmentsConfig)
+    {
+        $this->installmentsConfig = $installmentsConfig;
+
+        return $this;
+    }
+
+    protected function getShippingAddress()
+    {
+        if (!$this->shippingAddress) {
+            $this->shippingAddress = $this->getOrderAdapter()->getShippingAddress();
+        }
+
+        return $this->shippingAddress;
+    }
+
+    protected function getBillingAddress()
+    {
+        if (!$this->billingAddress) {
+            $this->billingAddress = $this->getOrderAdapter()->getBillingAddress();
+        }
+
+        return $this->billingAddress;
     }
 }

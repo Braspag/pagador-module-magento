@@ -13,10 +13,6 @@ class DataAssignObserver extends AbstractDataAssignObserver
         $data = $this->readDataArgument($observer);
         $paymentInfo = $method->getInfoInstance();
 
-        if ($data->getDataByKey('cc_owner') !== null) {
-            $paymentInfo->setAdditionalInformation('cc_owner', $data->getDataByKey('cc_owner'));
-        }
-
         if ($data->getDataByKey('cc_installments') !== null) {
             $paymentInfo->setAdditionalInformation('cc_installments', $data->getDataByKey('cc_installments'));
         }
