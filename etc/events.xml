@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-	<event name="payment_method_assign_data">
-        <observer name="webjump_braspag_gateway_data_assign" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
+	<event name="payment_method_assign_data_braspag_pagador_creditcard">
+        <observer name="webjump_braspag_assign_data_braspag_pagador_creditcard" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
     </event>
 </config>

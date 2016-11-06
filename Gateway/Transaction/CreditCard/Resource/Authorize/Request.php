@@ -62,12 +62,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerIdentity()
     {
-        return false;
+        return null;
     }
 
     public function getCustomerIdentityType()
     {
-        return false;
+        return null;
     }
 
     public function getCustomerEmail()
@@ -77,26 +77,26 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerBirthDate()
     {
-        return false;
+        return null;
     }
 
     public function getCustomerAddressStreet()
     {
-        List($street,  $streetNumber) = explode(', ', $this->getBillingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
 
-        return $street;
+        return trim($street);
     }
 
     public function getCustomerAddressNumber()
     {
-        List($street,  $streetNumber) = explode(', ', $this->getBillingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
 
-        return $streetNumber;
+        return (int) $streetNumber;
     }
 
     public function getCustomerAddressComplement()
     {
-        return false;
+        return null;
     }
 
     public function getCustomerAddressZipCode()
@@ -126,21 +126,21 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerDeliveryAddressStreet()
     {
-        List($street,  $streetNumber) = explode(',', $this->getShippingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
 
         return trim($street);
     }
 
     public function getCustomerDeliveryAddressNumber()
     {
-        List($street,  $streetNumber) = explode(',', $this->getShippingAddress()->getStreetLine1());
+        List($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
 
-        return trim($streetNumber);
+        return (int) $streetNumber;
     }
 
     public function getCustomerDeliveryAddressComplement()
     {
-        return false;
+        return null;
     }
 
     public function getCustomerDeliveryAddressZipCode()
@@ -187,7 +187,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-        List($provider, $brand) = explode('-', $this->getPaymentData()->getCcType());
+        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
         
         return $provider;
     }
@@ -199,7 +199,11 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentInstallments()
     {
-        return $this->getPaymentData()->getAdditionalInformation('cc_installments');
+        if (!$installments = $this->getPaymentData()->getCcInstallments()) {
+            $installments = 1;
+        }
+
+        return $installments;
     }
 
     public function getPaymentInterest()
@@ -214,7 +218,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentAuthenticate()
     {
-        return false;
+        return null;
     }
 
     public function getPaymentSoftDescriptor()
@@ -234,7 +238,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardExpirationDate()
     {
-        return $this->getPaymentData()->getCcExpMonth() . '/' . $this->getPaymentData()->getCcExpYear();
+        return str_pad($this->getPaymentData()->getCcExpMonth(), 2, '0', STR_PAD_LEFT) . '/' . $this->getPaymentData()->getCcExpYear();
     }
 
     public function getPaymentCreditCardSecurityCode()
@@ -244,24 +248,24 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardSaveCard()
     {
-        return false;
+        return null;
     }
 
     public function getPaymentCreditCardBrand()
     {
-        List($provider, $brand) = explode('-', $this->getPaymentData()->getCcType());
+        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
         
         return $brand;
     }
 
     public function getPaymentExtraDataCollection()
     {
-        return false;
+        return null;
     }
 
     public function getAntiFraudRequest()
     {
-        return false;
+        return null;
     }
 
     protected function getConfig()
