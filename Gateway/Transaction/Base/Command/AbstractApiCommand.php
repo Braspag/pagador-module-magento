@@ -6,6 +6,8 @@ use Magento\Payment\Gateway\CommandInterface;
 use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
 use Magento\Payment\Gateway\Response\HandlerInterface as ResponseHandler;
+use Magento\Payment\Gateway\Validator\ValidatorInterface;
+use Magento\Payment\Gateway\Command\CommandException;
 
 /**
  * Braspag Transaction Abstract Api Command
@@ -24,15 +26,19 @@ abstract class AbstractApiCommand implements CommandInterface
 
 	protected $responseHandler;
 
+    protected $validator;
+
 	public function __construct(
 		BraspagApi $api,
 		RequestBuilder $requestBuilder,
-		ResponseHandler $responseHandler
+		ResponseHandler $responseHandler,
+        ValidatorInterface $validator = null
 	)
 	{
 		$this->setApi($api);
 		$this->setRequestBuilder($requestBuilder);
-		$this->setResponseHandler($responseHandler);		
+		$this->setResponseHandler($responseHandler);
+        $this->setValidator($validator);
 	}
 
 	public function execute(array $commandSubject)
@@ -40,6 +46,17 @@ abstract class AbstractApiCommand implements CommandInterface
         $request = $this->getRequestBuilder()->build($commandSubject);
 
         $response = $this->sendRequest($request);
+        if ($this->getValidator()) {
+            $result = $this->getValidator()->validate(
+                array_merge($commandSubject, ['response' => $response])
+            );
+            if (!$result->isValid()) {
+                $errorMessage = $result->getFailsDescription();
+                throw new CommandException(
+                    __(reset($errorMessage))
+                );
+            }
+        }
 
         $this->getResponseHandler()->handle($commandSubject, ['response' => $response]);
 
@@ -80,6 +97,18 @@ abstract class AbstractApiCommand implements CommandInterface
     protected function setRequestBuilder(RequestBuilder $requestBuilder)
     {
         $this->requestBuilder = $requestBuilder;
+
+        return $this;
+    }
+
+    protected function getValidator()
+    {
+        return $this->validator;
+    }
+
+    protected function setValidator(ValidatorInterface $validator = null)
+    {
+        $this->validator = $validator;
 
         return $this;
     }

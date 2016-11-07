@@ -154,6 +154,7 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardSendRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Validator\Validator</argument>
         </arguments>
     </virtualType>
 
@@ -161,22 +162,6 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <!-- CSS Processor -->
-
-    <virtualType name="AlternativeSourceProcessors">
-        <arguments>
-            <argument name="alternatives" xsi:type="array">
-                <item name="scss" xsi:type="array">
-                    <item name="class" xsi:type="string">Webjump\BraspagPagador\Preprocessor\Adapter\Scss\Processor</item>
-                </item>
-<!--                 <item name="less" xsi:type="array">
-                    <item name="after" xsi:type="string">scss</item>
-                    <item name="class" xsi:type="string">Magento\Framework\Css\PreProcessor\Adapter\Less\Processor</item>
-                </item> -->
             </argument>
         </arguments>
     </virtualType>
