@@ -1,11 +1,20 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Validator;
+namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
 
+/**
+ * Validator
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
 class Validator implements ValidatorInterface
 {
 	const NOTFINISHED = 0;

@@ -143,18 +143,38 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardSendRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
+    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request">
+        <arguments>
+            <argument name="config" xsi:type="object">BraspagTransactionCreditCardSendRequestConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
         </arguments>
     </virtualType>    
 
+    <virtualType name="BraspagTransactionCreditCardCaptureRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionCreditCardCaptureRequest</argument>
+        </arguments>
+    </virtualType>  
+
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardSendRequestBuilder</argument>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardAuthorizeRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
-            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Validator\Validator</argument>
+            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
+            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
         </arguments>
     </virtualType>
 
@@ -162,6 +182,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">BraspagTransactionCreditCardCaptureCommand</item>
             </argument>
         </arguments>
     </virtualType>

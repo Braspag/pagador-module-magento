@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Validator;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Validator\Validator;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
