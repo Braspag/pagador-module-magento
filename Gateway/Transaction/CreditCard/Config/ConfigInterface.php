@@ -16,4 +16,8 @@ interface ConfigInterface
 	public function getMerchantId();
 
 	public function getMerchantKey();
+
+	public function isAuthorizeAndCapture();
+
+	public function getSoftDescriptor();
 }

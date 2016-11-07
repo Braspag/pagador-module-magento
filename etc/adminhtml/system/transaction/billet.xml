@@ -14,11 +14,15 @@
 	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 	        <config_path>payment/braspag_pagador_billet/active</config_path>
 	    </field>
-	    <field id="provider" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
-	        <label>Provider</label>
+	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Title</label>
+	        <config_path>payment/braspag_pagador_billet/title</config_path>
+	    </field>
+	    <field id="types" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Type</label>
 	        <comment />
-	        <source_model>Webjump\BraspagPagador\Model\Config\Source\Transaction\Billet\Provider</source_model>
-	        <config_path>payment/braspag_pagador_billet/provider</config_path>
+	        <source_model>Webjump\BraspagPagador\Model\Source\BilletTypes</source_model>
+	        <config_path>payment/braspag_pagador_billet/types</config_path>
             <depends>
                 <field id="active">1</field>
             </depends>

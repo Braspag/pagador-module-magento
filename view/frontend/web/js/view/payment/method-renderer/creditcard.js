@@ -1,6 +1,9 @@
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
  */
 /*browser:true*/
 /*global define*/
@@ -17,6 +20,21 @@ define(
                 creditCardInstallments: ''
             },
 
+            initObservable: function () {
+                this._super()
+                    .observe([
+                        'creditCardType',
+                        'creditCardNumber',
+                        'creditCardOwner',
+                        'creditCardExpYear',
+                        'creditCardExpMonth',
+                        'creditCardVerificationNumber',
+                        'creditCardInstallments'
+                    ]);
+
+                return this;
+            },
+
             getCode: function() {
                 return 'braspag_pagador_creditcard';
             },
@@ -25,8 +43,27 @@ define(
                 return true;
             },
 
+            getData: function () {
+                return {
+                    'method': this.item.method,
+                    'additional_data': {
+                        'cc_cid': this.creditCardVerificationNumber(),
+                        'cc_type': this.creditCardType(),
+                        'cc_exp_year': this.creditCardExpYear(),
+                        'cc_exp_month': this.creditCardExpMonth(),
+                        'cc_number': this.creditCardNumber(),
+                        'cc_owner': this.creditCardOwner(),
+                        'cc_installments': this.creditCardInstallments() 
+                    }
+                };
+            },
+
+            isInstallmentsActive: function () {
+                return window.checkoutConfig.payment.ccform.installments.active;
+            },
+
             getCcInstallments: function() {
-                return window.checkoutConfig.payment.ccform.installments[this.getCode()];
+                return window.checkoutConfig.payment.ccform.installments.list[this.getCode()];
             },
 
             getCcInstallmentsValues: function() {

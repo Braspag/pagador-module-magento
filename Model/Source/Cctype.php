@@ -19,6 +19,35 @@ class Cctype extends \Magento\Payment\Model\Source\Cctype
      */
     public function getAllowedTypes()
     {
-        return array('VI', 'MC', 'AE', 'DI', 'JCB', 'OT');
+        return [
+			'Simulado',
+			'Cielo-Visa',
+			'Cielo-Master',
+			'Cielo-Amex',
+			'Cielo-Elo',
+			'Cielo-Aura',
+			'Cielo-Jcb',
+			'Cielo-Diners',
+			'Cielo-Discover',
+			'Redecard-Visa',
+			'Redecard-Master',
+			'Redecard-Hipercard',
+			'Redecard-Hiper',
+			'Redecard-Diners',
+			'RedeSitef-Visa',
+			'RedeSitef-Master',
+			'RedeSitef-Hipercard',
+			'RedeSitef-Diners',
+			'CieloSitef-Visa',
+			'CieloSitef-Master',
+			'CieloSitef-Amex',
+			'CieloSitef-Elo',
+			'CieloSitef-Aura',
+			'CieloSitef-Jcb',
+			'CieloSitef-Diners',
+			'CieloSitef-Discover',
+			'SantanderSitef-Visa',
+			'SantanderSitef-Master',
+        ];
     }
 }

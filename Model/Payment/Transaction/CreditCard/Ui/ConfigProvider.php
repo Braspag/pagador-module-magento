@@ -34,7 +34,10 @@ final class ConfigProvider implements ConfigProviderInterface
         return [
             'payment' => [
                 'ccform' => [
-                    'installments' => $this->getInstallments(),
+                    'installments' => [
+                        'active' => true,
+                        'list' => $this->getInstallments(),
+                    ],
                 ]
             ]
         ];
