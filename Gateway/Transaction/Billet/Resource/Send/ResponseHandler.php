@@ -5,10 +5,20 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
+use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface;
 
+/**
+ * Braspag Transaction Billet Send Response Handler
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
 class ResponseHandler implements HandlerInterface
 {
-    const TXN_ID = 'TXN_ID';
+    const ADDITIONAL_INFORMATION_BILLET_URL = 'billet_url';
 
     public function handle(array $handlingSubject, array $response)
     {
@@ -16,12 +26,18 @@ class ResponseHandler implements HandlerInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
+        if (!isset($response['response']) || !$response['response'] instanceof ResponseInterface) {
+            throw new \InvalidArgumentException('Braspag Billet Send Response Lib object should be provided');
+        }
+
+        /** @var ResponseInterface $response */
+        $response = $response['response'];
         $paymentDO = $handlingSubject['payment'];
-
         $payment = $paymentDO->getPayment();
-        $payment->setTransactionId($response[self::TXN_ID]);
-        $payment->setIsTransactionClosed(false);
 
+        $payment->setTransactionId($response->getPaymentPaymentId());
+        $payment->setIsTransactionClosed(false);
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BILLET_URL, $response->getPaymentUrl());
         return $this;
     }
 }

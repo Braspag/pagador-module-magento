@@ -2,18 +2,26 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface;
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
-use Magento\Sales\Model\Order;
+use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as BraspaglibRequestInterface;
+use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 
-class Request implements RequestInterface
+/**
+ * Braspag Transaction Billet Send Request
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
+class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
-	const BRASPAG_PAYMENT_TYPE = 'Boleto';
-
-	protected $order;
-	protected $paymentInfo;
+	protected $orderAdapter;
+	
 	protected $config;
 
 	public function __construct(
@@ -21,14 +29,6 @@ class Request implements RequestInterface
 	) { 
 		$this->setConfig($config);
 	}
-
-    public function setPayment(PaymentDataObjectInterface $paymentDataObject)
-    {
-    	$this->setOrder($paymentDataObject->getOrder());
-    	$this->setPaymentInfo($paymentDataObject->getPayment());
-
-    	return $this;
-    }
 
 	public function getMerchantId()
 	{
@@ -42,42 +42,39 @@ class Request implements RequestInterface
 
 	public function getMerchantOrderId()
 	{
-		return $this->getOrder()->getIncrementId();
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getCustomerName()
 	{
-        return $this->getOrder()->getCustomerName();
-	}
-
-	public function getPaymentType()
-	{
-		return self::BRASPAG_PAYMENT_TYPE;
+        return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
 	}
 
 	public function getPaymentAmount()
 	{
-		return str_replace('.', '', $this->getOrder()->getPayment()->getAmountAuthorized());
+		return str_replace('.', '', $this->getOrderAdapter()->getGrandTotalAmount());
 	}
 
 	public function getPaymentAddress()
 	{
-		return trim(implode(PHP_EOL, $this->getOrder()->getBillingAddress()->getStreet()));
+		$address = $this->getOrderAdapter()->getBillingAddress();
+
+		return sprintf("%s %s %s/%s - %s", $address->getStreetLine1(), $address->getStreetLine2(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
 	}
 
 	public function getPaymentProvider()
 	{
-		return $this->getPaymentInfo()->getData('billet_type');
+		return $this->getConfig()->getPaymentProvider();
 	}
 
 	public function getPaymentBoletoNumber()
 	{
-
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getPaymentAssignor()
 	{
-		return $this->getConfig()->getPaymentDemonstrative();
+		return $this->getConfig()->getPaymentAssignor();
 	}
 
 	public function getPaymentDemonstrative()
@@ -87,12 +84,12 @@ class Request implements RequestInterface
 
 	public function getPaymentExpirationDate()
 	{
-
+		return $this->getConfig()->getExpirationDate();
 	}
 
 	public function getPaymentIdentification()
 	{
-
+		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
 	public function getPaymentInstructions()
@@ -100,12 +97,12 @@ class Request implements RequestInterface
 		return $this->getConfig()->getPaymentInstructions();
 	}
 
-    protected function getOrder()
+    protected function getOrderAdapter()
     {
         return $this->order;
     }
 
-    protected function setOrder(Order $order)
+    public function setOrderAdapter(OrderAdapterInterface $order)
     {
         $this->order = $order;
 
@@ -120,18 +117,6 @@ class Request implements RequestInterface
     protected function setConfig(ConfigInterface $config)
     {
         $this->config = $config;
-
-        return $this;
-    }
-
-    protected function getPaymentInfo()
-    {
-        return $this->paymentInfo;
-    }
-
-    protected function setPaymentInfo(InfoInterface $paymentInfo)
-    {
-        $this->paymentInfo = $paymentInfo;
 
         return $this;
     }

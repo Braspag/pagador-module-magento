@@ -1,6 +1,9 @@
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
  */
 /*browser:true*/
 /*global define*/
@@ -10,6 +13,7 @@ define(
     ],
     function (Component) {
         'use strict';
+        
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/billet',
