@@ -11,7 +11,9 @@
 namespace Webjump\BraspagPagador\Api\Factories;
 
 
+use Magento\Sales\Api\Data\OrderInterface;
+
 interface FactoryInterface
 {
-    public function create();
+    public function create(OrderInterface $order);
 }

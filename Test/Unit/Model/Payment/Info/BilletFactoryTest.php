@@ -19,24 +19,33 @@ use Magento\Framework\ObjectManagerInterface;
 class BilletFactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $billetFactory;
-    private $order;
-    private $objectManager;
+    private $orderMock;
+    private $billetMock;
+    private $objectManagerMock;
 
     public function setUp()
     {
-        $this->order = $this->getMockBuilder(OrderInterface::class)
+        $this->orderMock = $this->getMockBuilder(OrderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->objectManager =  $this->getMockBuilder(ObjectManagerInterface::class)
-            ->getMockForAbstractClass();
+        $this->billetMock = $this->getMockBuilder(Billet::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->billetFactory = new BilletFactory($this->objectManager, $this->order);
+        $this->objectManagerMock =  $this->getMockBuilder(ObjectManagerInterface::class)
+            ->getMockForAbstractClass();
     }
 
     public function testCreate()
     {
-        $this->markTestIncomplete();
-        $this->assertInstanceOf(Billet::class, $this->billetFactory->create());
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with(Billet::class, ['order' => $this->orderMock])
+            ->will($this->returnValue($this->billetMock));
+
+        $this->billetFactory = new BilletFactory($this->objectManagerMock);
+
+        $this->assertInstanceOf(Billet::class, $this->billetFactory->create($this->orderMock));
     }
 }

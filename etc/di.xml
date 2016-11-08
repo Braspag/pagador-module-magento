@@ -12,8 +12,14 @@
 
     <type name="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory">
         <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
-            <argument name="priceHelper" xsi:type="object">\Magento\Sales\Api\Data\OrderInterface</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManagerInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Block\Payment\Info\Billet">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManagerInterface</argument>
         </arguments>
     </type>
 
@@ -39,7 +45,7 @@
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionBilletValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionBilletCommandPool</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Info</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\Billet</argument>
         </arguments>
     </virtualType>
 
@@ -145,5 +151,4 @@
             </argument>
         </arguments>
     </virtualType>
-
 </config>

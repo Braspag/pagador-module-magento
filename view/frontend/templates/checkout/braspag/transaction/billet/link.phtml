@@ -10,5 +10,6 @@
  */
 ?>
 <?php if ($this->getBilletUrl()): ?>
-    <a href="<?php echo $this->getBilletUrl() ?>" target="_blank"><?php echo __('Imprimir Boleto') ?></a>
+    <hr />
+    <a class="action tocart primary" href="<?php echo $this->getBilletUrl() ?>" target="_blank"><?php echo __('Print Billet') ?></a>
 <?php endif ?>
