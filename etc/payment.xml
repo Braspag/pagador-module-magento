@@ -93,5 +93,31 @@
         <type id="SantanderSitef-Master" order="27">
             <label>SantanderSitef Master</label>
         </type>
+
+        <!-- Billet -->
+        <type id="Bradesco" order="28">
+            <label>Bradesco</label>
+        </type>
+        <type id="BancoDoBrasil" order="29">
+            <label>Banco do Brasil</label>
+        </type>
+        <type id="CitiBank" order="30">
+            <label>CitiBank</label>
+        </type>
+        <type id="Itau" order="31">
+            <label>Itau</label>
+        </type>
+        <type id="Brb" order="32">
+            <label>Brb</label>
+        </type>
+        <type id="Caixa" order="33">
+            <label>Caixa</label>
+        </type>
+        <type id="Santander" order="34">
+            <label>Santander</label>
+        </type>
+        <type id="HSBC" order="35">
+            <label>HSBC</label>
+        </type>
     </credit_cards>
 </payment>

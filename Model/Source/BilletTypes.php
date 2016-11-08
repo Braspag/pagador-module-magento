@@ -1,21 +1,35 @@
 <?php
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ */
 
 namespace Webjump\BraspagPagador\Model\Source;
 
-class BilletTypes implements \Magento\Framework\Option\ArrayInterface
+
+use Magento\Payment\Model\Source\Cctype;
+
+class BilletTypes extends Cctype
 {
-    public function toOptionArray()
+    /**
+     * @return array
+     */
+    public function getAllowedTypes()
     {
-    	return [
-    		['value' => 'Simulado', 'label' => 'Simulado*'],
-    		['value' => 'Bradesco', 'label' => 'Bradesco'],
-    		['value' => 'BancoDoBrasil', 'label' => 'Banco do Brasil'],
-    		['value' => 'CitiBank', 'label' => 'CitiBank'],
-    		['value' => 'Itau', 'label' => 'Itau'],
-    		['value' => 'Brb', 'label' => 'Brb'],
-    		['value' => 'Caixa', 'label' => 'Caixa'],
-    		['value' => 'Santander', 'label' => 'Santander'],
-    		['value' => 'HSBC', 'label' => 'HSBC'],
-    	];
+        return [
+            'Simulado',
+            'Bradesco',
+            'BancoDoBrasil',
+            'CitiBank',
+            'Itau',
+            'Brb',
+            'Caixa',
+            'Santander',
+            'HSBC'
+        ];
     }
 }
