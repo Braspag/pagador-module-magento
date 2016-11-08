@@ -187,4 +187,77 @@
         </arguments>
     </virtualType>
 
+    <!-- Braspag Pagador Transaction Payment Debit Card -->
+
+    <virtualType name="BraspagTransactionDebitCardsRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionDebitCardValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionDebitCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionDebitCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionDebitCardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="order" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderCommand" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\OrderCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionDebitCardOrderRequestBuilder</argument>
+            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\ResponseHandler</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request">
+        <arguments>
+            <argument name="config" xsi:type="object">BraspagTransactionDebitCardOrderRequestConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request">
+        <arguments>
+            <argument name="config" xsi:type="object">BraspagTransactionDebitCardOrderRequestConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionDebitCardOrderRequest</argument>
+        </arguments>
+    </virtualType>  
+
 </config>
