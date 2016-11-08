@@ -23,7 +23,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
     	$this->billetConfig->expects($this->once())
     	    ->method('getPaymentDemonstrative')
     	    ->will($this->returnValue('Desmonstrative Teste'));
-    	    
+
         static::assertEquals(
             [
 	            'payment' => [

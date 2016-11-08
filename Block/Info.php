@@ -2,7 +2,7 @@
 
 namespace Webjump\BraspagPagador\Block;
 
-use Magento\Framework\Phrase;
+use Magento\Framework\Phrase; 
 use Magento\Payment\Block\ConfigurableInfo;
 
 class Info extends ConfigurableInfo

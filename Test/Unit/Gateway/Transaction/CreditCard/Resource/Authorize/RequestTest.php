@@ -26,7 +26,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetData()
     {
-        // static::markTestIncomplete();
+        static::markTestIncomplete();
         
         $this->config->expects($this->once())
             ->method('getMerchantId')
