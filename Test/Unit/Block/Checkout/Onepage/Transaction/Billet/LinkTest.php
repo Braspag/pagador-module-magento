@@ -9,7 +9,7 @@
 namespace Webjump\BraspagPagador\Test\Unit\Block\Checkout\Onepage\Transaction\Billet;
 
 
-use \Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
+use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
 use Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet\Link;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Sales\Api\Data\OrderInterface as Order;
@@ -59,19 +59,6 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $link = new Link($this->context, $session);
 
         $this->assertEquals(self::RETURN_URL, $link->getBilletUrl());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testGetBilletUrlWithoutOrderValid()
-    {
-        $session = $this->getMockBuilder(Session::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $link = new Link($this->context, $session);
-        $link->getBilletUrl();
     }
 
     /**
