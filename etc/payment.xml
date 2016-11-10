@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    
     <methods>
         <method name="braspag_pagador_billet">
             <allow_multiple_address>1</allow_multiple_address>
@@ -8,6 +9,7 @@
             <allow_multiple_address>1</allow_multiple_address>
         </method>
     </methods>
+    
     <credit_cards>
         <type id="Simulado" order="0">
             <label>Simulado*</label>
@@ -93,5 +95,11 @@
         <type id="SantanderSitef-Master" order="27">
             <label>SantanderSitef Master</label>
         </type>
+        
+        <!-- Debit Card -->
+        <type id="Cielo" order="1">
+            <label>Cielo</label>
+        </type>
+
     </credit_cards>
 </payment>

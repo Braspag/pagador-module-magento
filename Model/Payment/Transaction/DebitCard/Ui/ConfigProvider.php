@@ -3,8 +3,6 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Installments\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Installments\InstallmentInterface;
 
 /**
  * Braspag Transaction DebitCard Authorize Command
