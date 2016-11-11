@@ -25,7 +25,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $installer->startSetup();
 
             $table = $installer->getConnection()->newTable(
-                $installer->getTable('webjump_braspag_pagador_cardtoken')
+                $installer->getTable('webjump_braspagpagador_cardtoken')
             )->addColumn(
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
