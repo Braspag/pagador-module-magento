@@ -6,7 +6,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestInterface as BraspagMagentoRequestInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
 
 /**
@@ -248,7 +248,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardSaveCard()
     {
-        return null;
+        return $this->getPaymentData()->getCcSavecard();
     }
 
     public function getPaymentCreditCardBrand()

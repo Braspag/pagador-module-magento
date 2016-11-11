@@ -1,0 +1,11 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+      - WebDriver:
+          url: 'http://braspag.dev/'
+          browser: chrome
+          reset: true
+          restart: true
+          window_size: 1024x768
+
+      - \Helper\Acceptance

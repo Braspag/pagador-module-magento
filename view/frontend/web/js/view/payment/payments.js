@@ -25,6 +25,10 @@ define(
             {
                 type: 'braspag_pagador_creditcard',
                 component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard'
+            },
+            {
+                type: 'braspag_pagador_debitcard',
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/debitcard'
             }
         );
         return Component.extend({});

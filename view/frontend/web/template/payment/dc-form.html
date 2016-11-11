@@ -8,9 +8,10 @@
  */
 -->
 <fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}">
+
     <!-- ko if: (isShowLegend())-->
     <legend class="legend">
-        <span><!-- ko i18n: 'Credit Card Information'--><!-- /ko --></span>
+        <span><!-- ko i18n: 'Debit Card Information'--><!-- /ko --></span>
     </legend><br />
     <!-- /ko -->
     <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
@@ -37,7 +38,7 @@
     </div>
     <div class="field number required">
         <label data-bind="attr: {for: getCode() + '_cc_number'}" class="label">
-            <span><!-- ko i18n: 'Credit Card Number'--><!-- /ko --></span>
+            <span><!-- ko i18n: 'Debit Card Number'--><!-- /ko --></span>
         </label>
         <div class="control">
             <input type="number" name="payment[cc_number]" class="input-text" value=""
@@ -52,28 +53,6 @@
                               valueUpdate: 'keyup' "/>
         </div>
     </div>
-    <!-- ko if: (isSaveCardActive())-->
-    <div class="field choice" data-bind="attr: {id: getCode() + '_cc_savecard'}">
-        <input type="checkbox"
-               name="payment[cc_savecard]"
-               class="checkbox"
-               data-bind="attr: {'id': getCode() + '_cc_savecard', checked: creditCardsavecard}"/>
-        <label class="label" data-bind="attr: {'for': getCode() + '_cc_savecard'}">
-            <span><!-- ko i18n: 'Add To Braspag JustClick'--><!-- /ko --></span>
-        </label>
-        <div class="field-tooltip toggle">
-            <span class="field-tooltip-action action-cvv"
-                  tabindex="0"
-                  data-toggle="dropdown"
-                  data-bind="attr: {title: $t('What is this?')}, mageInit: {'dropdown':{'activeClass': '_active'}}">
-                <span><!-- ko i18n: 'What is this?'--><!-- /ko --></span>
-            </span>
-            <div class="field-tooltip-content"
-                 data-target="dropdown"
-                 data-bind="html: getSaveCardHelpHtml()"></div>
-        </div>
-    </div>
-    <!-- /ko -->
     <div class="field owner required" data-bind="attr: {id: getCode() + '_cc_owner_div'}">
         <label data-bind="attr: {for: getCode() + '_cc_owner'}" class="label">
             <span><!-- ko i18n: 'Name on Card'--><!-- /ko --></span>
@@ -159,29 +138,5 @@
         </div>
     </div>
     <!-- /ko -->
-    <!-- ko if: (isInstallmentsActive())-->
-    <div class="field installments required" data-bind="attr: {id: getCode() + '_cc_installments'}">
-        <label data-bind="attr: {for: getCode() + '_installments'}" class="label">
-            <span><!-- ko i18n: 'Installments'--><!-- /ko --></span>
-        </label>
-        <div class="control">
-            <div class="fields">
-                <div class="field no-label installments">
-                    <div class="control">
-                        <select  name="payment[cc_installments]"
-                                 class="select select-installments"
-                                 data-bind="attr: {id: getCode() + '_installments', 'data-container': getCode() + '-cc-installments', 'data-validate': JSON.stringify({required:true})},
-                                            enable: isActive($parents),
-                                            options: getCcInstallmentsValues(),
-                                            optionsValue: 'value',
-                                            optionsText: 'installments',
-                                            optionsCaption: $t('Installments'),
-                                            value: creditCardInstallments">
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /ko -->
+
 </fieldset>

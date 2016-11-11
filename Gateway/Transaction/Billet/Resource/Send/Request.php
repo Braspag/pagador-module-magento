@@ -52,7 +52,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
 	public function getPaymentAmount()
 	{
-		return str_replace('.', '', $this->getOrderAdapter()->getGrandTotalAmount());
+		$amount = (float) $this->getOrderAdapter()->getGrandTotalAmount() * 100;
+		return str_replace('.', '', $amount);
 	}
 
 	public function getPaymentAddress()

@@ -36,7 +36,8 @@ class DataAssignObserver extends AbstractDataAssignObserver
             'cc_cid' => $additionalData->getCcCid(),
             'cc_exp_month' => $additionalData->getCcExpMonth(),
             'cc_exp_year' => $additionalData->getCcExpYear(),
-            'cc_installments' => $additionalData->getCcInstallments()
+            'cc_installments' => $additionalData->getCcInstallments(),
+            'cc_savecard' => (boolean) $additionalData->getCcSavecard(),
         ]);
 
         return $this;

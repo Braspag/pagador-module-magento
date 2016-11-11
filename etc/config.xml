@@ -32,6 +32,18 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
             </braspag_pagador_creditcard>
+            <braspag_pagador_debitcard>
+                <active>1</active>
+                <model>BraspagTransactionDebitCardsRemoteMethodAdapter</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>order</payment_action>
+                <title>Braspag transaction Debit</title>
+                <can_authorize>1</can_authorize>
+                <cctypes>Simulado</cctypes>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </braspag_pagador_debitcard>
         </payment>
     </default>
 </config>
