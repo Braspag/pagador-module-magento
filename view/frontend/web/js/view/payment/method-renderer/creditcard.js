@@ -10,14 +10,16 @@
 define(
     [
         'Magento_Payment/js/view/payment/cc-form',
+        'mage/translate'
     ],
-    function (Component) {
+    function (Component, $t) {
         'use strict';
 
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/creditcard',
-                creditCardInstallments: ''
+                creditCardInstallments: '',
+                creditCardsavecard: false
             },
 
             initObservable: function () {
@@ -29,7 +31,8 @@ define(
                         'creditCardExpYear',
                         'creditCardExpMonth',
                         'creditCardVerificationNumber',
-                        'creditCardInstallments'
+                        'creditCardInstallments',
+                        'creditCardsavecard'
                     ]);
 
                 return this;
@@ -53,7 +56,8 @@ define(
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
                         'cc_owner': this.creditCardOwner(),
-                        'cc_installments': this.creditCardInstallments() 
+                        'cc_installments': this.creditCardInstallments(),
+                        'cc_savecard': this.creditCardsavecard()
                     }
                 };
             },
@@ -73,6 +77,14 @@ define(
                         'installments': value
                     };
                 });
+            },
+
+            isSaveCardActive: function() {
+                return true;
+            },
+
+            getSaveCardHelpHtml: function () {
+                return '<span>' + $t('Add To Braspag JustClick') + '</span>';
             }
 
         });

@@ -52,6 +52,28 @@
                               valueUpdate: 'keyup' "/>
         </div>
     </div>
+    <!-- ko if: (isSaveCardActive())-->
+    <div class="field choice" data-bind="attr: {id: getCode() + '_cc_savecard'}">
+        <input type="checkbox"
+               name="payment[cc_savecard]"
+               class="checkbox"
+               data-bind="attr: {'id': getCode() + '_cc_savecard', checked: creditCardsavecard}"/>
+        <label class="label" data-bind="attr: {'for': getCode() + '_cc_savecard'}">
+            <span><!-- ko i18n: 'Add To Braspag JustClick'--><!-- /ko --></span>
+        </label>
+        <div class="field-tooltip toggle">
+            <span class="field-tooltip-action action-cvv"
+                  tabindex="0"
+                  data-toggle="dropdown"
+                  data-bind="attr: {title: $t('What is this?')}, mageInit: {'dropdown':{'activeClass': '_active'}}">
+                <span><!-- ko i18n: 'What is this?'--><!-- /ko --></span>
+            </span>
+            <div class="field-tooltip-content"
+                 data-target="dropdown"
+                 data-bind="html: getSaveCardHelpHtml()"></div>
+        </div>
+    </div>
+    <!-- /ko -->
     <div class="field owner required" data-bind="attr: {id: getCode() + '_cc_owner_div'}">
         <label data-bind="attr: {for: getCode() + '_cc_owner'}" class="label">
             <span><!-- ko i18n: 'Name on Card'--><!-- /ko --></span>

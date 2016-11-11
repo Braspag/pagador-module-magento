@@ -122,7 +122,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\Info')
             ->disableOriginalConstructor()
-            ->setMethods(['getCcType', 'getAdditionalInformation', 'getCcNumber', 'getCcOwner', 'getCcExpMonth', 'getCcExpYear', 'getCcCid', 'getCcInstallments'])
+            ->setMethods([
+                'getCcType',
+                'getAdditionalInformation',
+                'getCcNumber',
+                'getCcOwner',
+                'getCcExpMonth',
+                'getCcExpYear',
+                'getCcCid',
+                'getCcInstallments',
+                'getCcSavecard',
+            ])
             ->getMock();
 
         $infoMock->expects($this->once())
@@ -152,6 +162,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $infoMock->expects($this->once())
             ->method('getCcInstallments')
             ->will($this->returnValue(3));
+
+        $infoMock->expects($this->once())
+            ->method('getCcSavecard')
+            ->will($this->returnValue(true));
 
         $this->request->setOrderAdapter($orderAdapterMock);
         $this->request->setPaymentData($infoMock);
@@ -194,7 +208,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('John Due', $this->request->getPaymentCreditCardHolder());
         static::assertEquals('05/2019', $this->request->getPaymentCreditCardExpirationDate());
         static::assertEquals('123', $this->request->getPaymentCreditCardSecurityCode());
-        static::assertNull($this->request->getPaymentCreditCardSaveCard());
+        static::assertTrue($this->request->getPaymentCreditCardSaveCard());
         static::assertEquals('Visa', $this->request->getPaymentCreditCardBrand());
         static::assertNull($this->request->getPaymentExtraDataCollection());
         static::assertNull($this->request->getAntiFraudRequest());

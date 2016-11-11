@@ -7,6 +7,5 @@ modules:
           reset: true
           restart: true
           window_size: 1024x768
-          
-      - \Helper\Acceptance
+
       - \Helper\Acceptance

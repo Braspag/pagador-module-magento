@@ -248,7 +248,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardSaveCard()
     {
-        return null;
+        return $this->getPaymentData()->getCcSavecard();
     }
 
     public function getPaymentCreditCardBrand()
