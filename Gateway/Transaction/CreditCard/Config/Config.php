@@ -8,6 +8,8 @@ class Config implements ConfigInterface
 {
 	protected $config;
 
+	const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
+
 	public function __construct(
 		ScopeConfigInterface $config
 	){
@@ -26,7 +28,7 @@ class Config implements ConfigInterface
 
 	public function isAuthorizeAndCapture()
 	{
-		return (\Magento\Authorizenet\Model\Authorizenet::ACTION_AUTHORIZE_CAPTURE === $this->getConfig()->getValue('payment/braspag_pagador_creditcard/payment_action', \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+		return (self::ACTION_AUTHORIZE_CAPTURE === $this->getConfig()->getValue('payment/braspag_pagador_creditcard/payment_action', \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
 	}
 
 	public function getSoftDescriptor()
