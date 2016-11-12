@@ -32,4 +32,14 @@ interface CardTokenInterface
     public function getCustomerId();
 
     public function getStoreId();
+
+    public function setId($id);
+
+    public function setAlias($alias);
+
+    public function setToken($token);
+
+    public function setCustomerId($customerId);
+
+    public function setStoreId($storeId);
 }

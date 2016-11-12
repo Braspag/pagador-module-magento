@@ -2,7 +2,7 @@
 
 namespace Webjump\BraspagPagador\Model;
 
-USE \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+use \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
 /**
  * Card Token Model
@@ -50,5 +50,30 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Magen
     public function getStoreId()
     {
     	return $this->getData(self::STORE_ID);
-    }	
+    }
+
+    public function setId($id)
+    {
+        return $this->setData(self::ENTITY_ID, $id);
+    }
+
+    public function setAlias($alias)
+    {
+        return $this->setData(self::ALIAS, $alias);
+    }
+
+    public function setToken($token)
+    {
+        return $this->setData(self::TOKEN, $token);
+    }
+
+    public function setCustomerId($customerId)
+    {
+        return $this->setData(self::CUSTOMER_ID, $customerId);
+    }
+
+    public function setStoreId($storeId)
+    {
+        return $this->setData(self::STORE_ID, $storeId);
+    }
 }

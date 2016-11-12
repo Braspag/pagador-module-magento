@@ -23,8 +23,10 @@ class CardTokenTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInstance()
     {
-    	$this->model = $this->objectManagerHelper->getObject('Webjump\BraspagPagador\Model\CardToken', []);
+    	$this->model = $this->objectManagerHelper->getObject('Webjump\BraspagPagador\Model\CardToken');
+        $this->model->setAlias('alias');
 
         static::assertInstanceOf('Webjump\BraspagPagador\Api\Data\CardTokenInterface', $this->model);
+        static::assertEquals('alias', $this->model->getAlias());
     }
 }
