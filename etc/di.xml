@@ -273,4 +273,12 @@
         </arguments>
     </virtualType>  
 
+    <type name="Webjump\BraspagPagador\Model\CardTokenFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+
 </config>
