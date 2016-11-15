@@ -1,0 +1,75 @@
+<?php
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ */
+
+namespace Webjump\BraspagPagador\Model\AntiFraud\FingerPrint;
+
+
+use Webjump\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
+
+class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInterface
+{
+
+    /**
+     * @return string
+     */
+    public function getSrcPngImageUrl()
+    {
+        if (! $this->srcPngImageUrl) {
+            $this->srcPngImageUrl =  $this->getScopeConfig()->getValue(self::XML_SRC_PNG_IMAGE_URL);
+        }
+
+        return $this->srcPngImageUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSrcJsUrl()
+    {
+        if (! $this->srcJsUrl) {
+            $this->srcJsUrl =  $this->getScopeConfig()->getValue(self::XML_SRC_JS_URL);
+        }
+
+        return $this->srcJsUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSrcFlashUrl()
+    {
+        if (! $this->srcFlashUrl) {
+            $this->srcFlashUrl =  $this->getScopeConfig()->getValue(self::XML_SRC_FLASH_URL);
+        }
+
+        return $this->srcFlashUrl;
+    }
+
+    public function getOrgId()
+    {
+        if (! $this->orgId) {
+            $this->orgId =  $this->getScopeConfig()->getValue(self::XML_ORG_ID);
+        }
+
+        return $this->orgId;
+    }
+
+    public function getSessionId()
+    {
+        if (! $this->sessionId) {
+            $sessionId =  $this->getSession()->getSessionId();
+            /** @todo set xml path in constant */
+            $merchantId = $this->getScopeConfig()->getValue('payment/braspag_pagador_global/merchant_id');
+            $this->sessionId = $sessionId . $merchantId;
+        }
+
+        return $this->sessionId;
+    }
+}

@@ -37,6 +37,13 @@
         </arguments>
     </type>
 
+    <type name="\Webjump\BraspagPagador\Block\AntiFraud\FingerPrint">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="antiFraudFingerPrint" xsi:type="object">\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint</argument>
+        </arguments>
+    </type>
+
 	<!-- Braspag Pagador Transaction Payment Billet -->
 
     <virtualType name="BraspagTransactionBilletRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">

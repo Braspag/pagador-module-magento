@@ -45,5 +45,12 @@
                 <sort_order>1</sort_order>
             </braspag_pagador_debitcard>
         </payment>
+        <webjump_braspag_antifraud>
+            <fingerprint>
+                <src_png_img>https://h.online-metrix.net/fp/clear.png</src_png_img>
+                <src_js>https://h.online-metrix.net/fp/check.js</src_js>
+                <src_flash>https://h.online-metrix.net/fp/fp.swf</src_flash>
+            </fingerprint>
+        </webjump_braspag_antifraud>
     </default>
 </config>
