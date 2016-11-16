@@ -181,17 +181,17 @@
         </arguments>
     </virtualType>  
 
-    <type name="Webjump\BraspagPagador\Model\CardTokenBuilder">
+    <type name="Webjump\BraspagPagador\Model\CardTokenRepository">
         <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
             <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
             <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+            <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\CardToken</argument>
         </arguments>
     </type>
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler">
         <arguments>
-            <argument name="cardTokenBuilder" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenBuilder</argument>
+            <argument name="cardTokenRepository" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenRepository</argument>
         </arguments>
     </type>
 

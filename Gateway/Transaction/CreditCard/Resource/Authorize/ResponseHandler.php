@@ -19,12 +19,12 @@ use Webjump\BraspagPagador\Model\CardTokenRepositoryInterface;
  */
 class ResponseHandler implements HandlerInterface
 {
-    protected $CardTokenRepository;
+    protected $cardTokenRepository;
 
     public function __construct(
-        CardTokenRepositoryInterface $CardTokenRepository
+        CardTokenRepositoryInterface $cardTokenRepository
     ) {
-        $this->setCardTokenRepository($CardTokenRepository);
+        $this->setCardTokenRepository($cardTokenRepository);
     }
 
     public function handle(array $handlingSubject, array $response)
@@ -58,7 +58,7 @@ class ResponseHandler implements HandlerInterface
             return $cardToken;
         }
 
-        $cardToken = $this->getCardTokenRepository()->create($payment->getCcNumberEnc(), $response->getPaymentCardToken());
+        $cardToken = $this->getCardTokenRepository()->create($response->getPaymentCardNumberEncrypted(), $response->getPaymentCardToken());
         $this->getCardTokenRepository()->save($cardToken);
 
         return $cardToken;
@@ -69,9 +69,9 @@ class ResponseHandler implements HandlerInterface
         return $this->CardTokenRepository;
     }
 
-    protected function setCardTokenRepository(CardTokenRepositoryInterface $CardTokenRepository)
+    protected function setCardTokenRepository(CardTokenRepositoryInterface $cardTokenRepository)
     {
-        $this->CardTokenRepository = $CardTokenRepository;
+        $this->CardTokenRepository = $cardTokenRepository;
 
         return $this;
     }
