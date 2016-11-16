@@ -7,7 +7,7 @@ use Webjump\BraspagPagador\Model\CardTokenFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
 use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
-
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 /**
  * Card Token repository
@@ -67,6 +67,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
         $cardToken->setToken($token);
         $cardToken->setCustomerId($this->getSession()->getCustomerId());
         $cardToken->setStoreId($this->getStoreManager()->getStore()->getId());
+        $cardToken->setActive(true);
 
         return $cardToken;
 	}

@@ -6,7 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
-use Webjump\BraspagPagador\Model\CardTokenRepositoryInterface;
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Response Handler

@@ -1,0 +1,36 @@
+<?php
+
+namespace Webjump\BraspagPagador\Api;
+
+use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+
+interface CardTokenRepositoryInterface
+{
+	/**
+	 * get Card Token by token
+	 * 	
+	 * @param  string $token Token
+	 * 
+	 * @return false|CardTokenInterface 	$oken	Card Token Instance
+	 */
+	public function get($token);
+
+	/**
+	 * Create a cardToken Instance
+	 * 
+	 * @param  string $alias Card Token Alias
+	 * @param  string $token Token
+	 * 
+	 * @return CardTokenInterface        Card Token Instance
+	 */
+	public function create($alias, $token);
+
+	/**
+	 * Card Token Save
+	 * 
+	 * @param  CardTokenInterface $cardToken Card Token To Save
+	 * 
+	 * @return Exception|CardTokenInterface 	Card Token Save
+	 */
+	public function save(CardTokenInterface $cardToken);
+}

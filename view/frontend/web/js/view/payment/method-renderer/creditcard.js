@@ -63,7 +63,7 @@ define(
             },
 
             isInstallmentsActive: function () {
-                return window.checkoutConfig.payment.ccform.installments.active;
+                return window.checkoutConfig.payment.ccform.installments.active[this.getCode()];
             },
 
             getCcInstallments: function() {

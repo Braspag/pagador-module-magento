@@ -10,7 +10,7 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Model\CardTokenRepositoryInterface');
+        $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
 
     	$this->handler = new ResponseHandler(
             $this->cardTokenRepositoryMock
@@ -34,10 +34,13 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPaymentCardToken')
             ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
+        $responseMock->expects($this->once())
+            ->method('getPaymentCardNumberEncrypted')
+            ->will($this->returnValue('453.***.***.***.5466'));
+
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
-
 
         $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
             ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
@@ -50,10 +53,6 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentMock->expects($this->once())
             ->method('setTransactionId')
             ->with(123);
-
-        $paymentMock->expects($this->once())
-            ->method('getCcNumberEnc')
-            ->will($this->returnValue('453.***.***.***.5466'));
 
         $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()

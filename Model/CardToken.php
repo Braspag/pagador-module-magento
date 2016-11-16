@@ -78,4 +78,14 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
     {
         return $this->setData(self::STORE_ID, $storeId);
     }
+
+    public function isActive()
+    {
+        return (boolean) $this->getData(self::ACTIVE);
+    }
+
+    public function setActive($active)
+    {
+        return $this->setData(self::ACTIVE, (boolean) $active);
+    }
 }
