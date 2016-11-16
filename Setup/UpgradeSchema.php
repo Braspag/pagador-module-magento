@@ -63,13 +63,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ['nullable' => false, 'default' => 0],
                 'Active'
             )->addForeignKey(
-                $installer->getFkName('webjump_braspag_pagador_cardtoken', 'store_id', 'store', 'store_id'),
+                $installer->getFkName('webjump_braspagpagador_cardtoken', 'store_id', 'store', 'store_id'),
                 'store_id',
                 $installer->getTable('store'),
                 'store_id',
                 \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
             )->addForeignKey(
-                $installer->getFkName('webjump_braspag_pagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
+                $installer->getFkName('webjump_braspagpagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
                 'customer_id',
                 $installer->getTable('customer_entity'),
                 'entity_id',

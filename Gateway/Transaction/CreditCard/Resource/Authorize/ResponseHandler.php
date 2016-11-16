@@ -45,8 +45,10 @@ class ResponseHandler implements HandlerInterface
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
 
-        $cardToken = $this->getCardTokenFactory()->create($payment->getCcNumberEnc(), $response->getPaymentCardToken());
-        $cardToken->save();
+        if ($response->getPaymentCardToken()) {
+            $cardToken = $this->getCardTokenFactory()->create($payment->getCcNumberEnc(), $response->getPaymentCardToken());
+            $cardToken->save();
+        }        
 
         return $this;
     }

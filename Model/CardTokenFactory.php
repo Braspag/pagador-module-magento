@@ -7,6 +7,15 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
 
+/**
+ * Card Token factory
+ *
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
 class CardTokenFactory implements CardTokenFactoryInterface
 {
 	protected $objectManager;
@@ -15,19 +24,23 @@ class CardTokenFactory implements CardTokenFactoryInterface
 
     protected $session;
 
+    protected $instanceName;
+
 	public function __construct(
 		ObjectManagerInterface $objectManager,
         StoreManagerInterface $storeManager,
-        Session $session
+        Session $session,
+        $instanceName = CardToken::class
 	) {
 		$this->setObjectManager($objectManager);
         $this->setStoreManager($storeManager);
         $this->setSession($session);
+        $this->setInstanceName($instanceName);
 	}
 
     public function create($alias, $token)
    	{
-   		$cardToken = $this->getObjectManager()->create('Webjump\BraspagPagador\Model\CardToken');
+   		$cardToken = $this->getObjectManager()->create($this->getInstanceName());
 
         $cardToken->setAlias($alias);
         $cardToken->setToken($token);
@@ -71,5 +84,17 @@ class CardTokenFactory implements CardTokenFactoryInterface
         $this->session = $session;
 
         return $this;
+    }
+
+    protected function setInstanceName($instanceName)
+    {
+        $this->instanceName = $instanceName;
+
+        return $this;
+    }
+
+    protected function getInstanceName()
+    {
+        return $this->instanceName;
     }
 }

@@ -35,10 +35,16 @@ class DataAssignObserver extends AbstractDataAssignObserver
             'cc_number' => $additionalData->getCcNumber(),
             'cc_cid' => $additionalData->getCcCid(),
             'cc_exp_month' => $additionalData->getCcExpMonth(),
-            'cc_exp_year' => $additionalData->getCcExpYear(),
-            'cc_installments' => $additionalData->getCcInstallments(),
-            'cc_savecard' => (boolean) $additionalData->getCcSavecard(),
+            'cc_exp_year' => $additionalData->getCcExpYear()
         ]);
+
+        if ($additionalData->getCcInstallments()) {
+            $info->setAdditionalInformation('cc_installments', (int) $additionalData->getCcInstallments());
+        }
+
+        if ($additionalData->getCcSavecard()) {
+            $info->setAdditionalInformation('cc_savecard', (boolean) $additionalData->getCcSavecard());
+        }
 
         return $this;
     }

@@ -169,7 +169,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
+    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
         </arguments>
@@ -180,6 +180,20 @@
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardCaptureRequest</argument>
         </arguments>
     </virtualType>  
+
+    <type name="Webjump\BraspagPagador\Model\CardTokenFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler">
+        <arguments>
+            <argument name="cardTokenFactory" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenFactory</argument>
+        </arguments>
+    </type>
 
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand">
         <arguments>
@@ -280,12 +294,6 @@
         </arguments>
     </virtualType>  
 
-    <type name="Webjump\BraspagPagador\Model\CardTokenFactory">
-        <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
-            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
-            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
-        </arguments>
-    </type>
+    <type name="Webjump\BraspagPagador\Model\CardToken"></type>
 
 </config>

@@ -10,10 +10,7 @@
 
 namespace Webjump\BraspagPagador\Model\Source;
 
-
-use Magento\Payment\Model\Source\Cctype;
-
-class BilletTypes extends Cctype
+class BilletTypes extends \Magento\Payment\Model\Source\Cctype
 {
     /**
      * @return array

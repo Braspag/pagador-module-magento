@@ -4,6 +4,8 @@ namespace Webjump\BraspagPagador\Model;
 
 use \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
+use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
+
 /**
  * Card Token Model
  *
@@ -19,7 +21,7 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Magen
 
 	protected function _construct()
 	{
-		$this->_init('Webjump\BraspagPagador\Model\ResourceModel\CardToken');
+		$this->_init(CardTokenResourceModel::class);
 	}
 
 	public function getIdentities()

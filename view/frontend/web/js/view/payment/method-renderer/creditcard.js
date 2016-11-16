@@ -19,7 +19,7 @@ define(
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/creditcard',
                 creditCardInstallments: '',
-                creditCardsavecard: false
+                creditCardsavecard: 0
             },
 
             initObservable: function () {
@@ -57,7 +57,7 @@ define(
                         'cc_number': this.creditCardNumber(),
                         'cc_owner': this.creditCardOwner(),
                         'cc_installments': this.creditCardInstallments(),
-                        'cc_savecard': this.creditCardsavecard()
+                        'cc_savecard': this.creditCardsavecard() ? 1 : 0
                     }
                 };
             },
