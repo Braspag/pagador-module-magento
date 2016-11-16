@@ -10,10 +10,10 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->cardTokenFactoryMock = $this->getMock('Webjump\BraspagPagador\Model\CardTokenFactoryInterface');
+        $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Model\CardTokenRepositoryInterface');
 
     	$this->handler = new ResponseHandler(
-            $this->cardTokenFactoryMock
+            $this->cardTokenRepositoryMock
         );
     }
 
@@ -30,7 +30,7 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPaymentPaymentId')
             ->will($this->returnValue(123));
 
-        $responseMock->expects($this->once())
+        $responseMock->expects($this->exactly(3))
             ->method('getPaymentCardToken')
             ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
@@ -56,17 +56,22 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('453.***.***.***.5466'));
 
         $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
-            ->setMethods(['save'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $cardTokenMock->expects($this->once())
-            ->method('save')
-            ->will($this->returnValue($cardTokenMock));
+        $this->cardTokenRepositoryMock->expects($this->once())
+            ->method('get')
+            ->with('6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
+            ->will($this->returnValue(null));
 
-        $this->cardTokenFactoryMock->expects($this->once())
+        $this->cardTokenRepositoryMock->expects($this->once())
             ->method('create')
             ->with('453.***.***.***.5466', '6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
+            ->will($this->returnValue($cardTokenMock));
+
+        $this->cardTokenRepositoryMock->expects($this->once())
+            ->method('save')
+            ->with($cardTokenMock)
             ->will($this->returnValue($cardTokenMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];

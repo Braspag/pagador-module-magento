@@ -15,7 +15,7 @@ use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceMod
  *
  * @link        http://www.webjump.com.br
  */
-class CardToken extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface, \Webjump\BraspagPagador\Api\Data\CardTokenInterface
+class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webjump\BraspagPagador\Api\Data\CardTokenInterface
 {
 	const CACHE_TAG = 'webjump_braspagpagador_cardtoken';
 
