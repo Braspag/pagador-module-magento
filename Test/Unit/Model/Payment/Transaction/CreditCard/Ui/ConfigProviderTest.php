@@ -65,7 +65,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 'payment' => [
                     'ccform' => [
                         'installments' => [
-                            'active' => true,
+                            'active' => ['braspag_pagador_creditcard' => true],
                             'list' => [
                                 'braspag_pagador_creditcard' => [
                                     1 => __('1x R$10,00 without interest'),
@@ -92,7 +92,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 'payment' => [
                     'ccform' => [
                         'installments' => [
-                            'active' => true,
+                            'active' => ['braspag_pagador_creditcard' => true],
                             'list' => [],
                         ],
                     ]

@@ -199,7 +199,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentInstallments()
     {
-        if (!$installments = $this->getPaymentData()->getCcInstallments()) {
+        if (!$installments = $this->getPaymentData()->getAdditionalInformation('cc_installments')) {
             $installments = 1;
         }
 
@@ -248,7 +248,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardSaveCard()
     {
-        return $this->getPaymentData()->getCcSavecard();
+        return (boolean) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
     }
 
     public function getPaymentCreditCardBrand()
@@ -330,5 +330,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         }
 
         return $this->billingAddress;
+    }
+
+    public function getPaymentCreditCardCardToken()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('cc_token');
     }
 }

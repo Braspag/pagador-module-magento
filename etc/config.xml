@@ -32,6 +32,25 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
             </braspag_pagador_creditcard>
+            <braspag_pagador_creditcardtoken>
+                <active>1</active>
+                <model>BraspagTransactionCreditCardTokensRemoteMethodAdapter</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Braspag Transaction Credit Card JustClick</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_use_checkout>1</can_use_checkout>
+                <cctypes>Simulado</cctypes>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+                <installments_interest_by_issuer>0</installments_interest_by_issuer>
+                <installments_number>12</installments_number>
+                <installments_is_with_interest>1</installments_is_with_interest>
+                <installment_min_amount>10.00</installment_min_amount>
+                <installments_interest_rate>10</installments_interest_rate>
+                <installments_max_without_interest>6</installments_max_without_interest>
+            </braspag_pagador_creditcardtoken>            
             <braspag_pagador_debitcard>
                 <active>1</active>
                 <model>BraspagTransactionDebitCardsRemoteMethodAdapter</model>
@@ -45,5 +64,12 @@
                 <sort_order>1</sort_order>
             </braspag_pagador_debitcard>
         </payment>
+        <webjump_braspag_antifraud>
+            <fingerprint>
+                <src_png_img>https://h.online-metrix.net/fp/clear.png</src_png_img>
+                <src_js>https://h.online-metrix.net/fp/check.js</src_js>
+                <src_flash>https://h.online-metrix.net/fp/fp.swf</src_flash>
+            </fingerprint>
+        </webjump_braspag_antifraud>
     </default>
 </config>

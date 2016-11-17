@@ -10,7 +10,11 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-    	$this->handler = new ResponseHandler();
+        $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
+
+    	$this->handler = new ResponseHandler(
+            $this->cardTokenRepositoryMock
+        );
     }
 
     public function tearDown()
@@ -22,26 +26,52 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
     {
     	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-    	$responseMock->expects($this->once())
-    	    ->method('getPaymentPaymentId')
-    	    ->will($this->returnValue(123));
+        $responseMock->expects($this->once())
+            ->method('getPaymentPaymentId')
+            ->will($this->returnValue(123));
 
-    	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
-    		->disableOriginalConstructor()
-    	    ->getMock();
+        $responseMock->expects($this->exactly(3))
+            ->method('getPaymentCardToken')
+            ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
+        $responseMock->expects($this->once())
+            ->method('getPaymentCardNumberEncrypted')
+            ->will($this->returnValue('453.***.***.***.5466'));
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
-    		->getMock();
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    	$paymentDataObjectMock->expects($this->once())
-    	    ->method('getPayment')
-    	    ->will($this->returnValue($paymentMock));
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
 
-    	$paymentMock->expects($this->once())
-    	    ->method('setTransactionId')
-    	    ->with(123);
+        $paymentDataObjectMock->expects($this->once())
+            ->method('getPayment')
+            ->will($this->returnValue($paymentMock));
+
+        $paymentMock->expects($this->once())
+            ->method('setTransactionId')
+            ->with(123);
+
+        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->cardTokenRepositoryMock->expects($this->once())
+            ->method('get')
+            ->with('6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
+            ->will($this->returnValue(null));
+
+        $this->cardTokenRepositoryMock->expects($this->once())
+            ->method('create')
+            ->with('453.***.***.***.5466', '6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
+            ->will($this->returnValue($cardTokenMock));
+
+        $this->cardTokenRepositoryMock->expects($this->once())
+            ->method('save')
+            ->with($cardTokenMock)
+            ->will($this->returnValue($cardTokenMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
     	$response = ['response' => $responseMock];

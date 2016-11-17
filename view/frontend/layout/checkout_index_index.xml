@@ -10,6 +10,13 @@
         <css src="Webjump_BraspagPagador::css/style.css"/>
     </head>
     <body>
+        <referenceBlock name="after.body.start">
+            <block  class="Webjump\BraspagPagador\Block\AntiFraud\FingerPrint"
+                    before="-"
+                    name="checkout.braspag.antifraud.fingerprint"
+                    template="checkout/braspag/antifraud/fingerprint.phtml"
+                    cacheable="false" />
+        </referenceBlock>
         <referenceBlock name="checkout.root">
             <arguments>
                 <argument name="jsLayout" xsi:type="array">
@@ -33,6 +40,9 @@
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="braspag_pagador_creditcard" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="braspag_pagador_creditcardtoken" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="braspag_pagador_debitcard" xsi:type="array">
