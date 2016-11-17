@@ -10,6 +10,8 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->markTestIncomplete();
+        
         $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
 
     	$this->handler = new ResponseHandler(
