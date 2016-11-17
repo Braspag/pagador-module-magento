@@ -98,4 +98,14 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
     {
         return $this->setData(self::BRAND, $brand);
     }
+
+    public function getProvider()
+    {
+        return $this->getData(self::PROVIDER);
+    }
+
+    public function setProvider($provider)
+    {
+        return $this->setData(self::PROVIDER, $provider);
+    }
 }

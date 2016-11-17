@@ -6,6 +6,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 /**
  * Credit Card Data Assign
@@ -18,6 +19,14 @@ use Magento\Framework\DataObject;
  */
 class DataAssignObserver extends AbstractDataAssignObserver
 {
+    protected $cardTokenRepository;
+
+    public function __construct(
+        CardTokenRepositoryInterface $cardTokenRepository
+    ) {
+        $this->setCardTokenRepository($cardTokenRepository);
+    }
+
     public function execute(Observer $observer)
     {
         $method = $this->readMethodArgument($observer);
@@ -47,8 +56,22 @@ class DataAssignObserver extends AbstractDataAssignObserver
         }
 
         if ($additionalData->getCcToken()) {
+            $cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken());
+            $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
         }
+
+        return $this;
+    }
+
+    protected function getCardTokenRepository()
+    {
+        return $this->cardTokenRepository;
+    }
+
+    protected function setCardTokenRepository($cardTokenRepository)
+    {
+        $this->cardTokenRepository = $cardTokenRepository;
 
         return $this;
     }

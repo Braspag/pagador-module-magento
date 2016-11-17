@@ -24,7 +24,7 @@ interface CardTokenRepositoryInterface
 	 * 
 	 * @return CardTokenInterface        Card Token Instance
 	 */
-	public function create($alias, $token, $brand);
+	public function create($alias, $token, $provider, $brand);
 
 	/**
 	 * get List of Card Tokens

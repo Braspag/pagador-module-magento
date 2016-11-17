@@ -38,7 +38,7 @@ define(
             },
 
             isActive: function() {
-                return true;
+                return window.isCustomerLoggedIn;
             },
 
             getData: function () {

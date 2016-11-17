@@ -80,7 +80,7 @@ define(
             },
 
             isSaveCardActive: function() {
-                return true;
+                return window.isCustomerLoggedIn;
             },
 
             getSaveCardHelpHtml: function () {

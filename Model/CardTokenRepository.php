@@ -66,13 +66,14 @@ class CardTokenRepository implements CardTokenRepositoryInterface
 		return $this->instances[$token];
 	}
 
-	public function create($alias, $token, $brand)
+	public function create($alias, $token, $provider, $brand)
 	{
    		$cardToken = $this->getCardTokenFactory()->create();
 
         $cardToken->setAlias($alias);
         $cardToken->setToken($token);
-        $cardToken->setToken($brand);
+        $cardToken->setProvider($provider);
+        $cardToken->setBrand($brand);
         $cardToken->setCustomerId($this->getSession()->getCustomerId());
         $cardToken->setStoreId($this->getStoreManager()->getStore()->getId());
         $cardToken->setActive(true);

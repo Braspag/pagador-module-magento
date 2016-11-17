@@ -83,6 +83,17 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
             $setup->getConnection()->addColumn(
                 $setup->getTable('webjump_braspagpagador_cardtoken'),
+                'provider',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'length'    => 60,
+                    'nullable' => false,
+                    'comment' => 'Provider'
+                ]
+            );
+
+            $setup->getConnection()->addColumn(
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
                 'brand',
                 [
                     'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,

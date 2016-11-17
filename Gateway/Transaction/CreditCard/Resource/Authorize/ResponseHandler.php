@@ -61,6 +61,7 @@ class ResponseHandler implements HandlerInterface
         $cardToken = $this->getCardTokenRepository()->create(
             $response->getPaymentCardNumberEncrypted(),
             $response->getPaymentCardToken(),
+            $response->getPaymentCardProvider(),
             $response->getPaymentCardBrand()
         );
         
