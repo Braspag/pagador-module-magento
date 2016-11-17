@@ -8,6 +8,10 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
 use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\Search\FilterGroup;
+use Webjump\BraspagPagador\Model\ResourceModel\CardToken\Collection;
 
 /**
  * Card Token repository
@@ -30,17 +34,20 @@ class CardTokenRepository implements CardTokenRepositoryInterface
 
     protected $instances = [];
 
+    protected $searchResults;
+
 	public function __construct(
 		CardTokenFactory $cardTokenFactory,
         StoreManagerInterface $storeManager,
         Session $session,
-        CardTokenResourceModel $resource
-
+        CardTokenResourceModel $resource,
+        SearchResultsInterface $searchResults
 	) {
 		$this->setCardTokenFactory($cardTokenFactory);
         $this->setStoreManager($storeManager);
         $this->setSession($session);
         $this->setResource($resource);
+        $this->setSearchResults($searchResults);
 	}
 
 	public function get($token, $forceReload = false)
@@ -59,12 +66,13 @@ class CardTokenRepository implements CardTokenRepositoryInterface
 		return $this->instances[$token];
 	}
 
-	public function create($alias, $token)
+	public function create($alias, $token, $brand)
 	{
    		$cardToken = $this->getCardTokenFactory()->create();
 
         $cardToken->setAlias($alias);
         $cardToken->setToken($token);
+        $cardToken->setToken($brand);
         $cardToken->setCustomerId($this->getSession()->getCustomerId());
         $cardToken->setStoreId($this->getStoreManager()->getStore()->getId());
         $cardToken->setActive(true);
@@ -84,6 +92,46 @@ class CardTokenRepository implements CardTokenRepositoryInterface
 
 		return $this->get($cardToken->getToken());
 	}
+
+    public function getList(SearchCriteriaInterface $searchCriteria)
+    {
+        $collection = $this->getCardTokenFactory()->create()->getCollection();
+
+        foreach ($searchCriteria->getFilterGroups() as $group) {
+            $this->addFilterGroupToCollection($group, $collection);
+        }
+
+        foreach ((array) $searchCriteria->getSortOrders() as $sortOrder) {
+            $field = $sortOrder->getField();
+            $collection->addOrder(
+                $field,
+                ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+            );
+        }
+
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
+        $collection->load();
+
+        $searchResult = $this->getSearchResults();
+        $searchResult->setSearchCriteria($searchCriteria);
+        $searchResult->setItems($collection->getItems());
+        $searchResult->setTotalCount($collection->getSize());
+
+        return $searchResult;
+    }
+
+    protected function addFilterGroupToCollection(FilterGroup $filterGroup, Collection $collection)
+    {
+        $fields = [];
+
+        foreach ($filterGroup->getFilters() as $filter) {
+            $conditionType = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
+            $collection->addFieldToFilter($filter->getField(), [$conditionType => $filter->getValue()]);            
+        }
+
+        return $this;
+    }
 
     protected function getSession()
     {
@@ -129,6 +177,18 @@ class CardTokenRepository implements CardTokenRepositoryInterface
     protected function setResource($resource)
     {
         $this->resource = $resource;
+
+        return $this;
+    }
+
+    protected function getSearchResults()
+    {
+        return $this->searchResults;
+    }
+
+    protected function setSearchResults($searchResults)
+    {
+        $this->searchResults = $searchResults;
 
         return $this;
     }

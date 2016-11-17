@@ -6,6 +6,7 @@
  * @link        http://www.webjump.com.br
  */
 .checkout-payment-method .ccard .type .select,
+.checkout-payment-method .ccard .token .select,
 .checkout-payment-method .ccard .owner .input-text,
 .checkout-payment-method .ccard .installments .select {
 	width: 225px;

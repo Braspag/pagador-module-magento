@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Api;
 
 use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 interface CardTokenRepositoryInterface
 {
@@ -23,7 +24,16 @@ interface CardTokenRepositoryInterface
 	 * 
 	 * @return CardTokenInterface        Card Token Instance
 	 */
-	public function create($alias, $token);
+	public function create($alias, $token, $brand);
+
+	/**
+	 * get List of Card Tokens
+	 * 
+	 * @param  SearchCriteriaInterface $searchCriteria Filter
+	 * 
+	 * @return Magento\Framework\Api\SearchResultsInterface Result
+	 */
+	public function getList(SearchCriteriaInterface $searchCriteria);
 
 	/**
 	 * Card Token Save

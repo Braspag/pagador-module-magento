@@ -32,6 +32,7 @@ class CardTokenTest extends \PHPUnit_Framework_TestCase
         static::assertEquals($data[CardTokenInterface::TOKEN], $this->model->getToken());
         static::assertEquals($data[CardTokenInterface::CUSTOMER_ID], $this->model->getCustomerId());
         static::assertEquals($data[CardTokenInterface::STORE_ID], $this->model->getStoreId());
+        static::assertEquals($data[CardTokenInterface::BRAND], $this->model->getBrand());
         static::assertTrue($this->model->isActive());
     }
 
@@ -43,6 +44,7 @@ class CardTokenTest extends \PHPUnit_Framework_TestCase
             CardTokenInterface::CUSTOMER_ID => 1,
             CardTokenInterface::STORE_ID => 2,
             CardTokenInterface::ACTIVE => 1,
+            CardTokenInterface::BRAND => 'brand',
         ];
     }
 }
