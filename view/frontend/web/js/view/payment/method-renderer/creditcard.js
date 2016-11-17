@@ -10,9 +10,10 @@
 define(
     [
         'Magento_Payment/js/view/payment/cc-form',
-        'mage/translate'
+        'mage/translate',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost'
     ],
-    function (Component, $t) {
+    function (Component, $t, sopt) {
         'use strict';
 
         return Component.extend({

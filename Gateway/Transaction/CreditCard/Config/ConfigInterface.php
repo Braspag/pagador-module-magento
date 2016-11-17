@@ -20,4 +20,6 @@ interface ConfigInterface
 	public function isAuthorizeAndCapture();
 
 	public function getSoftDescriptor();
+
+	public function getSilentOrderPostUri();
 }

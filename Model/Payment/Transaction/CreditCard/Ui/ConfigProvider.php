@@ -3,9 +3,9 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
-
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
 /**
  * Braspag Transaction CreditCard Authorize Command
  *
@@ -21,17 +21,21 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected $installments = [];
 
-    protected $builder;
+    protected $installmentsBuilder;
+
+    protected $silentorderPostBuilder;
 
     public function __construct(
-        BuilderInterface $builder
+        InstallmentsBuilder $installmentsBuilder,
+        SilentOrderPOstBuilder $silentorderPostBuilder
     ) {
-        $this->setBuilder($builder);
+        $this->setInstallmentsBuilder($installmentsBuilder);
+        $this->setSilentorderPostBuilder($silentorderPostBuilder);
     }
 
     public function getConfig()
     {
-        return [
+        $config = [
             'payment' => [
                 'ccform' => [
                     'installments' => [
@@ -41,32 +45,48 @@ final class ConfigProvider implements ConfigProviderInterface
                 ]
             ]
         ];
+
+        if ($silentorderPostAccessToken = $this->getSilentorderPostBuilder()->build()) {
+            $config['payment']['ccform']['silentorderpost']['accesstoken'][self::CODE] = $silentorderPostAccessToken;
+        }
+
+        return $config;
+    }
+
+    public function getSilentOrderPostAccessToken()
+    {
+        
     }
 
     protected function getInstallments()
     {
-        foreach ($this->getBuilder()->build() as $installment) {
-            $this->addInstallment($installment);
+        foreach ($this->getInstallmentsBuilder()->build() as $installment) {
+            $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
         }
 
     	return $this->installments;
     }
 
-    protected function addInstallment(InstallmentInterface $installment)
+    protected function getInstallmentsBuilder()
     {
-        $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
+        return $this->installmentsBuilder;
+    }
+
+    protected function setInstallmentsBuilder($installmentsBuilder)
+    {
+        $this->installmentsBuilder = $installmentsBuilder;
 
         return $this;
     }
 
-    protected function getBuilder()
+    protected function getSilentorderPostBuilder()
     {
-        return $this->builder;
+        return $this->silentorderPostBuilder;
     }
 
-    protected function setBuilder(BuilderInterface $builder)
+    protected function setSilentorderPostBuilder($silentorderPostBuilder)
     {
-        $this->builder = $builder;
+        $this->silentorderPostBuilder = $silentorderPostBuilder;
 
         return $this;
     }
