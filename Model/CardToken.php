@@ -4,6 +4,8 @@ namespace Webjump\BraspagPagador\Model;
 
 use \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
+use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
+
 /**
  * Card Token Model
  *
@@ -13,13 +15,13 @@ use \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
  *
  * @link        http://www.webjump.com.br
  */
-class CardToken extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface, \Webjump\BraspagPagador\Api\Data\CardTokenInterface
+class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webjump\BraspagPagador\Api\Data\CardTokenInterface
 {
 	const CACHE_TAG = 'webjump_braspagpagador_cardtoken';
 
 	protected function _construct()
 	{
-		$this->_init('Webjump\BraspagPagador\Model\ResourceModel\CardToken');
+		$this->_init(CardTokenResourceModel::class);
 	}
 
 	public function getIdentities()
@@ -75,5 +77,35 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Magen
     public function setStoreId($storeId)
     {
         return $this->setData(self::STORE_ID, $storeId);
+    }
+
+    public function isActive()
+    {
+        return (boolean) $this->getData(self::ACTIVE);
+    }
+
+    public function setActive($active)
+    {
+        return $this->setData(self::ACTIVE, (boolean) $active);
+    }
+
+    public function getBrand()
+    {
+        return $this->getData(self::BRAND);
+    }
+
+    public function setBrand($brand)
+    {
+        return $this->setData(self::BRAND, $brand);
+    }
+
+    public function getProvider()
+    {
+        return $this->getData(self::PROVIDER);
+    }
+
+    public function setProvider($provider)
+    {
+        return $this->setData(self::PROVIDER, $provider);
     }
 }

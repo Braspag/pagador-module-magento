@@ -35,7 +35,7 @@ final class ConfigProvider implements ConfigProviderInterface
             'payment' => [
                 'ccform' => [
                     'installments' => [
-                        'active' => true,
+                        'active' => [self::CODE => true],
                         'list' => $this->getInstallments(),
                     ],
                 ]

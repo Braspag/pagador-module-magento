@@ -23,15 +23,27 @@ interface CardTokenInterface
 
 	const STORE_ID = 'store_id';
 
+    const ACTIVE = 'active';
+
+    const PROVIDER = 'provider';
+
+    const BRAND = 'brand';
+
     public function getId();
 
     public function getAlias();
 
     public function getToken();
 
+    public function getBrand();
+
     public function getCustomerId();
 
     public function getStoreId();
+
+    public function isActive();
+
+    public function getProvider();
 
     public function setId($id);
 
@@ -39,7 +51,15 @@ interface CardTokenInterface
 
     public function setToken($token);
 
+    public function setBrand($brand);
+
     public function setCustomerId($customerId);
 
     public function setStoreId($storeId);
+
+    public function setActive($active);
+
+    public function setProvider($provider);
+
 }
+

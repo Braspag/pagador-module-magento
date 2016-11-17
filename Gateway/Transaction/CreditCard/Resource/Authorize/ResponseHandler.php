@@ -6,7 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
-use Webjump\BraspagPagador\Model\CardTokenFactoryInterface;
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -19,12 +19,12 @@ use Webjump\BraspagPagador\Model\CardTokenFactoryInterface;
  */
 class ResponseHandler implements HandlerInterface
 {
-    protected $cardTokenFactory;
+    protected $cardTokenRepository;
 
     public function __construct(
-        CardTokenFactoryInterface $cardTokenFactory
+        CardTokenRepositoryInterface $cardTokenRepository
     ) {
-        $this->setCardTokenFactory($cardTokenFactory);
+        $this->setCardTokenRepository($cardTokenRepository);
     }
 
     public function handle(array $handlingSubject, array $response)
@@ -45,20 +45,39 @@ class ResponseHandler implements HandlerInterface
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
 
-        $cardToken = $this->getCardTokenFactory()->create($payment->getCcNumberEnc(), $response->getPaymentCardToken());
-        $cardToken->save();
+        if ($response->getPaymentCardToken()) {
+            $this->saveCardToken($payment, $response);
+        }        
 
         return $this;
     }
 
-    protected function getCardTokenFactory()
+    protected function saveCardToken($payment, $response)
     {
-        return $this->cardTokenFactory;
+        if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
+            return $cardToken;
+        }
+
+        $cardToken = $this->getCardTokenRepository()->create(
+            $response->getPaymentCardNumberEncrypted(),
+            $response->getPaymentCardToken(),
+            $response->getPaymentCardProvider(),
+            $response->getPaymentCardBrand()
+        );
+        
+        $this->getCardTokenRepository()->save($cardToken);
+
+        return $cardToken;
     }
 
-    protected function setCardTokenFactory(CardTokenFactoryInterface $cardTokenFactory)
+    protected function getCardTokenRepository()
     {
-        $this->cardTokenFactory = $cardTokenFactory;
+        return $this->CardTokenRepository;
+    }
+
+    protected function setCardTokenRepository(CardTokenRepositoryInterface $cardTokenRepository)
+    {
+        $this->CardTokenRepository = $cardTokenRepository;
 
         return $this;
     }

@@ -17,33 +17,28 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/creditcard',
+                template: 'Webjump_BraspagPagador/payment/creditcardtoken/creditcardtoken',
                 creditCardInstallments: '',
-                creditCardsavecard: 0
+                creditCardToken: ''
             },
 
             initObservable: function () {
                 this._super()
                     .observe([
-                        'creditCardType',
-                        'creditCardNumber',
-                        'creditCardOwner',
-                        'creditCardExpYear',
-                        'creditCardExpMonth',
+                        'creditCardToken',
                         'creditCardVerificationNumber',
-                        'creditCardInstallments',
-                        'creditCardsavecard'
+                        'creditCardInstallments'
                     ]);
 
                 return this;
             },
 
             getCode: function() {
-                return 'braspag_pagador_creditcard';
+                return 'braspag_pagador_creditcardtoken';
             },
 
             isActive: function() {
-                return true;
+                return window.isCustomerLoggedIn;
             },
 
             getData: function () {
@@ -51,13 +46,8 @@ define(
                     'method': this.item.method,
                     'additional_data': {
                         'cc_cid': this.creditCardVerificationNumber(),
-                        'cc_type': this.creditCardType(),
-                        'cc_exp_year': this.creditCardExpYear(),
-                        'cc_exp_month': this.creditCardExpMonth(),
-                        'cc_number': this.creditCardNumber(),
-                        'cc_owner': this.creditCardOwner(),
-                        'cc_installments': this.creditCardInstallments(),
-                        'cc_savecard': this.creditCardsavecard() ? 1 : 0
+                        'cc_token': this.creditCardToken(),
+                        'cc_installments': this.creditCardInstallments()
                     }
                 };
             },
@@ -79,12 +69,17 @@ define(
                 });
             },
 
-            isSaveCardActive: function() {
-                return window.isCustomerLoggedIn;
+            getCcAvailableTokens: function () {
+                return window.checkoutConfig.payment.ccform.tokens.list[this.getCode()];
             },
-
-            getSaveCardHelpHtml: function () {
-                return '<span>' + $t('Add To Braspag JustClick') + '</span>';
+            
+            getCcAvailableTokensValues: function() {
+                return _.map(this.getCcAvailableTokens(), function (value, key) {
+                    return {
+                        'token': key,
+                        'alias': value
+                    };
+                });
             }
 
         });

@@ -27,6 +27,10 @@ define(
                 component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard'
             },
             {
+                type: 'braspag_pagador_creditcardtoken',
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/token'
+            },
+            {
                 type: 'braspag_pagador_debitcard',
                 component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/debitcard'
             }

@@ -2,6 +2,9 @@
 
 namespace Webjump\BraspagPagador\Model\ResourceModel\CardToken;
 
+use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
+use Webjump\BraspagPagador\Model\CardToken as CardTokenModel;
+
 /**
  * Card Token Collection
  *
@@ -15,6 +18,9 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 {
 	protected function _construct()
 	{
-		$this->_init('Webjump\BraspagPagador\Model\CardToken', 'Webjump\BraspagPagador\Model\ResourceModel\CardToken');
+		$this->_init(
+			CardTokenModel::class,
+			CardTokenResourceModel::class
+		);
 	}
 }
