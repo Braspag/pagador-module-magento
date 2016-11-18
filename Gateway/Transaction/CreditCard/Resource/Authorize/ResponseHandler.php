@@ -6,6 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
+use Webjump\BraspagPagador\Model\CardTokenFactoryInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -18,6 +19,14 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
  */
 class ResponseHandler implements HandlerInterface
 {
+    protected $cardTokenFactory;
+
+    public function __construct(
+        CardTokenFactoryInterface $cardTokenFactory
+    ) {
+        $this->setCardTokenFactory($cardTokenFactory);
+    }
+
     public function handle(array $handlingSubject, array $response)
     {
         if (!isset($handlingSubject['payment']) || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface) {
@@ -35,6 +44,21 @@ class ResponseHandler implements HandlerInterface
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
+
+        $cardToken = $this->getCardTokenFactory()->create($payment->getCcNumberEnc(), $response->getPaymentCardToken());
+        $cardToken->save();
+
+        return $this;
+    }
+
+    protected function getCardTokenFactory()
+    {
+        return $this->cardTokenFactory;
+    }
+
+    protected function setCardTokenFactory(CardTokenFactoryInterface $cardTokenFactory)
+    {
+        $this->cardTokenFactory = $cardTokenFactory;
 
         return $this;
     }
