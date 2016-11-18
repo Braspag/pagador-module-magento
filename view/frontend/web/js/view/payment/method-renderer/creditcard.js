@@ -20,7 +20,8 @@ define(
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/creditcard',
                 creditCardInstallments: '',
-                creditCardsavecard: 0
+                creditCardsavecard: 0,
+                creditCardExpDate: ''
             },
 
             initObservable: function () {
@@ -31,6 +32,7 @@ define(
                         'creditCardOwner',
                         'creditCardExpYear',
                         'creditCardExpMonth',
+                        'creditCardExpDate',
                         'creditCardVerificationNumber',
                         'creditCardInstallments',
                         'creditCardsavecard'
@@ -86,6 +88,13 @@ define(
 
             getSaveCardHelpHtml: function () {
                 return '<span>' + $t('Add To Braspag JustClick') + '</span>';
+            },
+
+            placeOrder: function (data, event) {
+                var accesstoken = sopt.getAccessToken(this.getCode());
+                var paymentToken = sopt.getPaymentToken(accesstoken);
+
+                console.log(paymentToken);
             }
 
         });

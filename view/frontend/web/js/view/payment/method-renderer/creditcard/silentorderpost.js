@@ -9,7 +9,7 @@
 /*global define*/
 define(
     [
-        'SilentOrderPost'
+        'Webjump_BraspagPagador/js/vendor/silentorderpost'
     ],
     function(
         SilentOrderPost
@@ -17,10 +17,37 @@ define(
         'use strict';
 
         return {
+            
+            getAccessToken: function (code) {
+                return window.checkoutConfig.payment.ccform.silentorderpost.accesstoken[code];
+            },
+
             getPaymentToken: function(accesstoken) {
-                var options {
-                    
+                var paymentToken = '';
+
+                var options = {
+                    accessToken: accesstoken,
+
+                    onSuccess: function (e) {
+                        console.log(e);
+                        paymentToken = e.PaymentToken;
+                    },
+
+                    onError: function (e) {
+                        console.log(e);
+                    },
+
+                    onInvalid: function (e) {
+                        console.log(e);
+                    },
+
+                    environment: "sandbox",
+                    language: "PT"
                 };
+
+                SilentOrderPost.bpSop_silentOrderPost(options);
+
+                return paymentToken;
             }
         }
     }

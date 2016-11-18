@@ -30,7 +30,7 @@ class Builder implements BuilderInterface
         	->setUri($this->getConfig()->getSilentOrderPostUri())
         	->setMethod(\Zend_Http_Client::POST)
             ->setClientConfig([
-                'timeout' => 180
+                'timeout' => 30
             ])->setHeaders(
                 [
                   'cache-control' => 'no-cache',
