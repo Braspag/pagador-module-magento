@@ -9,36 +9,51 @@
 /*global define*/
 define(
     [
-        'Webjump_BraspagPagador/js/vendor/silentorderpost'
+        'Webjump_BraspagPagador/js/vendor/silentorderpost',
+        'Magento_Ui/js/model/messageList',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/paymenttoken',
+        'jquery',
     ],
     function(
-        SilentOrderPost
+        SilentOrderPost,
+        globalMessageList,
+        paymentToken,
+        $
     ) {
         'use strict';
 
         return {
             
+            isActive: function () {
+                return true;
+            },
+
             getAccessToken: function (code) {
                 return window.checkoutConfig.payment.ccform.silentorderpost.accesstoken[code];
             },
 
-            getPaymentToken: function(accesstoken) {
-                var paymentToken = '';
+            getPaymentToken: function(code, messageContainer) {
+                messageContainer = messageContainer || globalMessageList;
 
                 var options = {
-                    accessToken: accesstoken,
+                    accessToken: this.getAccessToken(code),
 
                     onSuccess: function (e) {
                         console.log(e);
-                        paymentToken = e.PaymentToken;
+                        console.log(e.PaymentToken);
+                        paymentToken.setPaymentToken(e.PaymentToken);
                     },
 
                     onError: function (e) {
                         console.log(e);
+                        messageContainer.addErrorMessage({message: e.Text, parameters: [], trace: ''});
                     },
 
                     onInvalid: function (e) {
                         console.log(e);
+                        for (var i = e.length - 1; i >= 0; i--) {
+                            messageContainer.addErrorMessage({message: e[i].Message, parameters: [], trace: ''});
+                        }
                     },
 
                     environment: "sandbox",
@@ -47,7 +62,9 @@ define(
 
                 SilentOrderPost.bpSop_silentOrderPost(options);
 
-                return paymentToken;
+                console.log(paymentToken.getPaymentToken());
+
+                return paymentToken.getPaymentToken();
             }
         }
     }

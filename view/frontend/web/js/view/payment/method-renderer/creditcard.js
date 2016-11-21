@@ -21,7 +21,8 @@ define(
                 template: 'Webjump_BraspagPagador/payment/creditcard',
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
-                creditCardExpDate: ''
+                creditCardExpDate: '',
+                creditCardSoptPaymentToken: ''
             },
 
             initObservable: function () {
@@ -35,7 +36,8 @@ define(
                         'creditCardExpDate',
                         'creditCardVerificationNumber',
                         'creditCardInstallments',
-                        'creditCardsavecard'
+                        'creditCardsavecard',
+                        'creditCardSoptPaymentToken'
                     ]);
 
                 return this;
@@ -50,6 +52,7 @@ define(
             },
 
             getData: function () {
+
                 return {
                     'method': this.item.method,
                     'additional_data': {
@@ -60,7 +63,8 @@ define(
                         'cc_number': this.creditCardNumber(),
                         'cc_owner': this.creditCardOwner(),
                         'cc_installments': this.creditCardInstallments(),
-                        'cc_savecard': this.creditCardsavecard() ? 1 : 0
+                        'cc_savecard': this.creditCardsavecard() ? 1 : 0,
+                        'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
                     }
                 };
             },
@@ -90,11 +94,28 @@ define(
                 return '<span>' + $t('Add To Braspag JustClick') + '</span>';
             },
 
-            placeOrder: function (data, event) {
-                var accesstoken = sopt.getAccessToken(this.getCode());
-                var paymentToken = sopt.getPaymentToken(accesstoken);
+            getCreditCardSoptPaymentToken: function () {
+                console.log(sopt.getPaymentToken(this.getCode(), this.messageContainer));
+                // this.creditCardSoptPaymentToken();
+            },
 
-                console.log(paymentToken);
+            updateCreditCardExpData: function () {
+                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
+            },
+
+            pad: function(num, size) {
+                var s = "00" + num;
+                return s.substr(s.length-size);
+            },
+
+            validate: function () {
+
+                if (sopt.isActive()) {
+                    this.updateCreditCardExpData();
+                    this.getCreditCardSoptPaymentToken();
+                }
+
+                return false;
             }
 
         });

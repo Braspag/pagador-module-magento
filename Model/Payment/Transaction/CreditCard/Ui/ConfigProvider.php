@@ -48,6 +48,9 @@ final class ConfigProvider implements ConfigProviderInterface
 
         if ($silentorderPostAccessToken = $this->getSilentorderPostBuilder()->build()) {
             $config['payment']['ccform']['silentorderpost']['accesstoken'][self::CODE] = $silentorderPostAccessToken;
+            $config['payment']['ccform']['silentorderpost']['requesttimeout'][self::CODE] = 5000;
+            $config['payment']['ccform']['silentorderpost']['environment'][self::CODE] = 'sandbox';
+            $config['payment']['ccform']['silentorderpost']['language'][self::CODE] = 'PT';
         }
 
         return $config;
