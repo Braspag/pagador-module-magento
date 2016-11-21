@@ -55,6 +55,12 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardSilentOrderPostUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider">
+        <arguments>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder</argument>            
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionDebitCardOrderUiConfigProvider" type="Magento\Payment\Model\CcGenericConfigProvider">
         <arguments>
             <argument name="methodCodes" xsi:type="array">
@@ -71,6 +77,7 @@
                 <item name="braspag_pagador_creditcardtoken_config_provider" xsi:type="object">BraspagTransactionCreditCardTokenUiConfigProvider</item>
                 <item name="braspag_pagador_creditcard_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardInstallmentsUiConfigProvider</item>
                 <item name="braspag_pagador_creditcardtoken_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardTokenInstallmentsUiConfigProvider</item>
+                <item name="braspag_pagador_creditcard_silentorderpost_config_provider" xsi:type="object">BraspagTransactionCreditCardSilentOrderPostUiConfigProvider</item>
                 <item name="braspag_pagador_debitcard_config_provider" xsi:type="object">BraspagTransactionDebitCardOrderUiConfigProvider</item>
             </argument>
         </arguments>

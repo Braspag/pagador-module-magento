@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
+
 /**
  * Braspag Transaction CreditCard Authorize Command
  *
@@ -26,11 +26,9 @@ final class ConfigProvider implements ConfigProviderInterface
     protected $silentorderPostBuilder;
 
     public function __construct(
-        InstallmentsBuilder $installmentsBuilder,
-        SilentOrderPOstBuilder $silentorderPostBuilder
+        InstallmentsBuilder $installmentsBuilder
     ) {
         $this->setInstallmentsBuilder($installmentsBuilder);
-        $this->setSilentorderPostBuilder($silentorderPostBuilder);
     }
 
     public function getConfig()
@@ -46,19 +44,7 @@ final class ConfigProvider implements ConfigProviderInterface
             ]
         ];
 
-        if ($silentorderPostAccessToken = $this->getSilentorderPostBuilder()->build()) {
-            $config['payment']['ccform']['silentorderpost']['accesstoken'][self::CODE] = $silentorderPostAccessToken;
-            $config['payment']['ccform']['silentorderpost']['requesttimeout'][self::CODE] = 5000;
-            $config['payment']['ccform']['silentorderpost']['environment'][self::CODE] = 'sandbox';
-            $config['payment']['ccform']['silentorderpost']['language'][self::CODE] = 'PT';
-        }
-
         return $config;
-    }
-
-    public function getSilentOrderPostAccessToken()
-    {
-        
     }
 
     protected function getInstallments()
@@ -78,18 +64,6 @@ final class ConfigProvider implements ConfigProviderInterface
     protected function setInstallmentsBuilder($installmentsBuilder)
     {
         $this->installmentsBuilder = $installmentsBuilder;
-
-        return $this;
-    }
-
-    protected function getSilentorderPostBuilder()
-    {
-        return $this->silentorderPostBuilder;
-    }
-
-    protected function setSilentorderPostBuilder($silentorderPostBuilder)
-    {
-        $this->silentorderPostBuilder = $silentorderPostBuilder;
 
         return $this;
     }

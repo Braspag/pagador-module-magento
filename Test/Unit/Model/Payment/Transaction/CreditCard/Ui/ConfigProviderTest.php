@@ -104,35 +104,4 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             $this->configProvider->getConfig()
         );
     }
-
-    public function testGetConfigWithoutSilentorderPost()
-    {
-        $token = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
-
-        $this->installmentsBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue([]));
-
-        $this->silentorderPostBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue($token));
-
-        static::assertEquals(
-            [
-                'payment' => [
-                    'ccform' => [
-                        'installments' => [
-                            'active' => ['braspag_pagador_creditcard' => true],
-                            'list' => [],
-                        ],
-                        'silentorderpost' => [
-                            'accesstoken' => ['braspag_pagador_creditcard' => $token]
-                        ],
-                    ]
-                ]
-            ],
-
-            $this->configProvider->getConfig()
-        );
-    }
 }

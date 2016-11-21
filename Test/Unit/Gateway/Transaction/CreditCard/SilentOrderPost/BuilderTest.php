@@ -53,17 +53,36 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->transferBuilderMock->expects($this->once())
             ->method('setMethod')
-            ->with('post')
+            ->with('POST')
+            ->will($this->returnValue($this->transferBuilderMock));
+
+        $this->transferBuilderMock->expects($this->once())
+            ->method('setClientConfig')
+            ->with(['timeout' => 30])
+            ->will($this->returnValue($this->transferBuilderMock));
+
+        $this->transferBuilderMock->expects($this->once())
+            ->method('setHeaders')
+            ->with([
+                  'cache-control' => 'no-cache',
+                  'content-type' => 'application/json; charset=utf-8'
+                ])
             ->will($this->returnValue($this->transferBuilderMock));
 
         $this->transferBuilderMock->expects($this->once())
             ->method('build')
             ->will($this->returnValue($this->tranferMock));
 
+        $this->responseMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\SilentOrderPostInterface');
+
+        $this->responseMock->expects($this->once())
+            ->method('getAccessToken')
+            ->will($this->returnValue($accessToken));            
+
         $this->clientMock->expects($this->once())
             ->method('placeRequest')
             ->with($this->tranferMock)
-            ->will($this->returnValue(['AccessToken' => $accessToken]));
+            ->will($this->returnValue($this->responseMock));
 
     	$result = $this->builder->build();
 

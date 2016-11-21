@@ -28,7 +28,7 @@ class Builder implements BuilderInterface
 	{
         $transferO = $this->getTransferBuilder()
         	->setUri($this->getConfig()->getSilentOrderPostUri())
-        	->setMethod(\Zend_Http_Client::POST)
+        	->setMethod(\Zend\Http\Request::METHOD_POST)
             ->setClientConfig([
                 'timeout' => 30
             ])->setHeaders(
