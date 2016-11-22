@@ -36,6 +36,11 @@ class Config implements ConfigInterface
 		return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/soft_config', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
 
+	public function getSilentOrderPostUri()
+	{
+		return 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=' . $this->getMerchantId();
+	}
+
     protected function getConfig()
     {
         return $this->config;

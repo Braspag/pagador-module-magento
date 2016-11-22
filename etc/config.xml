@@ -31,6 +31,10 @@
                 <installment_min_amount>10.00</installment_min_amount>
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
+                <silentorderpost_active>0</silentorderpost_active>
+                <silentorderpost_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/card</silentorderpost_url_homolog>
+                <silentorderpost_url_production></silentorderpost_url_production>
+                <silentorderpost_is_sandbox_mode>0</silentorderpost_is_sandbox_mode>
             </braspag_pagador_creditcard>
             <braspag_pagador_creditcardtoken>
                 <active>1</active>

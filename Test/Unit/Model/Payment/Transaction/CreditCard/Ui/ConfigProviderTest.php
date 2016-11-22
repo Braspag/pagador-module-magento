@@ -13,10 +13,13 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-        $this->builderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface');
+        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface');
+
+        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface');
 
 		$this->configProvider = new ConfigProvider(
-            $this->builderMock
+            $this->installmentsBuilderMock,
+            $this->silentorderPostBuilderMock
         );
 	}
 
@@ -52,7 +55,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('3x R$3,80 with interest*')));
 
-        $this->builderMock->expects($this->once())
+        $this->installmentsBuilderMock->expects($this->once())
             ->method('build')
             ->will($this->returnValue([
                 $installments1,
@@ -83,7 +86,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConfigWithoutInstallments()
     {
-        $this->builderMock->expects($this->once())
+        $this->installmentsBuilderMock->expects($this->once())
             ->method('build')
             ->will($this->returnValue([]));
 

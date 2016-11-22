@@ -5,10 +5,24 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig" />
-    
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
+
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
         <arguments>
             <argument name="customerSession" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionCreditCardSilentOrderConverterZendClient" type="Magento\Payment\Gateway\Http\Client\Zend">
+        <arguments>
+            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\ConvertResponse</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder">
+        <arguments>
+            <argument name="client" xsi:type="object">BraspagTransactionCreditCardSilentOrderConverterZendClient</argument>
         </arguments>
     </type>
 
