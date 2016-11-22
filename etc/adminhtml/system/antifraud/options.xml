@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="options" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Options</label>
+        <field id="sequence" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+            <label>Sequence</label>
+            <comment><![CDATA[
+            Tipo de Fluxo para realização da análise de fraude. <br />
+            Primeiro Analise (Analyse First) <br />
+            Primeiro Autorização (Authorize First)
+            ]]></comment>
+            <source_model>Webjump\BraspagPagador\Model\Source\Sequence</source_model>
+        </field>
+
+        <field id="sequence_criteria" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Sequence Criteria</label>
+            <comment><![CDATA[
+                Critério do fluxo <br />
+                On Success - Só realiza a analise se tiver sucesso na transação. <br />
+                Always - Sempre realiza a analise <br />
+            ]]></comment>
+            <source_model>Webjump\BraspagPagador\Model\Source\SequenceCriteria</source_model>
+        </field>
+
+        <field id="capture_in_low_risk" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>Capture On Low Risk</label>
+            <comment><![CDATA[
+            Identifica se a autorização deve ser com captura automática quando o risco de fraude for considerado baixo (Accept). Em casos de Reject ou Review, o fluxo permanece o mesmo, ou seja, a captura acontecerá conforme o valor especificado no parâmetro "Capture". Para a utilização deste parâmetro, a sequência do fluxo de análise de risco deve ser obrigatoriamente "AuthorizeFirst". Por depender do resutlado de análise de risco, este parâmetro só terá efeito quando o serviço de Antifraude for contratado.
+            ]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="void_in_high_risk" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+            <label>Void On High Risk</label>
+            <comment><![CDATA[
+            Identifica se o estorno deve acontecer automaticamente quando o risco de fraude for considerado alto (Reject). Em casos de Accept ou Review, o fluxo permanece o mesmo, ou seja, o estorno deve ser feito manualmente. Para a utilização deste parâmetro, a sequência do fluxo de análise de risco deve ser obrigatoriamente "AuthorizeFirst". Por depender do resutlado de análise de risco, este parâmetro só terá efeito quando o serviço de Antifraude for contratado.
+            ]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+    </group>
+</include>

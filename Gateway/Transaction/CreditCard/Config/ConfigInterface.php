@@ -13,11 +13,15 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
  */
 interface ConfigInterface
 {
-	public function getMerchantId();
+    public function getMerchantId();
 
-	public function getMerchantKey();
+    public function getMerchantKey();
 
-	public function isAuthorizeAndCapture();
+    public function isAuthorizeAndCapture();
 
-	public function getSoftDescriptor();
+    public function getSoftDescriptor();
+
+    public function getIdentityAttributeCode();
+
+    public function hasAntiFraud();
 }

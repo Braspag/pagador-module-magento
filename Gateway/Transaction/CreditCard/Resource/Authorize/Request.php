@@ -1,14 +1,4 @@
 <?php
-
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
-
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
-use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
-use Magento\Payment\Model\InfoInterface;
-
 /**
  * Braspag Transaction CreditCard Authorize Request
  *
@@ -18,42 +8,47 @@ use Magento\Payment\Model\InfoInterface;
  *
  * @link        http://www.webjump.com.br
  */
-class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
+namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
+
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as BraspaglibRequestInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Magento\Payment\Model\InfoInterface;
+
+class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface, RequestAntiFraudInterface
 {
-	protected $orderAdapter;
-
+    protected $orderAdapter;
     protected $paymentData;
-
-	protected $config;
-
+    protected $config;
     protected $installmentsConfig;
-
     protected $billingAddress;
-
     protected $shippingAddress;
+    protected $antiFraudRequest;
 
-	public function __construct(
-		ConfigInterface $config,
+    public function __construct(
+        ConfigInterface $config,
         InstallmentsConfigInterface $installmentsConfig
-	) {
-		$this->setConfig($config);
+    ) {
+        $this->setConfig($config);
         $this->setInstallmentsConfig($installmentsConfig);
-	}
+    }
 
     public function getMerchantId()
     {
-    	return $this->getConfig()->getMerchantId();
+        return $this->getConfig()->getMerchantId();
     }
 
     public function getMerchantKey()
     {
-    	return $this->getConfig()->getMerchantKey();
+        return $this->getConfig()->getMerchantKey();
     }
 
-	public function getMerchantOrderId()
-	{
-		return $this->getOrderAdapter()->getOrderIncrementId();
-	}
+    public function getMerchantOrderId()
+    {
+        return $this->getOrderAdapter()->getOrderIncrementId();
+    }
 
     public function getCustomerName()
     {
@@ -62,12 +57,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerIdentity()
     {
-        return null;
+        return $this->getBillingAddress()->getData($this->getConfig()->getIdentityAttributeCode());
     }
 
     public function getCustomerIdentityType()
     {
-        return null;
+        return 'CPF';
     }
 
     public function getCustomerEmail()
@@ -82,14 +77,14 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerAddressStreet()
     {
-        List($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
 
         return trim($street);
     }
 
     public function getCustomerAddressNumber()
     {
-        List($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
 
         return (int) $streetNumber;
     }
@@ -126,14 +121,14 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerDeliveryAddressStreet()
     {
-        List($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
 
         return trim($street);
     }
 
     public function getCustomerDeliveryAddressNumber()
     {
-        List($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
 
         return (int) $streetNumber;
     }
@@ -187,8 +182,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
-        
+        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+
         return $provider;
     }
 
@@ -213,7 +208,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCapture()
     {
-        return $this->getConfig()->isAuthorizeAndCapture();
+        return (bool) $this->getConfig()->isAuthorizeAndCapture();
     }
 
     public function getPaymentAuthenticate()
@@ -253,8 +248,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardBrand()
     {
-        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
-        
+        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+
         return $brand;
     }
 
@@ -263,9 +258,20 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return null;
     }
 
+    /**
+     * @return BraspagMagentoRequestInterface
+     */
     public function getAntiFraudRequest()
     {
-        return null;
+        return $this->antiFraudRequest;
+    }
+
+    /**
+     * @param BraspagMagentoRequestInterface $antiFraudRequest
+     */
+    public function setAntiFraudRequest(BraspagMagentoRequestInterface $antiFraudRequest)
+    {
+        $this->antiFraudRequest = $antiFraudRequest;
     }
 
     protected function getConfig()
