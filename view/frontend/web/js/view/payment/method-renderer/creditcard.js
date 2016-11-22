@@ -13,9 +13,10 @@ define(
         'mage/translate',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'jquery',
-        'Magento_Checkout/js/action/place-order'
+        'Magento_Checkout/js/action/place-order',
+        'Magento_Checkout/js/model/full-screen-loader'
     ],
-    function (Component, $t, sopt, $, placeOrderAction) {
+    function (Component, $t, sopt, $, placeOrderAction, fullScreenLoader) {
         'use strict';
 
         return Component.extend({
@@ -97,7 +98,26 @@ define(
             },
 
             updateCreditCardSoptPaymentToken: function () {
-                this.creditCardSoptPaymentToken(sopt.getPaymentToken(this, this.messageContainer));
+                var self = this;
+
+                fullScreenLoader.startLoader();
+
+                var options = {
+                    holderName: self.creditCardOwner(),
+                    rawNumber: self.creditCardNumber(),
+                    expiration: self.creditCardExpDate(),
+                    securityCode: self.creditCardVerificationNumber(),
+                    code: self.getCode(),
+                    successCallBack: function () {
+                        fullScreenLoader.stopLoader();
+                    },
+                    failCallBack: function () {
+                        fullScreenLoader.stopLoader();
+                        this.messageContainer.addErrorMessage({message: "Error geting the silent order post payment token!", parameters: [], trace: ''});
+                    }
+                };
+
+                this.creditCardSoptPaymentToken(sopt.getPaymentToken(options));
             },
 
             updateCreditCardExpData: function () {
@@ -111,7 +131,7 @@ define(
 
             getPlaceOrderDeferredObject: function () {
 
-                if (sopt.isActive()) {
+                if (sopt.isActive(this.getCode())) {
                     this.updateCreditCardExpData();
                     this.updateCreditCardSoptPaymentToken();
                 }

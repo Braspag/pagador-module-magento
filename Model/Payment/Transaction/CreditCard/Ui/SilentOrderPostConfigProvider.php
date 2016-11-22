@@ -4,6 +4,8 @@ namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfigInterface;
+
 /**
  * Braspag Transaction CreditCard Authorize Command
  *
@@ -15,14 +17,20 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPo
  */
 final class SilentOrderPostConfigProvider implements ConfigProviderInterface
 {
-    const CODE = 'braspag_pagador_creditcard';
+    protected $code;
 
     protected $silentorderPostBuilder;
 
+    protected $silentOrderPostConfig;
+
     public function __construct(
-        SilentOrderPOstBuilder $silentorderPostBuilder
+        $code,
+        SilentOrderPOstBuilder $silentorderPostBuilder,
+        SilentOrderPostConfigInterface $silentOrderPostConfig
     ) {
+        $this->setCode($code);
         $this->setSilentorderPostBuilder($silentorderPostBuilder);
+        $this->setSilentOrderPostConfig($silentOrderPostConfig);
     }
 
     public function getConfig()
@@ -31,10 +39,9 @@ final class SilentOrderPostConfigProvider implements ConfigProviderInterface
             'payment' => [
                 'ccform' => [
                     'silentorderpost' => [
-                        'accesstoken' => [self::CODE => $this->getSilentorderPostBuilder()->build()],
-                        'requesttimeout' => [self::CODE => 5000],
-                        'environment' => [self::CODE => 'sandbox'],
-                        'language' => [self::CODE => 'PT'],
+                        'active' => [$this->getCode() => $this->getSilentOrderPostConfig()->isActive($this->getCode())],
+                        'url' => [$this->getCode() => $this->getSilentOrderPostConfig()->getUrl($this->getCode())],
+                        'accesstoken' => [$this->getCode() => $this->getSilentorderPostBuilder()->build()],
                     ],
                 ]
             ]
@@ -51,6 +58,30 @@ final class SilentOrderPostConfigProvider implements ConfigProviderInterface
     protected function setSilentorderPostBuilder($silentorderPostBuilder)
     {
         $this->silentorderPostBuilder = $silentorderPostBuilder;
+
+        return $this;
+    }
+
+    protected function getCode()
+    {
+        return $this->code;
+    }
+
+    protected function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    protected function getSilentOrderPostConfig()
+    {
+        return $this->silentOrderPostConfig;
+    }
+
+    protected function setSilentOrderPostConfig($silentOrderPostConfig)
+    {
+        $this->silentOrderPostConfig = $silentOrderPostConfig;
 
         return $this;
     }

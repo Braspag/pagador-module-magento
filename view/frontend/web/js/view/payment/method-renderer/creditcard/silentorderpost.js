@@ -9,14 +9,10 @@
 /*global define*/
 define(
     [
-        'Webjump_BraspagPagador/js/vendor/silentorderpost',
-        'Magento_Ui/js/model/messageList',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/paymenttoken',
-        'jquery',
+        'jquery'
     ],
     function(
-        SilentOrderPost,
-        globalMessageList,
         paymentToken,
         $
     ) {
@@ -24,42 +20,41 @@ define(
 
         return {
             
-            isActive: function () {
-                return true;
+            isActive: function (code) {
+                return window.checkoutConfig.payment.ccform.silentorderpost.active[code];
             },
 
             getAccessToken: function (code) {
                 return window.checkoutConfig.payment.ccform.silentorderpost.accesstoken[code];
             },
 
-            getPaymentToken: function(creditcard, messageContainer) {
-                messageContainer = messageContainer || globalMessageList;
+            getUrl: function (code) {
+                return window.checkoutConfig.payment.ccform.silentorderpost.url[code];
+            },
 
+            getPaymentToken: function(options) {
                 var settings = {
-                  "async": false,
-                  "url": "https://homologacao.pagador.com.br/post/api/public/v1/card",
-                  "method": "POST",
-                  "data": {
-                    "HolderName": creditcard.creditCardOwner(),
-                    "RawNumber": creditcard.creditCardNumber(),
-                    "Expiration": creditcard.creditCardExpDate(),
-                    "SecurityCode": creditcard.creditCardVerificationNumber(),
-                    "AccessToken": this.getAccessToken(creditcard.getCode())
-                  }
+                    "async": false, //deprecated
+                    "url": this.getUrl(options.code),
+                    "method": "POST",
+                    "data": {
+                        "HolderName": options.holderName,
+                        "RawNumber": options.rawNumber,
+                        "Expiration": options.expiration,
+                        "SecurityCode": options.securityCode,
+                        "AccessToken": this.getAccessToken(options.code)
+                    }
                 }
 
                 $.ajax(settings).done(function (result) {
                     paymentToken.setPaymentToken(result.PaymentToken);
+                    options.successCallBack();
                 }).fail(function () {
                     paymentToken.setPaymentToken(false);
-                    messageContainer.addErrorMessage({message: "Error geting the silent order post payment token!", parameters: [], trace: ''});
+                    options.failCallBack();
                 });
 
                 return paymentToken.getPaymentToken();
-            },
-
-            validate: function (paymentToken) {
-                return (paymentToken);
             }
         }
     }
