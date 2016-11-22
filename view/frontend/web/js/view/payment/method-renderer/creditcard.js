@@ -11,9 +11,11 @@ define(
     [
         'Magento_Payment/js/view/payment/cc-form',
         'mage/translate',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost'
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'jquery',
+        'Magento_Checkout/js/action/place-order'
     ],
-    function (Component, $t, sopt) {
+    function (Component, $t, sopt, $, placeOrderAction) {
         'use strict';
 
         return Component.extend({
@@ -56,7 +58,7 @@ define(
                 return {
                     'method': this.item.method,
                     'additional_data': {
-                        'cc_cid': this.creditCardVerificationNumber(),
+                        'cc_cid': this.creditCardVerificationNumber (),
                         'cc_type': this.creditCardType(),
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
@@ -94,9 +96,8 @@ define(
                 return '<span>' + $t('Add To Braspag JustClick') + '</span>';
             },
 
-            getCreditCardSoptPaymentToken: function () {
-                console.log(sopt.getPaymentToken(this.getCode(), this.messageContainer));
-                // this.creditCardSoptPaymentToken();
+            updateCreditCardSoptPaymentToken: function () {
+                this.creditCardSoptPaymentToken(sopt.getPaymentToken(this, this.messageContainer));
             },
 
             updateCreditCardExpData: function () {
@@ -108,14 +109,16 @@ define(
                 return s.substr(s.length-size);
             },
 
-            validate: function () {
+            getPlaceOrderDeferredObject: function () {
 
                 if (sopt.isActive()) {
                     this.updateCreditCardExpData();
-                    this.getCreditCardSoptPaymentToken();
+                    this.updateCreditCardSoptPaymentToken();
                 }
 
-                return false;
+                return $.when(
+                    placeOrderAction(this.getData(), this.messageContainer)
+                );
             }
 
         });

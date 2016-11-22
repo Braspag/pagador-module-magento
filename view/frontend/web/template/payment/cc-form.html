@@ -40,7 +40,7 @@
             <span><!-- ko i18n: 'Credit Card Number'--><!-- /ko --></span>
         </label>
         <div class="control">
-            <input type="number" name="payment[cc_number]" class="input-text bp-sop-cardnumber" value=""
+            <input type="number" name="payment[cc_number]" class="input-text bp-sop-cardnumber silentorderpost" value=""
                    data-bind="attr: {
                                     autocomplete: off,
                                     id: getCode() + '_cc_number',
@@ -78,7 +78,7 @@
         <div class="control">
             <input type="text"
                    autocomplete="off"
-                   class="input-text owner  bp-sop-cardholdername"
+                   class="input-text owner  bp-sop-cardholdername silentorderpost"
                    name="payment[cc_owner]"
                    data-bind="attr: {id: getCode() + '_cc_owner',
                         title: $t('Name on Card'),
@@ -122,7 +122,7 @@
                         </select>
                     </div>
                 </div>
-                <input type="hidden" class="bp-sop-cardexpirationdate" data-bind="value: creditCardExpDate">
+                <input type="hidden" class="bp-sop-cardexpirationdate silentorderpost" data-bind="value: creditCardExpDate">
             </div>
         </div>
     </div>
@@ -134,7 +134,7 @@
         <div class="control _with-tooltip">
             <input type="number"
                    autocomplete="off"
-                   class="input-text cvv bp-sop-cardcvv"
+                   class="input-text cvv bp-sop-cardcvv silentorderpost"
                    name="payment[cc_cid]"
                    value=""
                    data-bind="attr: {id: getCode() + '_cc_cid',

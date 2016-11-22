@@ -32,39 +32,34 @@ define(
                 return window.checkoutConfig.payment.ccform.silentorderpost.accesstoken[code];
             },
 
-            getPaymentToken: function(code, messageContainer) {
+            getPaymentToken: function(creditcard, messageContainer) {
                 messageContainer = messageContainer || globalMessageList;
 
-                var options = {
-                    accessToken: this.getAccessToken(code),
+                var settings = {
+                  "async": false,
+                  "url": "https://homologacao.pagador.com.br/post/api/public/v1/card",
+                  "method": "POST",
+                  "data": {
+                    "HolderName": creditcard.creditCardOwner(),
+                    "RawNumber": creditcard.creditCardNumber(),
+                    "Expiration": creditcard.creditCardExpDate(),
+                    "SecurityCode": creditcard.creditCardVerificationNumber(),
+                    "AccessToken": this.getAccessToken(creditcard.getCode())
+                  }
+                }
 
-                    onSuccess: function (e) {
-                        console.log(e);
-                        console.log(e.PaymentToken);
-                        paymentToken.setPaymentToken(e.PaymentToken);
-                    },
-
-                    onError: function (e) {
-                        console.log(e);
-                        messageContainer.addErrorMessage({message: e.Text, parameters: [], trace: ''});
-                    },
-
-                    onInvalid: function (e) {
-                        console.log(e);
-                        for (var i = e.length - 1; i >= 0; i--) {
-                            messageContainer.addErrorMessage({message: e[i].Message, parameters: [], trace: ''});
-                        }
-                    },
-
-                    environment: "sandbox",
-                    language: "PT"
-                };
-
-                SilentOrderPost.bpSop_silentOrderPost(options);
-
-                console.log(paymentToken.getPaymentToken());
+                $.ajax(settings).done(function (result) {
+                    paymentToken.setPaymentToken(result.PaymentToken);
+                }).fail(function () {
+                    paymentToken.setPaymentToken(false);
+                    messageContainer.addErrorMessage({message: "Error geting the silent order post payment token!", parameters: [], trace: ''});
+                });
 
                 return paymentToken.getPaymentToken();
+            },
+
+            validate: function (paymentToken) {
+                return (paymentToken);
             }
         }
     }
