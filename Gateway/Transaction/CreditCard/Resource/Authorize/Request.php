@@ -336,4 +336,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     {
         return $this->getPaymentData()->getAdditionalInformation('cc_token');
     }
+
+    public function getPaymentCreditSoptpaymenttoken()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('cc_soptpaymenttoken');
+    }
 }

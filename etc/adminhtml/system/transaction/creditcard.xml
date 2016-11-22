@@ -31,5 +31,6 @@
         </field>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/types.xml"/>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/installments.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/silentorderpost.xml"/>
     </group>
 </include>

@@ -10,16 +10,22 @@
 define(
     [
         'Magento_Payment/js/view/payment/cc-form',
-        'mage/translate'
+        'mage/translate',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'jquery',
+        'Magento_Checkout/js/action/place-order',
+        'Magento_Checkout/js/model/full-screen-loader'
     ],
-    function (Component, $t) {
+    function (Component, $t, sopt, $, placeOrderAction, fullScreenLoader) {
         'use strict';
 
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/creditcard',
                 creditCardInstallments: '',
-                creditCardsavecard: 0
+                creditCardsavecard: 0,
+                creditCardExpDate: '',
+                creditCardSoptPaymentToken: ''
             },
 
             initObservable: function () {
@@ -30,9 +36,11 @@ define(
                         'creditCardOwner',
                         'creditCardExpYear',
                         'creditCardExpMonth',
+                        'creditCardExpDate',
                         'creditCardVerificationNumber',
                         'creditCardInstallments',
-                        'creditCardsavecard'
+                        'creditCardsavecard',
+                        'creditCardSoptPaymentToken'
                     ]);
 
                 return this;
@@ -47,17 +55,19 @@ define(
             },
 
             getData: function () {
+
                 return {
                     'method': this.item.method,
                     'additional_data': {
-                        'cc_cid': this.creditCardVerificationNumber(),
+                        'cc_cid': this.creditCardVerificationNumber (),
                         'cc_type': this.creditCardType(),
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
                         'cc_owner': this.creditCardOwner(),
                         'cc_installments': this.creditCardInstallments(),
-                        'cc_savecard': this.creditCardsavecard() ? 1 : 0
+                        'cc_savecard': this.creditCardsavecard() ? 1 : 0,
+                        'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
                     }
                 };
             },
@@ -85,6 +95,50 @@ define(
 
             getSaveCardHelpHtml: function () {
                 return '<span>' + $t('Add To Braspag JustClick') + '</span>';
+            },
+
+            updateCreditCardSoptPaymentToken: function () {
+                var self = this;
+
+                fullScreenLoader.startLoader();
+
+                var options = {
+                    holderName: self.creditCardOwner(),
+                    rawNumber: self.creditCardNumber(),
+                    expiration: self.creditCardExpDate(),
+                    securityCode: self.creditCardVerificationNumber(),
+                    code: self.getCode(),
+                    successCallBack: function () {
+                        fullScreenLoader.stopLoader();
+                    },
+                    failCallBack: function () {
+                        fullScreenLoader.stopLoader();
+                        this.messageContainer.addErrorMessage({message: "Error geting the silent order post payment token!", parameters: [], trace: ''});
+                    }
+                };
+
+                this.creditCardSoptPaymentToken(sopt.getPaymentToken(options));
+            },
+
+            updateCreditCardExpData: function () {
+                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
+            },
+
+            pad: function(num, size) {
+                var s = "00" + num;
+                return s.substr(s.length-size);
+            },
+
+            getPlaceOrderDeferredObject: function () {
+
+                if (sopt.isActive(this.getCode())) {
+                    this.updateCreditCardExpData();
+                    this.updateCreditCardSoptPaymentToken();
+                }
+
+                return $.when(
+                    placeOrderAction(this.getData(), this.messageContainer)
+                );
             }
 
         });
