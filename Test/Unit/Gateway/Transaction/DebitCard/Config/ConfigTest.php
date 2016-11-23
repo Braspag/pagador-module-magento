@@ -38,7 +38,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfig->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/braspag_pagador_debit/return_url')
+            ->with('payment/braspag_pagador_debitcard/return_url')
             ->will($this->returnValue('http://test.com'));
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());

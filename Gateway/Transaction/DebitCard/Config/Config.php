@@ -35,7 +35,7 @@ class Config implements ConfigInterface
 
 	public function getPaymentReturnUrl()
 	{
-		return $this->getConfig()->getValue('payment/braspag_pagador_debit/return_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+		return $this->getConfig()->getValue('payment/braspag_pagador_debitcard/return_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
 
 
