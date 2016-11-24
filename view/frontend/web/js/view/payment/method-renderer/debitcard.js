@@ -26,10 +26,6 @@ define(
                 redirectAfterPlaceOrder: false
             },
 
-            afterPlaceOrder: function () {
-                
-            },
-
             initObservable: function () {
                 this._super()
                     .observe([
