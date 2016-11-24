@@ -56,3 +56,5 @@ composer.phar
 /vendor/
 composer.lock
 /build/
+
+Test/output/

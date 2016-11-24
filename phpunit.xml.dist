@@ -18,4 +18,17 @@
         <directory suffix="Test.php">Test/Unit</directory>
     </testsuite>
 
+    <filter>
+        <blacklist>
+            <directory>Test</directory>
+            <directory>vendor</directory>
+        </blacklist>
+    </filter>
+
+	<logging>
+	    <!--coverage_html_placeholder
+	    <log type="coverage-html" target="Test/output/coverage" charset="UTF-8" yui="true" highlight="true"/>
+	    coverage_html_placeholder-->
+	</logging>
+
 </phpunit>

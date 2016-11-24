@@ -34,6 +34,8 @@ class ResponseHandler implements HandlerInterface
         $payment = $paymentDO->getPayment();
 
         $payment->setTransactionId($response->getPaymentPaymentId());
+        $payment->setAdditionalInformation('redirect_url', $response->getPaymentAuthenticationUrl());
+        
         $payment->setIsTransactionClosed(false);
 
         return $this;

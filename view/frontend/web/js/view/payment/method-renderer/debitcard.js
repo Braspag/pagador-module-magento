@@ -10,13 +10,24 @@
 define(
     [
         'Magento_Payment/js/view/payment/cc-form',
+        'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Magento_Checkout/js/model/payment/additional-validators'
     ],
-    function (Component) {
+    function (
+        Component,
+        RedirectAfterPlaceOrder,
+        additionalValidators
+    ) {
         'use strict';
 
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/debitcard',
+                redirectAfterPlaceOrder: false
+            },
+
+            afterPlaceOrder: function () {
+                
             },
 
             initObservable: function () {
@@ -57,6 +68,31 @@ define(
 
             isActive: function() {
                 return true;
+            },
+
+            placeOrder: function (data, event) {
+                var self = this;
+
+                if (event) {
+                    event.preventDefault();
+                }
+
+                if (this.validate() && additionalValidators.validate()) {
+                    this.isPlaceOrderActionAllowed(false);
+
+                    this.getPlaceOrderDeferredObject()
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                            function (orderId) {
+                                RedirectAfterPlaceOrder(orderId);
+                            }
+                        );
+                }
+
+                return false;
             }
 
         });
