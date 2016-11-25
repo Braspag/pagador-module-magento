@@ -55,11 +55,17 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardSilentOrderPostConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfig">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardSilentOrderPostUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider">
         <arguments>
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
             <argument name="silentorderPostBuilder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder</argument>
-            <argument name="silentOrderPostConfig" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfig</argument>            
+            <argument name="silentOrderPostConfig" xsi:type="object">BraspagTransactionCreditCardSilentOrderPostConfig</argument>            
         </arguments>
     </virtualType>
 

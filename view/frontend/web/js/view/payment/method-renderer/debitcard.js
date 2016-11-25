@@ -10,13 +10,22 @@
 define(
     [
         'Magento_Payment/js/view/payment/cc-form',
+        'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Webjump_BraspagPagador/js/model/superdebito'
     ],
-    function (Component) {
+    function (
+        Component,
+        RedirectAfterPlaceOrder,
+        additionalValidators,
+        SuperDebito
+    ) {
         'use strict';
 
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/debitcard',
+                redirectAfterPlaceOrder: false
             },
 
             initObservable: function () {
@@ -31,10 +40,6 @@ define(
                     ]);
 
                 return this;
-            },
-
-            isInstallmentsActive: function () {
-                return false;
             },
 
             getData: function () {
@@ -57,6 +62,35 @@ define(
 
             isActive: function() {
                 return true;
+            },
+
+            placeOrder: function (data, event) {
+                var self = this;
+
+                if (event) {
+                    event.preventDefault();
+                }
+
+                if (this.validate() && additionalValidators.validate()) {
+                    this.isPlaceOrderActionAllowed(false);
+
+                    this.getPlaceOrderDeferredObject()
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                            function (orderId) {
+                                if (SuperDebito.isActive()) {
+                                    SuperDebito.start();
+                                } else {
+                                    RedirectAfterPlaceOrder(orderId);                                    
+                                }
+                            }
+                        );
+                }
+
+                return false;
             }
 
         });
