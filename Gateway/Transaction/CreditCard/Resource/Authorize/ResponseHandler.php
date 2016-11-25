@@ -6,8 +6,10 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
 /**
+
  * Braspag Transaction CreditCard Authorize Response Handler
  *
  * @author      Webjump Core Team <dev@webjump.com>
@@ -18,6 +20,14 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterfa
  */
 class ResponseHandler implements HandlerInterface
 {
+    protected $cardTokenRepository;
+
+    public function __construct(
+        CardTokenRepositoryInterface $cardTokenRepository
+    ) {
+        $this->setCardTokenRepository($cardTokenRepository);
+    }
+
     public function handle(array $handlingSubject, array $response)
     {
         if (!isset($handlingSubject['payment']) || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface) {
@@ -31,11 +41,14 @@ class ResponseHandler implements HandlerInterface
         /** @var ResponseInterface $response */
         $response = $response['response'];
         $paymentDO = $handlingSubject['payment'];
-        /** @var Payment $payment */
         $payment = $paymentDO->getPayment();
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
+
+        if ($response->getPaymentCardToken()) {
+            $this->saveCardToken($payment, $response);
+        }
 
         if (! ($response->getPaymentFraudAnalysis() instanceof AntiFraudResponseInterface)) {
             return $this;
@@ -66,5 +79,37 @@ class ResponseHandler implements HandlerInterface
         $payment->setAdditionalInformation('antifraud_reply_data_ip_routing_method', $antiFraudResponse->getReplyDataIpRoutingMethod());
         $payment->setAdditionalInformation('antifraud_reply_data_score_model_used', $antiFraudResponse->getReplyDataScoreModelUsed());
         $payment->setAdditionalInformation('antifraud_reply_data_case_priority', $antiFraudResponse->getReplyDataCasePriority());
+
+        return $this;
+    }
+
+    protected function saveCardToken($payment, $response)
+    {
+        if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
+            return $cardToken;
+        }
+
+        $cardToken = $this->getCardTokenRepository()->create(
+            $response->getPaymentCardNumberEncrypted(),
+            $response->getPaymentCardToken(),
+            $response->getPaymentCardProvider(),
+            $response->getPaymentCardBrand()
+        );
+
+        $this->getCardTokenRepository()->save($cardToken);
+
+        return $cardToken;
+    }
+
+    protected function getCardTokenRepository()
+    {
+        return $this->CardTokenRepository;
+    }
+
+    protected function setCardTokenRepository(CardTokenRepositoryInterface $cardTokenRepository)
+    {
+        $this->CardTokenRepository = $cardTokenRepository;
+
+        return $this;
     }
 }

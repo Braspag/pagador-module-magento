@@ -26,4 +26,6 @@ interface ConfigInterface
     public function getSession();
 
     public function hasAntiFraud();
+
+	public function getSilentOrderPostUri();
 }

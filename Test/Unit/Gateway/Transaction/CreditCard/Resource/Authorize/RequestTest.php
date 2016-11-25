@@ -130,7 +130,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                 'getCcExpMonth',
                 'getCcExpYear',
                 'getCcCid',
-                'getCcInstallments',
                 'getCcSavecard',
             ])
             ->getMock();
@@ -159,13 +158,12 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ->method('getCcCid')
             ->will($this->returnValue('123'));
 
-        $infoMock->expects($this->once())
-            ->method('getCcInstallments')
-            ->will($this->returnValue(3));
-
-        $infoMock->expects($this->once())
-            ->method('getCcSavecard')
-            ->will($this->returnValue(true));
+        $infoMock->expects($this->any())
+            ->method('getAdditionalInformation')
+            ->will($this->returnValueMap(array(
+                array('cc_savecard', true),
+                array('cc_installments', 3)
+            )));
 
         $this->request->setOrderAdapter($orderAdapterMock);
         $this->request->setPaymentData($infoMock);

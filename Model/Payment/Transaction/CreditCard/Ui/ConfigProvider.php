@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
 
 /**
@@ -21,52 +21,49 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected $installments = [];
 
-    protected $builder;
+    protected $installmentsBuilder;
+
+    protected $silentorderPostBuilder;
 
     public function __construct(
-        BuilderInterface $builder
+        InstallmentsBuilder $installmentsBuilder
     ) {
-        $this->setBuilder($builder);
+        $this->setInstallmentsBuilder($installmentsBuilder);
     }
 
     public function getConfig()
     {
-        return [
+        $config = [
             'payment' => [
                 'ccform' => [
                     'installments' => [
-                        'active' => true,
+                        'active' => [self::CODE => true],
                         'list' => $this->getInstallments(),
                     ],
                 ]
             ]
         ];
+
+        return $config;
     }
 
     protected function getInstallments()
     {
-        foreach ($this->getBuilder()->build() as $installment) {
-            $this->addInstallment($installment);
+        foreach ($this->getInstallmentsBuilder()->build() as $installment) {
+            $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
         }
 
     	return $this->installments;
     }
 
-    protected function addInstallment(InstallmentInterface $installment)
+    protected function getInstallmentsBuilder()
     {
-        $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
-
-        return $this;
+        return $this->installmentsBuilder;
     }
 
-    protected function getBuilder()
+    protected function setInstallmentsBuilder($installmentsBuilder)
     {
-        return $this->builder;
-    }
-
-    protected function setBuilder(BuilderInterface $builder)
-    {
-        $this->builder = $builder;
+        $this->installmentsBuilder = $installmentsBuilder;
 
         return $this;
     }

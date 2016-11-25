@@ -39,7 +39,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->scopeConfig->expects($this->at(2))
             ->method('getValue')
             ->with('payment/braspag_pagador_creditcard/payment_action')
-            ->will($this->returnValue(\Magento\Authorizenet\Model\Authorizenet::ACTION_AUTHORIZE_CAPTURE));
+            ->will($this->returnValue('authorize_capture'));
 
         $this->scopeConfig->expects($this->at(3))
             ->method('getValue')

@@ -40,7 +40,7 @@
             <span><!-- ko i18n: 'Credit Card Number'--><!-- /ko --></span>
         </label>
         <div class="control">
-            <input type="number" name="payment[cc_number]" class="input-text" value=""
+            <input type="number" name="payment[cc_number]" class="input-text bp-sop-cardnumber silentorderpost" value=""
                    data-bind="attr: {
                                     autocomplete: off,
                                     id: getCode() + '_cc_number',
@@ -54,10 +54,7 @@
     </div>
     <!-- ko if: (isSaveCardActive())-->
     <div class="field choice" data-bind="attr: {id: getCode() + '_cc_savecard'}">
-        <input type="checkbox"
-               name="payment[cc_savecard]"
-               class="checkbox"
-               data-bind="attr: {'id': getCode() + '_cc_savecard', checked: creditCardsavecard}"/>
+        <input type="checkbox" class="checkbox" id="creditcard-save" data-bind="checked: creditCardsavecard" />
         <label class="label" data-bind="attr: {'for': getCode() + '_cc_savecard'}">
             <span><!-- ko i18n: 'Add To Braspag JustClick'--><!-- /ko --></span>
         </label>
@@ -81,7 +78,7 @@
         <div class="control">
             <input type="text"
                    autocomplete="off"
-                   class="input-text owner"
+                   class="input-text owner  bp-sop-cardholdername silentorderpost"
                    name="payment[cc_owner]"
                    data-bind="attr: {id: getCode() + '_cc_owner',
                         title: $t('Name on Card'),
@@ -125,6 +122,7 @@
                         </select>
                     </div>
                 </div>
+                <input type="hidden" class="bp-sop-cardexpirationdate silentorderpost" data-bind="value: creditCardExpDate">
             </div>
         </div>
     </div>
@@ -136,7 +134,7 @@
         <div class="control _with-tooltip">
             <input type="number"
                    autocomplete="off"
-                   class="input-text cvv"
+                   class="input-text cvv bp-sop-cardcvv silentorderpost"
                    name="payment[cc_cid]"
                    value=""
                    data-bind="attr: {id: getCode() + '_cc_cid',

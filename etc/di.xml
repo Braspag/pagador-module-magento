@@ -1,6 +1,31 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <preference for="Webjump\BraspagPagador\Api\CardTokenRepositoryInterface" type="Webjump\BraspagPagador\Model\CardTokenRepository" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionCreditCardSilentOrderConverterZendClient" type="Magento\Payment\Gateway\Http\Client\Zend">
+        <arguments>
+            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\ConvertResponse</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder">
+        <arguments>
+            <argument name="client" xsi:type="object">BraspagTransactionCreditCardSilentOrderConverterZendClient</argument>
+        </arguments>
+    </type>
+
     <!-- Installments Builder/Config -->
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
@@ -170,7 +195,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
+    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
             <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudRequest</argument>
@@ -206,6 +231,20 @@
         </arguments>
     </virtualType>
 
+    <type name="Webjump\BraspagPagador\Model\CardTokenRepository">
+        <arguments>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+            <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\CardToken</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler">
+        <arguments>
+            <argument name="cardTokenRepository" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenRepository</argument>
+        </arguments>
+    </type>
+
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardAuthorizeRequestBuilder</argument>
@@ -228,6 +267,38 @@
             <argument name="commands" xsi:type="array">
                 <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
                 <item name="capture" xsi:type="string">BraspagTransactionCreditCardCaptureCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Braspag Pagador Transaction Payment Credit Card Token -->
+
+    <virtualType name="BraspagTransactionCreditCardTokensRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardTokenValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionCreditCardTokenConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionCreditCardTokenConfigValueHandler</item>
             </argument>
         </arguments>
     </virtualType>
@@ -304,5 +375,7 @@
             <argument name="request" xsi:type="object">BraspagTransactionDebitCardOrderRequest</argument>
         </arguments>
     </virtualType>
+
+    <type name="Webjump\BraspagPagador\Model\CardToken" shared="false" />
 
 </config>

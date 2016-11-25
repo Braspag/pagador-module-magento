@@ -50,3 +50,9 @@ crashlytics-build.properties
 /Test/Acceptance/vendor
 /Test/Acceptance/tests/_output
 /Test/Acceptance/composer.lock
+
+### Composer ###
+composer.phar
+/vendor/
+composer.lock
+/build/
