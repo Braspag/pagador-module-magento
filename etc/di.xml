@@ -7,6 +7,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
+    <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
         <arguments>
@@ -313,7 +314,7 @@
     <virtualType name="BraspagTransactionDebitCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="order" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -323,11 +324,11 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionDebitCardOrderRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
-            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\Validator</argument>
+            <!-- <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\Validator</argument> -->
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config">
+    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
         </arguments>
@@ -335,7 +336,7 @@
 
     <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request">
         <arguments>
-            <argument name="config" xsi:type="object">BraspagTransactionDebitCardOrderRequestConfig</argument>
+            <argument name="config" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config</argument>
         </arguments>
     </virtualType>
 
@@ -345,7 +346,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionDebitCardOrderRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestBuilder">
+    <virtualType name="BraspagTransactionDebitCardOrderRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionDebitCardOrderRequest</argument>
         </arguments>
