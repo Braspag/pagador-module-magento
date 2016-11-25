@@ -12,26 +12,38 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFra
 
 
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
+use Magento\Checkout\Model\Session;
 
 class RequestFactory
 {
     private $objectManager;
     private $class;
+    private $session;
 
     /**
+     * RequestFactory constructor.
      * @param ObjectManagerInterface $objectManager
      * @param string $class
+     * @param SessionManagerInterface $session
      */
-    public function __construct(ObjectManagerInterface $objectManager, $class = Request::class)
+    public function __construct(ObjectManagerInterface $objectManager, $class = Request::class, SessionManagerInterface $session)
     {
         $this->setObjectManager($objectManager);
         $this->setClass($class);
+        $this->setSession($session);
     }
 
     public function create(OrderItemInterface $orderItem)
     {
-        return $this->getObjectManager()->create($this->getClass(), ['itemAdapter' => $orderItem]);
+        return $this->getObjectManager()->create(
+            $this->getClass(),
+            [
+                'itemAdapter' => $orderItem,
+                'session'=> $this->getSession()
+            ]
+        );
     }
 
     /**
@@ -64,5 +76,21 @@ class RequestFactory
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @return SessionManagerInterface
+     */
+    protected function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * @param SessionManagerInterface $session
+     */
+    protected function setSession($session)
+    {
+        $this->session = $session;
     }
 }

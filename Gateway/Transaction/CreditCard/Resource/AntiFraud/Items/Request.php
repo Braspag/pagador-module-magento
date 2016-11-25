@@ -10,19 +10,24 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items;
 
 
+use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\Items\RequestInterface as BraspaglibRequestInterface;
 
 class Request implements BraspaglibRequestInterface
 {
     protected $itemAdapter;
+    protected $session;
+    protected $quote;
 
     /**
      * @param OrderItemInterface $itemAdapter
+     * @param SessionManagerInterface $session
      */
-    public function __construct(OrderItemInterface $itemAdapter)
+    public function __construct(OrderItemInterface $itemAdapter, SessionManagerInterface $session)
     {
         $this->setItemAdapter($itemAdapter);
+        $this->setSession($session);
     }
 
     /**
@@ -108,25 +113,21 @@ class Request implements BraspaglibRequestInterface
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerEmail()
     {
+        return $this->getQuote()->getCustomerEmail();
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerIdentity()
     {
+        return $this->getQuote()->getCustomerTaxvat();
+
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerName()
     {
+        return $this->getQuote()->getCustomerFirstname() . ' ' . $this->getQuote()->getCustomerLastname();
+
     }
 
     /**
@@ -151,6 +152,22 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
+     * @return SessionManagerInterface
+     */
+    protected function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * @param SessionManagerInterface $session
+     */
+    protected function setSession($session)
+    {
+        $this->session = $session;
+    }
+
+    /**
      * @param OrderItemInterface $itemAdapter
      * @return $this
      */
@@ -167,4 +184,17 @@ class Request implements BraspaglibRequestInterface
     {
         return $this->itemAdapter;
     }
+
+    /**
+     * @return \Magento\Quote\Model\Quote
+     */
+    protected function getQuote()
+    {
+        if (!$this->quote) {
+            $this->quote = $this->getSession()->getQuote();
+        }
+
+        return $this->quote;
+    }
+
 }

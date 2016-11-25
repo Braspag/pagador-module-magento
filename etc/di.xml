@@ -146,6 +146,7 @@
     <virtualType name="BraspagTransactionCreditCardSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
         </arguments>
     </virtualType>
 
@@ -193,11 +194,11 @@
 
     <virtualType name="BraspagPagadorTransactionCreditCardResourceAntiFraudItemsRequestFactory" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory">
         <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="objectManager" xsi:type="object">Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="class" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\Request</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
         </arguments>
     </virtualType>
-
-
 
     <virtualType name="BraspagTransactionCreditCardCaptureRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder">
         <arguments>

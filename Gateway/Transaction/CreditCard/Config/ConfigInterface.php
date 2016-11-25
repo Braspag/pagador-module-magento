@@ -23,5 +23,7 @@ interface ConfigInterface
 
     public function getIdentityAttributeCode();
 
+    public function getSession();
+
     public function hasAntiFraud();
 }

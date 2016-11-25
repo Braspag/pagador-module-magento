@@ -26,6 +26,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected $billingAddress;
     protected $shippingAddress;
     protected $antiFraudRequest;
+    protected $quote;
 
     public function __construct(
         ConfigInterface $config,
@@ -57,7 +58,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerIdentity()
     {
-        return $this->getBillingAddress()->getData($this->getConfig()->getIdentityAttributeCode());
+        return $this->getQuote()->getData($this->getConfig()->getIdentityAttributeCode());
     }
 
     public function getCustomerIdentityType()
@@ -250,7 +251,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     {
         list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
-        return $brand;
+        return ($brand) ? $brand : 'Visa';
     }
 
     public function getPaymentExtraDataCollection()
@@ -274,6 +275,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         $this->antiFraudRequest = $antiFraudRequest;
     }
 
+    /**
+     * @return ConfigInterface
+     */
     protected function getConfig()
     {
         return $this->config;
@@ -336,5 +340,17 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         }
 
         return $this->billingAddress;
+    }
+
+    /**
+     * @return \Magento\Quote\Model\Quote
+     */
+    protected function getQuote()
+    {
+        if (!$this->quote) {
+            $this->quote = $this->getConfig()->getSession()->getQuote();
+        }
+
+        return $this->quote;
     }
 }
