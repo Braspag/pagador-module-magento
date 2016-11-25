@@ -12,10 +12,9 @@ define(
         'mage/storage',
         'Magento_Checkout/js/model/url-builder',
         'Magento_Checkout/js/model/error-processor',
-        'Magento_Checkout/js/model/full-screen-loader',
-        'Webjump_BraspagPagador/js/action/redirect-post'
+        'Magento_Checkout/js/model/full-screen-loader'
     ],
-    function (storage, urlBuilder, errorProcessor, fullScreenLoader, redirectPost) {
+    function (storage, urlBuilder, errorProcessor, fullScreenLoader) {
         'use strict';
 
         return function (orderId) {

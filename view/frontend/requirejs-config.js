@@ -5,4 +5,5 @@
  *
  * @link        http://www.webjump.com.br
  */
-var config = {};
+var config = {}
+

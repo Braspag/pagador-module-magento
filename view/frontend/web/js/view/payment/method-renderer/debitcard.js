@@ -11,12 +11,14 @@ define(
     [
         'Magento_Payment/js/view/payment/cc-form',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
-        'Magento_Checkout/js/model/payment/additional-validators'
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Webjump_BraspagPagador/js/model/superdebito'
     ],
     function (
         Component,
         RedirectAfterPlaceOrder,
-        additionalValidators
+        additionalValidators,
+        SuperDebito
     ) {
         'use strict';
 
@@ -38,10 +40,6 @@ define(
                     ]);
 
                 return this;
-            },
-
-            isInstallmentsActive: function () {
-                return false;
             },
 
             getData: function () {
@@ -83,7 +81,11 @@ define(
                             }
                         ).done(
                             function (orderId) {
-                                RedirectAfterPlaceOrder(orderId);
+                                if (SuperDebito.isActive()) {
+                                    SuperDebito.start();
+                                } else {
+                                    RedirectAfterPlaceOrder(orderId);                                    
+                                }
                             }
                         );
                 }
