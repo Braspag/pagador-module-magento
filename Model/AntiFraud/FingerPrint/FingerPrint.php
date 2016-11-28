@@ -64,12 +64,25 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
     public function getSessionId()
     {
         if (! $this->sessionId) {
-            $sessionId =  $this->getSession()->getSessionId();
+            $sessionId = $this->getSession()->getSessionId();
+            if ($this->getScopeConfig()->getValue(self::XML_ORDER_ID_TO_FINGERPRINT)) {
+                $sessionId =  $this->getReservedOrderId();
+            }
             /** @todo set xml path in constant */
             $merchantId = $this->getScopeConfig()->getValue('payment/braspag_pagador_global/merchant_id');
             $this->sessionId = $sessionId . $merchantId;
         }
 
         return $this->sessionId;
+    }
+    
+    protected function getReservedOrderId()
+    {
+        if (! $this->getQuote()->getReservedOrderId()) {
+            $this->getQuote()->reserveOrderId();
+        }
+        
+        return $this->getQuote()->getReservedOrderId();
+        
     }
 }

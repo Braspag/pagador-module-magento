@@ -8,22 +8,27 @@
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="webjump_braspag_pagador_transaction_creditcard" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Credit Card</label>
-	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
-	        <label>Enabled</label>
-	        <comment />
-	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-	        <config_path>payment/braspag_pagador_creditcard/active</config_path>
-	    </field>
-	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
-	        <label>Title</label>
-	        <config_path>payment/braspag_pagador_creditcard/title</config_path>
-	    </field>
-	    <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
-	        <label>Payment Action</label>
-	        <comment />
-	        <source_model>Webjump\BraspagPagador\Model\Source\PaymentAction</source_model>
-	        <config_path>payment/braspag_pagador_creditcard/payment_action</config_path>
-	    </field>
+        <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Enabled</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/active</config_path>
+        </field>
+        <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Title</label>
+            <config_path>payment/braspag_pagador_creditcard/title</config_path>
+        </field>
+        <field id="customer_identity_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Customer Identity (CPF/CNPJ) Attribute</label>
+            <config_path>payment/braspag_pagador_creditcard/customer_identity_attribute_code</config_path>
+            <comment>object from \Magento\Quote\Model\Quote</comment>
+        </field>
+        <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Payment Action</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentAction</source_model>
+            <config_path>payment/braspag_pagador_creditcard/payment_action</config_path>
+        </field>
         <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
             <label>New Order Status</label>
             <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>

@@ -75,6 +75,13 @@
                 <src_js>https://h.online-metrix.net/fp/check.js</src_js>
                 <src_flash>https://h.online-metrix.net/fp/fp.swf</src_flash>
             </fingerprint>
+
+            <options>
+                <sequence>AnalyseFirst</sequence>
+                <sequence_criteria>OnSuccess</sequence_criteria>
+                <capture_in_low_risk>0</capture_in_low_risk>
+                <void_in_high_risk>0</void_in_high_risk>
+            </options>
         </webjump_braspag_antifraud>
     </default>
 </config>

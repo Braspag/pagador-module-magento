@@ -28,7 +28,7 @@
     </type>
 
     <!-- Installments Builder/Config -->
-    
+
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
         <arguments>
             <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
@@ -38,14 +38,14 @@
 
     <type name="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory">
         <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManagerInterface</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
         </arguments>
     </type>
 
     <type name="Webjump\BraspagPagador\Block\Payment\Info\Billet">
         <arguments>
             <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManagerInterface</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
         </arguments>
     </type>
 
@@ -66,7 +66,7 @@
     <type name="\Webjump\BraspagPagador\Block\AntiFraud\FingerPrint">
         <arguments>
             <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
-            <argument name="antiFraudFingerPrint" xsi:type="object">\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint</argument>
+            <argument name="antiFraudFingerPrint" xsi:type="object">BraspagAntiFraudModelFingerPrint</argument>
         </arguments>
     </type>
 
@@ -119,7 +119,7 @@
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionBilletSendRequest</argument>
         </arguments>
-    </virtualType>    
+    </virtualType>
 
     <virtualType name="BraspagTransactionBilletSendCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand">
         <arguments>
@@ -172,6 +172,7 @@
     <virtualType name="BraspagTransactionCreditCardSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
         </arguments>
     </virtualType>
 
@@ -195,17 +196,49 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder">
+    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
         </arguments>
-    </virtualType>    
+    </virtualType>
+
+
+    <virtualType name="BraspagAntiFraudModelFingerPrint" type="Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint">
+        <arguments>
+            <argument name="scopeConfig" xsi:type="object">\Magento\Framework\App\Config</argument>
+            <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorTransactionCreditCardResourceAntiFraudRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request">
+        <arguments>
+            <argument name="config" xsi:type="object">BraspagPagadorTransactionCreditCardConfigAntiFraudConfig</argument>
+            <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudItemsRequestFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorTransactionCreditCardConfigAntiFraudConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorTransactionCreditCardResourceAntiFraudItemsRequestFactory" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="class" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\Request</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
 
     <virtualType name="BraspagTransactionCreditCardCaptureRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardCaptureRequest</argument>
         </arguments>
-    </virtualType>  
+    </virtualType>
 
     <type name="Webjump\BraspagPagador\Model\CardTokenRepository">
         <arguments>
@@ -350,7 +383,7 @@
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionDebitCardOrderRequest</argument>
         </arguments>
-    </virtualType>  
+    </virtualType>
 
     <type name="Webjump\BraspagPagador\Model\CardToken" shared="false" />
 

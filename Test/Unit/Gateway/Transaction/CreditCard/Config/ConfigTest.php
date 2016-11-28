@@ -3,19 +3,21 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
-
+use Magento\Framework\Session\SessionManagerInterface;
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 
 	protected $scopeConfig;
+    protected $session;
 
     public function setUp()
     {
     	$this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-
+        $this->session = $this->getMockBuilder(SessionManagerInterface::class)->getMockForAbstractClass();
     	$this->config = new Config(
-    		$this->scopeConfig
+    		$this->scopeConfig,
+            $this->session
     	);
     }
 

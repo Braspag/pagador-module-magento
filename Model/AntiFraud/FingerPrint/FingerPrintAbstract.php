@@ -16,10 +16,11 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 abstract class FingerPrintAbstract
 {
-    const XML_SRC_PNG_IMAGE_URL = 'webjump_braspag_antifraud/fingerprint/src_png_img';
-    const XML_SRC_JS_URL        = 'webjump_braspag_antifraud/fingerprint/src_js';
-    const XML_SRC_FLASH_URL     = 'webjump_braspag_antifraud/fingerprint/src_flash';
-    const XML_ORG_ID            = 'webjump_braspag_antifraud/fingerprint/org_id';
+    const XML_SRC_PNG_IMAGE_URL         = 'webjump_braspag_antifraud/fingerprint/src_png_img';
+    const XML_SRC_JS_URL                = 'webjump_braspag_antifraud/fingerprint/src_js';
+    const XML_SRC_FLASH_URL             = 'webjump_braspag_antifraud/fingerprint/src_flash';
+    const XML_ORG_ID                    = 'webjump_braspag_antifraud/fingerprint/org_id';
+    const XML_ORDER_ID_TO_FINGERPRINT   = 'webjump_braspag_antifraud/fingerprint/use_order_id_to_fingerprint';
 
     private $scopeConfig;
     private $session;
@@ -29,6 +30,7 @@ abstract class FingerPrintAbstract
     protected $srcFlashUrl;
     protected $orgId;
     protected $sessionId;
+    protected $quote;
 
     /**
      * @param ScopeConfigInterface $scopeConfig
@@ -36,8 +38,8 @@ abstract class FingerPrintAbstract
      */
     public function __construct(ScopeConfigInterface $scopeConfig, SessionManagerInterface $session)
     {
-        $this->scopeConfig = $scopeConfig;
-        $this->session = $session;
+        $this->setScopeConfig($scopeConfig);
+        $this->setSession($session);
     }
 
     /**
@@ -74,5 +76,10 @@ abstract class FingerPrintAbstract
     protected function getSession()
     {
         return $this->session;
+    }
+
+    protected function getQuote()
+    {
+        return $this->getSession()->getQuote();
     }
 }

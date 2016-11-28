@@ -3,10 +3,10 @@
 namespace Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet;
 
 
-use \Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
+use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use \Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Sales\Api\Data\OrderInterface as Order;
 use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
 
