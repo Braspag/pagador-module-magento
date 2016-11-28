@@ -17,6 +17,7 @@ interface AntiFraudConfigInterface
 {
     const COUNTRY_TELEPHONE_CODE = 55;
     const XML_PATH_ACTIVE = 'webjump_braspag_antifraud/general/active';
+    const XML_PATH_FINGER_PRINT_ATTRIBUTE= 'webjump_braspag_antifraud/options/sequence';
     const XML_PATH_SEQUENCE = 'webjump_braspag_antifraud/options/sequence';
     const XML_PATH_SEQUENCE_CRITERIA = 'webjump_braspag_antifraud/options/sequence_criteria';
     const XML_PATH_CAPTURE_ON_LOW_RISK = 'webjump_braspag_antifraud/options/capture_in_low_risk';

@@ -28,7 +28,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $requestItemFactory;
     protected $billingAddress;
     protected $shippingAddress;
-    protected $quoteShippingAddress;
+    protected $quote;
+    protected $fingerPrintId;
 
     /**
      * @param ConfigInterface $config
@@ -52,6 +53,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getFingerPrintId()
     {
+        
         return $this->getConfig()->getSession()->getSessionId();
     }
 
@@ -173,7 +175,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     }
 
     /**
-     * @return OrderAdapter
+     * @return ConfigInterface
      */
     protected function getConfig()
     {
@@ -191,7 +193,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     /**
      * @param RequestFactory $requestItemFactory
      */
-    public function setRequestItemFactory(RequestFactory$requestItemFactory)
+    public function setRequestItemFactory(RequestFactory $requestItemFactory)
     {
         $this->requestItemFactory = $requestItemFactory;
     }
@@ -231,14 +233,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     }
 
     /**
-     * @return \Magento\Quote\Model\Quote\Interceptor
+     * @return \Magento\Quote\Model\Quote
      */
-    protected function getQuoteShippingAddress()
+    protected function getQuote()
     {
-        if (! $this->quoteShippingAddress) {
-            $this->quoteShippingAddress =  $this->getConfig()->getSession()->getQuote()->getShippingAddress();
+        if (! $this->quote) {
+            $this->quote =  $this->getConfig()->getSession()->getQuote();
         }
 
-        return $this->quoteShippingAddress;
+        return $this->quote;
     }
 }
