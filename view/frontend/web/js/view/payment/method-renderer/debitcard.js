@@ -9,16 +9,22 @@
 /*global define*/
 define(
     [
-        'Magento_Payment/js/view/payment/cc-form',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'Webjump_BraspagPagador/js/model/superdebito'
+        'Webjump_BraspagPagador/js/model/superdebito',
+        'Magento_Checkout/js/model/quote',
+        'Magento_Checkout/js/model/totals',
+        'Magento_Checkout/js/action/redirect-on-success'
     ],
     function (
         Component,
         RedirectAfterPlaceOrder,
         additionalValidators,
-        SuperDebito
+        SuperDebito,
+        quote,
+        totals,
+        redirectOnSuccessAction
     ) {
         'use strict';
 
@@ -36,7 +42,10 @@ define(
                         'creditCardOwner',
                         'creditCardExpYear',
                         'creditCardExpMonth',
-                        'creditCardVerificationNumber'
+                        'creditCardVerificationNumber',
+                        'merchantOrderNumber',
+                        'customerName',
+                        'amount'
                     ]);
 
                 return this;
@@ -64,6 +73,35 @@ define(
                 return true;
             },
 
+            updateCreditCardExpData: function () {
+                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear().slice(-2));
+            },
+
+            updateCustomerName: function () {
+                this.customerName(quote.billingAddress().firstname + ' ' + quote.billingAddress().lastname);
+            },
+
+            updateMerchantId: function () {
+                this.merchantOrderNumber('12000000000001');
+            },
+
+            updateAMount: function () {
+                var grand_total = 0;
+
+                if (totals.totals()) {
+                    grand_total = parseFloat(totals.getSegment('grand_total').value);
+                }
+
+                this.amount(grand_total);
+            },
+
+            prepareData: function () {
+                this.updateCreditCardExpData();
+                this.updateCustomerName();
+                this.updateMerchantId();
+                this.updateAMount();
+            },
+
             placeOrder: function (data, event) {
                 var self = this;
 
@@ -82,15 +120,51 @@ define(
                         ).done(
                             function (orderId) {
                                 if (SuperDebito.isActive()) {
-                                    SuperDebito.start();
-                                } else {
-                                    RedirectAfterPlaceOrder(orderId);                                    
+                                    return self.placeOrderWithSuperDebito(orderId);
                                 }
+
+                                RedirectAfterPlaceOrder(orderId);
                             }
                         );
                 }
 
                 return false;
+            },
+
+            placeOrderWithSuperDebito: function (orderId) {
+                this.prepareData();
+
+                var options = {
+                    onInitialize: function(response) {
+                        console.log(response);
+                    },
+                    onNotAuthenticable: function (response) {
+                        redirectOnSuccessAction.execute();
+                    },
+                    onInvalid: function(response) {
+                        console.log(response);
+                    },
+                    onError: function(response) {
+                        console.log(response);
+                    },
+                    onAbort: function(response) {
+                        console.log(response);
+                    },
+                    onRedirect: function(response) {
+                        console.log(response);
+                    },
+                    onAuthorize: function(response) {
+                        console.log(response);
+                    },
+                    onNotAuthorize: function(response) {
+                        console.log(response);
+                    },
+                    onFinalize: function(response) {
+                        console.log(response);
+                    }
+                };
+
+                SuperDebito.start(options);
             }
 
         });

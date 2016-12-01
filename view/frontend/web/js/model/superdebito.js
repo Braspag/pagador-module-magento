@@ -20,13 +20,15 @@ define(
         		return true;
         	},
 
-        	start: function () {
+            getMerchantId: function () {
+                return window.checkoutConfig.payment.braspag.merchantId;
+            },
 
-        		var options = {};
+        	start: function (options) {
+                options.merchantId = this.getMerchantId();
+                options.log = true;
 
         		superdebitoLib.superdebito(options);
-
-        		return options;
         	}
 
         };
