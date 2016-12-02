@@ -154,10 +154,10 @@ define(
                         console.log(response);
                     },
                     onAuthorize: function(response) {
-                        console.log(response);
+                        redirectOnSuccessAction.execute();
                     },
                     onNotAuthorize: function(response) {
-                        console.log(response);
+                        redirectOnSuccessAction.execute();
                     },
                     onFinalize: function(response) {
                         console.log(response);
