@@ -14,9 +14,20 @@ define(
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'jquery',
         'Magento_Checkout/js/action/place-order',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/full-screen-loader',
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
     ],
-    function (Component, $t, sopt, $, placeOrderAction, fullScreenLoader) {
+    function (
+        Component,
+        $t,
+        sopt,
+        $,
+        placeOrderAction,
+        fullScreenLoader,
+        additionalValidators,
+        RedirectAfterPlaceOrder
+    ) {
         'use strict';
 
         return Component.extend({
@@ -139,6 +150,45 @@ define(
                 return $.when(
                     placeOrderAction(this.getData(), this.messageContainer)
                 );
+            },
+
+            placeOrder: function (data, event) {
+                var self = this;
+
+                if (event) {
+                    event.preventDefault();
+                }
+
+                if (this.validate() && additionalValidators.validate()) {
+                    this.isPlaceOrderActionAllowed(false);
+
+                    this.getPlaceOrderDeferredObject()
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                            function (orderId) {
+                                self.afterPlaceOrder();
+
+                                if (self.isAuthenticated()) {
+                                    return RedirectAfterPlaceOrder(orderId);
+                                }
+
+                                if (self.redirectAfterPlaceOrder) {
+                                    redirectOnSuccessAction.execute();
+                                }
+                            }
+                        );
+
+                    return true;
+                }
+
+                return false;
+            },
+
+            isAuthenticated: function () {
+                return window.checkoutConfig.payment.ccform.authenticate.active[this.getCode()];
             }
 
         });
