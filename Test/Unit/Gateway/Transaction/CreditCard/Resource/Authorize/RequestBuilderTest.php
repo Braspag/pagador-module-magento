@@ -2,28 +2,34 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request as AntiFraudRequest;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as AvsRequest;
 
 class RequestBuilderTest extends \PHPUnit_Framework_TestCase
 {
     private $requestBuilder;
     private $requestMock;
-    private $scopeConfigMock;
+    private $configMock;
     private $antiFraudRequestMock;
+    private $avsRequestMock;
 
     public function setUp()
     {
         $this->requestMock = $this->getMockBuilder(RequestInterface::class)
             ->getMockForAbstractClass();
 
-        $this->scopeConfigMock = $this->getMockBuilder(ScopeConfigInterface::class)
+        $this->configMock = $this->getMockBuilder(ConfigInterface::class)
             ->getMockForAbstractClass();
 
         $this->antiFraudRequestMock = $this->getMockBuilder(AntiFraudRequest::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->avsRequestMock = $this->getMockBuilder(AvsRequest::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -33,7 +39,8 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         $this->requestBuilder = new RequestBuilder(
             $this->requestMock,
             $this->antiFraudRequestMock,
-            $this->scopeConfigMock
+            $this->avsRequestMock,
+            $this->configMock
         );
     }
 
@@ -59,12 +66,6 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($infoMock));
-
-
-        $this->scopeConfigMock->expects($this->once())
-            ->method('getValue')
-            ->with(AntiFraudConfigInterface::XML_PATH_ACTIVE)
-            ->will($this->returnValue(true));
 
         $this->antiFraudRequestMock->expects($this->once())
             ->method('setOrderAdapter')
@@ -115,11 +116,6 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($infoMock));
-
-        $this->scopeConfigMock->expects($this->once())
-            ->method('getValue')
-            ->with(AntiFraudConfigInterface::XML_PATH_ACTIVE)
-            ->will($this->returnValue(false));
 
         $this->antiFraudRequestMock->expects($this->never())
             ->method('setOrderAdapter')

@@ -87,13 +87,13 @@ class RequestBuilder implements BuilderInterface
         return $this->requestAntiFraud;
     }
 
-    public function setAvsRequest(RequestAvsLibInterface $requestAvs)
+    protected function setAvsRequest(RequestAvsLibInterface $requestAvs)
     {
         $this->requestAvs = $requestAvs;
         return $this;
     }
 
-    public function getRequestAvs()
+    protected function getRequestAvs()
     {
         return $this->requestAvs;
     }
