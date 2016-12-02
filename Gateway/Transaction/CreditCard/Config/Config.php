@@ -3,7 +3,6 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Config implements ConfigInterface
@@ -19,11 +18,9 @@ class Config implements ConfigInterface
 
     public function __construct(
         ScopeConfigInterface $config,
-        SessionManagerInterface $session,
         StoreManagerInterface $storeManager
     ){
         $this->setConfig($config);
-        $this->setSession($session);
         $this->setStoreManager($storeManager);
     }
 
@@ -72,22 +69,6 @@ class Config implements ConfigInterface
     public function getIdentityAttributeCode()
     {
         return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/customer_identity_attribute_code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    /**
-     * @return SessionManagerInterface
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
-
-    /**
-     * @param SessionManagerInterface $session
-     */
-    protected function setSession(SessionManagerInterface $session)
-    {
-        $this->session = $session;
     }
 
 	public function getSilentOrderPostUri()
