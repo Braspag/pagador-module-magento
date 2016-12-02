@@ -174,6 +174,7 @@
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
             <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="objectManager" xsi:type="object">Magento\Framework\ObjectManager\ObjectManager</argument>
         </arguments>
     </virtualType>
 

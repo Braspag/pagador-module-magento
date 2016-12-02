@@ -2,6 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
+            <braspag_pagador_config>
+                <return_url><![CDATA[checkout/onepage/success]]></return_url>
+            </braspag_pagador_config>
             <braspag_pagador_billet>
                 <active>1</active>
                 <model>BraspagTransactionBilletRemoteMethodAdapter</model>

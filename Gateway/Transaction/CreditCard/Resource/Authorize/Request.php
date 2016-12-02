@@ -217,7 +217,12 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getPaymentAuthenticate()
     {
-        return null;
+        return (bool) $this->getConfig()->getAuthenticate3DsVbv();
+    }
+
+    public function getReturnUrl()
+    {
+        return $this->getConfig()->getReturnUrl();
     }
 
     public function getPaymentSoftDescriptor()

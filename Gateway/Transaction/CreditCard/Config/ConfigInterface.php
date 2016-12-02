@@ -29,5 +29,10 @@ interface ConfigInterface
 
     public function hasAvs();
 
-	public function getSilentOrderPostUri();
+    public function getAuthenticate3DsVbv();
+
+    public function getReturnUrl();
+
+    public function getSilentOrderPostUri();
+
 }
