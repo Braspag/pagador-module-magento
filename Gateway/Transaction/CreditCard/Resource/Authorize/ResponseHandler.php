@@ -112,6 +112,10 @@ class ResponseHandler implements HandlerInterface
             $payment->setAdditionalInformation('braspag_pagador_avs_return_code', $avsResponse->getReturnCode());
         }
 
+        if ($response->getAuthenticationUrl()) {
+            $payment->setAdditionalInformation('redirect_url', $response->getAuthenticationUrl());
+        }
+
         return $this;
     }
 

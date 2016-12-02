@@ -23,11 +23,14 @@ interface ConfigInterface
 
     public function getIdentityAttributeCode();
 
-    public function getSession();
-
     public function hasAntiFraud();
 
     public function hasAvs();
 
-	public function getSilentOrderPostUri();
+    public function getAuthenticate3DsVbv();
+
+    public function getReturnUrl();
+
+    public function getSilentOrderPostUri();
+
 }

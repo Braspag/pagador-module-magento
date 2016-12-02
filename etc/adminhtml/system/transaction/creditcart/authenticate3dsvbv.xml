@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_creditcard_authenticate_3ds_vbv" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="89">
+    	<label>Authenticate 3DS/VBV</label>
+	    <field id="authenticate_3ds_vbv" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Active</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_creditcard/authenticate_3ds_vbv</config_path>
+	    </field>
+	</group>
+</include>

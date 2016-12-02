@@ -3,21 +3,25 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
-use Magento\Framework\Session\SessionManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
+
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
-	protected $config;
+	private $config;
 
-	protected $scopeConfig;
-    protected $session;
+	private $scopeConfigMock;
+    
+    private $storeManagerMock;
 
     public function setUp()
     {
-    	$this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->session = $this->getMockBuilder(SessionManagerInterface::class)->getMockForAbstractClass();
+    	$this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->storeManagerMock = $this->getMockBuilder(StoreManagerInterface::class)
+            ->getMock();
+
     	$this->config = new Config(
-    		$this->scopeConfig,
-            $this->session
+    		$this->scopeConfigMock,
+            $this->storeManagerMock
     	);
     }
 
@@ -28,22 +32,22 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testgetData()
     {
-    	$this->scopeConfig->expects($this->at(0))
+    	$this->scopeConfigMock->expects($this->at(0))
     	    ->method('getValue')
     	    ->with('payment/braspag_pagador_global/merchant_id')
     	    ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
-    	$this->scopeConfig->expects($this->at(1))
+    	$this->scopeConfigMock->expects($this->at(1))
     	    ->method('getValue')
     	    ->with('payment/braspag_pagador_global/merchant_key')
     	    ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
-        $this->scopeConfig->expects($this->at(2))
+        $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
             ->with('payment/braspag_pagador_creditcard/payment_action')
             ->will($this->returnValue('authorize_capture'));
 
-        $this->scopeConfig->expects($this->at(3))
+        $this->scopeConfigMock->expects($this->at(3))
             ->method('getValue')
             ->with('payment/braspag_pagador_creditcard/soft_config')
             ->will($this->returnValue('Texto que será impresso na fatura do portador'));
