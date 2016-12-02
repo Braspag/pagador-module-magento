@@ -1,6 +1,6 @@
 # Braspag Pagador Module integration for Magento 2
 
-still in alpha version
+still in alpha version | [![Build Status](https://travis-ci.org/webjump/magento2-module-braspagpagador.svg?branch=master)](https://travis-ci.org/webjump/magento2-module-braspagpagador)
 
 # Install:
 
