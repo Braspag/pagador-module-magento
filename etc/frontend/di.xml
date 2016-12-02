@@ -80,6 +80,7 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
+                <item name="braspag_pagador_base_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui\ConfigProvider</item>
                 <item name="braspag_pagador_billet_config_provider" xsi:type="object">BraspagTransactionBilletUiConfigProvider</item>
                 <item name="braspag_pagador_creditcard_config_provider" xsi:type="object">BraspagTransactionCreditCardUiConfigProvider</item>
                 <item name="braspag_pagador_creditcardtoken_config_provider" xsi:type="object">BraspagTransactionCreditCardTokenUiConfigProvider</item>

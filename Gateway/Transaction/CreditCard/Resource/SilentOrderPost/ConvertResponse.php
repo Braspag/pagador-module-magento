@@ -6,6 +6,12 @@ class ConvertResponse implements \Magento\Payment\Gateway\Http\ConverterInterfac
 {
     public function convert($source)
     {
-    	return new SilentOrderPost(json_decode($source, true));
+    	$silentOrderPost = new SilentOrderPost;
+
+    	if (!empty($source)) {
+    		$silentOrderPost->setData((json_decode($source, true)));
+    	}
+
+    	return $silentOrderPost;
     }
 }

@@ -8,6 +8,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
     <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
         <arguments>

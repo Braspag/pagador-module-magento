@@ -41,7 +41,7 @@
             <span><!-- ko i18n: 'Debit Card Number'--><!-- /ko --></span>
         </label>
         <div class="control">
-            <input type="number" name="payment[cc_number]" class="input-text" value=""
+            <input type="number" name="payment[cc_number]" class="input-text bp-sd-cardnumber" value=""
                    data-bind="attr: {
                                     autocomplete: off,
                                     id: getCode() + '_cc_number',
@@ -60,7 +60,7 @@
         <div class="control">
             <input type="text"
                    autocomplete="off"
-                   class="input-text owner"
+                   class="input-text owner bp-sd-cardholdername"
                    name="payment[cc_owner]"
                    data-bind="attr: {id: getCode() + '_cc_owner',
                         title: $t('Name on Card'),
@@ -105,6 +105,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" class="bp-sd-cardexpirationdate superdebito" data-bind="value: creditCardExpDate">
         </div>
     </div>
     <!-- ko if: (hasVerification())-->
@@ -115,7 +116,7 @@
         <div class="control _with-tooltip">
             <input type="number"
                    autocomplete="off"
-                   class="input-text cvv"
+                   class="input-text cvv bp-sd-cardcvv"
                    name="payment[cc_cid]"
                    value=""
                    data-bind="attr: {id: getCode() + '_cc_cid',
@@ -138,5 +139,9 @@
         </div>
     </div>
     <!-- /ko -->
+
+    <input type="hidden" class="bp-sd-merchantordernumber superdebito" data-bind="value: merchantOrderNumber">
+    <input type="hidden" class="bp-sd-customername superdebito" data-bind="value: customerName">
+    <input type="hidden" class="bp-sd-amount superdebito" data-bind="value: amount">
 
 </fieldset>
