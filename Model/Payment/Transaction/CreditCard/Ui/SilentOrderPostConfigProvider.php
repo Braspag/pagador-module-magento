@@ -39,8 +39,8 @@ final class SilentOrderPostConfigProvider implements ConfigProviderInterface
             'payment' => [
                 'ccform' => [
                     'silentorderpost' => [
-                        'active' => [$this->getCode() => $this->getSilentOrderPostConfig()->isActive($this->getCode())],
-                        'url' => [$this->getCode() => $this->getSilentOrderPostConfig()->getUrl($this->getCode())],
+                        'active' => [$this->getCode() => $this->getSilentOrderPostConfig()->isActive()],
+                        'url' => [$this->getCode() => $this->getSilentOrderPostConfig()->getUrl()],
                         'accesstoken' => [$this->getCode() => $this->getSilentorderPostBuilder()->build()],
                     ],
                 ]

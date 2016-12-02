@@ -38,8 +38,10 @@ class FingerPrintTest extends \PHPUnit_Framework_TestCase
         $this->scopeFingerPrintMock = $this->getMockBuilder(ScopeConfigInterface::class)
             ->getMockForAbstractClass();
 
-        $this->sessionMock = $this->getMockBuilder(SessionManagerInterface::class)
-            ->getMockForAbstractClass();
+        $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
+            ->setMethods(['getQuote', 'getSessionId'])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     public function testGetSrcPngImageUrl()
@@ -92,10 +94,57 @@ class FingerPrintTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSessionId()
     {
-        $this->scopeFingerPrintMock->expects($this->once())
+        $this->scopeFingerPrintMock->expects($this->at(0))
+            ->method('getValue')
+            ->with(\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
+            ->will($this->returnValue(false));
+
+        $this->scopeFingerPrintMock->expects($this->at(1))
             ->method('getValue')
             ->with('payment/braspag_pagador_global/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
+
+        $this->sessionMock->expects($this->once())
+            ->method('getSessionId')
+            ->will($this->returnValue(self::SESSION_ID));
+
+        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+
+        $sessionIdExpected = self::SESSION_ID . self::MERCHANT_ID;
+
+        $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
+    }
+
+    public function testGetSessionIdFromQuoteId()
+    {
+        $this->scopeFingerPrintMock->expects($this->at(0))
+            ->method('getValue')
+            ->with(\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
+            ->will($this->returnValue(true));
+
+        $this->scopeFingerPrintMock->expects($this->at(1))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_global/merchant_id')
+            ->will($this->returnValue(self::MERCHANT_ID));
+
+        $quoteMock = $this->getMockBuilder('Magento\Quote\Model\Quote')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $quoteMock->expects($this->at(0))
+            ->method('getReservedOrderId')
+            ->will($this->returnValue(0));
+
+        $quoteMock->expects($this->once())
+            ->method('reserveOrderId');
+
+        $quoteMock->expects($this->at(2))
+            ->method('getReservedOrderId')
+            ->will($this->returnValue(self::SESSION_ID));
+
+        $this->sessionMock->expects($this->once())
+            ->method('getQuote')
+            ->will($this->returnValue($quoteMock));
 
         $this->sessionMock->expects($this->once())
             ->method('getSessionId')

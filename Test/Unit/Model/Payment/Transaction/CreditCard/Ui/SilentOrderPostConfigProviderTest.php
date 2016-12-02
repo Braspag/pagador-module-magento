@@ -15,18 +15,32 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
 	{
         $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface');
 
+        $this->silentorderPostConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfigInterface');
+
 		$this->configProvider = new SilentOrderPostConfigProvider(
-            $this->silentorderPostBuilderMock
+            'braspag_pagador_creditcard',
+            $this->silentorderPostBuilderMock,
+            $this->silentorderPostConfigMock
         );
 	}
 
     public function testGetConfig()
     {
         $token = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
+        $code = \Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE;
 
         $this->silentorderPostBuilderMock->expects($this->once())
             ->method('build')
             ->will($this->returnValue($token));
+
+        $this->silentorderPostConfigMock->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(true));
+
+        $this->silentorderPostConfigMock->expects($this->once())
+            ->method('getUrl')
+            ->will($this->returnValue('http://test.com.br'));
+
 
         static::assertEquals(
             [
@@ -34,9 +48,8 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
                     'ccform' => [
                         'silentorderpost' => [
                             'accesstoken' => ['braspag_pagador_creditcard' => $token],
-                            'requesttimeout' => ['braspag_pagador_creditcard' => 5000],
-                            'environment' => ['braspag_pagador_creditcard' => 'sandbox'],
-                            'language' => ['braspag_pagador_creditcard' => 'PT'],
+                            'active' => ['braspag_pagador_creditcard' => true],
+                            'url' => ['braspag_pagador_creditcard' => 'http://test.com.br'],
                         ],
                     ]
                 ]

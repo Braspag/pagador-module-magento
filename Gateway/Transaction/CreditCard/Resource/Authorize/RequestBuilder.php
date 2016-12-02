@@ -2,9 +2,12 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 /**
  * Braspag Transaction Billet Send Request Builder
  *
@@ -16,15 +19,23 @@ use Magento\Payment\Gateway\Request\BuilderInterface;
  */
 class RequestBuilder implements BuilderInterface
 {
-	protected $request;
-
+    protected $request;
+    protected $requestAntiFraud;
+    protected $requestAvs;
     protected $orderRepository;
+    protected $config;
 
-	public function __construct(
-		RequestInterface $request
-	) {
+    public function __construct (
+        BaseRequestInterface $request,
+        RequestAntiFraudLibInterface $requestAntiFraud,
+        RequestAvsLibInterface $requestAvs,
+        ConfigInterface $config
+    ) {
         $this->setRequest($request);
-	}
+        $this->setAntiFraudRequest($requestAntiFraud);
+        $this->setAvsRequest($requestAvs);
+        $this->setConfig($config);
+    }
 
     public function build(array $buildSubject)
     {
@@ -36,10 +47,28 @@ class RequestBuilder implements BuilderInterface
         $orderAdapter = $paymentDataObject->getOrder();
         $paymentData = $paymentDataObject->getPayment();
 
+        if($this->getConfig()->hasAntiFraud()) {
+            $this->getRequestAntiFraud()->setOrderAdapter($orderAdapter);
+            $this->getRequestAntiFraud()->setPaymentData($paymentData);
+            $this->getRequest()->setAntiFraudRequest($this->getRequestAntiFraud());
+        }
+
+        if($this->getConfig()->hasAvs()) {
+            $this->getRequestAvs()->setOrderAdapter($orderAdapter);
+            $this->getRequestAvs()->setPaymentData($paymentData);
+            $this->getRequest()->setAvsRequest($this->getRequestAvs());
+        }
+
         $this->getRequest()->setOrderAdapter($orderAdapter);
         $this->getRequest()->setPaymentData($paymentData);
 
         return $this->getRequest();
+    }
+
+    protected function setRequest(BaseRequestInterface $request)
+    {
+        $this->request = $request;
+        return $this;
     }
 
     protected function getRequest()
@@ -47,10 +76,36 @@ class RequestBuilder implements BuilderInterface
         return $this->request;
     }
 
-    protected function setRequest(RequestInterface $request)
+    protected function setAntiFraudRequest(RequestAntiFraudLibInterface $requestAntiFraud)
     {
-        $this->request = $request;
-
+        $this->requestAntiFraud = $requestAntiFraud;
         return $this;
+    }
+
+    protected function getRequestAntiFraud()
+    {
+        return $this->requestAntiFraud;
+    }
+
+    protected function setAvsRequest(RequestAvsLibInterface $requestAvs)
+    {
+        $this->requestAvs = $requestAvs;
+        return $this;
+    }
+
+    protected function getRequestAvs()
+    {
+        return $this->requestAvs;
+    }
+
+    protected function setConfig(ConfigInterface $config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+    protected  function getConfig()
+    {
+        return $this->config;
     }
 }

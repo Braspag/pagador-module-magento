@@ -54,5 +54,7 @@ crashlytics-build.properties
 ### Composer ###
 composer.phar
 /vendor/
-composer.lock
+/composer.lock
 /build/
+
+Test/output/

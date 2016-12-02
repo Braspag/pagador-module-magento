@@ -5,4 +5,16 @@
  *
  * @link        http://www.webjump.com.br
  */
-var config = {};
+var config = {
+	shim: {
+		"Webjump_BraspagPagador/js/vendor/superdebitoLib": {
+			export: 'superdebito',
+			init: function () {
+				return {
+					superdebito: superdebito
+				}
+			}
+		}
+	}
+}
+
