@@ -200,6 +200,7 @@
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
             <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudRequest</argument>
+            <argument name="requestAvs" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAvsRequest</argument>
             <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
         </arguments>
     </virtualType>
@@ -218,6 +219,13 @@
             <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudItemsRequestFactory</argument>
         </arguments>
     </virtualType>
+
+    <virtualType name="BraspagPagadorTransactionCreditCardResourceAvsRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
 
     <virtualType name="BraspagPagadorTransactionCreditCardConfigAntiFraudConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig">
         <arguments>

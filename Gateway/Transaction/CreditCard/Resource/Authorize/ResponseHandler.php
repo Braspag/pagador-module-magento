@@ -10,6 +10,7 @@ use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface as VelocityResponseInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface as VelocityReasonsResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface as AvsResponseInterface;
 /**
 
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -101,6 +102,14 @@ class ResponseHandler implements HandlerInterface
                 }
                 $payment->setAdditionalInformation('braspag_pagador_velocity_reject_reasons', serialize($reasons));
             }
+        }
+
+        if ($response->getAvs() instanceof AvsResponseInterface) {
+            /** @var AvsResponseInterface $avsResponse */
+            $avsResponse = $response->getAvs();
+
+            $payment->setAdditionalInformation('braspag_pagador_avs_status', $avsResponse->getStatus());
+            $payment->setAdditionalInformation('braspag_pagador_avs_return_code', $avsResponse->getReturnCode());
         }
 
         return $this;

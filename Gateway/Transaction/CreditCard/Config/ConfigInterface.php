@@ -27,5 +27,7 @@ interface ConfigInterface
 
     public function hasAntiFraud();
 
+    public function hasAvs();
+
 	public function getSilentOrderPostUri();
 }

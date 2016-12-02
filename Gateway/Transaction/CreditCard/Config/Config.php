@@ -11,6 +11,7 @@ class Config implements ConfigInterface
     protected $session;
 
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
+    const XML_CONFIG_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
 
     public function __construct(
         ScopeConfigInterface $config,
@@ -43,6 +44,11 @@ class Config implements ConfigInterface
     public function hasAntiFraud()
     {
         return $this->getConfig()->getValue(AntiFraudConfigInterface::XML_PATH_ACTIVE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function hasAvs()
+    {
+        return $this->getConfig()->getValue(static::XML_CONFIG_AVS_ACTIVE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIdentityAttributeCode()

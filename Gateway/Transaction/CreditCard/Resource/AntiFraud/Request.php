@@ -34,6 +34,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     /**
      * @param ConfigInterface $config
      * @param RequestFactory $requestItemFactory
+     * @todo inject config anti-fraud
      */
     public function __construct(ConfigInterface $config, RequestFactory $requestItemFactory)
     {

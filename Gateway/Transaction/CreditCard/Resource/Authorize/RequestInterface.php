@@ -2,9 +2,9 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
-use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Magento\Payment\Model\InfoInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Request Interface
@@ -15,11 +15,9 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterfac
  *
  * @link        http://www.webjump.com.br
  */
-interface RequestInterface
+interface RequestInterface extends BaseRequestInterface
 {
-    public function setOrderAdapter(OrderAdapterInterface $order);
-
-    public function setPaymentData(InfoInterface $payment);
-
     public function setAntiFraudRequest(RequestAntiFraudLibInterface $requestAntiFraud);
+
+    public function setAvsRequest(RequestAvsLibInterface $requestAntiFraud);
 }
