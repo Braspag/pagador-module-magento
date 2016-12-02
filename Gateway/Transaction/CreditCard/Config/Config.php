@@ -4,13 +4,13 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
-use Magento\Framework\ObjectManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Config implements ConfigInterface
 {
     protected $config;
     protected $session;
-    protected $objectManager;
+    protected $storeManager;
 
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const XML_CONFIG_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
@@ -20,11 +20,11 @@ class Config implements ConfigInterface
     public function __construct(
         ScopeConfigInterface $config,
         SessionManagerInterface $session,
-        ObjectManagerInterface $objectManager
+        StoreManagerInterface $storeManager
     ){
         $this->setConfig($config);
         $this->setSession($session);
-        $this->setObjectManager($objectManager);
+        $this->setStoreManager($storeManager);
     }
 
     public function getMerchantId()
@@ -64,10 +64,9 @@ class Config implements ConfigInterface
 
     public function getReturnUrl()
     {
-        return $this->getObjectManager()->get('Magento\Store\Model\StoreManagerInterface')
-            ->getBaseUrl()
-
-            . $this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->getStoreManager()->getStore()->getUrl(
+            $this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
+        );
     }
 
     public function getIdentityAttributeCode()
@@ -112,15 +111,21 @@ class Config implements ConfigInterface
         return $this;
     }
 
-    protected function getObjectManager()
+    /**
+     * @return StoreManagerInterface
+     */
+    protected function getStoreManager()
     {
-        return $this->objectManager;
+        return $this->storeManager;
     }
 
-    protected function setObjectManager(ObjectManagerInterface $objectManager)
+    /**
+     * @param StoreManagerInterface $storeManager
+     * @return $this
+     */
+    protected function setStoreManager(StoreManagerInterface $storeManager)
     {
-        $this->objectManager = $objectManager;
-
+        $this->storeManager = $storeManager;
         return $this;
     }
 }
