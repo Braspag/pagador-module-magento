@@ -40,6 +40,9 @@ final class ConfigProvider implements ConfigProviderInterface
                         'active' => [self::CODE => true],
                         'list' => $this->getInstallments(),
                     ],
+                    'authenticate' => [
+                        'active' => [self::CODE => true]
+                    ],
                 ]
             ]
         ];

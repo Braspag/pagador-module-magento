@@ -27,6 +27,8 @@ class Validator implements ValidatorInterface
 	const ABORTED = 13;
 	const SCHEDULED = 20;
 
+    protected $statusDenied;
+
     public function validate(array $validationSubject)
     {
         if (!isset($validationSubject['response']) || !$validationSubject['response'] instanceof ResponseInterface) {
@@ -37,11 +39,28 @@ class Validator implements ValidatorInterface
         $status = true;
         $message = [];
 
-        if (in_array($response->getPaymentStatus(), [self::DENIED, self::VOIDED, self::ABORTED, self::NOTFINISHED])) {
+        if (in_array($response->getPaymentStatus(), $this->getStatusDenied($response))) {
         	$status = false;
         	$message = [$response->getPaymentProviderReturnMessage()];
         }
 
     	return new Result($status, $message);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     */
+    protected function getStatusDenied(ResponseInterface $response)
+    {
+        if (! $this->statusDenied) {
+            $this->statusDenied = [self::DENIED, self::VOIDED, self::ABORTED];
+
+            if (! $response->getAuthenticationUrl()) {
+                $this->statusDenied[] = self::NOTFINISHED;
+            }
+        }
+
+        return $this->statusDenied;
     }
 }

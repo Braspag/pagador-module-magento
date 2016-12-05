@@ -21,6 +21,7 @@ define(
             fullScreenLoader.startLoader();
             var serviceUrl;
 
+
             serviceUrl = urlBuilder.createUrl('/braspag/redirect-after-placeorder/:orderId/link', {
                 orderId: orderId
             });
