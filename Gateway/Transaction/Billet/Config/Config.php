@@ -5,6 +5,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 
 /**
  * Braspag Transaction Billet Config
@@ -15,10 +16,8 @@ use Magento\Framework\Stdlib\DateTime;
  *
  * @link        http://www.webjump.com.br
  */
-class Config implements ConfigInterface
+class Config extends BaseConfig implements ConfigInterface
 {
-	protected $config;
-
 	protected $date;
 
 	public function __construct(
@@ -29,57 +28,30 @@ class Config implements ConfigInterface
 		$this->setDate($date);
 	}
 
-	public function getMerchantId()
-	{
-		return $this->_getConfig('merchant_id');
-	}
-
-	public function getMerchantKey()
-	{
-		return $this->_getConfig('merchant_key');
-	}
-
 	public function getPaymentDemonstrative()
 	{
-		return $this->_getConfig('demonstrative');
+		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_DEMONSTRATIVE);
 	}
 
 	public function getPaymentInstructions()
 	{
-		return $this->_getConfig('instructions');
+		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_INSTRUCTIONS);
 	}
 
 	public function getPaymentAssignor()
 	{
-		return $this->_getConfig('assignor');
+		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR);
 	}
 
 	public function getExpirationDate()
 	{
-		return $this->getDate()->gmDate('Y-m-d', strtotime(sprintf('+%s day', (int) $this->_getConfig('expiration_days'))));
+		return $this->getDate()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE))));
 	}
 
 	public function getPaymentProvider()
 	{
-		return $this->_getConfig('provider');
+		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER);
 	}
-
-	protected function _getConfig($field)
-	{
-		return $this->getConfig()->getValue('payment/braspag_pagador_billet/' . $field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-	}
-
-    protected function getConfig()
-    {
-        return $this->config;
-    }
-
-    protected function setConfig(ScopeConfigInterface $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
 
     protected function getDate()
     {

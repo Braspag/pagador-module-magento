@@ -8,14 +8,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 
-	protected $scopeConfig;
+	protected $scopeConfigMock;
 
     public function setUp()
     {
-    	$this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+    	$this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
     	$this->config = new Config(
-    		$this->scopeConfig
+    		$this->scopeConfigMock
     	);
     }
 
@@ -26,11 +26,23 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testgetData()
     {
-    	$this->scopeConfig->expects($this->at(0))
-    	    ->method('getValue')
-    	    ->with('payment/braspag_pagador_global/merchant_id')
-    	    ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+        $this->scopeConfigMock->expects($this->at(0))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_global/merchant_id')
+            ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+
+        $this->scopeConfigMock->expects($this->at(1))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_global/merchant_key')
+            ->will($this->returnValue('0123456789012345678901234567890123456789'));
+
+        $this->scopeConfigMock->expects($this->at(2))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_global/test_mode')
+            ->will($this->returnValue(true));
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());
+        static::assertEquals('0123456789012345678901234567890123456789', $this->config->getMerchantKey());
+        static::assertTrue($this->config->isTestMode());
     }
 }

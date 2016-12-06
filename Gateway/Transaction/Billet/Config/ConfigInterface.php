@@ -13,6 +13,14 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Config;
  */
 interface ConfigInterface
 {
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_DEMONSTRATIVE = 'payment/braspag_pagador_billet/demonstrative';
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_INSTRUCTIONS = 'payment/braspag_pagador_billet/instructions';
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR = 'payment/braspag_pagador_billet/assignor';
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE = 'payment/braspag_pagador_billet/expiration_days';
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER = 'payment/braspag_pagador_billet/provider';
+
+	const DAY_FORMAT = '+%s day';
+	
 	public function getMerchantId();
 
 	public function getMerchantKey();
