@@ -4,6 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
+
 /**
  * Braspag Transaction Base Request Interface
  *

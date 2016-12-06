@@ -13,5 +13,11 @@
 	        <comment>Public key for Double Authentication Braspag. Leave empty to use demo account or contact Braspag to get your own merchant id.</comment>
 	        <config_path>payment/braspag_pagador_global/merchant_key</config_path>
 	    </field>
+        <field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Demo Mode Active</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_global/test_mode</config_path>
+        </field>
 	</group>	    
 </include>
