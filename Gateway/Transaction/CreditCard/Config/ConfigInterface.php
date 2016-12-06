@@ -33,4 +33,5 @@ interface ConfigInterface
 
     public function getSilentOrderPostUri();
 
+    public function getSession();
 }

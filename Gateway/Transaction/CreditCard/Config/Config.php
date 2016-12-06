@@ -3,25 +3,28 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Config implements ConfigInterface
 {
-    protected $config;
-    protected $session;
-    protected $storeManager;
-
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const XML_CONFIG_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
     const XML_CONFIG_3DS_VBV_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_vbv';
     const XML_CONFIG_RETURN_URL = 'payment/braspag_pagador_config/return_url';
 
+    protected $config;
+    protected $session;
+    protected $storeManager;
+
     public function __construct(
         ScopeConfigInterface $config,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        SessionManagerInterface $session
     ){
         $this->setConfig($config);
         $this->setStoreManager($storeManager);
+        $this->setSession($session);
     }
 
     public function getMerchantId()
@@ -61,9 +64,9 @@ class Config implements ConfigInterface
 
     public function getReturnUrl()
     {
-        return $this->getStoreManager()->getStore()->getUrl(
-            $this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
-        );
+        $url = (string) str_replace('index.php/', '', $this->getStoreManager()->getStore()->getUrl($this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL)));
+
+        return substr($url, 0, -1);
     }
 
     public function getIdentityAttributeCode()
@@ -75,6 +78,22 @@ class Config implements ConfigInterface
 	{
 		return 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=' . $this->getMerchantId();
 	}
+
+    /**
+     * @return SessionManagerInterface
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * @param SessionManagerInterface $session
+     */
+    protected function setSession(SessionManagerInterface $session)
+    {
+        $this->session = $session;
+    }
 
     protected function getConfig()
     {
