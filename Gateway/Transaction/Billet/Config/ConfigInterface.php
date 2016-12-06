@@ -17,7 +17,7 @@ interface ConfigInterface
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_INSTRUCTIONS = 'payment/braspag_pagador_billet/instructions';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR = 'payment/braspag_pagador_billet/assignor';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE = 'payment/braspag_pagador_billet/expiration_days';
-	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER = 'payment/braspag_pagador_billet/provider';
+	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER = 'payment/braspag_pagador_billet/types';
 
 	const DAY_FORMAT = '+%s day';
 	
