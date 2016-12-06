@@ -77,6 +77,9 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                                 ],
                             ],
                         ],
+                        'authenticate' => [
+                            'active' => ['braspag_pagador_creditcard' => true]
+                        ],
                     ]
                 ]
             ],
@@ -97,6 +100,9 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                         'installments' => [
                             'active' => ['braspag_pagador_creditcard' => true],
                             'list' => [],
+                        ],
+                        'authenticate' => [
+                            'active' => ['braspag_pagador_creditcard' => true]
                         ],
                     ]
                 ]
