@@ -16,8 +16,8 @@ define(
 
         return {
 			
-        	isActive: function () {
-        		return true;
+        	isActive: function (code) {
+        		return window.checkoutConfig.payment.dcform.superdebito.active[code];
         	},
 
             getMerchantId: function () {

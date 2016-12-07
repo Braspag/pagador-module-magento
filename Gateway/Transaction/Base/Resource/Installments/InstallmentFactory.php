@@ -1,22 +1,27 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Pricing\Helper\Data;
+
 class InstallmentFactory implements InstallmentFactoryInterface
 {
 	protected $objectManager;
 
 	protected $priceHelper;
 
+    protected $installmentClass;
+
 	public function __construct(
 		ObjectManagerInterface $objectManager,
-        Data $priceHelper
+        Data $priceHelper,
+        $installmentClass = 'Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment'
 	) {
 		$this->setObjectManager($objectManager);
         $this->setPriceHelper($priceHelper);
+        $this->setInstallmentClass($installmentClass);
 	}
 
     public function create($index, $total, InstallmentsConfigInterface $installmentsConfig)
@@ -45,7 +50,7 @@ class InstallmentFactory implements InstallmentFactoryInterface
 
     protected function getNewInstallmentInstance()
     {
-        return $this->getObjectManager()->create('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->getPriceHelper()]);
+        return $this->getObjectManager()->create($this->getInstallmentClass(), ['priceHelper' => $this->getPriceHelper()]);
     }
 
     protected function getObjectManager()
@@ -68,6 +73,18 @@ class InstallmentFactory implements InstallmentFactoryInterface
     protected function setPriceHelper(Data $priceHelper)
     {
         $this->priceHelper = $priceHelper;
+
+        return $this;
+    }
+
+    protected function getInstallmentClass()
+    {
+        return $this->installmentClass;
+    }
+
+    protected function setInstallmentClass($installmentClass)
+    {
+        $this->installmentClass = $installmentClass;
 
         return $this;
     }

@@ -33,6 +33,7 @@
                 <cctypes>Simulado</cctypes>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <installments_active>0</installments_active>
                 <installments_interest_by_issuer>0</installments_interest_by_issuer>
                 <installments_number>12</installments_number>
                 <installments_is_with_interest>1</installments_is_with_interest>

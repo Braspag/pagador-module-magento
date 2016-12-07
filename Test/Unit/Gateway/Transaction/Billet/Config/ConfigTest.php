@@ -65,7 +65,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfigMock->expects($this->at(6))
             ->method('getValue')
-            ->with('payment/braspag_pagador_billet/provider')
+            ->with('payment/braspag_pagador_billet/types')
             ->will($this->returnValue('payment provider'));
 
         $this->dateTimeMock->expects($this->once())

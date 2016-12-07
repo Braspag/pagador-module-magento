@@ -18,4 +18,6 @@ interface ConfigInterface
 	public function getMerchantKey();
 
 	public function getPaymentReturnUrl();
+
+	public function isSuperDebitoActive();
 }

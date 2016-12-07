@@ -11,7 +11,7 @@
     <route url="/V1/braspag/redirect-after-placeorder/:orderId/link" method="POST">
         <service class="Webjump\BraspagPagador\Api\RedirectPaymentInterface" method="getLink"/>
         <resources>
-            <resource ref="self"></resource>
+            <resource ref="anonymous" />
         </resources>
     </route>
 

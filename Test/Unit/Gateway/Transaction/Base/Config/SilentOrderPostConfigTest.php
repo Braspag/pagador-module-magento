@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Config;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig;
 
 /**
  * 
@@ -21,11 +21,13 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+
+        $this->code = 'payment_method_custom';
 
         $this->config = new SilentOrderPostConfig(
-            'braspag_pagador_creditcard',
-            $this->scopeConfig            
+            $this->scopeConfigMock,
+            $this->code
         );
     }
 
@@ -36,19 +38,19 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testIsActive() 
     {
-        $this->scopeConfig->expects($this->at(0))
+        $this->scopeConfigMock->expects($this->at(0))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_active')
+            ->with('payment/payment_method_custom/silentorderpost_active')
             ->will($this->returnValue(1));
 
-        $this->scopeConfig->expects($this->at(1))
+        $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_is_sandbox_mode')
-            ->will($this->returnValue(1));
+            ->with('payment/braspag_pagador_global/test_mode')
+            ->will($this->returnValue(true));
 
-        $this->scopeConfig->expects($this->at(2))
+        $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_url_homolog')
+            ->with('payment/payment_method_custom/silentorderpost_url_homolog')
             ->will($this->returnValue('http://teste.com/'));
 
         static::assertTrue($this->config->isActive());
@@ -57,19 +59,19 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testIsActiveWithSandboxDisabled() 
     {
-        $this->scopeConfig->expects($this->at(0))
+        $this->scopeConfigMock->expects($this->at(0))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_active')
+            ->with('payment/payment_method_custom/silentorderpost_active')
             ->will($this->returnValue(1));
 
-        $this->scopeConfig->expects($this->at(1))
+        $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_is_sandbox_mode')
-            ->will($this->returnValue(0));
+            ->with('payment/braspag_pagador_global/test_mode')
+            ->will($this->returnValue(false));
 
-        $this->scopeConfig->expects($this->at(2))
+        $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/silentorderpost_url_production')
+            ->with('payment/payment_method_custom/silentorderpost_url_production')
             ->will($this->returnValue('http://teste.com/'));
 
         static::assertTrue($this->config->isActive());

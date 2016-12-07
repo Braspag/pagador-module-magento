@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
 interface InstallmentInterface
 {

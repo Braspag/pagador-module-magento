@@ -27,7 +27,7 @@ class RedirectPayment implements RedirectPaymentInterface
 
     public function getLink($orderId)
     {
-    	$orderPayment = $this->getOrderPaymentRepository()->get($orderId);
+    	$orderPayment = $this->getOrderPaymentRepository()->get((int) $orderId);
 
     	$additionalInformation = $orderPayment->getAdditionalInformation();
         if (!is_object($additionalInformation)) {

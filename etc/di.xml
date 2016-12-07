@@ -3,12 +3,13 @@
 
     <preference for="Webjump\BraspagPagador\Api\CardTokenRepositoryInterface" type="Webjump\BraspagPagador\Model\CardTokenRepository" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
-    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder" />
-    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
-    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder" />
     <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
+    <preference for="Webjump\BraspagPagador\Model\Payment\Info\BilletFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
         <arguments>
@@ -18,22 +19,13 @@
 
     <virtualType name="BraspagTransactionCreditCardSilentOrderConverterZendClient" type="Magento\Payment\Gateway\Http\Client\Zend">
         <arguments>
-            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\ConvertResponse</argument>
+            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\ConvertResponse</argument>
         </arguments>
     </virtualType>
 
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder">
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder">
         <arguments>
             <argument name="client" xsi:type="object">BraspagTransactionCreditCardSilentOrderConverterZendClient</argument>
-        </arguments>
-    </type>
-
-    <!-- Installments Builder/Config -->
-
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory">
-        <arguments>
-            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
-            <argument name="priceHelper" xsi:type="object">\Magento\Framework\Pricing\Helper\Data</argument>
         </arguments>
     </type>
 
@@ -47,20 +39,6 @@
         <arguments>
             <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
             <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
-        </arguments>
-    </type>
-
-    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig">
-        <arguments>
-            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
-        </arguments>
-    </type>
-
-    <type name="\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder">
-        <arguments>
-             <argument name="instalLmentfactory" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory</argument>
-             <argument name="installmentsConfig" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig</argument>
-             <argument name="cart" xsi:type="object">Magento\Checkout\Model\Cart</argument>
         </arguments>
     </type>
 
@@ -177,9 +155,9 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig">
+    <virtualType name="BraspagTransactionCreditCardInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
         <arguments>
-            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
