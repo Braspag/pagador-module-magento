@@ -4,7 +4,7 @@
     <preference for="Webjump\BraspagPagador\Api\CardTokenRepositoryInterface" type="Webjump\BraspagPagador\Model\CardTokenRepository" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" /> 
-    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder" />
     <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
@@ -18,11 +18,11 @@
 
     <virtualType name="BraspagTransactionCreditCardSilentOrderConverterZendClient" type="Magento\Payment\Gateway\Http\Client\Zend">
         <arguments>
-            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\ConvertResponse</argument>
+            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\ConvertResponse</argument>
         </arguments>
     </virtualType>
 
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder">
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder">
         <arguments>
             <argument name="client" xsi:type="object">BraspagTransactionCreditCardSilentOrderConverterZendClient</argument>
         </arguments>

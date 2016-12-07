@@ -32,9 +32,4 @@ class Config extends AbstractConfig implements ConfigInterface
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY);
 	}
-
-	public function isTestMode()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE);
-	}
 }

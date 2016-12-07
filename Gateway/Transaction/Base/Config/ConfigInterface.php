@@ -15,13 +15,10 @@ interface ConfigInterface
 {
 	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID = 'payment/braspag_pagador_global/merchant_id';
 	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY = 'payment/braspag_pagador_global/merchant_key';
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'payment/braspag_pagador_global/test_mode';
 	
 	const DATE_FORMAT = 'Y-m-d';
 
     public function getMerchantId();
 
     public function getMerchantKey();
-
-    public function isTestMode();
 }

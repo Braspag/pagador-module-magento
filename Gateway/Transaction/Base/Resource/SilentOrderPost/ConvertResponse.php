@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
 class ConvertResponse implements \Magento\Payment\Gateway\Http\ConverterInterface
 {

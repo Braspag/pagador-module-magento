@@ -36,13 +36,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->with('payment/braspag_pagador_global/merchant_key')
             ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
-        $this->scopeConfigMock->expects($this->at(2))
-            ->method('getValue')
-            ->with('payment/braspag_pagador_global/test_mode')
-            ->will($this->returnValue(true));
-
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->config->getMerchantKey());
-        static::assertTrue($this->config->isTestMode());
     }
 }
