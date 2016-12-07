@@ -14,7 +14,7 @@ namespace Webjump\BraspagPagador\Block\Payment\Info;
 use Magento\Payment\Block\Info;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\ObjectManagerInterface;
+use Webjump\BraspagPagador\Model\Payment\Info\BilletFactoryInterface;
 use Webjump\BraspagPagador\Model\Payment\Info\BilletFactory;
 
 class Billet extends Info
@@ -24,10 +24,13 @@ class Billet extends Info
     /** @var BilletFactory */
     private $billetFactory;
 
-    public function __construct(Context $context, ObjectManagerInterface $objectManager, array $data = [])
-    {
+    public function __construct(
+        Context $context,
+        BilletFactoryInterface $billetFactory,
+        array $data = []
+    ) {
         parent::__construct($context, $data);
-        $this->billetFactory = $objectManager->create(BilletFactory::class);
+        $this->billetFactory = $billetFactory;
     }
 
     public function _construct()

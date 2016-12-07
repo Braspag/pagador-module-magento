@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
 class SilentOrderPost extends \Magento\Framework\DataObject implements SilentOrderPostInterface
 {

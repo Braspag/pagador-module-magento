@@ -13,7 +13,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
-        $this->installmentsconfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface');
+        $this->installmentsconfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
     	$this->request = new Request(
             $this->configMock,

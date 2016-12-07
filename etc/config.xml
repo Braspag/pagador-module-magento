@@ -5,6 +5,11 @@
             <braspag_pagador_config>
                 <return_url><![CDATA[checkout/onepage/success]]></return_url>
             </braspag_pagador_config>
+            <braspag_pagador_global>
+                <merchant_id>BC5D3432-527F-40C6-84BF-C549285536BE</merchant_id>
+                <merchant_key>yv3hzQuDfcUnNxcgkUifz4EQVPeeAwfedilpROwn</merchant_key>
+                <test_mode>1</test_mode>
+            </braspag_pagador_global>
             <braspag_pagador_billet>
                 <active>1</active>
                 <model>BraspagTransactionBilletRemoteMethodAdapter</model>
@@ -28,6 +33,7 @@
                 <cctypes>Simulado</cctypes>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <installments_active>0</installments_active>
                 <installments_interest_by_issuer>0</installments_interest_by_issuer>
                 <installments_number>12</installments_number>
                 <installments_is_with_interest>1</installments_is_with_interest>

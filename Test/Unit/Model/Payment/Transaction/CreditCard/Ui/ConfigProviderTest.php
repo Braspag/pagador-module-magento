@@ -9,94 +9,29 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 {
 	private $configProvider;
 
-    private $builderComposite;
+    private $creditCardConfig;
 
 	public function setUp()
 	{
-        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface');
-
-        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface');
+        $this->creditCardConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
-            $this->installmentsBuilderMock,
-            $this->silentorderPostBuilderMock
+            $this->creditCardConfig
         );
 	}
 
     public function testGetConfig()
     {
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
-
-        $installments1->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue(1));
-
-        $installments1->expects($this->once())
-            ->method('getLabel')
-            ->will($this->returnValue(__('1x R$10,00 without interest')));
-
-        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
-
-        $installments2->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue(2));
-
-        $installments2->expects($this->once())
-            ->method('getLabel')
-            ->will($this->returnValue(__('2x R$5,00 without interest')));
-
-        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
-
-        $installments3->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue(3));
-
-        $installments3->expects($this->once())
-            ->method('getLabel')
-            ->will($this->returnValue(__('3x R$3,80 with interest*')));
-
-        $this->installmentsBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue([
-                $installments1,
-                $installments2,
-                $installments3,
-            ]));
+        $this->creditCardConfig->expects($this->once())
+            ->method('isAuthenticate3DsVbv')
+            ->will($this->returnValue(true));
 
         static::assertEquals(
             [
                 'payment' => [
                     'ccform' => [
-                        'installments' => [
-                            'active' => ['braspag_pagador_creditcard' => true],
-                            'list' => [
-                                'braspag_pagador_creditcard' => [
-                                    1 => __('1x R$10,00 without interest'),
-                                    2 => __('2x R$5,00 without interest'),
-                                    3 => __('3x R$3,80 with interest*'),
-                                ],
-                            ],
-                        ],
-                    ]
-                ]
-            ],
-            $this->configProvider->getConfig()
-        );
-    }
-
-    public function testGetConfigWithoutInstallments()
-    {
-        $this->installmentsBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue([]));
-
-        static::assertEquals(
-            [
-                'payment' => [
-                    'ccform' => [
-                        'installments' => [
-                            'active' => ['braspag_pagador_creditcard' => true],
-                            'list' => [],
+                        'authenticate' => [
+                            'active' => ['braspag_pagador_creditcard' => true]
                         ],
                     ]
                 ]

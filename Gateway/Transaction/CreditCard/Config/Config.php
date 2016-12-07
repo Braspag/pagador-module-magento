@@ -57,9 +57,9 @@ class Config implements ConfigInterface
         return $this->getConfig()->getValue(static::XML_CONFIG_AVS_ACTIVE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
-    public function getAuthenticate3DsVbv()
+    public function isAuthenticate3DsVbv()
     {
-        return $this->getConfig()->getValue(static::XML_CONFIG_3DS_VBV_AUTHENTICATE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return (bool) $this->getConfig()->getValue(static::XML_CONFIG_3DS_VBV_AUTHENTICATE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getReturnUrl()

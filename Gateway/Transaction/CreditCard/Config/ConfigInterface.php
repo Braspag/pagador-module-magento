@@ -27,7 +27,7 @@ interface ConfigInterface
 
     public function hasAvs();
 
-    public function getAuthenticate3DsVbv();
+    public function isAuthenticate3DsVbv();
 
     public function getReturnUrl();
 

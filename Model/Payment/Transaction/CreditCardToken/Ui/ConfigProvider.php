@@ -3,11 +3,11 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface as InstallmentsBuilder;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface as InstallmentsBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface as TokensBuilder;
 use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 
 /**
  * Braspag Transaction CreditCard Token

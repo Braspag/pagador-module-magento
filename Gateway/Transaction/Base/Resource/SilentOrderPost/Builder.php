@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;

@@ -13,9 +13,9 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface');
+        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
 
-        $this->silentorderPostConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfigInterface');
+        $this->silentorderPostConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
 		$this->configProvider = new SilentOrderPostConfigProvider(
             'braspag_pagador_creditcard',
@@ -50,6 +50,34 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
                             'accesstoken' => ['braspag_pagador_creditcard' => $token],
                             'active' => ['braspag_pagador_creditcard' => true],
                             'url' => ['braspag_pagador_creditcard' => 'http://test.com.br'],
+                        ],
+                    ]
+                ]
+            ],
+
+            $this->configProvider->getConfig()
+        );
+    }
+
+    public function testGetConfigDisabled()
+    {
+        $this->silentorderPostBuilderMock->expects($this->never())
+            ->method('build');
+
+        $this->silentorderPostConfigMock->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(false));
+
+        $this->silentorderPostConfigMock->expects($this->never())
+            ->method('getUrl');
+
+
+        static::assertEquals(
+            [
+                'payment' => [
+                    'ccform' => [
+                        'silentorderpost' => [
+                            'active' => ['braspag_pagador_creditcard' => false]
                         ],
                     ]
                 ]

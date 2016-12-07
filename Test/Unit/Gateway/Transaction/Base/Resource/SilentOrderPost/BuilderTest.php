@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\SilentOrderPost;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\SilentOrderPost;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\Builder;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder;
 
 /**
  *
@@ -73,7 +73,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ->method('build')
             ->will($this->returnValue($this->tranferMock));
 
-        $this->responseMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\SilentOrderPostInterface');
+        $this->responseMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\SilentOrderPostInterface');
 
         $this->responseMock->expects($this->once())
             ->method('getAccessToken')

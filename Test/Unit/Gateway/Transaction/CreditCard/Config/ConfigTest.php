@@ -18,10 +18,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     	$this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->storeManagerMock = $this->getMockBuilder(StoreManagerInterface::class)
             ->getMock();
+        $this->sessionMock = $this->getMockBuilder('Magento\Framework\Session\SessionManagerInterface')
+            ->getMock();
 
     	$this->config = new Config(
     		$this->scopeConfigMock,
-            $this->storeManagerMock
+            $this->storeManagerMock,
+            $this->sessionMock
     	);
     }
 

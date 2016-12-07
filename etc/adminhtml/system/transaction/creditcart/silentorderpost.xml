@@ -14,11 +14,5 @@
 	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 	        <config_path>payment/braspag_pagador_creditcard/silentorderpost_active</config_path>
 	    </field>
-	    <field id="silentorderpost_sandboxmode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
-	        <label>Sandbox Mode</label>
-	        <comment />
-	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-	        <config_path>payment/braspag_pagador_creditcard/silentorderpost_is_sandbox_mode</config_path>
-	    </field>
 	</group>
 </include>

@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Installments;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactory;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory;
 
 class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,9 +12,11 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
 	private $objectManagerMock;
 
+    private $installmentClass;
+
     public function setUp()
     {
-    	$this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface');
+    	$this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
     	$this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->getMockForAbstractClass();
@@ -22,6 +24,8 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
         $this->pricingHelper = $this->getMockBuilder('Magento\Framework\Pricing\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->installmentClass = null;
 
     	$this->factory = new InstallmentFactory(
     		$this->objectManagerMock,
@@ -36,7 +40,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
     	$installmentMock->expects($this->once())
     	    ->method('setIndex')
@@ -52,7 +56,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
 
         $this->installmentsConfigMock->expects($this->once())
@@ -66,7 +70,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateWithInterest()
     {
-    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installmentMock->expects($this->once())
             ->method('setIndex')
@@ -82,7 +86,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
 
         $this->installmentsConfigMock->expects($this->once())
@@ -100,7 +104,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateWithInterestWithMaxWithouInterest()
     {
-        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installmentMock->expects($this->once())
             ->method('setIndex')
@@ -116,7 +120,7 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
             ->willReturn($installmentMock);
 
         $this->installmentsConfigMock->expects($this->once())
@@ -128,6 +132,42 @@ class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(5));
 
         $result = $this->factory->create(3, 100.00, $this->installmentsConfigMock);
+
+        static::assertSame($installmentMock, $result);
+    }
+
+    public function testCreateWithCustomClass()
+    {
+        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+
+        $this->factory = new InstallmentFactory(
+            $this->objectManagerMock,
+            $this->pricingHelper,
+            'Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment'
+        );
+
+        $installmentMock->expects($this->once())
+            ->method('setIndex')
+            ->with(1);
+
+        $installmentMock->expects($this->once())
+            ->method('setPrice')
+            ->with(100.00);
+
+        $installmentMock->expects($this->once())
+            ->method('setWithInterest')
+            ->with(false);
+
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment', ['priceHelper' => $this->pricingHelper])
+            ->willReturn($installmentMock);
+
+        $this->installmentsConfigMock->expects($this->once())
+            ->method('isInterestByIssuer')
+            ->will($this->returnValue(false));
+
+        $result = $this->factory->create(1, 100.00, $this->installmentsConfigMock);
 
         static::assertSame($installmentMock, $result);
     }

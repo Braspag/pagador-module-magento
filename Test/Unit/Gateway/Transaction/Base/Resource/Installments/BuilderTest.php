@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Installments;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Builder;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder;
 
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,20 +12,22 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     private $installmentsConfigMock;
 
-    private $cartMock;
+    private $sessionMock;
 
     public function setUp()
     {
-        $this->installmentFactoryMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentFactoryInterface');
+        $this->installmentFactoryMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface');
 
-        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface');
+        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
-        $this->cartMock = $this->getMock('Magento\Checkout\Model\Cart\CartInterface');
+        $this->sessionMock = $this->getMockBuilder('Magento\Checkout\Model\Session')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->builder = new Builder(
             $this->installmentFactoryMock,
             $this->installmentsConfigMock,
-            $this->cartMock
+            $this->sessionMock
         );        
     }
 
@@ -44,13 +46,13 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getGrandTotal')
             ->will($this->returnValue('100.00'));
 
-        $this->cartMock->expects($this->once())
+        $this->sessionMock->expects($this->once())
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
-        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
-        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')
@@ -97,11 +99,11 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getGrandTotal')
             ->will($this->returnValue('5.00'));
 
-        $this->cartMock->expects($this->once())
+        $this->sessionMock->expects($this->once())
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')

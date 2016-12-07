@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Installments;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\Installment;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
 
 class InstallmentTest extends \PHPUnit_Framework_TestCase
 {

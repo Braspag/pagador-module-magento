@@ -17,6 +17,7 @@ define(
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Magento_Checkout/js/action/redirect-on-success'
     ],
     function (
         Component,
@@ -26,7 +27,8 @@ define(
         placeOrderAction,
         fullScreenLoader,
         additionalValidators,
-        RedirectAfterPlaceOrder
+        RedirectAfterPlaceOrder,
+        redirectOnSuccessAction
     ) {
         'use strict';
 

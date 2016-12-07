@@ -41,8 +41,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->with('payment/braspag_pagador_debitcard/return_url')
             ->will($this->returnValue('http://test.com'));
 
+        $this->scopeConfig->expects($this->at(3))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_debitcard/superdebit_active')
+            ->will($this->returnValue(true));
+
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->config->getMerchantKey());
         static::assertEquals('http://test.com', $this->config->getPaymentReturnUrl());
+        static::assertTrue($this->config->isSuperDebitoActive());
     }
 }
+

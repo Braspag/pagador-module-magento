@@ -3,8 +3,8 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\SilentOrderPostConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Command
@@ -35,19 +35,29 @@ final class SilentOrderPostConfigProvider implements ConfigProviderInterface
 
     public function getConfig()
     {
-        $config = [
+        if (!$active = $this->getSilentOrderPostConfig()->isActive()) {
+            return [
+                'payment' => [
+                    'ccform' => [
+                        'silentorderpost' => [
+                            'active' => [$this->getCode() => $active],
+                        ],
+                    ]
+                ]
+            ];
+        }
+
+        return [
             'payment' => [
                 'ccform' => [
                     'silentorderpost' => [
-                        'active' => [$this->getCode() => $this->getSilentOrderPostConfig()->isActive()],
+                        'active' => [$this->getCode() => $active],
                         'url' => [$this->getCode() => $this->getSilentOrderPostConfig()->getUrl()],
                         'accesstoken' => [$this->getCode() => $this->getSilentorderPostBuilder()->build()],
                     ],
                 ]
             ]
         ];
-
-        return $config;
     }
 
     protected function getSilentorderPostBuilder()

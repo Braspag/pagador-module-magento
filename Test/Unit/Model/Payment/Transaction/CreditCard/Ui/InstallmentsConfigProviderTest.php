@@ -1,25 +1,25 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCardToken\Ui;
+namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\Ui;
 
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider;
+use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\InstallmentsConfigProvider;
 use Magento\Framework\Phrase;
 
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class InstallmentsConfigProviderTest extends \PHPUnit_Framework_TestCase
 {
 	private $configProvider;
 
     private $builderComposite;
 
+    private $code;
+
 	public function setUp()
 	{
         $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
-        $this->tokensBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
         $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
-		$this->configProvider = new ConfigProvider(
+		$this->configProvider = new InstallmentsConfigProvider(
             $this->installmentsBuilderMock,
-            $this->tokensBuilderMock,
             $this->installmentsConfigMock
         );
 	}
@@ -64,35 +64,8 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 $installments3,
             ]));
 
-        $token1 = $this->getMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
-
-        $token1->expects($this->once())
-            ->method('getToken')
-            ->will($this->returnValue('token 1'));
-
-        $token1->expects($this->once())
-            ->method('getAlias')
-            ->will($this->returnValue(__('alias 1')));
-
-        $token2 = $this->getMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
-
-        $token2->expects($this->once())
-            ->method('getToken')
-            ->will($this->returnValue('token 2'));
-
-        $token2->expects($this->once())
-            ->method('getAlias')
-            ->will($this->returnValue(__('alias 2')));
-
-        $this->tokensBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue([
-                $token1,
-                $token2,
-            ]));
-
-        $this->installmentsConfigMock->expects($this->once())
-            ->method('isInterestByIssuer')
+        $this->installmentsConfigMock->expects($this->exactly(2))
+            ->method('isActive')
             ->will($this->returnValue(true));
 
         static::assertEquals(
@@ -100,20 +73,14 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 'payment' => [
                     'ccform' => [
                         'installments' => [
-                            'active' => ['braspag_pagador_creditcardtoken' => true],
+                            'active' => ['braspag_pagador_creditcard' => true],
                             'list' => [
-                                'braspag_pagador_creditcardtoken' => [
+                                'braspag_pagador_creditcard' => [
                                     1 => __('1x R$10,00 without interest'),
                                     2 => __('2x R$5,00 without interest'),
                                     3 => __('3x R$3,80 with interest*'),
                                 ],
                             ],
-                        ],
-                        'tokens' => [
-                            'list' => ['braspag_pagador_creditcardtoken' => [
-                                'token 1' => __('alias 1'),
-                                'token 2' => __('alias 2'),
-                            ]],
                         ],
                     ]
                 ]
@@ -128,12 +95,8 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('build')
             ->will($this->returnValue([]));
 
-        $this->tokensBuilderMock->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue([]));
-
-        $this->installmentsConfigMock->expects($this->once())
-            ->method('isInterestByIssuer')
+        $this->installmentsConfigMock->expects($this->exactly(2))
+            ->method('isActive')
             ->will($this->returnValue(true));
 
         static::assertEquals(
@@ -141,10 +104,33 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 'payment' => [
                     'ccform' => [
                         'installments' => [
-                            'active' => ['braspag_pagador_creditcardtoken' => true],
+                            'active' => ['braspag_pagador_creditcard' => true],
                             'list' => [],
                         ],
-                        'tokens' => [
+                    ]
+                ]
+            ],
+            $this->configProvider->getConfig()
+        );
+    }
+
+    public function testGetConfigInstallmentsDisabled()
+    {
+        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+
+        $this->installmentsBuilderMock->expects($this->never())
+            ->method('build');
+
+        $this->installmentsConfigMock->expects($this->exactly(2))
+            ->method('isActive')
+            ->will($this->returnValue(false));
+
+        static::assertEquals(
+            [
+                'payment' => [
+                    'ccform' => [
+                        'installments' => [
+                            'active' => ['braspag_pagador_creditcard' => false],
                             'list' => [],
                         ],
                     ]
