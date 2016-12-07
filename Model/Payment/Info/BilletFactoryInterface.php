@@ -8,12 +8,12 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Api\Factories;
+namespace Webjump\BraspagPagador\Model\Payment\Info;
 
 
 use Magento\Sales\Api\Data\OrderInterface;
 
-interface FactoryInterface
+interface BilletFactoryInterface
 {
     public function create(OrderInterface $order);
 }

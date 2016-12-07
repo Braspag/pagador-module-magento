@@ -20,31 +20,17 @@ class BilletFactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $billetFactory;
     private $orderMock;
-    private $billetMock;
-    private $objectManagerMock;
 
     public function setUp()
     {
         $this->orderMock = $this->getMockBuilder(OrderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->billetMock = $this->getMockBuilder(Billet::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->objectManagerMock =  $this->getMockBuilder(ObjectManagerInterface::class)
-            ->getMockForAbstractClass();
     }
 
     public function testCreate()
     {
-        $this->objectManagerMock->expects($this->once())
-            ->method('create')
-            ->with(Billet::class, ['order' => $this->orderMock])
-            ->will($this->returnValue($this->billetMock));
-
-        $this->billetFactory = new BilletFactory($this->objectManagerMock);
+        $this->billetFactory = new BilletFactory();
 
         $this->assertInstanceOf(Billet::class, $this->billetFactory->create($this->orderMock));
     }

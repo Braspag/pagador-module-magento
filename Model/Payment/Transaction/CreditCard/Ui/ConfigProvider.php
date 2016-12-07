@@ -3,8 +3,7 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfig;
 
 /**
  * Braspag Transaction CreditCard Authorize Command
@@ -19,16 +18,12 @@ final class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'braspag_pagador_creditcard';
 
-    protected $installments = [];
-
-    protected $installmentsBuilder;
-
-    protected $silentorderPostBuilder;
+    protected $creditCardConfig;
 
     public function __construct(
-        InstallmentsBuilder $installmentsBuilder
-    ) {
-        $this->setInstallmentsBuilder($installmentsBuilder);
+        CreditCardConfig $creditCardConfig
+    ){
+        $this->setCreditCardConfig($creditCardConfig);
     }
 
     public function getConfig()
@@ -36,12 +31,8 @@ final class ConfigProvider implements ConfigProviderInterface
         $config = [
             'payment' => [
                 'ccform' => [
-                    'installments' => [
-                        'active' => [self::CODE => true],
-                        'list' => $this->getInstallments(),
-                    ],
                     'authenticate' => [
-                        'active' => [self::CODE => true]
+                        'active' => [self::CODE => $this->getCreditCardConfig()->isAuthenticate3DsVbv()]
                     ],
                 ]
             ]
@@ -50,23 +41,14 @@ final class ConfigProvider implements ConfigProviderInterface
         return $config;
     }
 
-    protected function getInstallments()
+    public function getCreditCardConfig()
     {
-        foreach ($this->getInstallmentsBuilder()->build() as $installment) {
-            $this->installments[self::CODE][$installment->getId()] = $installment->getLabel();
-        }
-
-    	return $this->installments;
+        return $this->creditCardConfig;
     }
 
-    protected function getInstallmentsBuilder()
+    protected function setCreditCardConfig($creditCardConfig)
     {
-        return $this->installmentsBuilder;
-    }
-
-    protected function setInstallmentsBuilder($installmentsBuilder)
-    {
-        $this->installmentsBuilder = $installmentsBuilder;
+        $this->creditCardConfig = $creditCardConfig;
 
         return $this;
     }

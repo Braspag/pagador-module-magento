@@ -4,8 +4,8 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
-use Magento\Checkout\Model\Cart\CartInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface;
+use Magento\Checkout\Model\Session;
 
 class Builder implements BuilderInterface
 {
@@ -17,7 +17,7 @@ class Builder implements BuilderInterface
 
 	protected $installmentFactory;
 
-	protected $cart;
+	protected $session;
 
 	protected $grandTotal;
 
@@ -26,11 +26,11 @@ class Builder implements BuilderInterface
 	public function __construct(
 		InstallmentFactoryInterface $instalLmentfactory,
 		InstallmentsConfigInterface $installmentsConfig,
-		CartInterface $cart
+		Session $session
 	) {
 		$this->setInstalLmentfactory($instalLmentfactory);
 		$this->setInstallmentsConfig($installmentsConfig);
-		$this->setCart($cart);
+		$this->setSession($session);
 	}
 
     public function build()
@@ -74,7 +74,7 @@ class Builder implements BuilderInterface
     protected function getGrandTotal()
     {
     	if (!$this->grandTotal) {
-    		$this->grandTotal = $this->getCart()->getQuote()->getGrandTotal();
+    		$this->grandTotal = $this->getSession()->getQuote()->getGrandTotal();
     	}
 
     	return $this->grandTotal;
@@ -104,14 +104,14 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function getCart()
+    protected function getSession()
     {
-        return $this->cart;
+        return $this->session;
     }
 
-    protected function setCart(CartInterface $cart)
+    protected function setSession(Session $session)
     {
-        $this->cart = $cart;
+        $this->session = $session;
 
         return $this;
     }
