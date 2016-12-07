@@ -17,6 +17,12 @@ abstract class AbstractConfig
 {
 	protected $config;
 
+    public function __construct(
+        ScopeConfigInterface $config
+    ){
+        $this->setConfig($config);
+    }
+
 	protected function _getConfig($uri)
 	{
 		return $this->getConfig()->getValue($uri, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);

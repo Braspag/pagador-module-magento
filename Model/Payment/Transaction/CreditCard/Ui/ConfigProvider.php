@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
 
 /**

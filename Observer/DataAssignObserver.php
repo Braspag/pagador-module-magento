@@ -47,6 +47,8 @@ class DataAssignObserver extends AbstractDataAssignObserver
             'cc_exp_year' => $additionalData->getCcExpYear()
         ]);
 
+        $info->setAdditionalInformation('cc_installments', 1);
+
         if ($additionalData->getCcInstallments()) {
             $info->setAdditionalInformation('cc_installments', (int) $additionalData->getCcInstallments());
         }

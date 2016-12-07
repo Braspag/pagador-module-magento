@@ -13,9 +13,9 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\BuilderInterface');
+        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
         $this->tokensBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
-        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfigInterface');
+        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
             $this->installmentsBuilderMock,
@@ -26,7 +26,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConfig()
     {
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments1->expects($this->once())
             ->method('getId')
@@ -36,7 +36,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('1x R$10,00 without interest')));
 
-        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments2->expects($this->once())
             ->method('getId')
@@ -46,7 +46,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('2x R$5,00 without interest')));
 
-        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments3->expects($this->once())
             ->method('getId')
