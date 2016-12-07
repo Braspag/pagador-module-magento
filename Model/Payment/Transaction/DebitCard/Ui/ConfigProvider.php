@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 
 /**
  * Braspag Transaction DebitCard Authorize Command
@@ -17,8 +18,38 @@ final class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'braspag_pagador_debitcard';
 
+    protected $debitConfig;
+
+    public function __construct(
+        ConfigInterface $debitConfig
+    ) {
+        $this->setDebitConfig($debitConfig);
+    }
+
     public function getConfig()
     {
-        return [];
+        $config = [
+            'payment' => [
+                'dcform' => [
+                    'superdebito' => [
+                        'active' => [self::CODE => $this->getDebitConfig()->isSuperDebitoActive()]
+                    ],
+                ]
+            ]
+        ];
+
+        return $config;
+    }
+
+    protected function getDebitConfig()
+    {
+        return $this->debitConfig;
+    }
+
+    protected function setDebitConfig($debitConfig)
+    {
+        $this->debitConfig = $debitConfig;
+
+        return $this;
     }
 }

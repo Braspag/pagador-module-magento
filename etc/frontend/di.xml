@@ -116,6 +116,7 @@
                 <!-- <item name="braspag_pagador_creditcardtoken_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardTokenInstallmentsUiConfigProvider</item> -->
                 
                 <item name="braspag_pagador_debitcard_config_provider" xsi:type="object">BraspagTransactionDebitCardOrderUiConfigProvider</item>
+                <item name="braspag_pagador_debitcard_default_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider</item>
             </argument>
         </arguments>
     </type>

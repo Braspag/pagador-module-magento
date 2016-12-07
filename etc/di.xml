@@ -9,6 +9,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
     <preference for="Webjump\BraspagPagador\Model\Payment\Info\BilletFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
         <arguments>

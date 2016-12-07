@@ -38,6 +38,10 @@ class Config implements ConfigInterface
 		return $this->getConfig()->getValue('payment/braspag_pagador_debitcard/return_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
 
+	public function isSuperDebitoActive()
+	{
+		return (bool) $this->getConfig()->getValue('payment/braspag_pagador_debitcard/superdebit_active', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+	}
 
     protected function getConfig()
     {

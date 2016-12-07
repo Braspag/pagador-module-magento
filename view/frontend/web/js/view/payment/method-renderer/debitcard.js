@@ -119,7 +119,7 @@ define(
                             }
                         ).done(
                             function (orderId) {
-                                if (SuperDebito.isActive()) {
+                                if (SuperDebito.isActive(self.getCode())) {
                                     return self.placeOrderWithSuperDebito(orderId);
                                 }
 
