@@ -42,12 +42,6 @@
 
     <!-- Credit Card Installments -->
 
-    <virtualType name="BraspagTransactionCreditCardInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
-        <arguments>
-            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
-        </arguments>
-    </virtualType>
-
     <virtualType name="BraspagTransactionCreditCardInstallmentsBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder">
         <arguments>
             <argument name="installmentsConfig" xsi:type="object">BraspagTransactionCreditCardInstallmentsConfig</argument>

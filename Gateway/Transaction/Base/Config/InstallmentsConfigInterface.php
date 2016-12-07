@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
 interface InstallmentsConfigInterface
 {
-	const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_ACTIVE = 'payment/%s/installments_is_active';
+	const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_ACTIVE = 'payment/%s/installments_active';
 	const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_NUMBER = 'payment/%s/installments_number';
 	const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_WITH_INTEREST = 'payment/%s/installments_is_with_interest';
 	const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MIN_MOUNT = 'payment/%s/installment_min_amount';

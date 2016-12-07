@@ -63,7 +63,7 @@ class InstallmentsConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfig->expects($this->at(6))
             ->method('getValue')
-            ->with('payment/payment_method_custom/installments_is_active')
+            ->with('payment/payment_method_custom/installments_active')
             ->will($this->returnValue(1));
 
         static::assertEquals(10, $this->config->getInstallmentsNumber());

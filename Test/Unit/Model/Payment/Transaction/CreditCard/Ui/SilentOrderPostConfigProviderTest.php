@@ -58,4 +58,32 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
             $this->configProvider->getConfig()
         );
     }
+
+    public function testGetConfigDisabled()
+    {
+        $this->silentorderPostBuilderMock->expects($this->never())
+            ->method('build');
+
+        $this->silentorderPostConfigMock->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(false));
+
+        $this->silentorderPostConfigMock->expects($this->never())
+            ->method('getUrl');
+
+
+        static::assertEquals(
+            [
+                'payment' => [
+                    'ccform' => [
+                        'silentorderpost' => [
+                            'active' => ['braspag_pagador_creditcard' => false]
+                        ],
+                    ]
+                ]
+            ],
+
+            $this->configProvider->getConfig()
+        );
+    }
 }

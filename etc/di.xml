@@ -154,9 +154,9 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\InstallmentsConfig">
+    <virtualType name="BraspagTransactionCreditCardInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
         <arguments>
-            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
