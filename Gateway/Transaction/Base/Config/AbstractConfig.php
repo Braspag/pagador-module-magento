@@ -58,7 +58,7 @@ abstract class AbstractConfig
         return $this->getContext()->getConfig();
     }
 
-    protected function getSession()
+    public function getSession()
     {
         return $this->getContext()->getSession();
     }
