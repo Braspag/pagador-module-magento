@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 /**
  * 
@@ -16,24 +17,20 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig
 class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 {
     private $config;
-
-    private $scopeConfig;
+    private $contextMock;
+    private $scopeConfigMock;
 
     public function setUp()
     {
         $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-
-        $this->code = 'payment_method_custom';
+        $this->contextMock = $this->getMock(ContextInterface::class);
 
         $this->config = new SilentOrderPostConfig(
-            $this->scopeConfigMock,
-            $this->code
+            $this->contextMock,
+            [
+                'code' => 'payment_method_custom'
+            ]
         );
-    }
-
-    public function tearDown()
-    {
-
     }
 
     public function testIsActive() 
@@ -52,6 +49,10 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
             ->method('getValue')
             ->with('payment/payment_method_custom/silentorderpost_url_homolog')
             ->will($this->returnValue('http://teste.com/'));
+
+        $this->contextMock->expects($this->exactly(3))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
 
         static::assertTrue($this->config->isActive());
         static::assertEquals('http://teste.com/', $this->config->getUrl());
@@ -73,6 +74,11 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
             ->method('getValue')
             ->with('payment/payment_method_custom/silentorderpost_url_production')
             ->will($this->returnValue('http://teste.com/'));
+
+        $this->contextMock->expects($this->exactly(3))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
+
 
         static::assertTrue($this->config->isActive());
         static::assertEquals('http://teste.com/', $this->config->getUrl());

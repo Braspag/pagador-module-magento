@@ -2,49 +2,30 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Session\SessionManagerInterface;
-use Magento\Store\Model\StoreManagerInterface;
 
-class Config implements ConfigInterface
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+
+class Config extends AbstractConfig implements ConfigInterface
 {
-    const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
-    const XML_CONFIG_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
-    const XML_CONFIG_3DS_VBV_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_vbv';
-    const XML_CONFIG_RETURN_URL = 'payment/braspag_pagador_config/return_url';
-
-    protected $config;
-    protected $session;
-    protected $storeManager;
-
-    public function __construct(
-        ScopeConfigInterface $config,
-        StoreManagerInterface $storeManager,
-        SessionManagerInterface $session
-    ){
-        $this->setConfig($config);
-        $this->setStoreManager($storeManager);
-        $this->setSession($session);
-    }
-
     public function getMerchantId()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->getConfig()->getValue(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getMerchantKey()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_key', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->getConfig()->getValue(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function isAuthorizeAndCapture()
     {
-        return (self::ACTION_AUTHORIZE_CAPTURE === $this->getConfig()->getValue('payment/braspag_pagador_creditcard/payment_action', \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+        return (static::ACTION_AUTHORIZE_CAPTURE === $this->getConfig()->getValue(static::XML_CONFIG_PAYMENT_ACTION, \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
     }
 
     public function getSoftDescriptor()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/soft_config', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->getConfig()->getValue(static::XML_CONFIG_SOFT_ACTION, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function hasAntiFraud()
@@ -65,13 +46,12 @@ class Config implements ConfigInterface
     public function getReturnUrl()
     {
         $url = (string) str_replace('index.php/', '', $this->getStoreManager()->getStore()->getUrl($this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL)));
-
         return substr($url, 0, -1);
     }
 
     public function getIdentityAttributeCode()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/customer_identity_attribute_code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->getConfig()->getValue(static::XML_CONFIG_CUSTOMER_IDENTITY_ATTRIBUTE_CODE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
 	public function getSilentOrderPostUri()
@@ -79,53 +59,8 @@ class Config implements ConfigInterface
 		return 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=' . $this->getMerchantId();
 	}
 
-    /**
-     * @return SessionManagerInterface
-     */
-    public function getSession()
+	public function getSession()
     {
-        return $this->session;
-    }
-
-    /**
-     * @param SessionManagerInterface $session
-     */
-    protected function setSession(SessionManagerInterface $session)
-    {
-        $this->session = $session;
-    }
-
-    protected function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @param ScopeConfigInterface $config
-     * @return $this
-     */
-    protected function setConfig(ScopeConfigInterface $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
-     * @return StoreManagerInterface
-     */
-    protected function getStoreManager()
-    {
-        return $this->storeManager;
-    }
-
-    /**
-     * @param StoreManagerInterface $storeManager
-     * @return $this
-     */
-    protected function setStoreManager(StoreManagerInterface $storeManager)
-    {
-        $this->storeManager = $storeManager;
-        return $this;
+        return parent::getSession();
     }
 }

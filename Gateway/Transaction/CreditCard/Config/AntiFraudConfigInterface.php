@@ -30,9 +30,4 @@ interface AntiFraudConfigInterface
     public function getCaptureOnLowRisk();
 
     public function getVoidOnHighRisk();
-
-    /**
-     * @return SessionManagerInterface
-     */
-    public function getSession();
 }

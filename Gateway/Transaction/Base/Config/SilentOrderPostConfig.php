@@ -2,7 +2,6 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class SilentOrderPostConfig extends AbstractConfig implements SilentOrderPostConfigInterface
 {
@@ -10,13 +9,15 @@ class SilentOrderPostConfig extends AbstractConfig implements SilentOrderPostCon
 
 	protected $code;
 
-	public function __construct(
-		ScopeConfigInterface $config,
-		$code
-	){
-		$this->setCode($code);
-		$this->setConfig($config);
-	}
+    protected function _construct(array $data = [])
+    {
+        $code = '';
+        if (isset($data['code'])) {
+            $code = $data['code'];
+        }
+
+        $this->setCode($code);
+    }
 
 	public function isActive()
 	{

@@ -2,35 +2,19 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfigInterface;
 
-/**
- * 
- *
- * @author      Webjump Core Team <dev@webjump.com>
- * @copyright   2016 Webjump (http://www.webjump.com.br)
- * @license     http://www.webjump.com.br  Copyright
- *
- * @link        http://www.webjump.com.br
- */
-class Config implements ConfigInterface
+class Config extends AbstractConfig implements ConfigInterface
 {
-	protected $config;
-
-	public function __construct(
-		ScopeConfigInterface $config
-	){
-		$this->setConfig($config);
-	}
-
 	public function getMerchantId()
 	{
-		return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+		return $this->getConfig()->getValue(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
 
 	public function getMerchantKey()
 	{
-		return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_key', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+		return $this->getConfig()->getValue(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
 
 	public function getPaymentReturnUrl()
@@ -42,16 +26,4 @@ class Config implements ConfigInterface
 	{
 		return (bool) $this->getConfig()->getValue('payment/braspag_pagador_debitcard/superdebit_active', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
-
-    protected function getConfig()
-    {
-        return $this->config;
-    }
-
-    protected function setConfig($config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
 }

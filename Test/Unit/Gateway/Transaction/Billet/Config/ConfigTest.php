@@ -2,38 +2,35 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Billet\Config;
 
+
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config;
 use Magento\Framework\Stdlib\DateTime;
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
-	private $config;
-
-	private $scopeConfigMock;
-    
     private $dateTimeMock;
+    private $config;
+    private $contextMock;
+    private $scopeConfigMock;
 
     public function setUp()
     {
-    	$this->scopeConfigMock = $this->getMock(ScopeConfigInterface::class);
-        $this->dateTimeMock = $this->getMockBuilder(DateTime::class)
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->contextMock = $this->getMock(ContextInterface::class);
+        $this->dateTimeMock =  $this->getMockBuilder(DateTime::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->config = new Config(
-    		$this->scopeConfigMock,
-            $this->dateTimeMock
-    	);
+        $this->config = new Config(
+            $this->contextMock
+        );
     }
 
-    public function tearDown()
+    public function testGetData()
     {
 
-    }
-
-    public function testgetData()
-    {
-    	$this->scopeConfigMock->expects($this->at(0))
+        $this->scopeConfigMock->expects($this->at(0))
     	    ->method('getValue')
     	    ->with('payment/braspag_pagador_global/merchant_id')
     	    ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
@@ -71,6 +68,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->dateTimeMock->expects($this->once())
             ->method('gmDate')
             ->will($this->returnValue('2016-10-114'));
+
+        $this->contextMock->expects($this->exactly(7))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
+
+        $this->contextMock->expects($this->once())
+            ->method('getDateTime')
+            ->will($this->returnValue($this->dateTimeMock));
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->config->getMerchantKey());

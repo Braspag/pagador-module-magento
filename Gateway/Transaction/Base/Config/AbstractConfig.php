@@ -2,7 +2,6 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
  * Braspag Transaction Base AbstractConfig
@@ -15,14 +14,27 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 abstract class AbstractConfig
 {
-	protected $config;
-
     const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'payment/braspag_pagador_global/test_mode';
 
-    public function __construct(
-        ScopeConfigInterface $config
-    ){
-        $this->setConfig($config);
+    protected $config;
+	protected $context;
+
+	public function __construct(
+	    ContextInterface $context,
+	    array $data = []
+    )
+    {
+        $this->setContext($context);
+        $this->_construct($data);
+    }
+
+    protected function _construct(array $data = [])
+    {
+    }
+
+    protected function _getConfig($uri)
+    {
+        return $this->getConfig()->getValue($uri, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     protected function isTestMode()
@@ -30,20 +42,34 @@ abstract class AbstractConfig
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE);
     }
 
-	protected function _getConfig($uri)
-	{
-		return $this->getConfig()->getValue($uri, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-	}
+    protected function getContext()
+    {
+        return $this->context;
+    }
+
+    protected function setContext(ContextInterface $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
 
     protected function getConfig()
     {
-        return $this->config;
+        return $this->getContext()->getConfig();
     }
 
-    protected function setConfig(ScopeConfigInterface $config)
+    protected function getSession()
     {
-        $this->config = $config;
+        return $this->getContext()->getSession();
+    }
 
-        return $this;
+    protected function getStoreManager()
+    {
+        return $this->getContext()->getStoreManager();
+    }
+
+    protected function getDateTime()
+    {
+        return $this->getContext()->getDateTime();
     }
 }

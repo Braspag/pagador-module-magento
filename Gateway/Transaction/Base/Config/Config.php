@@ -2,8 +2,6 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
-
 /**
  * Braspag Transaction Base Config
  *
@@ -16,12 +14,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class Config extends AbstractConfig implements ConfigInterface
 {
 	protected $config;
-
-	public function __construct(
-		ScopeConfigInterface $config
-	){
-		$this->setConfig($config);
-	}
 
 	public function getMerchantId()
 	{

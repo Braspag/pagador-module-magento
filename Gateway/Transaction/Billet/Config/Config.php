@@ -2,7 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
@@ -18,15 +18,6 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
  */
 class Config extends BaseConfig implements ConfigInterface
 {
-	protected $date;
-
-	public function __construct(
-		ScopeConfigInterface $config,
-		DateTime $date
-	){
-		$this->setConfig($config);
-		$this->setDate($date);
-	}
 
 	public function getPaymentDemonstrative()
 	{
@@ -45,23 +36,11 @@ class Config extends BaseConfig implements ConfigInterface
 
 	public function getExpirationDate()
 	{
-		return $this->getDate()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE))));
+		return $this->getDateTime()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE))));
 	}
 
 	public function getPaymentProvider()
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER);
 	}
-
-    protected function getDate()
-    {
-        return $this->date;
-    }
-
-    protected function setDate(DateTime $date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 }
