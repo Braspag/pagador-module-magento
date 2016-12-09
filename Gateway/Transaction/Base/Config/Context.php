@@ -16,10 +16,10 @@ class Context implements ContextInterface
     private $dateTime;
 
     public function __construct(
-        SessionManagerInterface $session,
-        DateTime $dateTime,
         ScopeConfigInterface $config,
-        StoreManagerInterface $storeManager
+        SessionManagerInterface $session,
+        StoreManagerInterface $storeManager,
+        DateTime $dateTime
     )
     {
         $this->setConfig($config);

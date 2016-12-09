@@ -19,6 +19,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->storeManagerMock = $this->getMock(StoreManagerInterface::class);
         $this->storeMock = $this->getMockBuilder(\Magento\Store\Model\StoreManager::class)
+            ->setMethods(['getUrl'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -31,15 +32,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testGetData()
     {
-        $this->markTestIncomplete();
         $this->scopeConfigMock->expects($this->at(0))
             ->method('getValue')
-            ->with('payment/braspag_pagador_global/merchant_id')
+            ->with('webjump_braspag/pagador/merchant_id')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
         $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('payment/braspag_pagador_global/merchant_key')
+            ->with('webjump_braspag/pagador/merchant_key')
             ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
         $this->scopeConfigMock->expects($this->at(2))
@@ -103,6 +103,5 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         static::assertTrue($this->config->isAuthenticate3DsVbv());
         static::assertEquals('http://www.braspagreturnurl.com.br/checkout/onepage/success', $this->config->getReturnUrl());
         static::assertEquals('customer_taxvat', $this->config->getIdentityAttributeCode());
-        static::assertEquals('https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getSilentOrderPostUri());
     }
 }

@@ -9,21 +9,21 @@ class AntiFraudConfig extends AbstractConfig implements AntiFraudConfigInterface
 {
     public function getSequence()
     {
-        return $this->getConfig()->getValue(self::XML_PATH_SEQUENCE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_getConfig(self::XML_PATH_SEQUENCE);
     }
 
     public function getSequenceCriteria()
     {
-        return $this->getConfig()->getValue(self::XML_PATH_SEQUENCE_CRITERIA, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_getConfig(self::XML_PATH_SEQUENCE_CRITERIA);
     }
 
     public function getCaptureOnLowRisk()
     {
-        return (bool) $this->getConfig()->getValue(self::XML_PATH_CAPTURE_ON_LOW_RISK, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return (bool) $this->_getConfig(self::XML_PATH_CAPTURE_ON_LOW_RISK);
     }
 
     public function getVoidOnHighRisk()
     {
-        return (bool) $this->getConfig()->getValue(self::XML_PATH_VOID_ON_HIGH_RISK, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return (bool) $this->_getConfig(self::XML_PATH_VOID_ON_HIGH_RISK);
     }
 }

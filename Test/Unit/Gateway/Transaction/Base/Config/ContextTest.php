@@ -3,7 +3,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context;
-use Magento\Framework\App\ScopeInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Stdlib\DateTime;
@@ -18,7 +18,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->scopeConfigMock  = $this->getMock(ScopeInterface::class);
+        // $this->markTestIncomplete();
+        $this->scopeConfigMock  = $this->getMock(ScopeConfigInterface::class);
         $this->sessionMock      = $this->getMock(SessionManagerInterface::class);
         $this->storeMock        = $this->getMock(StoreManagerInterface::class);
         $this->dateTimeMock     = $this->getMockBuilder(DateTime::class)
@@ -34,7 +35,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             $this->storeMock,
             $this->dateTimeMock
         );
-        $this->assertInstanceOf(ScopeInterface::class, $this->context->getConfig());
+        $this->assertInstanceOf(ScopeConfigInterface::class, $this->context->getConfig());
     }
 
     public function testGetSession()

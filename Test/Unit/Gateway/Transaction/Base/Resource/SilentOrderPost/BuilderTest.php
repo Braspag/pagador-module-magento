@@ -16,7 +16,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
         $this->transferBuilderMock = $this->getMock('Magento\Payment\Gateway\Http\TransferBuilder');
 
@@ -43,7 +43,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->tranferMock = $this->getMock('Magento\Payment\Gateway\Http\TransferInterface');
 
         $this->configMock->expects($this->once())
-            ->method('getSilentOrderPostUri')
+            ->method('getAccessTokenUrl')
             ->will($this->returnValue($uri));
 
         $this->transferBuilderMock->expects($this->once())

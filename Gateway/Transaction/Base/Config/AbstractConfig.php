@@ -14,7 +14,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
  */
 abstract class AbstractConfig
 {
-    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'payment/braspag_pagador_global/test_mode';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'webjump_braspag/pagador/test_mode';
 
     protected $config;
 	protected $context;

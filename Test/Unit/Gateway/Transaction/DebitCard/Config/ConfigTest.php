@@ -25,12 +25,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     {
     	$this->scopeConfigMock->expects($this->at(0))
     	    ->method('getValue')
-    	    ->with('payment/braspag_pagador_global/merchant_id')
+    	    ->with('webjump_braspag/pagador/merchant_id')
     	    ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
     	$this->scopeConfigMock->expects($this->at(1))
     	    ->method('getValue')
-    	    ->with('payment/braspag_pagador_global/merchant_key')
+    	    ->with('webjump_braspag/pagador/merchant_key')
     	    ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
         $this->scopeConfigMock->expects($this->at(2))

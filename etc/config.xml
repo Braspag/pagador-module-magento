@@ -2,14 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <braspag_pagador_config>
-                <return_url><![CDATA[checkout/onepage/success]]></return_url>
-            </braspag_pagador_config>
-            <braspag_pagador_global>
-                <merchant_id>BC5D3432-527F-40C6-84BF-C549285536BE</merchant_id>
-                <merchant_key>yv3hzQuDfcUnNxcgkUifz4EQVPeeAwfedilpROwn</merchant_key>
-                <test_mode>1</test_mode>
-            </braspag_pagador_global>
             <braspag_pagador_billet>
                 <active>1</active>
                 <model>BraspagTransactionBilletRemoteMethodAdapter</model>
@@ -41,9 +33,10 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
                 <silentorderpost_active>0</silentorderpost_active>
-                <silentorderpost_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/card</silentorderpost_url_homolog>
-                <silentorderpost_url_production></silentorderpost_url_production>
-                <silentorderpost_is_sandbox_mode>0</silentorderpost_is_sandbox_mode>
+                <silentorderpost_paymenttoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_homolog>
+                <silentorderpost_paymenttoken_url_production>https://www.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_production>
+                <silentorderpost_accesstoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_homolog>
+                <silentorderpost_accesstoken_url_production>https://www.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_production>
             </braspag_pagador_creditcard>
             <braspag_pagador_creditcardtoken>
                 <active>1</active>
@@ -78,6 +71,12 @@
                 <return_url>http://braspag.dev/</return_url>
             </braspag_pagador_debitcard>
         </payment>
+        <webjump_braspag>
+            <pagador>
+                <test_mode>1</test_mode>
+                <return_url><![CDATA[checkout/onepage/success]]></return_url>
+            </pagador>
+        </webjump_braspag>
         <webjump_braspag_antifraud>
             <fingerprint>
                 <src_png_img>https://h.online-metrix.net/fp/clear.png</src_png_img>
