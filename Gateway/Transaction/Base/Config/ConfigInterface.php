@@ -13,9 +13,9 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
  */
 interface ConfigInterface
 {
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID = 'payment/braspag_pagador_global/merchant_id';
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY = 'payment/braspag_pagador_global/merchant_key';
-	
+	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID     = 'webjump_braspag/pagador/merchant_id';
+	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY    = 'webjump_braspag/pagador/merchant_key';
+
 	const DATE_FORMAT = 'Y-m-d';
 
     public function getMerchantId();

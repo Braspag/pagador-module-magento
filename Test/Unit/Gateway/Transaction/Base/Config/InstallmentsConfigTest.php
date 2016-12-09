@@ -3,68 +3,68 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class InstallmentsConfigTest extends \PHPUnit_Framework_TestCase
 {
-	protected $config;
-
-	protected $scopeConfig;
-
-    protected $code;
+    /** @var  InstallmentsConfig */
+    private $config;
+    private $contextMock;
+    private $scopeConfigMock;
 
     public function setUp()
     {
-    	$this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->contextMock = $this->getMock(ContextInterface::class);
 
-        $this->code = 'payment_method_custom';
-
-    	$this->config = new InstallmentsConfig(
-    		$this->scopeConfig,
-            $this->code
-    	);
+        $this->config = new InstallmentsConfig(
+            $this->contextMock,
+            [
+                'code' => 'payment_method_custom'
+            ]
+        );
     }
 
-    public function tearDown()
+    public function testGetData()
     {
-
-    }
-
-    public function testgetData()
-    {
-    	$this->scopeConfig->expects($this->at(0))
+    	$this->scopeConfigMock->expects($this->at(0))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installments_number')
     	    ->will($this->returnValue(10));
 
-    	$this->scopeConfig->expects($this->at(1))
+    	$this->scopeConfigMock->expects($this->at(1))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installments_is_with_interest')
     	    ->will($this->returnValue(1));
 
-    	$this->scopeConfig->expects($this->at(2))
+    	$this->scopeConfigMock->expects($this->at(2))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installment_min_amount')
     	    ->will($this->returnValue(30.00));
 
-    	$this->scopeConfig->expects($this->at(3))
+    	$this->scopeConfigMock->expects($this->at(3))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installments_interest_rate')
     	    ->will($this->returnValue(20));
 
-    	$this->scopeConfig->expects($this->at(4))
+    	$this->scopeConfigMock->expects($this->at(4))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installments_interest_by_issuer')
     	    ->will($this->returnValue(1));
 
-    	$this->scopeConfig->expects($this->at(5))
+    	$this->scopeConfigMock->expects($this->at(5))
     	    ->method('getValue')
     	    ->with('payment/payment_method_custom/installments_max_without_interest')
     	    ->will($this->returnValue(5));
 
-        $this->scopeConfig->expects($this->at(6))
+        $this->scopeConfigMock->expects($this->at(6))
             ->method('getValue')
             ->with('payment/payment_method_custom/installments_active')
             ->will($this->returnValue(1));
+
+        $this->contextMock->expects($this->exactly(7))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
 
         static::assertEquals(10, $this->config->getInstallmentsNumber());
         static::assertTrue($this->config->isWithInterest());

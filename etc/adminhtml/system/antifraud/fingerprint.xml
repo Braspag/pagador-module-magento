@@ -17,6 +17,11 @@
             <comment />
         </field>
 
+        <field id="merchant_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="text">
+            <label>Merchant ID</label>
+            <comment />
+        </field>
+
         <field id="use_order_id_to_fingerprint" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
             <label>Use Order ID to Fingerprint</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

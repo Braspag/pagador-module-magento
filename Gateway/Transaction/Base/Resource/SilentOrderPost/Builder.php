@@ -2,7 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
@@ -15,7 +15,7 @@ class Builder implements BuilderInterface
 	protected $client;
 
 	public function __construct(
-		ConfigInterface $config,
+		SilentOrderPostConfigInterface $config,
 		TransferBuilder $transferBuilder,
 		ClientInterface $client
 	) {
@@ -27,7 +27,7 @@ class Builder implements BuilderInterface
 	public function build()
 	{
         $transferO = $this->getTransferBuilder()
-        	->setUri($this->getConfig()->getSilentOrderPostUri())
+        	->setUri($this->getConfig()->getAccessTokenUrl())
         	->setMethod(\Zend\Http\Request::METHOD_POST)
             ->setClientConfig([
                 'timeout' => 30
