@@ -38,7 +38,7 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $this->silentorderPostConfigMock->expects($this->once())
-            ->method('getUrl')
+            ->method('getPaymentTokenUrl')
             ->will($this->returnValue('http://test.com.br'));
 
 
@@ -69,7 +69,7 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(false));
 
         $this->silentorderPostConfigMock->expects($this->never())
-            ->method('getUrl');
+            ->method('getPaymentTokenUrl');
 
 
         static::assertEquals(

@@ -9,15 +9,17 @@ class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInt
 {
 	protected $code;
 
-    public function __construct(
-        ScopeConfigInterface $config,
-        $code
-    ){
-        $this->setConfig($config);
+    protected function _construct(array $data = [])
+    {
+        $code = '';
+        if (isset($data['code'])) {
+            $code = $data['code'];
+        }
+
         $this->setCode($code);
     }
 
-	public function isActive()
+    public function isActive()
 	{
 		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_ACTIVE);
 	}

@@ -2,130 +2,53 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Session\SessionManagerInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Magento\Payment\Model\Method\AbstractMethod;
 
-class Config implements ConfigInterface
+class Config extends BaseConfig implements ConfigInterface
 {
-    const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
-    const XML_CONFIG_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
-    const XML_CONFIG_3DS_VBV_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_vbv';
-    const XML_CONFIG_RETURN_URL = 'payment/braspag_pagador_config/return_url';
-
-    protected $config;
-    protected $session;
-    protected $storeManager;
-
-    public function __construct(
-        ScopeConfigInterface $config,
-        StoreManagerInterface $storeManager,
-        SessionManagerInterface $session
-    ){
-        $this->setConfig($config);
-        $this->setStoreManager($storeManager);
-        $this->setSession($session);
-    }
-
-    public function getMerchantId()
-    {
-        return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getMerchantKey()
-    {
-        return $this->getConfig()->getValue('payment/braspag_pagador_global/merchant_key', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
     public function isAuthorizeAndCapture()
     {
-        return (self::ACTION_AUTHORIZE_CAPTURE === $this->getConfig()->getValue('payment/braspag_pagador_creditcard/payment_action', \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+        return (AbstractMethod::ACTION_AUTHORIZE_CAPTURE === $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION));
     }
 
     public function getSoftDescriptor()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/soft_config', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SOFT_ACTION);
     }
 
     public function hasAntiFraud()
     {
-        return $this->getConfig()->getValue(AntiFraudConfigInterface::XML_PATH_ACTIVE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_getConfig(AntiFraudConfigInterface::XML_PATH_ACTIVE);
     }
 
     public function hasAvs()
     {
-        return $this->getConfig()->getValue(static::XML_CONFIG_AVS_ACTIVE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE);
     }
 
     public function isAuthenticate3DsVbv()
     {
-        return (bool) $this->getConfig()->getValue(static::XML_CONFIG_3DS_VBV_AUTHENTICATE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_VBV_AUTHENTICATE);
     }
 
     public function getReturnUrl()
     {
-        $url = (string) str_replace('index.php/', '', $this->getStoreManager()->getStore()->getUrl($this->getConfig()->getValue(static::XML_CONFIG_RETURN_URL)));
+        $url = (string) str_replace('index.php/', '', $this->getStoreManager()->getStore()->getUrl($this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_RETURN_URL)));
 
         return substr($url, 0, -1);
     }
 
     public function getIdentityAttributeCode()
     {
-        return $this->getConfig()->getValue('payment/braspag_pagador_creditcard/customer_identity_attribute_code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-	public function getSilentOrderPostUri()
-	{
-		return 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=' . $this->getMerchantId();
-	}
-
-    /**
-     * @return SessionManagerInterface
-     */
-    public function getSession()
-    {
-        return $this->session;
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE);
     }
 
     /**
-     * @param SessionManagerInterface $session
+     * @deprecated
      */
-    protected function setSession(SessionManagerInterface $session)
+	public function getSession()
     {
-        $this->session = $session;
-    }
-
-    protected function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @param ScopeConfigInterface $config
-     * @return $this
-     */
-    protected function setConfig(ScopeConfigInterface $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
-     * @return StoreManagerInterface
-     */
-    protected function getStoreManager()
-    {
-        return $this->storeManager;
-    }
-
-    /**
-     * @param StoreManagerInterface $storeManager
-     * @return $this
-     */
-    protected function setStoreManager(StoreManagerInterface $storeManager)
-    {
-        $this->storeManager = $storeManager;
-        return $this;
+        return parent::getSession();
     }
 }

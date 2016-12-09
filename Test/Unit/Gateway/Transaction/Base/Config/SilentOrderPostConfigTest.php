@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 /**
  * 
@@ -16,24 +17,20 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig
 class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 {
     private $config;
-
-    private $scopeConfig;
+    private $contextMock;
+    private $scopeConfigMock;
 
     public function setUp()
     {
         $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-
-        $this->code = 'payment_method_custom';
+        $this->contextMock = $this->getMock(ContextInterface::class);
 
         $this->config = new SilentOrderPostConfig(
-            $this->scopeConfigMock,
-            $this->code
+            $this->contextMock,
+            [
+                'code' => 'payment_method_custom'
+            ]
         );
-    }
-
-    public function tearDown()
-    {
-
     }
 
     public function testIsActive() 
@@ -45,16 +42,41 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('payment/braspag_pagador_global/test_mode')
+            ->with('webjump_braspag/pagador/test_mode')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/payment_method_custom/silentorderpost_url_homolog')
+            ->with('payment/payment_method_custom/silentorderpost_paymenttoken_url_homolog')
             ->will($this->returnValue('http://teste.com/'));
 
+        $this->scopeConfigMock->expects($this->at(3))
+            ->method('getValue')
+            ->with('payment/payment_method_custom/silentorderpost_accesstoken_url_production')
+            ->will($this->returnValue('http://production.com='));
+
+        $this->scopeConfigMock->expects($this->at(4))
+            ->method('getValue')
+            ->with('webjump_braspag/pagador/test_mode')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(5))
+            ->method('getValue')
+            ->with('payment/payment_method_custom/silentorderpost_accesstoken_url_homolog')
+            ->will($this->returnValue('http://homolog.com='));
+
+        $this->scopeConfigMock->expects($this->at(6))
+            ->method('getValue')
+            ->with('webjump_braspag/pagador/merchant_id')
+            ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+
+        $this->contextMock->expects($this->exactly(7))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
+
         static::assertTrue($this->config->isActive());
-        static::assertEquals('http://teste.com/', $this->config->getUrl());
+        static::assertEquals('http://teste.com/', $this->config->getPaymentTokenUrl());
+        static::assertEquals('http://homolog.com=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getAccessTokenUrl());
     }
 
     public function testIsActiveWithSandboxDisabled() 
@@ -66,15 +88,35 @@ class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('payment/braspag_pagador_global/test_mode')
+            ->with('webjump_braspag/pagador/test_mode')
             ->will($this->returnValue(false));
 
         $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/payment_method_custom/silentorderpost_url_production')
+            ->with('payment/payment_method_custom/silentorderpost_paymenttoken_url_production')
             ->will($this->returnValue('http://teste.com/'));
 
+        $this->scopeConfigMock->expects($this->at(3))
+            ->method('getValue')
+            ->with('payment/payment_method_custom/silentorderpost_accesstoken_url_production')
+            ->will($this->returnValue('http://production.com='));
+
+        $this->scopeConfigMock->expects($this->at(4))
+            ->method('getValue')
+            ->with('webjump_braspag/pagador/test_mode')
+            ->will($this->returnValue(false));
+
+        $this->scopeConfigMock->expects($this->at(5))
+            ->method('getValue')
+            ->with('webjump_braspag/pagador/merchant_id')
+            ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+
+        $this->contextMock->expects($this->exactly(6))
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
+
         static::assertTrue($this->config->isActive());
-        static::assertEquals('http://teste.com/', $this->config->getUrl());
+        static::assertEquals('http://teste.com/', $this->config->getPaymentTokenUrl());
+        static::assertEquals('http://production.com=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getAccessTokenUrl());
     }
 }
