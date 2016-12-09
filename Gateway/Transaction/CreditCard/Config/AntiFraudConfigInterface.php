@@ -11,8 +11,6 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 
-use Magento\Framework\Session\SessionManagerInterface;
-
 interface AntiFraudConfigInterface
 {
     const COUNTRY_TELEPHONE_CODE = 55;
