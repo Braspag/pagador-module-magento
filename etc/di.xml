@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-
     <preference for="Webjump\BraspagPagador\Api\CardTokenRepositoryInterface" type="Webjump\BraspagPagador\Model\CardTokenRepository" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder" />
@@ -19,14 +18,49 @@
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
         <arguments>
-            <argument name="config" xsi:type="object">\Magento\Framework\App\Config</argument>
             <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
             <argument name="dateTime" xsi:type="object">\Magento\Framework\Stdlib\DateTime</argument>
         </arguments>
     </type>
 
+    <!--<type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config">-->
+        <!--<arguments>-->
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+
+    <!--<type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config">-->
+        <!--<arguments>-->
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+
+    <!--<type name="Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config">-->
+        <!--<arguments>-->
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+
+    <!--<type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config">-->
+        <!--<arguments>-->
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+
+    <!--<type name="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config">-->
+        <!--<arguments>-->
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+
+    <virtualType name="BraspagTransactionBilletSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request" />
+    <virtualType name="BraspagTransactionCreditCardSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request" />
+    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request" />
+    <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request" />
+
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
         <arguments>
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
             <argument name="data" xsi:type="array">
                 <item name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</item>
             </argument>
@@ -35,6 +69,7 @@
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig">
         <arguments>
+            <!--<argument name="context" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context</argument>-->
             <argument name="data" xsi:type="array">
                 <item name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</item>
             </argument>
@@ -111,12 +146,6 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionBilletSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request">
-        <arguments>
-            <argument name="config" xsi:type="object">BraspagTransactionBilletSendRequestConfig</argument>
-            <argument name="date" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
-        </arguments>
-    </virtualType>
 
     <virtualType name="BraspagTransactionBilletSendRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestBuilder">
         <arguments>
@@ -172,19 +201,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request">
-        <arguments>
-            <argument name="config" xsi:type="object">BraspagTransactionCreditCardSendRequestConfig</argument>
-            <argument name="installmentsConfig" xsi:type="object">BraspagTransactionCreditCardInstallmentsConfig</argument>
-            <argument name="date" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
-        </arguments>
-    </virtualType>
 
-    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request">
-        <arguments>
-            <argument name="config" xsi:type="object">BraspagTransactionCreditCardSendRequestConfig</argument>
-        </arguments>
-    </virtualType>
 
     <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
         <arguments>
@@ -358,17 +375,6 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request">
-        <arguments>
-            <argument name="config" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config</argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request">
-        <arguments>
-            <argument name="config" xsi:type="object">BraspagTransactionDebitCardOrderRequestConfig</argument>
-        </arguments>
-    </virtualType>
 
     <virtualType name="BraspagTransactionDebitCardOrderRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder">
         <arguments>

@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
 
-use Magento\Framework\App\ScopeInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Stdlib\DateTime;
@@ -15,16 +15,11 @@ class Context implements ContextInterface
     private $storeManager;
     private $dateTime;
 
-    /**
-     * @param ScopeInterface $config
-     * @param SessionManagerInterface $session
-     * @param StoreManagerInterface $storeManager
-     */
     public function __construct(
-        ScopeInterface $config,
         SessionManagerInterface $session,
-        StoreManagerInterface $storeManager,
-        DateTime $dateTime
+        DateTime $dateTime,
+        ScopeConfigInterface $config,
+        StoreManagerInterface $storeManager
     )
     {
         $this->setConfig($config);
@@ -54,7 +49,7 @@ class Context implements ContextInterface
         return $this->dateTime;
     }
 
-    protected function setConfig(ScopeInterface $config)
+    protected function setConfig(ScopeConfigInterface $config)
     {
         $this->config = $config;
         return $this;

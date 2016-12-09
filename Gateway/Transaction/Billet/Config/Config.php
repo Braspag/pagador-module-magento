@@ -2,9 +2,6 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Billet\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Stdlib\DateTime;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 
 /**

@@ -13,8 +13,6 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
  */
 class Config extends AbstractConfig implements ConfigInterface
 {
-	protected $config;
-
 	public function getMerchantId()
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID);
