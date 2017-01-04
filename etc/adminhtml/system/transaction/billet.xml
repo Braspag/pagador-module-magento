@@ -59,5 +59,10 @@
                 <field id="active">1</field>
             </depends>
 	    </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+            <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+            <config_path>payment/braspag_pagador_billet/order_status</config_path>
+        </field>
     </group>
 </include>
