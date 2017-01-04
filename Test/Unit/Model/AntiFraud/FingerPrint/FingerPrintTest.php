@@ -101,7 +101,7 @@ class FingerPrintTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeFingerPrintMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_id')
+            ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
         $this->sessionMock->expects($this->once())
@@ -124,7 +124,7 @@ class FingerPrintTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeFingerPrintMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_id')
+            ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
         $quoteMock = $this->getMockBuilder('Magento\Quote\Model\Quote')
