@@ -29,6 +29,11 @@
 	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 	        <config_path>payment/braspag_pagador_debitcard/superdebit_active</config_path>
 	    </field>
+        <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Sort Order</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/sort_order</config_path>
+        </field>
 	    <include path="Webjump_BraspagPagador::system/transaction/debitcart/types.xml"/>
     </group>
 </include>
