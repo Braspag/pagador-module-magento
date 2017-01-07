@@ -1,0 +1,126 @@
+<?php
+
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler;
+
+class VelocityAnalysisHandlerTest extends \PHPUnit_Framework_TestCase
+{
+	private $handler;
+
+    public function setUp()
+    {
+    	$this->handler = new VelocityAnalysisHandler;
+    }
+
+    public function tearDown()
+    {
+
+    }
+
+    public function testHandle()
+    {
+    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+
+        $velocityReasonMock1 = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
+
+        $velocityReasonMock1->expects($this->once())
+            ->method('getRuleId')
+            ->will($this->returnValue(1));
+
+        $velocityReasonMock1->expects($this->once())
+            ->method('getMessage')
+            ->will($this->returnValue('volcity reason message'));
+
+        $velocityReasonMock1->expects($this->once())
+            ->method('getHitsQuantity')
+            ->will($this->returnValue(100));
+
+        $velocityReasonMock1->expects($this->once())
+            ->method('getExpirationBlockTimeInSeconds')
+            ->will($this->returnValue(200));
+
+        $velocityMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface');
+
+        $velocityMock->expects($this->once())
+            ->method('getId')
+            ->will($this->returnValue(1));
+
+        $velocityMock->expects($this->once())
+            ->method('getResultMessage')
+            ->will($this->returnValue('volcity result message'));
+
+        $velocityMock->expects($this->once())
+            ->method('getScore')
+            ->will($this->returnValue(20));
+
+        $velocityMock->expects($this->once())
+            ->method('getRejectReasons')
+            ->will($this->returnValue([
+                $velocityReasonMock1
+            ]));
+
+        $responseMock->expects($this->once())
+            ->method('getVelocityAnalysis')
+            ->will($this->returnValue($velocityMock));
+
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $paymentMock->expects($this->at(0))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_velocity_id', 1);
+
+        $paymentMock->expects($this->at(1))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_velocity_result_message', 'volcity result message');
+
+        $paymentMock->expects($this->at(2))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_velocity_score', 20);
+
+        $paymentMock->expects($this->at(3))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_velocity_reject_reasons', 'a:1:{i:0;a:4:{s:7:"rule_id";i:1;s:7:"message";s:22:"volcity reason message";s:13:"hits_quantity";i:100;s:32:"expiration_block_time_in_seconds";i:200;}}');
+
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
+
+        $paymentDataObjectMock->expects($this->once())
+            ->method('getPayment')
+            ->will($this->returnValue($paymentMock));
+
+    	$handlingSubject = ['payment' => $paymentDataObjectMock];
+    	$response = ['response' => $responseMock];
+
+    	$this->handler->handle($handlingSubject, $response);
+    }
+
+    public function testHandleWithoutVelocity()
+    {
+        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+
+        $responseMock->expects($this->once())
+            ->method('getVelocityAnalysis')
+            ->will($this->returnValue(null));
+
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
+
+        $paymentDataObjectMock->expects($this->once())
+            ->method('getPayment')
+            ->will($this->returnValue($paymentMock));
+
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $responseMock];
+
+        $this->handler->handle($handlingSubject, $response);
+    }
+}

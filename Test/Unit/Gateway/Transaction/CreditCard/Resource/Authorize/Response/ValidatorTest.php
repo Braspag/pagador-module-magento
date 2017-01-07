@@ -56,4 +56,15 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     	static::assertFalse($result->isValid());
     	static::assertEquals(['Error Message'], $result->getFailsDescription());
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Braspag Credit Card Authorize Response object should be provided
+     */
+    public function testValidateWithoutResponse()
+    {
+        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+
+        $this->validator->validate([]);
+    }
 }
