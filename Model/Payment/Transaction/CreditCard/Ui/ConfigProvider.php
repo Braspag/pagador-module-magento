@@ -31,6 +31,9 @@ final class ConfigProvider implements ConfigProviderInterface
         $config = [
             'payment' => [
                 'ccform' => [
+                    'savecard' => [
+                        'active' => [self::CODE => $this->getCreditCardConfig()->isSaveCardActive()]
+                    ],
                     'authenticate' => [
                         'active' => [self::CODE => $this->getCreditCardConfig()->isAuthenticate3DsVbv()]
                     ],

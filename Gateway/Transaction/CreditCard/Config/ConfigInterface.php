@@ -22,6 +22,7 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SILENTORDERPOST_URL_PRODUCTION = 'payment/braspag_pagador_creditcard/silentorderpost_url_production';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SILENTORDERPOST_URL_HOMOLOG = 'payment/braspag_pagador_creditcard/silentorderpost_url_homolog';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_ACTIVE = 'payment/braspag_pagador_creditcardtoken/active';
 
     public function isAuthorizeAndCapture();
 
@@ -36,4 +37,6 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function isAuthenticate3DsVbv();
 
     public function getReturnUrl();
+
+    public function isSaveCardActive();
 }
