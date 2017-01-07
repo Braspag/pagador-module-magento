@@ -103,7 +103,7 @@ define(
             },
 
             isSaveCardActive: function() {
-                return window.isCustomerLoggedIn;
+                return (window.isCustomerLoggedIn && window.checkoutConfig.payment.ccform.savecard.active[this.getCode()]);
             },
 
             getSaveCardHelpHtml: function () {

@@ -262,10 +262,23 @@
         </arguments>
     </type>
 
+    <virtualType name="BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler</item>
+                <item name="antifraude" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler</item>
+                <item name="avs" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler</item>
+                <item name="card_token" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler</item>
+                <item name="nsu" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler</item>
+                <item name="velocity_analysis" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardAuthorizeRequestBuilder</argument>
-            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
             <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator</argument>
         </arguments>

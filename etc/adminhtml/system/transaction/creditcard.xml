@@ -34,6 +34,11 @@
             <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
             <config_path>payment/braspag_pagador_creditcard/order_status</config_path>
         </field>
+        <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Sort Order</label>
+            <comment />
+            <config_path>payment/braspag_pagador_creditcard/sort_order</config_path>
+        </field>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/types.xml"/>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/installments.xml"/>
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/silentorderpost.xml"/>

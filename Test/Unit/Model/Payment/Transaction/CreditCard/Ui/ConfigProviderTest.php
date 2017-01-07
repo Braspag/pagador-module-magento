@@ -26,10 +26,17 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('isAuthenticate3DsVbv')
             ->will($this->returnValue(true));
 
+        $this->creditCardConfig->expects($this->once())
+            ->method('isSaveCardActive')
+            ->will($this->returnValue(true));
+
         static::assertEquals(
             [
                 'payment' => [
                     'ccform' => [
+                        'savecard' => [
+                            'active' => ['braspag_pagador_creditcard' => true]
+                        ],
                         'authenticate' => [
                             'active' => ['braspag_pagador_creditcard' => true]
                         ],
