@@ -38,14 +38,19 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $additionalData = new DataObject($additionalData ?: []);
         }
 
+        list($provider, $brand) = array_pad(explode('-', $additionalData->getCcType(), 2), 2, null);
+
         $info->addData([
             'cc_type' => $additionalData->getCcType(),
             'cc_owner' => $additionalData->getCcOwner(),
             'cc_number' => $additionalData->getCcNumber(),
             'cc_cid' => $additionalData->getCcCid(),
             'cc_exp_month' => $additionalData->getCcExpMonth(),
-            'cc_exp_year' => $additionalData->getCcExpYear()
+            'cc_exp_year' => $additionalData->getCcExpYear(),
+            'cc_provider' => $provider,
+            'cc_brand' => $brand
         ]);
+
 
         $info->setAdditionalInformation('cc_installments', 1);
 

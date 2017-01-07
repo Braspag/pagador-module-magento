@@ -14,16 +14,14 @@ use Magento\Payment\Gateway\Response\HandlerInterface;
  *
  * @link        http://www.webjump.com.br
  */
-class BaseHandler extends AbstractHandler implements HandlerInterface
+class NsuHandler extends AbstractHandler implements HandlerInterface
 {
     protected function _handle($payment, $response)
     {
-        $payment->setTransactionId($response->getPaymentPaymentId());
-        $payment->setIsTransactionClosed(false);
-
-        if ($authenticationUrl = $response->getAuthenticationUrl()) {
-            $payment->setAdditionalInformation('redirect_url', $authenticationUrl);
-        }
+        $payment->setAdditionalInformation('proof_of_sale', $response->getPaymentProofOfSale());
+        $payment->setAdditionalInformation('payment_token', $response->getPaymentPaymentId());
+		$payment->setAdditionalInformation('send_provider', $payment->getCcType());
+		$payment->setAdditionalInformation('receive_provider', $response->getPaymentCardProvider());
 
         return $this;
     }

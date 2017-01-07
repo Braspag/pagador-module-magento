@@ -1,16 +1,16 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler;
 
-class BaseHandlerTest extends \PHPUnit_Framework_TestCase
+class AvsHandlerTest extends \PHPUnit_Framework_TestCase
 {
 	private $handler;
 
     public function setUp()
     {
-    	$this->handler = new BaseHandler;
+    	$this->handler = new AvsHandler;
     }
 
     public function tearDown()
@@ -22,17 +22,31 @@ class BaseHandlerTest extends \PHPUnit_Framework_TestCase
     {
     	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-        $responseMock->expects($this->once())
-            ->method('getPaymentPaymentId')
+        $avsResponseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
+
+        $avsResponseMock->expects($this->once())
+            ->method('getStatus')
+            ->will($this->returnValue('status'));
+
+        $avsResponseMock->expects($this->once())
+            ->method('getReturnCode')
             ->will($this->returnValue(123));
 
         $responseMock->expects($this->once())
-            ->method('getAuthenticationUrl')
-            ->will($this->returnValue('http://teste.com/'));
+            ->method('getAvs')
+            ->will($this->returnValue($avsResponseMock));
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $paymentMock->expects($this->at(0))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_avs_status', 'status');
+
+        $paymentMock->expects($this->at(1))
+            ->method('setAdditionalInformation')
+            ->with('braspag_pagador_avs_return_code', 123);
 
         $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
             ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
@@ -41,14 +55,6 @@ class BaseHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
-
-        $paymentMock->expects($this->once())
-            ->method('setTransactionId')
-            ->with(123);
-
-        $paymentMock->expects($this->once())
-            ->method('setAdditionalInformation')
-            ->with('redirect_url', 'http://teste.com/');
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
     	$response = ['response' => $responseMock];
