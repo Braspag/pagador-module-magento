@@ -73,7 +73,14 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->setAdditionalInformation('cc_soptpaymenttoken', $additionalData->getCcSoptpaymenttoken());
         }
 
+        $this->processExtraData($additionalData, $info);
+
         return $this;
+    }
+
+    protected function processExtraData($additionalData, $info)
+    {
+        return false;
     }
 
     protected function getCardTokenRepository()
