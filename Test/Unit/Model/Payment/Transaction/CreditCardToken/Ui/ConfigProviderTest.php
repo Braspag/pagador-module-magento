@@ -145,7 +145,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                             'list' => [],
                         ],
                         'tokens' => [
-                            'list' => [],
+                            'list' => ['braspag_pagador_creditcardtoken' => []],
                         ],
                     ]
                 ]

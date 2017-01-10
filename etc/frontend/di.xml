@@ -43,7 +43,6 @@
     <!-- Credit Card Installments -->
 
     <virtualType name="BraspagTransactionCreditCardInstallmentsBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder" />
-
     <virtualType name="BraspagTransactionCreditCardInstallmentsUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\InstallmentsConfigProvider">
         <arguments>
             <argument name="installmentsBuilder" xsi:type="object">BraspagTransactionCreditCardInstallmentsBuilder</argument>
@@ -74,6 +73,31 @@
         </arguments>
     </virtualType>
 
+    <!-- Credit Card Token ui config -->
+
+    <virtualType name="BraspagPagadorPaymentTransactionCreditCardTokenInstallmentsConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="code" xsi:type="const">Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorPaymentTransactionCreditCardTokenInstallmentsBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder">
+        <arguments>
+            <argument name="installmentsConfig" xsi:type="object">BraspagPagadorPaymentTransactionCreditCardTokenInstallmentsConfig</argument>
+            <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorModelPaymentTransactionCreditCardTokenUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider">
+        <arguments>
+            <argument name="installmentsBuilder" xsi:type="object">BraspagPagadorPaymentTransactionCreditCardTokenInstallmentsBuilder</argument>
+            <argument name="tokensBuilder" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder</argument>
+            <argument name="installmentsConfig" xsi:type="object">BraspagPagadorPaymentTransactionCreditCardTokenInstallmentsConfig</argument>
+        </arguments>
+    </virtualType>
+
     <!-- Config Ui Provider -->
 
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
@@ -85,6 +109,7 @@
                 <item name="braspag_pagador_creditcard_default_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider</item>
                 <item name="braspag_pagador_creditcard_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardInstallmentsUiConfigProvider</item>
                 <item name="braspag_pagador_creditcard_silentorderpost_config_provider" xsi:type="object">BraspagTransactionCreditCardSilentOrderPostUiConfigProvider</item>               
+                <item name="braspag_pagador_creditcard_token_config_provider" xsi:type="object">BraspagPagadorModelPaymentTransactionCreditCardTokenUiConfigProvider</item>
                 <item name="braspag_pagador_debitcard_config_provider" xsi:type="object">BraspagTransactionDebitCardOrderUiConfigProvider</item>
                 <item name="braspag_pagador_debitcard_default_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider</item>
             </argument>
