@@ -55,7 +55,10 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             'brand' => $response->getPaymentCardBrand(),
         ]);
 
-        $this->getEventManager()->dispatch('braspag_creditcard_token_handler_save_before',['card_data' => $data]);
+        $this->getEventManager()->dispatch(
+            'braspag_creditcard_token_handler_save_before',
+            ['card_data' => $data, 'payment' => $payment, 'response' => $response]
+        );
 
         $cardToken = $this->getCardTokenRepository()->create($data->toArray());
 
