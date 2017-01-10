@@ -19,12 +19,11 @@ interface CardTokenRepositoryInterface
 	/**
 	 * Create a cardToken Instance
 	 * 
-	 * @param  string $alias Card Token Alias
-	 * @param  string $token Token
+	 * @param  array $data Card Token Data
 	 * 
 	 * @return CardTokenInterface        Card Token Instance
 	 */
-	public function create($alias, $token, $provider, $brand);
+	public function create($data);
 
 	/**
 	 * get List of Card Tokens
