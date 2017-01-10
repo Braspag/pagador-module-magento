@@ -3,17 +3,25 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler;
+use Magento\Framework\DataObject;
 
 class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
 {
 	private $handler;
 
+    private $eventManagerMock;
+
+    private $cardTokenRepositoryMock;
+
     public function setUp()
     {
         $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
 
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+
     	$this->handler = new CardTokenHandler(
-            $this->cardTokenRepositoryMock
+            $this->cardTokenRepositoryMock,
+            $this->eventManagerMock
         );
     }
 
@@ -24,6 +32,13 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
+        $data = new DataObject([
+            'alias' => '453.***.***.***.5466',
+            'token' => '6e1bf77a-b28b-4660-b14f-455e2a1c95e9',
+            'provider' => 'Cielo',
+            'brand' => 'Visa',
+        ]);
+
     	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $responseMock->expects($this->exactly(3))
@@ -33,6 +48,14 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
         $responseMock->expects($this->once())
             ->method('getPaymentCardNumberEncrypted')
             ->will($this->returnValue('453.***.***.***.5466'));
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentCardProvider')
+            ->will($this->returnValue('Cielo'));
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentCardBrand')
+            ->will($this->returnValue('Visa'));
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -57,13 +80,17 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->cardTokenRepositoryMock->expects($this->once())
             ->method('create')
-            ->with('453.***.***.***.5466', '6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
+            ->with($data->toArray())
             ->will($this->returnValue($cardTokenMock));
 
         $this->cardTokenRepositoryMock->expects($this->once())
             ->method('save')
             ->with($cardTokenMock)
             ->will($this->returnValue($cardTokenMock));
+
+        $this->eventManagerMock->expects($this->once())
+            ->method('dispatch')
+            ->with('braspag_creditcard_token_handler_save_before',['card_data' => $data]);
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
     	$response = ['response' => $responseMock];
@@ -99,16 +126,6 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->with('6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
             ->will($this->returnValue($cardTokenMock));
-
-        // $this->cardTokenRepositoryMock->expects($this->once())
-        //     ->method('create')
-        //     ->with('453.***.***.***.5466', '6e1bf77a-b28b-4660-b14f-455e2a1c95e9')
-        //     ->will($this->returnValue($cardTokenMock));
-
-        // $this->cardTokenRepositoryMock->expects($this->once())
-        //     ->method('save')
-        //     ->with($cardTokenMock)
-        //     ->will($this->returnValue($cardTokenMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
         $response = ['response' => $responseMock];

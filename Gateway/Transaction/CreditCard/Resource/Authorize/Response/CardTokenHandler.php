@@ -6,6 +6,9 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\DataObject;
+
 /**
 
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -20,10 +23,14 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
 {
     protected $cardTokenRepository;
 
+    protected $eventManager;
+
     public function __construct(
-        CardTokenRepositoryInterface $cardTokenRepository
+        CardTokenRepositoryInterface $cardTokenRepository,
+        ManagerInterface $eventManager
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
+        $this->setEventManager($eventManager);
     }
 
     protected function _handle($payment, $response)
@@ -41,12 +48,19 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             return $cardToken;
         }
 
-        $cardToken = $this->getCardTokenRepository()->create(
-            $response->getPaymentCardNumberEncrypted(),
-            $response->getPaymentCardToken(),
-            $response->getPaymentCardProvider(),
-            $response->getPaymentCardBrand()
+        $data = new DataObject([
+            'alias' => sprintf('xxxx-%s', $payment->getCcLast4()),
+            'token' => $response->getPaymentCardToken(),
+            'provider' => $response->getPaymentCardProvider(),
+            'brand' => $response->getPaymentCardBrand(),
+        ]);
+
+        $this->getEventManager()->dispatch(
+            'braspag_creditcard_token_handler_save_before',
+            ['card_data' => $data, 'payment' => $payment, 'response' => $response]
         );
+
+        $cardToken = $this->getCardTokenRepository()->create($data->toArray());
 
         $this->getCardTokenRepository()->save($cardToken);
 
@@ -61,6 +75,18 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
     protected function setCardTokenRepository(CardTokenRepositoryInterface $cardTokenRepository)
     {
         $this->CardTokenRepository = $cardTokenRepository;
+
+        return $this;
+    }
+
+    protected function getEventManager()
+    {
+        return $this->eventManager;
+    }
+
+    protected function setEventManager($eventManager)
+    {
+        $this->eventManager = $eventManager;
 
         return $this;
     }

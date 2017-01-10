@@ -7,11 +7,13 @@ use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
 class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-	protected $repository;
+	private $repository;
+
+    private $cardTokenFactoryMock;
 
     public function setUp()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
         
         $this->cardTokenFactoryMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardTokenFactory')
             ->setMethods(['create'])
@@ -26,13 +28,17 @@ class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
 
          $this->resourceMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\ResourceModel\CardToken')
          	->disableOriginalConstructor()
+            ->setMethods(['save'])
             ->getMock();
+
+        $this->searchresultMock = $this->getMock('Magento\Framework\Api\SearchResultsInterface');
 
     	$this->repository = new CardTokenRepository(
             $this->cardTokenFactoryMock,
             $this->storeManagerMock,
             $this->sessionMock,
-            $this->resourceMock
+            $this->resourceMock,
+            $this->searchresultMock
     	);
     }
 
@@ -68,10 +74,46 @@ class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
     	static::assertSame($cardToken, $result);
     }
 
+    public function testGetWithoutCardToken()
+    {
+        $token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
+
+        $cardToken = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+            ->disableOriginalConstructor()
+            ->setMethods(['load', 'getId'])
+            ->getMock();
+
+        $cardToken->expects($this->once())
+            ->method('getId')
+            ->will($this->returnValue(null));
+
+        $cardToken->expects($this->once())
+            ->method('load')
+            ->with($token, CardTokenInterface::TOKEN)
+            ->will($this->returnValue($cardToken));
+
+        $this->cardTokenFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($cardToken));
+
+        $result = $this->repository->get($token);
+
+        static::assertFalse($result);
+    }
+
     public function testCreate()
     {
         $alias = '453.***.***.***.5466';
         $token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
+        $provider = 'Cielo';
+        $brand = 'Visa';
+
+        $data = [
+            'alias' => $alias,
+            'token' => $token,
+            'provider' => $provider,
+            'brand' => $brand,
+        ];
 
         $storeMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
 
@@ -87,35 +129,34 @@ class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getCustomerId')
             ->will($this->returnValue(123));
 
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardToken = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
+            ->setMethods(['setData', 'setCustomerId', 'setStoreId', 'setActive'])
             ->getMock();
-        
-        $cardTokenMock->expects($this->once())
-            ->method('setAlias')
-            ->with($alias)
-            ->will($this->returnValue($cardTokenMock));
 
-        $cardTokenMock->expects($this->once())
-            ->method('setToken')
-            ->with($token)
-            ->will($this->returnValue($cardTokenMock));
+        $cardToken->expects($this->once())
+            ->method('setData')
+            ->with($data);
 
-        $cardTokenMock->expects($this->once())
+        $cardToken->expects($this->once())
             ->method('setCustomerId')
-            ->with(123)
-            ->will($this->returnValue($cardTokenMock));
+            ->with(123);
 
-        $cardTokenMock->expects($this->once())
+        $cardToken->expects($this->once())
             ->method('setStoreId')
-            ->with(456)
-            ->will($this->returnValue($cardTokenMock));
+            ->with(456);
+
+        $cardToken->expects($this->once())
+            ->method('setActive')
+            ->with(true);
 
         $this->cardTokenFactoryMock->expects($this->once())
             ->method('create')
-            ->willReturn($cardTokenMock);
+            ->will($this->returnValue($cardToken));
 
-    	$this->repository->create($alias, $token);
+
+
+    	$this->repository->create($data);
     }
 
     public function testSave()
@@ -145,5 +186,29 @@ class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
     	    ->will($this->returnValue($cardTokenMock));
 
          $this->repository->save($cardTokenMock);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testSaveWithException()
+    {
+        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->resourceMock->expects($this->once())
+            ->method('save')
+            ->with($cardTokenMock)
+            ->will($this->throwException(new \Exception));
+
+         try {
+            $this->repository->save($cardTokenMock);             
+         } catch (\Magento\Framework\Exception\CouldNotSaveException $e) {
+             $this->assertEquals($e->getMessage(), 'Unable to save Card Token');
+             return;
+         }
+
+         $this->fail('should be throw exception');
     }
 }
