@@ -33,7 +33,7 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
     public function testHandle()
     {
         $data = new DataObject([
-            'alias' => '453.***.***.***.5466',
+            'alias' => 'xxxx-5466',
             'token' => '6e1bf77a-b28b-4660-b14f-455e2a1c95e9',
             'provider' => 'Cielo',
             'brand' => 'Visa',
@@ -46,10 +46,6 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
         $responseMock->expects($this->once())
-            ->method('getPaymentCardNumberEncrypted')
-            ->will($this->returnValue('453.***.***.***.5466'));
-
-        $responseMock->expects($this->once())
             ->method('getPaymentCardProvider')
             ->will($this->returnValue('Cielo'));
 
@@ -60,6 +56,10 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $paymentMock->expects($this->once())
+            ->method('getCcLast4')
+            ->will($this->returnValue('5466'));
 
         $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
             ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
@@ -90,7 +90,7 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->eventManagerMock->expects($this->once())
             ->method('dispatch')
-            ->with('braspag_creditcard_token_handler_save_before',['card_data' => $data]);
+            ->with('braspag_creditcard_token_handler_save_before',['card_data' => $data, 'payment' => $paymentMock, 'response' => $responseMock]);
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
     	$response = ['response' => $responseMock];

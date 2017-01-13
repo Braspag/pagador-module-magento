@@ -70,6 +70,8 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected function getTokens()
     {
+        $this->tokens[self::CODE] = [];
+        
         foreach ($this->getTokensBuilder()->build() as $token) {
             $this->tokens[self::CODE][$token->getToken()] = $token->getAlias();
         }

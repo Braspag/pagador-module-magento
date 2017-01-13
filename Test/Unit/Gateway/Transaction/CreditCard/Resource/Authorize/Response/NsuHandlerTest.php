@@ -32,7 +32,7 @@ class NsuHandlerTest extends \PHPUnit_Framework_TestCase
 
         $responseMock->expects($this->once())
             ->method('getPaymentCardProvider')
-            ->will($this->returnValue('Redecard'));
+            ->will($this->returnValue('Redecard-Visa'));
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -48,7 +48,7 @@ class NsuHandlerTest extends \PHPUnit_Framework_TestCase
 
         $paymentMock->expects($this->at(2))
             ->method('getCcType')
-            ->will($this->returnValue('Cielo'));
+            ->will($this->returnValue('Cielo-Visa'));
 
         $paymentMock->expects($this->at(3))
             ->method('setAdditionalInformation')
