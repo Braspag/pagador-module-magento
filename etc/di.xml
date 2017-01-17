@@ -271,6 +271,7 @@
                 <item name="card_token" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler</item>
                 <item name="nsu" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler</item>
                 <item name="velocity_analysis" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler</item>
+                <item name="status_antifraude" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\StatusAntiFraudHandler</item>
             </argument>
         </arguments>
     </virtualType>
