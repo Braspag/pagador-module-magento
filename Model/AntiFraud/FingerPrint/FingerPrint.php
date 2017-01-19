@@ -82,6 +82,7 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
 
         if (!$quote->getReservedOrderId()) {
             $quote->reserveOrderId();
+            $quote->save();
         }
         
         return $quote->getReservedOrderId();        
