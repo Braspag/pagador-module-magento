@@ -56,7 +56,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerName()
     {
-        return $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
+        return trim($this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname());
     }
 
     public function getCustomerIdentity()
@@ -66,7 +66,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerIdentityType()
     {
-        return 'CPF';
+        $identity = (int) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
+        return (strlen($identity) === 14) ? 'CNPJ' : 'CPF';
     }
 
     public function getCustomerEmail()
@@ -81,21 +82,18 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerAddressStreet()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
-
-        return trim($street);
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
     }
 
     public function getCustomerAddressNumber()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
 
-        return (int) $streetNumber;
     }
 
     public function getCustomerAddressComplement()
     {
-        return null;
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
     }
 
     public function getCustomerAddressZipCode()
@@ -105,7 +103,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerAddressDistrict()
     {
-        return $this->getBillingAddress()->getStreetLine2();
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
     }
 
     public function getCustomerAddressCity()
@@ -125,21 +123,17 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerDeliveryAddressStreet()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
-
-        return trim($street);
+        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
     }
 
     public function getCustomerDeliveryAddressNumber()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
-
-        return (int) $streetNumber;
+        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
     }
 
     public function getCustomerDeliveryAddressComplement()
     {
-        return null;
+        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
     }
 
     public function getCustomerDeliveryAddressZipCode()
@@ -149,7 +143,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerDeliveryAddressDistrict()
     {
-        return $this->getShippingAddress()->getStreetLine2();
+        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
     }
 
     public function getCustomerDeliveryAddressCity()
@@ -325,6 +319,26 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return $this->getPaymentData()->getAdditionalInformation('cc_soptpaymenttoken');
     }
 
+    protected function getBillingAddressAttribute($attribute)
+    {
+        if (preg_match('/^street_/', $attribute)) {
+            $line = (int) str_replace('street_', '', $attribute);
+            return $this->getQuoteBillingAddress()->getStreetLine($line);
+        }
+
+        $this->getQuoteBillingAddress()->getData($attribute);
+    }
+
+    protected function getShippingAddressAttribute($attribute)
+    {
+        if (preg_match('/^street_/', $attribute)) {
+            $line = (int) str_replace('street_', '', $attribute);
+            return $this->getQuoteShippingAddress()->getStreetLine($line);
+        }
+
+        $this->getQuoteShippingAddress()->getData($attribute);
+    }
+
     /**
      * @return ConfigInterface
      */
@@ -390,5 +404,15 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         }
 
         return $this->quote;
+    }
+
+    protected function getQuoteBillingAddress()
+    {
+        return $this->getQuote()->getBillingAddress();
+    }
+
+    protected function getQuoteShippingAddress()
+    {
+        return $this->getQuote()->getShippingAddress();
     }
 }

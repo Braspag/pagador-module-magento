@@ -20,47 +20,28 @@ class Request implements BraspaglibRequestInterface
     protected $session;
     protected $quote;
 
-    /**
-     * @param OrderItemInterface $itemAdapter
-     * @param SessionManagerInterface $session
-     */
     public function __construct(OrderItemInterface $itemAdapter, SessionManagerInterface $session)
     {
         $this->setItemAdapter($itemAdapter);
         $this->setSession($session);
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getGiftCategory()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getHostHedge()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getNonSensicalHedge()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getObscenitiesHedge()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPhoneHedge()
     {
     }
@@ -82,71 +63,46 @@ class Request implements BraspaglibRequestInterface
 
     public function getUnitPrice()
     {
-        return $this->getItemAdapter()->getPrice();
+        $amount = $this->getItemAdapter()->getPrice() * 100;
+        return str_replace('.', '', $amount);
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getRisk()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getTimeHedge()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getType()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getVelocityHedge()
     {
     }
 
     public function getPassengerEmail()
     {
-        return $this->getQuote()->getCustomerEmail();
     }
 
     public function getPassengerIdentity()
     {
-        return $this->getQuote()->getCustomerTaxvat();
-
     }
 
     public function getPassengerName()
     {
-        return $this->getQuote()->getCustomerFirstname() . ' ' . $this->getQuote()->getCustomerLastname();
-
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerRating()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerPhone()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getPassengerStatus()
     {
     }

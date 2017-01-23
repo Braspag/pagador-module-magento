@@ -12,6 +12,7 @@
                 </label>
                 <frontend_model>Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Group</frontend_model>
                 <include path="Webjump_BraspagPagador::system/global.xml"/>
+                <include path="Webjump_BraspagPagador::system/customer.xml"/>
                 <include path="Webjump_BraspagPagador::system/transaction.xml"/>
             </group>
         </section>
