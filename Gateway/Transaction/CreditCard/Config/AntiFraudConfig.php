@@ -26,4 +26,9 @@ class AntiFraudConfig extends AbstractConfig implements AntiFraudConfigInterface
     {
         return (bool) $this->_getConfig(self::XML_PATH_VOID_ON_HIGH_RISK);
     }
+
+    public function userOrderIdToFingerPrint()
+    {
+        return (bool) $this->_getConfig(self::XML_ORDER_ID_TO_FINGERPRINT);
+    }
 }

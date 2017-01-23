@@ -77,6 +77,26 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->with('payment/braspag_pagador_creditcard/customer_identity_attribute_code')
             ->will($this->returnValue('customer_taxvat'));
 
+        $this->scopeConfigMock->expects($this->at(9))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_customer_address/street_attribute')
+            ->will($this->returnValue('street_1'));
+
+        $this->scopeConfigMock->expects($this->at(10))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_customer_address/number_attribute')
+            ->will($this->returnValue('street_2'));
+
+        $this->scopeConfigMock->expects($this->at(11))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_customer_address/complement_attribute')
+            ->will($this->returnValue('street_3'));
+
+        $this->scopeConfigMock->expects($this->at(12))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_customer_address/district_attribute')
+            ->will($this->returnValue('street_4'));
+
         $this->storeMock->expects($this->once())
             ->method('getUrl')
             ->with('checkout/onepage/success')
@@ -86,7 +106,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->method('getStore')
             ->will($this->returnValue($this->storeMock));
 
-        $this->contextMock->expects($this->exactly(9))
+        $this->contextMock->expects($this->exactly(13))
             ->method('getConfig')
             ->will($this->returnValue($this->scopeConfigMock));
 
@@ -103,5 +123,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         static::assertTrue($this->config->isAuthenticate3DsVbv());
         static::assertEquals('http://www.braspagreturnurl.com.br/checkout/onepage/success', $this->config->getReturnUrl());
         static::assertEquals('customer_taxvat', $this->config->getIdentityAttributeCode());
+        static::assertEquals('street_1', $this->config->getCustomerStreetAttribute());
+        static::assertEquals('street_2', $this->config->getCustomerNumberAttribute());
+        static::assertEquals('street_3', $this->config->getCustomerComplementAttribute());
+        static::assertEquals('street_4', $this->config->getCustomerDistrictAttribute());
     }
 }

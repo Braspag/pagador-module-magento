@@ -20,6 +20,7 @@ interface AntiFraudConfigInterface
     const XML_PATH_SEQUENCE_CRITERIA = 'webjump_braspag_antifraud/options/sequence_criteria';
     const XML_PATH_CAPTURE_ON_LOW_RISK = 'webjump_braspag_antifraud/options/capture_in_low_risk';
     const XML_PATH_VOID_ON_HIGH_RISK = 'webjump_braspag_antifraud/options/void_in_high_risk';
+    const XML_ORDER_ID_TO_FINGERPRINT   = 'webjump_braspag_antifraud/fingerprint/use_order_id_to_fingerprint';
 
     public function getSequence();
 
@@ -28,4 +29,6 @@ interface AntiFraudConfigInterface
     public function getCaptureOnLowRisk();
 
     public function getVoidOnHighRisk();
+
+    public function userOrderIdToFingerPrint();
 }

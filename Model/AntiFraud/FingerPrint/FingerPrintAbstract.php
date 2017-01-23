@@ -33,10 +33,6 @@ abstract class FingerPrintAbstract
     protected $sessionId;
     protected $quote;
 
-    /**
-     * @param ScopeConfigInterface $scopeConfig
-     * @param SessionManagerInterface $session
-     */
     public function __construct(ScopeConfigInterface $scopeConfig, SessionManagerInterface $session)
     {
         $this->setScopeConfig($scopeConfig);

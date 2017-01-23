@@ -34,7 +34,6 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     /**
      * @param ConfigInterface $config
      * @param RequestFactory $requestItemFactory
-     * @todo inject config anti-fraud
      */
     public function __construct(ConfigInterface $config, RequestFactory $requestItemFactory)
     {
@@ -54,7 +53,10 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getFingerPrintId()
     {
-        
+        if ($this->getConfig()->userOrderIdToFingerPrint()) {
+            return (string) $this->getReservedOrderId();
+        }
+
         return $this->getConfig()->getSession()->getSessionId();
     }
 
@@ -68,23 +70,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return (boolean) $this->getConfig()->getVoidOnHighRisk();
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getBrowserCookiesAccepted()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getBrowserEmail()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getBrowserHostName()
     {
     }
@@ -94,23 +87,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->getOrderAdapter()->getRemoteIp();
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getBrowserType()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getCartIsGift()
     {
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getCartReturnsAccepted()
     {
     }
@@ -127,14 +111,12 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getCartShippingAddressee()
     {
-        return  $this->getShippingAddress()->getFirstname() . ' ' .
-                ($this->getShippingAddress()->getMiddlename()) ? $this->getShippingAddress()->getMiddlename() . ' ' : '' .
-                $this->getShippingAddress()->getLastname();
+        return trim(
+            $this->getShippingAddress()->getFirstname() . ' ' .
+            $this->getShippingAddress()->getLastname()
+        );
     }
 
-    /**
-     * @todo to implementation
-     */
     public function getCartShippingMethod()
     {
     }
@@ -142,7 +124,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getCartShippingPhone()
     {
         return ConfigInterface::COUNTRY_TELEPHONE_CODE .
-               preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getBillingAddress()->getTelephone());
+               preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone());
     }
 
     public function setOrderAdapter(OrderAdapterInterface $orderAdapter)
@@ -151,79 +133,51 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this;
     }
 
-    /**
-     * @param InfoInterface $payment
-     */
     public function setPaymentData(InfoInterface $payment)
     {
         $this->paymentData = $payment;
     }
 
-    /**
-     * @return InfoInterface
-     */
     public function getPaymentData()
     {
         return $this->paymentData;
     }
 
-    /**
-     * @return OrderAdapter
-     */
     protected function getOrderAdapter()
     {
         return $this->orderAdapter;
     }
 
-    /**
-     * @return ConfigInterface
-     */
     protected function getConfig()
     {
         return $this->config;
     }
 
-    /**
-     * @return RequestFactory
-     */
     public function getRequestItemFactory()
     {
         return $this->requestItemFactory;
     }
 
-    /**
-     * @param RequestFactory $requestItemFactory
-     */
     public function setRequestItemFactory(RequestFactory $requestItemFactory)
     {
         $this->requestItemFactory = $requestItemFactory;
     }
 
-    /**
-     * @param ConfigInterface $config
-     * @return $this
-     */
     protected function setConfig(ConfigInterface $config)
     {
         $this->config = $config;
         return $this;
     }
 
-    /**
-     * @return \Magento\Payment\Gateway\Data\AddressAdapterInterface|null
-     */
     protected function getShippingAddress()
     {
-        if (!$this->shippingAddress) {
+        if (! $this->shippingAddress) {
             $this->shippingAddress = $this->getOrderAdapter()->getShippingAddress();
         }
 
         return $this->shippingAddress;
     }
 
-    /**
-     * @return \Magento\Payment\Gateway\Data\AddressAdapterInterface|null
-     */
     protected function getBillingAddress()
     {
         if (!$this->billingAddress) {
@@ -233,9 +187,6 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->billingAddress;
     }
 
-    /**
-     * @return \Magento\Quote\Model\Quote
-     */
     protected function getQuote()
     {
         if (! $this->quote) {
@@ -243,5 +194,17 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         }
 
         return $this->quote;
+    }
+
+    protected function getReservedOrderId()
+    {
+        $quote = $this->getQuote();
+
+        if (! $quote->getReservedOrderId()) {
+            $quote->reserveOrderId();
+            $quote->save();
+        }
+
+        return $quote->getReservedOrderId();
     }
 }
