@@ -19,6 +19,10 @@ use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface;
 class ResponseHandler implements HandlerInterface
 {
     const ADDITIONAL_INFORMATION_BILLET_URL = 'billet_url';
+    const ADDITIONAL_INFORMATION_BOLETO_NUMBER = 'boleto_number';
+    const ADDITIONAL_INFORMATION_EXPIRATION_DATE = 'expiration_date';
+    const ADDITIONAL_INFORMATION_BAR_CODE_NUMBER = 'bar_code_number';
+    const ADDITIONAL_INFORMATION_DIGITABLE_LINE = 'digitable_line';
 
     public function handle(array $handlingSubject, array $response)
     {
@@ -37,7 +41,13 @@ class ResponseHandler implements HandlerInterface
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
+
         $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BILLET_URL, $response->getPaymentUrl());
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BOLETO_NUMBER, $response->getPaymentBoletoNumber());
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_EXPIRATION_DATE, $response->getPaymentUrl());
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BAR_CODE_NUMBER, $response->getPaymentBarCodeNumber());
+        $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_DIGITABLE_LINE, $response->getDigitableLine());
+
         return $this;
     }
 }
