@@ -144,7 +144,7 @@ define(
 
             getPlaceOrderDeferredObject: function () {
 
-                if (sopt.isActive(this.getCode())) {
+                if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
                     this.updateCreditCardExpData();
                     this.updateCreditCardSoptPaymentToken();
                 }
@@ -152,6 +152,10 @@ define(
                 return $.when(
                     placeOrderAction(this.getData(), this.messageContainer)
                 );
+            },
+
+            isSoptActive: function () {
+                return true;
             },
 
             placeOrder: function (data, event) {
