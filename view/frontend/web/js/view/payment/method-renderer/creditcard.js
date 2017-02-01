@@ -17,7 +17,8 @@ define(
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
-        'Magento_Checkout/js/action/redirect-on-success'
+        'Magento_Checkout/js/action/redirect-on-success',
+        'mage/validation'
     ],
     function (
         Component,
@@ -39,6 +40,10 @@ define(
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
                 creditCardSoptPaymentToken: ''
+            },
+
+            validateForm: function (form) {
+                return $(form).validation() && $(form).validation('isValid');
             },
 
             initObservable: function () {
@@ -161,6 +166,10 @@ define(
             placeOrder: function (data, event) {
                 var self = this;
 
+                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                    return;
+                }
+
                 if (event) {
                     event.preventDefault();
                 }
@@ -196,14 +205,6 @@ define(
             isAuthenticated: function () {
                 return window.checkoutConfig.payment.ccform.authenticate.active[this.getCode()];
             },
-
-
-
-
-
-
-
-
 
             /**
              * Get list of available credit card types
