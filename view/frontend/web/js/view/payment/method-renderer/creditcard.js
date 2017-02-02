@@ -74,7 +74,7 @@ define(
 
             getData: function () {
 
-                return {
+                var data = {
                     'method': this.item.method,
                     'additional_data': {
                         'cc_cid': this.creditCardVerificationNumber (),
@@ -88,6 +88,21 @@ define(
                         'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
                     }
                 };
+
+                if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
+                    data = {
+                        'method': this.item.method,
+                        'additional_data': {
+                            'cc_cid': this.creditCardVerificationNumber (),
+                            'cc_type': this.creditCardType(),
+                            'cc_installments': this.creditCardInstallments(),
+                            'cc_savecard': this.creditCardsavecard() ? 1 : 0,
+                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                        }
+                    };
+                }
+
+                return data;
             },
 
             isInstallmentsActive: function () {
