@@ -105,6 +105,10 @@ define(
             placeOrder: function (data, event) {
                 var self = this;
 
+                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                    return;
+                }
+
                 if (event) {
                     event.preventDefault();
                 }
@@ -118,14 +122,14 @@ define(
                                 self.isPlaceOrderActionAllowed(true);
                             }
                         ).done(
-                            function (orderId) {
-                                if (SuperDebito.isActive(self.getCode())) {
-                                    return self.placeOrderWithSuperDebito(orderId);
-                                }
-
-                                RedirectAfterPlaceOrder(orderId);
+                        function (orderId) {
+                            if (SuperDebito.isActive(self.getCode())) {
+                                return self.placeOrderWithSuperDebito(orderId);
                             }
-                        );
+
+                            RedirectAfterPlaceOrder(orderId);
+                        }
+                    );
                 }
 
                 return false;
@@ -133,6 +137,10 @@ define(
 
             placeOrderWithSuperDebito: function (orderId) {
                 this.prepareData();
+
+                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                    return;
+                }
 
                 var options = {
                     onInitialize: function(response) {
