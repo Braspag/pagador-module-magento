@@ -68,13 +68,11 @@
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
-                <return_url>http://braspag.dev/</return_url>
             </braspag_pagador_debitcard>
         </payment>
         <webjump_braspag>
             <pagador>
                 <test_mode>1</test_mode>
-                <return_url><![CDATA[checkout/onepage/success]]></return_url>
             </pagador>
         </webjump_braspag>
         <webjump_braspag_antifraud>

@@ -19,5 +19,10 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>webjump_braspag/pagador/test_mode</config_path>
         </field>
+		<field id="return_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Return URL</label>
+			<comment />
+			<config_path>webjump_braspag/pagador/return_url</config_path>
+		</field>
 	</group>	    
 </include>

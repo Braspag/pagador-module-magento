@@ -15,6 +15,7 @@ interface ConfigInterface
 {
 	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID     = 'webjump_braspag/pagador/merchant_id';
 	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY    = 'webjump_braspag/pagador/merchant_key';
+	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL    = 'webjump_braspag/pagador/return_url';
 
 	const DATE_FORMAT = 'Y-m-d';
 

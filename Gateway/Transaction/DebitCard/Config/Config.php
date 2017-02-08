@@ -19,8 +19,8 @@ class Config extends AbstractConfig implements ConfigInterface
 
 	public function getPaymentReturnUrl()
 	{
-		return $this->getConfig()->getValue('payment/braspag_pagador_debitcard/return_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-	}
+        return $this->_getConfig(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL);
+    }
 
 	public function isSuperDebitoActive()
 	{
