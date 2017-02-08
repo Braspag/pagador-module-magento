@@ -21,6 +21,7 @@ define(
         'Magento_Checkout/js/action/redirect-on-success',
         'Magento_Checkout/js/model/quote',
         'ko',
+        'Magento_Checkout/js/model/error-processor',
         'mage/validation'
     ],
     function (
@@ -36,6 +37,7 @@ define(
         redirectOnSuccessAction,
         quote,
         ko,
+        errorProcessor,
         mageValidation
     ) {
         'use strict';
@@ -54,10 +56,7 @@ define(
                 var self = this;
                 this._super();
 
-                quote.totals.subscribe(function (newValue) {
-                    self.getCcInstallments();
-                });
-
+                self.getCcInstallments();
             },
 
             validateForm: function (form) {
@@ -136,22 +135,12 @@ define(
                 ).done(function (transport) {
                     self.allInstallments.removeAll();
 
-                    if (self.getCode() === 'braspag_pagador_creditcard') {
-                        _.map(transport, function (value, key) {
-                            self.allInstallments.push({
-                                'value': key,
-                                'installments': value
-                            });
+                    _.map(transport, function (value, key) {
+                        self.allInstallments.push({
+                            'value': value.id,
+                            'installments': value.label
                         });
-                    } else {
-                        _.map(transport, function (value, key) {
-                            self.allInstallments.push({
-                                'id': key,
-                                'label': value
-                            });
-                        });
-                    }
-
+                    });
 
                 }).always(function () {
                     fullScreenLoader.stopLoader();
@@ -234,32 +223,47 @@ define(
                     event.preventDefault();
                 }
 
-                if (this.validate() && additionalValidators.validate()) {
-                    this.isPlaceOrderActionAllowed(false);
-
-                    this.getPlaceOrderDeferredObject()
-                        .fail(
-                            function () {
-                                self.isPlaceOrderActionAllowed(true);
-                            }
-                        ).done(
-                        function (orderId) {
-                            self.afterPlaceOrder();
-
-                            if (self.isAuthenticated()) {
-                                return RedirectAfterPlaceOrder(orderId);
-                            }
-
-                            if (self.redirectAfterPlaceOrder) {
-                                redirectOnSuccessAction.execute();
-                            }
-                        }
-                    );
-
-                    return true;
+                if (! (this.validate() && additionalValidators.validate())) {
+                    return false;
                 }
 
-                return false;
+                this.isPlaceOrderActionAllowed(false);
+
+                this.getPlaceOrderDeferredObject()
+                    .fail(
+                        function () {
+                            self.isPlaceOrderActionAllowed(true);
+                        }
+                    ).done(
+                    function (orderId) {
+                        self.afterPlaceOrder();
+
+                        fullScreenLoader.startLoader();
+                        $.when(
+                            RedirectAfterPlaceOrder(orderId)
+                        ).done(
+                            function (url) {
+                                console.log(url);
+                                if (url.length) {
+                                    window.location.replace(url);
+                                    return true;
+                                }
+
+                                if (self.redirectAfterPlaceOrder) {
+                                    redirectOnSuccessAction.execute();
+                                }
+                            }
+                        ).fail(
+                            function (response) {
+                                errorProcessor.process(response, messageContainer);
+                            }
+                        ).always(function () {
+                            fullScreenLoader.stopLoader();
+                        });
+                    }
+                );
+
+                return true;
             },
 
             isAuthenticated: function () {

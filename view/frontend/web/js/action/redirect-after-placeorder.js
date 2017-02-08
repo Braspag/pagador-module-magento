@@ -10,15 +10,12 @@
 define(
     [
         'mage/storage',
-        'Magento_Checkout/js/model/url-builder',
-        'Magento_Checkout/js/model/error-processor',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/url-builder'
     ],
-    function (storage, urlBuilder, errorProcessor, fullScreenLoader) {
+    function (storage, urlBuilder) {
         'use strict';
 
         return function (orderId) {
-            fullScreenLoader.startLoader();
             var serviceUrl;
 
 
@@ -28,15 +25,6 @@ define(
 
             return storage.post(
                 serviceUrl, false
-            ).done(
-                function (url) {
-                    window.location.replace(url);
-                }
-            ).fail(
-                function (response) {
-                    errorProcessor.process(response, messageContainer);
-                    fullScreenLoader.stopLoader();
-                }
             );
         };
     }

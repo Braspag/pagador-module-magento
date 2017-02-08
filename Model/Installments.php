@@ -25,7 +25,10 @@ class Installments implements InstallmentsInterface
 
         /** @var Installment $item */
         foreach ($this->getBuilder()->build() as $item) {
-            $result[$item->getId()] = $item->getLabel();
+            $result[] = [
+                'id' => $item->getId(),
+                'label' => $item->getLabel()
+            ];
         }
 
         return $result;
