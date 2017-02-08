@@ -17,7 +17,10 @@ define(
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Webjump_BraspagPagador/js/action/installments',
         'Magento_Checkout/js/action/redirect-on-success',
+        'Magento_Checkout/js/model/quote',
+        'ko',
         'mage/validation'
     ],
     function (
@@ -29,7 +32,11 @@ define(
         fullScreenLoader,
         additionalValidators,
         RedirectAfterPlaceOrder,
-        redirectOnSuccessAction
+        installments,
+        redirectOnSuccessAction,
+        quote,
+        ko,
+        mageValidation
     ) {
         'use strict';
 
@@ -39,7 +46,18 @@ define(
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
-                creditCardSoptPaymentToken: ''
+                creditCardSoptPaymentToken: '',
+                allInstallments: ko.observableArray([])
+            },
+
+            initialize: function () {
+                var self = this;
+                this._super();
+
+                quote.totals.subscribe(function (newValue) {
+                    self.getCcInstallments();
+                });
+
             },
 
             validateForm: function (form) {
@@ -110,7 +128,34 @@ define(
             },
 
             getCcInstallments: function() {
-                return window.checkoutConfig.payment.ccform.installments.list[this.getCode()];
+                var self = this;
+
+                fullScreenLoader.startLoader();
+                $.when(
+                    installments()
+                ).done(function (transport) {
+                    self.allInstallments.removeAll();
+
+                    if (self.getCode() === 'braspag_pagador_creditcard') {
+                        _.map(transport, function (value, key) {
+                            self.allInstallments.push({
+                                'value': key,
+                                'installments': value
+                            });
+                        });
+                    } else {
+                        _.map(transport, function (value, key) {
+                            self.allInstallments.push({
+                                'id': key,
+                                'label': value
+                            });
+                        });
+                    }
+
+
+                }).always(function () {
+                    fullScreenLoader.stopLoader();
+                });
             },
 
             getCcInstallmentsValues: function() {
@@ -198,18 +243,18 @@ define(
                                 self.isPlaceOrderActionAllowed(true);
                             }
                         ).done(
-                            function (orderId) {
-                                self.afterPlaceOrder();
+                        function (orderId) {
+                            self.afterPlaceOrder();
 
-                                if (self.isAuthenticated()) {
-                                    return RedirectAfterPlaceOrder(orderId);
-                                }
-
-                                if (self.redirectAfterPlaceOrder) {
-                                    redirectOnSuccessAction.execute();
-                                }
+                            if (self.isAuthenticated()) {
+                                return RedirectAfterPlaceOrder(orderId);
                             }
-                        );
+
+                            if (self.redirectAfterPlaceOrder) {
+                                redirectOnSuccessAction.execute();
+                            }
+                        }
+                    );
 
                     return true;
                 }
