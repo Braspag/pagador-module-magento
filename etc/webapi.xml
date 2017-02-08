@@ -15,4 +15,11 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/creditcard/installments" method="POST">
+        <service class="Webjump\BraspagPagador\Api\InstallmentsInterface" method="getInstallments"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
 </routes>

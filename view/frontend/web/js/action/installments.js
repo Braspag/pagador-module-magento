@@ -12,20 +12,19 @@ define(
         'mage/storage',
         'Magento_Checkout/js/model/url-builder'
     ],
-    function (storage, urlBuilder) {
+    function (
+        storage,
+        urlBuilder
+    ) {
         'use strict';
 
-        return function (orderId) {
+        return function () {
             var serviceUrl;
-
-
-            serviceUrl = urlBuilder.createUrl('/braspag/redirect-after-placeorder/:orderId/link', {
-                orderId: orderId
-            });
+            serviceUrl = urlBuilder.createUrl('/braspag/creditcard/installments/', {});
 
             return storage.post(
                 serviceUrl, false
-            );
+            )
         };
     }
 );

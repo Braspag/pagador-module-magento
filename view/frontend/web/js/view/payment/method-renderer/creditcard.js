@@ -17,7 +17,11 @@ define(
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Webjump_BraspagPagador/js/action/installments',
         'Magento_Checkout/js/action/redirect-on-success',
+        'Magento_Checkout/js/model/quote',
+        'ko',
+        'Magento_Checkout/js/model/error-processor',
         'mage/validation'
     ],
     function (
@@ -29,7 +33,12 @@ define(
         fullScreenLoader,
         additionalValidators,
         RedirectAfterPlaceOrder,
-        redirectOnSuccessAction
+        installments,
+        redirectOnSuccessAction,
+        quote,
+        ko,
+        errorProcessor,
+        mageValidation
     ) {
         'use strict';
 
@@ -39,7 +48,15 @@ define(
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
-                creditCardSoptPaymentToken: ''
+                creditCardSoptPaymentToken: '',
+                allInstallments: ko.observableArray([])
+            },
+
+            initialize: function () {
+                var self = this;
+                this._super();
+
+                self.getCcInstallments();
             },
 
             validateForm: function (form) {
@@ -110,7 +127,24 @@ define(
             },
 
             getCcInstallments: function() {
-                return window.checkoutConfig.payment.ccform.installments.list[this.getCode()];
+                var self = this;
+
+                fullScreenLoader.startLoader();
+                $.when(
+                    installments()
+                ).done(function (transport) {
+                    self.allInstallments.removeAll();
+
+                    _.map(transport, function (value, key) {
+                        self.allInstallments.push({
+                            'value': value.id,
+                            'installments': value.label
+                        });
+                    });
+
+                }).always(function () {
+                    fullScreenLoader.stopLoader();
+                });
             },
 
             getCcInstallmentsValues: function() {
@@ -189,32 +223,47 @@ define(
                     event.preventDefault();
                 }
 
-                if (this.validate() && additionalValidators.validate()) {
-                    this.isPlaceOrderActionAllowed(false);
+                if (! (this.validate() && additionalValidators.validate())) {
+                    return false;
+                }
 
-                    this.getPlaceOrderDeferredObject()
-                        .fail(
-                            function () {
-                                self.isPlaceOrderActionAllowed(true);
-                            }
+                this.isPlaceOrderActionAllowed(false);
+
+                this.getPlaceOrderDeferredObject()
+                    .fail(
+                        function () {
+                            self.isPlaceOrderActionAllowed(true);
+                        }
+                    ).done(
+                    function (orderId) {
+                        self.afterPlaceOrder();
+
+                        fullScreenLoader.startLoader();
+                        $.when(
+                            RedirectAfterPlaceOrder(orderId)
                         ).done(
-                            function (orderId) {
-                                self.afterPlaceOrder();
-
-                                if (self.isAuthenticated()) {
-                                    return RedirectAfterPlaceOrder(orderId);
+                            function (url) {
+                                console.log(url);
+                                if (url.length) {
+                                    window.location.replace(url);
+                                    return true;
                                 }
 
                                 if (self.redirectAfterPlaceOrder) {
                                     redirectOnSuccessAction.execute();
                                 }
                             }
-                        );
+                        ).fail(
+                            function (response) {
+                                errorProcessor.process(response, messageContainer);
+                            }
+                        ).always(function () {
+                            fullScreenLoader.stopLoader();
+                        });
+                    }
+                );
 
-                    return true;
-                }
-
-                return false;
+                return true;
             },
 
             isAuthenticated: function () {

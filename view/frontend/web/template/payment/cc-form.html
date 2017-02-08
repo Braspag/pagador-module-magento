@@ -170,7 +170,7 @@
                                  class="select select-installments"
                                  data-bind="attr: {id: getCode() + '_installments', 'data-container': getCode() + '-cc-installments', 'data-validate': JSON.stringify({required:true})},
                                             enable: isActive($parents),
-                                            options: getCcInstallmentsValues(),
+                                            options: allInstallments,
                                             optionsValue: 'value',
                                             optionsText: 'installments',
                                             optionsCaption: $t('Installments'),
