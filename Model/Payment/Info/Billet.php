@@ -17,7 +17,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHand
 
 class Billet
 {
-    private $order;
+    protected $order;
 
     /**
      * @param OrderInterface $order

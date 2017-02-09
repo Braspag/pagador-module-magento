@@ -66,12 +66,4 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE);
     }
-
-    /**
-     * @deprecated
-     */
-	public function getSession()
-    {
-        return parent::getSession();
-    }
 }

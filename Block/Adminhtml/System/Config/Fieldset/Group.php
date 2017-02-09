@@ -11,15 +11,6 @@ namespace Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset;
  */
 class Group extends \Magento\Config\Block\System\Config\Form\Fieldset
 {
-    public function __construct(
-        \Magento\Backend\Block\Context $context,
-        \Magento\Backend\Model\Auth\Session $authSession,
-        \Magento\Framework\View\Helper\Js $jsHelper,
-        array $data = []
-    ) {
-        parent::__construct($context, $authSession, $jsHelper, $data);
-    }
-
     protected function _getHeaderCommentHtml($element)
     {
         $groupConfig = $element->getGroup();

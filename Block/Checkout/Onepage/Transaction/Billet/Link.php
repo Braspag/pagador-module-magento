@@ -12,7 +12,7 @@ use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
 
 class Link extends Template
 {
-    private $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * Link constructor.

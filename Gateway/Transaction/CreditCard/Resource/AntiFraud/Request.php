@@ -10,10 +10,8 @@
  */
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud;
 
-use Magento\Payment\Gateway\Data\Order\OrderAdapter;
+
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Magento\Sales\Api\Data\OrderInterface;
-use Magento\Sales\Api\Data\OrderItemInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as BraspaglibRequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface as ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;

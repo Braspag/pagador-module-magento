@@ -226,12 +226,6 @@
         </arguments>
     </type>
 
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler">
-        <arguments>
-            <argument name="cardTokenRepository" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenRepository</argument>
-        </arguments>
-    </type>
-
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">

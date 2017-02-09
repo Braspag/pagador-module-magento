@@ -10,10 +10,10 @@ use Magento\Framework\Stdlib\DateTime;
 
 class Context implements ContextInterface
 {
-    private $config;
-    private $session;
-    private $storeManager;
-    private $dateTime;
+    protected $config;
+    protected $session;
+    protected $storeManager;
+    protected $dateTime;
 
     public function __construct(
         ScopeConfigInterface $config,
