@@ -15,7 +15,10 @@ define(
         'Webjump_BraspagPagador/js/model/superdebito',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/totals',
-        'Magento_Checkout/js/action/redirect-on-success'
+        'Magento_Checkout/js/action/redirect-on-success',
+        'Magento_Checkout/js/model/error-processor',
+        'jquery',
+        'Magento_Checkout/js/model/full-screen-loader'
     ],
     function (
         Component,
@@ -24,7 +27,10 @@ define(
         SuperDebito,
         quote,
         totals,
-        redirectOnSuccessAction
+        redirectOnSuccessAction,
+        errorProcessor,
+        $,
+        fullScreenLoader
     ) {
         'use strict';
 
@@ -127,7 +133,28 @@ define(
                                 return self.placeOrderWithSuperDebito(orderId);
                             }
 
-                            RedirectAfterPlaceOrder(orderId);
+                            fullScreenLoader.startLoader();
+                            $.when(
+                                RedirectAfterPlaceOrder(orderId)
+                            ).done(
+                                function (url) {
+                                    console.log(url);
+                                    if (url.length) {
+                                        window.location.replace(url);
+                                        return true;
+                                    }
+
+                                    if (self.redirectAfterPlaceOrder) {
+                                        redirectOnSuccessAction.execute();
+                                    }
+                                }
+                            ).fail(
+                                function (response) {
+                                    errorProcessor.process(response, messageContainer);
+                                }
+                            ).always(function () {
+                                fullScreenLoader.stopLoader();
+                            });
                         }
                     );
                 }

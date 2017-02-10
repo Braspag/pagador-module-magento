@@ -18,9 +18,9 @@ use Magento\Checkout\Model\Session;
 
 class RequestFactory
 {
-    private $objectManager;
-    private $class;
-    private $session;
+    protected $objectManager;
+    protected $class;
+    protected $session;
 
     /**
      * RequestFactory constructor.

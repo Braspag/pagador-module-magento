@@ -51,7 +51,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getMerchantOrderId()
     {
-        return str_replace(0,9, $this->getOrderAdapter()->getOrderIncrementId());
+        return  $this->getOrderAdapter()->getOrderIncrementId();
     }
 
     public function getCustomerName()
@@ -159,6 +159,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getCustomerDeliveryAddressCountry()
     {
         return 'BRA';
+    }
+
+    public function getPaymentType()
+    {
+        return false;
     }
 
     public function getPaymentAmount()

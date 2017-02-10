@@ -15,9 +15,12 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config" />
-
+    app/code/Webjump/BraspagPagador/Gateway/Transaction/CreditCard/Config/MDDConfig.php
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
     <preference for="Webjump\BraspagPagador\Model\Payment\Info\BilletFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory" />
+
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\GeneralRequest" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfig" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
         <arguments>
@@ -223,12 +226,6 @@
             <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
             <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
             <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\CardToken</argument>
-        </arguments>
-    </type>
-
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\ResponseHandler">
-        <arguments>
-            <argument name="cardTokenRepository" xsi:type="object">Webjump\BraspagPagador\Model\CardTokenRepository</argument>
         </arguments>
     </type>
 

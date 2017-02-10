@@ -16,7 +16,6 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_VBV_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_vbv';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_RETURN_URL = 'payment/braspag_pagador_config/return_url';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION = 'payment/braspag_pagador_creditcard/payment_action';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SOFT_ACTION = 'payment/braspag_pagador_creditcard/soft_config';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';

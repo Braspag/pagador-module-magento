@@ -21,7 +21,7 @@ class Builder implements BuilderInterface
 
 	protected $grandTotal;
 
-	protected $installmentsNumber;
+	protected $installmentsNumber = 0;
 
 	public function __construct(
 		InstallmentFactoryInterface $instalLmentfactory,
@@ -35,7 +35,8 @@ class Builder implements BuilderInterface
 
     public function build()
     {
-    	for ($i = 1; $i < $this->getInstallmentsNumber(); $i++) {
+        $installmentItems = $this->getInstallmentsNumber();
+    	for ($i = 1; $i < $installmentItems ; $i++) {
 
             if (!$this->canProcessInstallment($i)) {
                 break;

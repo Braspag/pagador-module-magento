@@ -7,19 +7,22 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Stdlib\DateTime;
+use Magento\Framework\Stdlib\DateTime\DateTime as CurrentDate;
 
 class Context implements ContextInterface
 {
-    private $config;
-    private $session;
-    private $storeManager;
-    private $dateTime;
+    protected $config;
+    protected $session;
+    protected $storeManager;
+    protected $dateTime;
+    protected $currentDate;
 
     public function __construct(
         ScopeConfigInterface $config,
         SessionManagerInterface $session,
         StoreManagerInterface $storeManager,
-        DateTime $dateTime
+        DateTime $dateTime,
+        CurrentDate $currentDate
     )
     {
         $this->setConfig($config);
@@ -47,6 +50,20 @@ class Context implements ContextInterface
     public function getDateTime()
     {
         return $this->dateTime;
+    }
+
+    /**
+     * @return CurrentDate
+     */
+    public function getCurrentDate()
+    {
+        return $this->currentDate;
+    }
+
+    protected function setCurrentDate(CurrentDate $dateTime)
+    {
+        $this->currentDate = $dateTime;
+        return $this;
     }
 
     protected function setConfig(ScopeConfigInterface $config)

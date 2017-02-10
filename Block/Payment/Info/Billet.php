@@ -22,7 +22,7 @@ class Billet extends Info
     const TEMPLATE = 'Webjump_BraspagPagador::payment/info/billet.phtml';
 
     /** @var BilletFactory */
-    private $billetFactory;
+    protected $billetFactory;
 
     public function __construct(
         Context $context,

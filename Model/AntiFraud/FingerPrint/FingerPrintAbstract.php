@@ -23,8 +23,8 @@ abstract class FingerPrintAbstract
     const XML_MERCHANT_ID                    = 'webjump_braspag_antifraud/fingerprint/merchant_id';
     const XML_ORDER_ID_TO_FINGERPRINT   = 'webjump_braspag_antifraud/fingerprint/use_order_id_to_fingerprint';
 
-    private $scopeConfig;
-    private $session;
+    protected $scopeConfig;
+    protected $session;
     
     protected $srcPngImageUrl;
     protected $srcJsUrl;

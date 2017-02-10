@@ -34,9 +34,7 @@ class Config extends BaseConfig implements ConfigInterface
 
     public function getReturnUrl()
     {
-        $url = (string) str_replace('index.php/', '', $this->getStoreManager()->getStore()->getUrl($this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_RETURN_URL)));
-
-        return substr($url, 0, -1);
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL);
     }
 
     public function getIdentityAttributeCode()
@@ -67,13 +65,5 @@ class Config extends BaseConfig implements ConfigInterface
     public function getCustomerDistrictAttribute()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE);
-    }
-
-    /**
-     * @deprecated
-     */
-	public function getSession()
-    {
-        return parent::getSession();
     }
 }

@@ -11,4 +11,6 @@ interface ContextInterface
     public function getStoreManager();
 
     public function getDateTime();
+
+    public function getCurrentDate();
 }
