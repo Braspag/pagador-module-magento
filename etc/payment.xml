@@ -100,6 +100,9 @@
         <type id="Bradesco" order="28">
             <label>Bradesco</label>
         </type>
+        <type id="Bradesco2" order="28">
+            <label>Bradesco 2</label>
+        </type>
         <type id="BancoDoBrasil" order="29">
             <label>Banco do Brasil</label>
         </type>

@@ -17,6 +17,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface
 {
@@ -28,15 +29,17 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $shippingAddress;
     protected $quote;
     protected $fingerPrintId;
+    protected $mdd;
 
-    /**
-     * @param ConfigInterface $config
-     * @param RequestFactory $requestItemFactory
-     */
-    public function __construct(ConfigInterface $config, RequestFactory $requestItemFactory)
+    public function __construct(
+        ConfigInterface $config,
+        RequestFactory $requestItemFactory,
+        AdapterGeneralInterface $adapterGeneral
+    )
     {
         $this->setConfig($config);
         $this->setRequestItemFactory($requestItemFactory);
+        $this->setMdd($adapterGeneral);
     }
 
     public function getSequence()
@@ -107,6 +110,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $items;
     }
 
+    public function getMerchantDefinedFields()
+    {
+        $mdd = $this->getMdd();
+        $mdd->setPaymentData($this->getPaymentData());
+        $mdd->setOrderAdapter($this->getOrderAdapter());
+        return $mdd;
+    }
+
     public function getCartShippingAddressee()
     {
         return trim(
@@ -139,6 +150,17 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getPaymentData()
     {
         return $this->paymentData;
+    }
+
+    protected function setMdd(AdapterGeneralInterface $mdd)
+    {
+        $this->mdd = $mdd;
+        return $this;
+    }
+
+    protected   function getMdd()
+    {
+        return $this->mdd;
     }
 
     protected function getOrderAdapter()

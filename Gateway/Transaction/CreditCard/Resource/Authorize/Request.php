@@ -161,6 +161,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return 'BRA';
     }
 
+    public function getPaymentType()
+    {
+        return false;
+    }
+
     public function getPaymentAmount()
     {
         $amount = $this->getOrderAdapter()->getGrandTotalAmount() * 100;

@@ -26,5 +26,6 @@
 
         <include path="Webjump_BraspagPagador::system/antifraud/fingerprint.xml"/>
         <include path="Webjump_BraspagPagador::system/antifraud/options.xml"/>
+        <include path="Webjump_BraspagPagador::system/antifraud/mdd.xml"/>
     </section>
 </include>

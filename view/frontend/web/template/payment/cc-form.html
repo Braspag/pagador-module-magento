@@ -46,12 +46,18 @@
                                     id: getCode() + '_cc_number',
                                     title: $t('Credit Card Number'),
                                     'data-container': getCode() + '-cc-number',
-                                    'data-validate': JSON.stringify({'required-number':true, 'validate-card-type':getCcAvailableTypesValues(), 'validate-card-number':'#' + getCode() + '_cc_type', 'validate-cc-type':'#' + getCode() + '_cc_type'})},
+                                    'data-validate': JSON.stringify({'required-number':true})},
+                              event: {paste: creditCardNumberIsPasted},
                               enable: isActive($parents),
                               value: creditCardNumber,
                               valueUpdate: 'keyup' "/>
         </div>
     </div>
+
+    <div class="field credit_card_field_is_pasted" data-bind="attr: {id: getCode() + '_credit_card_field_is_pasted'}">
+        <input  type="hidden" name="payment[credit_card_field_is_pasted]" data-bind="attr: {id: getCode() + 'credit_card_field_is_pasted'}, value: creditCardFieldIsPasted "/>
+    </div>
+
     <!-- ko if: (isSaveCardActive())-->
     <div class="field choice" data-bind="attr: {id: getCode() + '_cc_savecard'}">
         <input type="checkbox" class="checkbox" id="creditcard-save" data-bind="checked: creditCardsavecard" />
@@ -98,7 +104,7 @@
                     <div class="control">
                         <select  name="payment[cc_exp_month]"
                                  class="select select-month"
-                                 data-bind="attr: {id: getCode() + '_expiration', 'data-container': getCode() + '-cc-month', 'data-validate': JSON.stringify({required:true, 'validate-cc-exp':'#' + getCode() + '_expiration_yr'})},
+                                 data-bind="attr: {id: getCode() + '_expiration', 'data-container': getCode() + '-cc-month', 'data-validate': JSON.stringify({required:true})},
                                             enable: isActive($parents),
                                             options: getCcMonthsValues(),
                                             optionsValue: 'value',
@@ -140,7 +146,7 @@
                    data-bind="attr: {id: getCode() + '_cc_cid',
                         title: $t('Card Verification Number'),
                         'data-container': getCode() + '-cc-cvv',
-                        'data-validate': JSON.stringify({'required-number':true, 'validate-card-cvv':'#' + getCode() + '_cc_type'})},
+                        'data-validate': JSON.stringify({'required-number':true})},
                         enable: isActive($parents),
                         value: creditCardVerificationNumber" />
             <div class="field-tooltip toggle">
@@ -182,4 +188,5 @@
         </div>
     </div>
     <!-- /ko -->
+
 </fieldset>
