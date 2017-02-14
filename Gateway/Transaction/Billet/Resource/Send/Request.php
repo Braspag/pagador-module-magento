@@ -21,8 +21,9 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
 	protected $orderAdapter;
-	
+	protected $quote;
 	protected $config;
+	protected $billingAddress;
 
 	public function __construct(
 		ConfigInterface $config
@@ -50,6 +51,68 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
 	}
 
+    public function getCustomerIdentity()
+    {
+        return $this->getQuote()->getData($this->getConfig()->getIdentityAttributeCode());
+    }
+
+    public function getCustomerIdentityType()
+    {
+        $identity = (int) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
+        return (strlen($identity) === 14) ? 'CNPJ' : 'CPF';
+    }
+
+    public function getCustomerEmail()
+    {
+        return $this->getBillingAddress()->getEmail();
+    }
+
+    public function getCustomerBirthDate()
+    {
+        return null;
+    }
+
+    public function getCustomerAddressStreet()
+    {
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
+    }
+
+    public function getCustomerAddressNumber()
+    {
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
+
+    }
+
+    public function getCustomerAddressComplement()
+    {
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+    }
+
+    public function getCustomerAddressZipCode()
+    {
+        return preg_replace('/[^0-9]/','', $this->getBillingAddress()->getPostcode());
+    }
+
+    public function getCustomerAddressDistrict()
+    {
+        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
+    }
+
+    public function getCustomerAddressCity()
+    {
+        return $this->getBillingAddress()->getCity();
+    }
+
+    public function getCustomerAddressState()
+    {
+        return $this->getBillingAddress()->getRegionCode();
+    }
+
+    public function getCustomerAddressCountry()
+    {
+        return 'BRA';
+    }
+
 	public function getPaymentAmount()
 	{
 		$amount = (float) $this->getOrderAdapter()->getGrandTotalAmount() * 100;
@@ -58,9 +121,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
 	public function getPaymentAddress()
 	{
-		$address = $this->getOrderAdapter()->getBillingAddress();
+		$address = $this->getBillingAddress();
 
-		return sprintf("%s %s %s/%s - %s", $address->getStreetLine1(), $address->getStreetLine2(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
+		return sprintf("%s %s %s/%s - %s", $this->getCustomerAddressStreet(), $this->getCustomerAddressNumber(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
 	}
 
 	public function getPaymentProvider()
@@ -110,6 +173,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $this;
     }
 
+    /**
+     * @return ConfigInterface
+     */
     protected function getConfig()
     {
         return $this->config;
@@ -120,5 +186,41 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         $this->config = $config;
 
         return $this;
+    }
+
+    /**
+     * @return \Magento\Quote\Model\Quote
+     */
+    protected function getQuote()
+    {
+        if (!$this->quote) {
+            $this->quote = $this->getConfig()->getSession()->getQuote();
+        }
+
+        return $this->quote;
+    }
+
+    protected function getBillingAddressAttribute($attribute)
+    {
+        if (preg_match('/^street_/', $attribute)) {
+            $line = (int) str_replace('street_', '', $attribute);
+            return $this->getQuoteBillingAddress()->getStreetLine($line);
+        }
+
+        $this->getQuoteBillingAddress()->getData($attribute);
+    }
+
+    protected function getQuoteBillingAddress()
+    {
+        return $this->getQuote()->getBillingAddress();
+    }
+
+    protected function getBillingAddress()
+    {
+        if (!$this->billingAddress) {
+            $this->billingAddress = $this->getOrderAdapter()->getBillingAddress();
+        }
+
+        return $this->billingAddress;
     }
 }

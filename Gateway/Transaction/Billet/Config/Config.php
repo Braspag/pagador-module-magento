@@ -40,4 +40,29 @@ class Config extends BaseConfig implements ConfigInterface
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER);
 	}
+
+    public function getCustomerStreetAttribute()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_STREET_ATTRIBUTE);
+    }
+
+    public function getCustomerNumberAttribute()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_NUMBER_ATTRIBUTE);
+    }
+
+    public function getCustomerComplementAttribute()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_COMPLEMENT_ATTRIBUTE);
+    }
+
+    public function getCustomerDistrictAttribute()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE);
+    }
+
+    public function getIdentityAttributeCode()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE);
+    }
 }
