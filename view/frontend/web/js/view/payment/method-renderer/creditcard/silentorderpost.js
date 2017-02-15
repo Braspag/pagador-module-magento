@@ -33,6 +33,9 @@ define(
             },
 
             getPaymentToken: function(options) {
+                var expiration = (options.securityCode) ? options.expiration : '08/2018';
+                var securityCode  = (options.securityCode) ? options.securityCode : '737';
+
                 var settings = {
                     "async": false, //deprecated
                     "url": this.getUrl(options.code),
@@ -40,11 +43,11 @@ define(
                     "data": {
                         "HolderName": options.holderName,
                         "RawNumber": options.rawNumber,
-                        "Expiration": options.expiration,
-                        "SecurityCode": options.securityCode,
+                        "Expiration": expiration,
+                        "SecurityCode": securityCode,
                         "AccessToken": this.getAccessToken(options.code)
                     }
-                }
+                };
 
                 $.ajax(settings).done(function (result) {
                     paymentToken.setPaymentToken(result.PaymentToken);
