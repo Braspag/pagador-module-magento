@@ -29,6 +29,13 @@ class InitializeCommand implements CommandInterface
 
         $payment->getOrder()->setCanSendNewEmailFlag(false);
 
+        $baseTotalDue = $payment->getOrder()->getBaseTotalDue();
+        $totalDue = $payment->getOrder()->getTotalDue();
+
+        $payment->authorize(true, $baseTotalDue);
+        $payment->setAmountAuthorized($totalDue);
+        $payment->setBaseAmountAuthorized($payment->getOrder()->getBaseTotalDue());
+
         $stateObject->setData(OrderInterface::STATE, Order::STATE_PENDING_PAYMENT);
 
         if ($payment->getMethod() === CreditCardProvider::CODE) {
@@ -36,13 +43,17 @@ class InitializeCommand implements CommandInterface
         }
 
         $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('order_status'));
+
+        if ($payment->getIsFraudDetected()) {
+            $stateObject->setData(OrderInterface::STATE, Order::STATE_PAYMENT_REVIEW);
+            $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('reject_order_status'));
+        }
+
+        if ($payment->getIsTransactionPending()) {
+            $stateObject->setData(OrderInterface::STATE, Order::STATE_PAYMENT_REVIEW);
+            $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('review_order_status'));
+        }
+
         $stateObject->setData('is_notified', false);
-
-        $baseTotalDue = $payment->getOrder()->getBaseTotalDue();
-        $totalDue = $payment->getOrder()->getTotalDue();
-
-        $payment->authorize(true, $baseTotalDue);
-        $payment->setAmountAuthorized($totalDue);
-        $payment->setBaseAmountAuthorized($payment->getOrder()->getBaseTotalDue());
     }
 }
