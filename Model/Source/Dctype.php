@@ -20,8 +20,12 @@ class Dctype extends \Magento\Payment\Model\Source\Cctype
     public function getAllowedTypes()
     {
         return [
-			'Simulado',
-			'Cielo',
+            'Simulado',
+            'Cielo-Visa',
+            'Cielo-Master',
+            'Cielo-Elo',
+            'Redecard-Visa',
+            'Redecard-Master'
         ];
     }
 }

@@ -12,6 +12,7 @@
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <can_initialize>1</can_initialize>
             </braspag_pagador_billet>
             <braspag_pagador_creditcard>
                 <active>1</active>
@@ -37,6 +38,7 @@
                 <silentorderpost_paymenttoken_url_production>https://www.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_production>
                 <silentorderpost_accesstoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_homolog>
                 <silentorderpost_accesstoken_url_production>https://www.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_production>
+                <can_initialize>1</can_initialize>
             </braspag_pagador_creditcard>
             <braspag_pagador_creditcardtoken>
                 <active>1</active>
@@ -68,6 +70,7 @@
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <can_initialize>1</can_initialize>
             </braspag_pagador_debitcard>
         </payment>
         <webjump_braspag>
