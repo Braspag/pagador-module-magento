@@ -138,6 +138,7 @@
     <virtualType name="BraspagTransactionBilletCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionBilletSendCommand</item>
             </argument>
         </arguments>
@@ -263,6 +264,7 @@
     <virtualType name="BraspagTransactionCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
                 <item name="capture" xsi:type="string">BraspagTransactionCreditCardCaptureCommand</item>
             </argument>
@@ -336,6 +338,7 @@
     <virtualType name="BraspagTransactionDebitCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
             </argument>
         </arguments>
