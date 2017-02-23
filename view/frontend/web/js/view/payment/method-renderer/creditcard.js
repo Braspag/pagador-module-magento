@@ -12,6 +12,7 @@ define(
         'Magento_Checkout/js/view/payment/default',
         'mage/translate',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
         'jquery',
         'Magento_Checkout/js/action/place-order',
         'Magento_Checkout/js/model/full-screen-loader',
@@ -28,6 +29,7 @@ define(
         Component,
         $t,
         sopt,
+        soptToken,
         $,
         placeOrderAction,
         fullScreenLoader,
@@ -169,22 +171,62 @@ define(
 
                 fullScreenLoader.startLoader();
 
-                var options = {
-                    holderName: self.creditCardOwner(),
-                    rawNumber: self.creditCardNumber(),
-                    expiration: self.creditCardExpDate(),
-                    securityCode: self.creditCardVerificationNumber(),
-                    code: self.getCode(),
-                    successCallBack: function () {
-                        fullScreenLoader.stopLoader();
-                    },
-                    failCallBack: function () {
-                        fullScreenLoader.stopLoader();
-                        this.messageContainer.addErrorMessage({message: "Error geting the silent order post payment token!", parameters: [], trace: ''});
-                    }
-                };
+                $.when(
+                    soptToken()
+                ).done(function (transport) {
 
-                this.creditCardSoptPaymentToken(sopt.getPaymentToken(options));
+                    var options = {
+                        holderName: self.creditCardOwner(),
+                        rawNumber: self.creditCardNumber(),
+                        expiration: self.creditCardExpDate(),
+                        securityCode: self.creditCardVerificationNumber(),
+                        code: self.getCode(),
+                        authToken: transport,
+                        successCallBack: function () {
+                            fullScreenLoader.stopLoader();
+                        },
+                        failCallBack: function () {
+                            fullScreenLoader.stopLoader();
+                        }
+                    };
+
+                    self.creditCardSoptPaymentToken(sopt.getPaymentToken(options));
+
+                    $.when(
+                        placeOrderAction(self.getData(), self.messageContainer)
+                    )
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                        function (orderId) {
+                            self.afterPlaceOrder();
+
+                            fullScreenLoader.startLoader();
+                            $.when(
+                                RedirectAfterPlaceOrder(orderId)
+                            ).done(
+                                function (url) {
+                                    if (url.length) {
+                                        window.location.replace(url);
+                                        return true;
+                                    }
+
+                                    if (self.redirectAfterPlaceOrder) {
+                                        redirectOnSuccessAction.execute();
+                                    }
+                                }
+                            ).fail(
+                                function (response) {
+                                    errorProcessor.process(response, messageContainer);
+                                }
+                            ).always(function () {
+                                fullScreenLoader.stopLoader();
+                            });
+                        }
+                    );
+                });
             },
 
             updateCreditCardExpData: function () {
@@ -197,15 +239,46 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
-
+                var self = this;
                 if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
                     this.updateCreditCardExpData();
                     this.updateCreditCardSoptPaymentToken();
-                }
+                } else {
+                    $.when(
+                        placeOrderAction(this.getData(), this.messageContainer)
+                    )
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                        function (orderId) {
+                            self.afterPlaceOrder();
 
-                return $.when(
-                    placeOrderAction(this.getData(), this.messageContainer)
-                );
+                            fullScreenLoader.startLoader();
+                            $.when(
+                                RedirectAfterPlaceOrder(orderId)
+                            ).done(
+                                function (url) {
+                                    if (url.length) {
+                                        window.location.replace(url);
+                                        return true;
+                                    }
+
+                                    if (self.redirectAfterPlaceOrder) {
+                                        redirectOnSuccessAction.execute();
+                                    }
+                                }
+                            ).fail(
+                                function (response) {
+                                    errorProcessor.process(response, messageContainer);
+                                }
+                            ).always(function () {
+                                fullScreenLoader.stopLoader();
+                            });
+                        }
+                    );
+                }
             },
 
             isSoptActive: function () {
@@ -229,39 +302,7 @@ define(
 
                 this.isPlaceOrderActionAllowed(false);
 
-                this.getPlaceOrderDeferredObject()
-                    .fail(
-                        function () {
-                            self.isPlaceOrderActionAllowed(true);
-                        }
-                    ).done(
-                    function (orderId) {
-                        self.afterPlaceOrder();
-
-                        fullScreenLoader.startLoader();
-                        $.when(
-                            RedirectAfterPlaceOrder(orderId)
-                        ).done(
-                            function (url) {
-                                console.log(url);
-                                if (url.length) {
-                                    window.location.replace(url);
-                                    return true;
-                                }
-
-                                if (self.redirectAfterPlaceOrder) {
-                                    redirectOnSuccessAction.execute();
-                                }
-                            }
-                        ).fail(
-                            function (response) {
-                                errorProcessor.process(response, messageContainer);
-                            }
-                        ).always(function () {
-                            fullScreenLoader.stopLoader();
-                        });
-                    }
-                );
+                this.getPlaceOrderDeferredObject();
 
                 return true;
             },

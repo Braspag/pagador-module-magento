@@ -22,4 +22,11 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/creditcard/silentauthtoken" method="POST">
+        <service class="Webjump\BraspagPagador\Api\SilentAuthTokenInterface" method="getToken"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
 </routes>
