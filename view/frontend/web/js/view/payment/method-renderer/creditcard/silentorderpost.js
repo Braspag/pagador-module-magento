@@ -35,6 +35,11 @@ define(
             getPaymentToken: function(options) {
                 var expiration = (options.securityCode) ? options.expiration : '08/2018';
                 var securityCode  = (options.securityCode) ? options.securityCode : '737';
+                var token = this.getAccessToken(options.code);
+
+                if (options.authToken) {
+                    token = options.authToken
+                }
 
                 var settings = {
                     "async": false, //deprecated
@@ -45,7 +50,7 @@ define(
                         "RawNumber": options.rawNumber,
                         "Expiration": expiration,
                         "SecurityCode": securityCode,
-                        "AccessToken": this.getAccessToken(options.code)
+                        "AccessToken": token
                     }
                 };
 

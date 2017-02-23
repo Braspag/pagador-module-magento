@@ -5,6 +5,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder" />
     <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
     <preference for="Webjump\BraspagPagador\Api\InstallmentsInterface" type="Webjump\BraspagPagador\Model\Installments" />
+    <preference for="Webjump\BraspagPagador\Api\SilentAuthTokenInterface" type="Webjump\BraspagPagador\Model\SilentAuthToken" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder" />
 
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context" />
