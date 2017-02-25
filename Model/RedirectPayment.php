@@ -2,12 +2,12 @@
 
 namespace Webjump\BraspagPagador\Model;
 
-use Magento\Sales\Api\OrderPaymentRepositoryInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
 use Webjump\BraspagPagador\Api\RedirectPaymentInterface;
 use Magento\Framework\DataObject;
 
 /**
- * 
+ *
  *
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -17,34 +17,39 @@ use Magento\Framework\DataObject;
  */
 class RedirectPayment implements RedirectPaymentInterface
 {
-	protected $orderPaymentRepository;
+    protected $OrderRepository;
 
     public function __construct(
-    	OrderPaymentRepositoryInterface $orderPaymentRepository
+        OrderRepositoryInterface $OrderRepository
     ){
-        $this->setOrderPaymentRepository($orderPaymentRepository);
+        $this->setOrderRepository($OrderRepository);
     }
 
     public function getLink($orderId)
     {
-    	$orderPayment = $this->getOrderPaymentRepository()->get((int) $orderId);
+        $order = $this->getOrderRepository()->get((int) $orderId);
+        $orderPayment = $order->getPayment();
 
-    	$additionalInformation = $orderPayment->getAdditionalInformation();
+        $additionalInformation = $orderPayment->getAdditionalInformation();
         if (!is_object($additionalInformation)) {
             $additionalInformation = new DataObject($additionalInformation ?: []);
         }
 
-    	return $additionalInformation->getRedirectUrl();
+        return $additionalInformation->getRedirectUrl();
     }
 
-    protected function getOrderPaymentRepository()
+
+    /**
+     * @return OrderRepositoryInterface
+     */
+    protected function getOrderRepository()
     {
-        return $this->orderPaymentRepository;
+        return $this->OrderRepository;
     }
 
-    protected function setOrderPaymentRepository($orderPaymentRepository)
+    protected function setOrderRepository($OrderRepository)
     {
-        $this->orderPaymentRepository = $orderPaymentRepository;
+        $this->OrderRepository = $OrderRepository;
 
         return $this;
     }
