@@ -18,7 +18,8 @@ define(
         'Magento_Checkout/js/action/redirect-on-success',
         'Magento_Checkout/js/model/error-processor',
         'jquery',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/full-screen-loader',
+        'Magento_Checkout/js/action/place-order',
     ],
     function (
         Component,
@@ -30,7 +31,8 @@ define(
         redirectOnSuccessAction,
         errorProcessor,
         $,
-        fullScreenLoader
+        fullScreenLoader,
+        placeOrderAction
     ) {
         'use strict';
 
@@ -108,6 +110,16 @@ define(
                 this.updateAMount();
             },
 
+            getPlaceOrderDeferredObject: function () {
+
+                this.updateCreditCardExpData();
+                this.updateCreditCardSoptPaymentToken();
+
+                return $.when(
+                    placeOrderAction(this.getData(), this.messageContainer)
+                );
+            },
+
             placeOrder: function (data, event) {
                 var self = this;
 
@@ -163,6 +175,9 @@ define(
             },
 
             placeOrderWithSuperDebito: function (orderId) {
+
+                var self = this;
+
                 this.prepareData();
 
                 if (! this.validateForm('#'+ this.getCode() + '-form')) {
@@ -200,6 +215,28 @@ define(
                 };
 
                 SuperDebito.start(options);
+
+                fullScreenLoader.startLoader();
+                $.when(
+                    RedirectAfterPlaceOrder(orderId)
+                ).done(
+                    function (url) {
+                        if (url.length) {
+                            window.location.replace(url);
+                            return true;
+                        }
+
+                        if (self.redirectAfterPlaceOrder) {
+                            redirectOnSuccessAction.execute();
+                        }
+                    }
+                ).fail(
+                    function (response) {
+                        errorProcessor.process(response, messageContainer);
+                    }
+                ).always(function () {
+                    fullScreenLoader.stopLoader();
+                });
             }
 
         });
