@@ -50,7 +50,7 @@ define(
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
-                creditCardSoptPaymentToken: '',
+                creditCardSoptPaymentken: '',
                 allInstallments: ko.observableArray([])
             },
 
