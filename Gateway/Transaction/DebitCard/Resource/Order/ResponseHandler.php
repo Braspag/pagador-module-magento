@@ -33,6 +33,11 @@ class ResponseHandler implements HandlerInterface
         $paymentDO = $handlingSubject['payment'];
         $payment = $paymentDO->getPayment();
 
+        list($paymentProvider, $paymentBrand) = array_pad(explode('-', $payment->getCcType(), 2), 2, null);
+        list($responseProvider, $responseBrand) = array_pad(explode('-', $response->getPaymentCardProvider(), 2), 2, null);
+        $payment->setAdditionalInformation('send_provider', $paymentProvider);
+        $payment->setAdditionalInformation('receive_provider', $responseProvider);
+
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setAdditionalInformation('redirect_url', $response->getPaymentAuthenticationUrl());
         
