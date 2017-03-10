@@ -50,15 +50,31 @@ define(
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
-                creditCardSoptPaymentToken: '',
+                creditCardSoptPaymentken: '',
                 allInstallments: ko.observableArray([])
             },
 
             initialize: function () {
-                var self = this;
                 this._super();
 
-                self.getCcInstallments();
+                this.getCcInstallments();
+            },
+
+            maskCvv: function (data, event) {
+                var maxlength = 3;
+
+                if (
+                    this.creditCardType() === 'Cielo-Amex' ||
+                    this.creditCardType() === 'CieloSitef-Amex'
+                ){
+                    maxlength = 4;
+                }
+
+                if (event.target.value.length >= maxlength) {
+                    return false;
+                }
+
+                return true;
             },
 
             validateForm: function (form) {

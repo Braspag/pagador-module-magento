@@ -148,6 +148,7 @@
                         'data-container': getCode() + '-cc-cvv',
                         'data-validate': JSON.stringify({'required-number':true})},
                         enable: isActive($parents),
+                        event: { keypress: maskCvv },
                         value: creditCardVerificationNumber" />
             <div class="field-tooltip toggle">
                 <span class="field-tooltip-action action-cvv"

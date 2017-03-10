@@ -34,7 +34,7 @@ class Installments implements InstallmentsInterface
         return $result;
     }
 
-    protected function setBuilder($builder)
+    protected function setBuilder(BuilderInterface $builder)
     {
         $this->builder = $builder;
         return $this;
