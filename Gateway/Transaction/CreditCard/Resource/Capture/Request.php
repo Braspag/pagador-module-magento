@@ -38,6 +38,11 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->getConfig()->getMerchantKey();
     }
 
+    public function isTestEnvironment()
+    {
+        return $this->getConfig()->getIsTestEnvironment();
+    }
+
     public function getPaymentId()
     {
         return $this->getOrderAdapter()->getOrderIncrementId();
@@ -65,6 +70,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this;
     }
 
+    /**
+     * @return ConfigInterface
+     */
     protected function getConfig()
     {
         return $this->config;
