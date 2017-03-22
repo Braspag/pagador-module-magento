@@ -60,6 +60,11 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $this->getOrderAdapter()->getOrderIncrementId();
     }
 
+    public function isTestEnvironment()
+    {
+        return $this->getConfig()->getIsTestEnvironment();
+    }
+
     public function getCustomerName()
     {
     	return $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
@@ -111,6 +116,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $brand;
     }
 
+    /**
+     * @return ConfigInterface
+     */
     protected function getConfig()
     {
         return $this->config;

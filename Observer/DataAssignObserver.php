@@ -38,7 +38,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $additionalData = new DataObject($additionalData ?: []);
         }
 
-        list($provider, $brand) = array_pad(explode('-', $additionalData->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', 'Cielo-Visa', 2), 2, null);
 
         $info->addData([
             'cc_type' => $additionalData->getCcType(),
@@ -53,6 +53,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
         ]);
 
 
+        $info->setAdditionalInformation('cc_brand', $brand);
         $info->setAdditionalInformation('cc_installments', 1);
 
         if ($additionalData->getCcInstallments()) {

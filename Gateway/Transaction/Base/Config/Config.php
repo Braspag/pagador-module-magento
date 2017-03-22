@@ -22,4 +22,9 @@ class Config extends AbstractConfig implements ConfigInterface
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY);
 	}
+
+	public function getIsTestEnvironment()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT);
+    }
 }

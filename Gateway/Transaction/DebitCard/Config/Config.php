@@ -26,4 +26,9 @@ class Config extends AbstractConfig implements ConfigInterface
 	{
 		return (bool) $this->getConfig()->getValue('payment/braspag_pagador_debitcard/superdebit_active', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 	}
+
+    public function getIsTestEnvironment()
+    {
+        return $this->_getConfig(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT);
+    }
 }

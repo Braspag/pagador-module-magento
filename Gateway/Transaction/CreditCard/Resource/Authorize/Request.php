@@ -49,6 +49,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return $this->getConfig()->getMerchantKey();
     }
 
+    public function isTestEnvironment()
+    {
+        return $this->getConfig()->getIsTestEnvironment();
+    }
+
     public function getMerchantOrderId()
     {
         return  $this->getOrderAdapter()->getOrderIncrementId();

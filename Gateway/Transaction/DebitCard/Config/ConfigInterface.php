@@ -20,4 +20,6 @@ interface ConfigInterface
 	public function getPaymentReturnUrl();
 
 	public function isSuperDebitoActive();
+
+	public function getIsTestEnvironment();
 }
