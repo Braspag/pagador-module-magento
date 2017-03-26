@@ -14,7 +14,10 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 interface MDDConfigInterface
 {
     const XML_PATH_FETCH_SELF_SHIPPING_METHOD = 'webjump_braspag_antifraud/mdd/fetch_self_shipping_method';
+    const XML_PATH_STORE_CODE = 'webjump_braspag_antifraud/mdd/store_code_to_fetch_self';
     const XML_PATH_VERTICAL_SEGMENT = 'webjump_braspag_antifraud/mdd/vertical_segment';
+    const XML_PATH_STORE_IDENTITY = 'webjump_braspag_antifraud/mdd/store_identity';
+    const XML_PATH_CUSTOMER_CREATE_NEED_CONFIRM = 'customer/create_account/confirm_inherit';
 
     /**
      * @return \Magento\Customer\Api\Data\CustomerInterface|\Magento\Framework\Api\ExtensibleDataInterface
@@ -31,4 +34,8 @@ interface MDDConfigInterface
     public function getFetchSelfShippingMethod();
 
     public function getVerticalSegment();
+
+    public function getStoreCode();
+
+    public function getStoreIdentity();
 }
