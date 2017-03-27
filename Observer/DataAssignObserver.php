@@ -7,6 +7,7 @@ use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider;
 
 /**
  * Credit Card Data Assign
@@ -31,6 +32,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
     {
         $method = $this->readMethodArgument($observer);
         $info = $method->getInfoInstance();
+
         $data = $this->readDataArgument($observer);
 
         $additionalData = $data->getData(PaymentInterface::KEY_ADDITIONAL_DATA);
