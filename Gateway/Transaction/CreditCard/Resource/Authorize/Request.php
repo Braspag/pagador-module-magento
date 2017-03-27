@@ -126,6 +126,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return 'BRA';
     }
 
+    public function getCustomerAddressPhone()
+    {
+        return $this->getBillingAddress()->getTelephone();
+    }
+
     public function getCustomerDeliveryAddressStreet()
     {
         return $this->getShippingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
@@ -164,6 +169,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getCustomerDeliveryAddressCountry()
     {
         return 'BRA';
+    }
+
+    public function getCustomerDeliveryAddressPhone()
+    {
+        return $this->getShippingAddress()->getTelephone();
     }
 
     public function getPaymentType()
