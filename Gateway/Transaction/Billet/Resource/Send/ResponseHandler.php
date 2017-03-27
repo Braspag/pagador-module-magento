@@ -48,6 +48,30 @@ class ResponseHandler implements HandlerInterface
         $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_BAR_CODE_NUMBER, $response->getPaymentBarCodeNumber());
         $payment->setAdditionalInformation(self::ADDITIONAL_INFORMATION_DIGITABLE_LINE, $response->getDigitableLine());
 
+        $payment->unsetData([
+            'cc_type',
+            'cc_owner',
+            'cc_number',
+            'cc_cid',
+            'cc_exp_month',
+            'cc_exp_year',
+            'cc_provider',
+            'cc_brand'
+        ]);
+
+        $payment->setAdditionalInformation('cc_brand', null);
+        $payment->setAdditionalInformation('cc_installments', null);
+        $payment->setAdditionalInformation('cc_savecard', null);
+        $payment->setAdditionalInformation('cc_token', null);
+        $payment->setAdditionalInformation('cc_soptpaymenttoken', null);
+
+        $payment->setAdditionalInformation('cc_brand', null);
+        $payment->setAdditionalInformation('send_taxvat', null);
+        $payment->setAdditionalInformation('send_cardholdername', null);
+        $payment->setAdditionalInformation('code_financial_table', null);
+        $payment->setAdditionalInformation('bit120', null);
+        $payment->setAdditionalInformation('financial_data', null);
+
         return $this;
     }
 }

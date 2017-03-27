@@ -18,10 +18,21 @@
             <source_model>\Magento\Shipping\Model\Config\Source\Allmethods</source_model>
         </field>
 
+        <field id="store_code_to_fetch_self" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="text">
+            <label>Store Code From Customer Fetch Self</label>
+            <comment />
+        </field>
+
         <field id="vertical_segment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Vertical Segment</label>
             <comment />
             <source_model>\Webjump\BraspagPagador\Model\Source\VerticalSegment</source_model>
         </field>
+
+        <field id="store_identity" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+            <label>Store Identity (CNPJ)</label>
+            <comment />
+        </field>
+
     </group>
 </include>
