@@ -59,18 +59,18 @@ class ResponseHandler implements HandlerInterface
             'cc_brand'
         ]);
 
-        $payment->setAdditionalInformation('cc_brand', null);
-        $payment->setAdditionalInformation('cc_installments', null);
-        $payment->setAdditionalInformation('cc_savecard', null);
-        $payment->setAdditionalInformation('cc_token', null);
-        $payment->setAdditionalInformation('cc_soptpaymenttoken', null);
+        $payment->unsAdditionalInformation('cc_brand');
+        $payment->unsAdditionalInformation('cc_installments');
+        $payment->unsAdditionalInformation('cc_savecard');
+        $payment->unsAdditionalInformation('cc_token');
+        $payment->unsAdditionalInformation('cc_soptpaymenttoken');
 
-        $payment->setAdditionalInformation('cc_brand', null);
-        $payment->setAdditionalInformation('send_taxvat', null);
-        $payment->setAdditionalInformation('send_cardholdername', null);
-        $payment->setAdditionalInformation('code_financial_table', null);
-        $payment->setAdditionalInformation('bit120', null);
-        $payment->setAdditionalInformation('financial_data', null);
+        $payment->unsAdditionalInformation('cc_brand');
+        $payment->unsAdditionalInformation('send_taxvat');
+        $payment->unsAdditionalInformation('send_cardholdername');
+        $payment->unsAdditionalInformation('code_financial_table');
+        $payment->unsAdditionalInformation('bit120');
+        $payment->unsAdditionalInformation('financial_data');
 
         return $this;
     }
