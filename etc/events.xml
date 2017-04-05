@@ -9,4 +9,7 @@
     <event name="payment_method_assign_data_braspag_pagador_debitcard">
         <observer name="webjump_payment_method_assign_data_braspag_pagador_debitcard" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
     </event>
+    <event name="payment_method_assign_data_braspag_pagador_billet">
+        <observer name="webjump_payment_method_assign_data_braspag_pagador_billet" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
+    </event>
 </config>
