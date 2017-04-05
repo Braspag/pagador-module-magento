@@ -7,7 +7,7 @@ use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider;
+use Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider as BilletConfigProvider;
 
 /**
  * Credit Card Data Assign
@@ -33,6 +33,26 @@ class DataAssignObserver extends AbstractDataAssignObserver
         $method = $this->readMethodArgument($observer);
         $info = $method->getInfoInstance();
 
+        $info->unsetData([
+            'cc_type',
+            'cc_owner',
+            'cc_number',
+            'cc_last_4',
+            'cc_cid',
+            'cc_exp_month',
+            'cc_exp_year',
+            'cc_provider'
+        ]);
+
+        $info->unsAdditionalInformation('cc_brand');
+        foreach ($info->getAdditionalInformation() as $key => $value) {
+            $info->unsAdditionalInformation($key);
+        }
+
+        if ($info->getMethodInstance()->getCode() === BilletConfigProvider::CODE) {
+            return $this;
+        }
+
         $data = $this->readDataArgument($observer);
 
         $additionalData = $data->getData(PaymentInterface::KEY_ADDITIONAL_DATA);
@@ -50,12 +70,13 @@ class DataAssignObserver extends AbstractDataAssignObserver
             'cc_cid' => $additionalData->getCcCid(),
             'cc_exp_month' => $additionalData->getCcExpMonth(),
             'cc_exp_year' => $additionalData->getCcExpYear(),
-            'cc_provider' => $provider,
-            'cc_brand' => $brand
+            'cc_provider' => $provider
         ]);
 
+        if ($brand) {
+            $info->setAdditionalInformation('cc_brand', $brand);
+        }
 
-        $info->setAdditionalInformation('cc_brand', $brand);
         $info->setAdditionalInformation('cc_installments', 1);
 
         if ($additionalData->getCcInstallments()) {
