@@ -17,6 +17,7 @@ interface MDDConfigInterface
     const XML_PATH_STORE_CODE = 'webjump_braspag_antifraud/mdd/store_code_to_fetch_self';
     const XML_PATH_VERTICAL_SEGMENT = 'webjump_braspag_antifraud/mdd/vertical_segment';
     const XML_PATH_STORE_IDENTITY = 'webjump_braspag_antifraud/mdd/store_identity';
+    const XML_PATH_CATEGORY_ATTRIBUTE_CODE = 'webjump_braspag_antifraud/mdd/category_attribute_code';
     const XML_PATH_CUSTOMER_CREATE_NEED_CONFIRM = 'customer/create_account/confirm_inherit';
 
     /**
@@ -38,4 +39,6 @@ interface MDDConfigInterface
     public function getStoreCode();
 
     public function getStoreIdentity();
+
+    public function getCategoryAttributeCode();
 }

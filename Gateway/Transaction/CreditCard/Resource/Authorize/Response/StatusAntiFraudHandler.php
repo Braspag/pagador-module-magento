@@ -23,6 +23,8 @@ class StatusAntiFraudHandler extends AbstractHandler implements HandlerInterface
     const STATUS_ACCEPT = 1;
     const STATUS_REJECT = 2;
     const STATUS_REVIEW = 3;
+    const STATUS_ABORTED = 4;
+    const STATUS_ERROR = 5;
 
     protected function _handle($payment, $response)
     {
@@ -36,7 +38,9 @@ class StatusAntiFraudHandler extends AbstractHandler implements HandlerInterface
             case self::STATUS_REJECT:
                 $payment->setIsFraudDetected(true);
                 break;
-            case self::STATUS_REVIEW:
+            case self::STATUS_REVIEW :
+            case self::STATUS_ABORTED :
+            case self::STATUS_ERROR :
                 $payment->setIsTransactionPending(true);
                 break;
         }
