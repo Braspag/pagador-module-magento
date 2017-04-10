@@ -19,7 +19,7 @@ define(
         'Magento_Checkout/js/model/error-processor',
         'jquery',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Magento_Checkout/js/action/place-order',
+        'Magento_Checkout/js/action/place-order'
     ],
     function (
         Component,
@@ -111,9 +111,7 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
-
                 this.updateCreditCardExpData();
-                this.updateCreditCardSoptPaymentToken();
 
                 return $.when(
                     placeOrderAction(this.getData(), this.messageContainer)
@@ -189,7 +187,7 @@ define(
                         console.log(response);
                     },
                     onNotAuthenticable: function (response) {
-                        redirectOnSuccessAction.execute();
+                        console.log(response);
                     },
                     onInvalid: function(response) {
                         console.log(response);
@@ -204,10 +202,10 @@ define(
                         console.log(response);
                     },
                     onAuthorize: function(response) {
-                        redirectOnSuccessAction.execute();
+                        console.log(response);
                     },
                     onNotAuthorize: function(response) {
-                        redirectOnSuccessAction.execute();
+                        console.log(response);
                     },
                     onFinalize: function(response) {
                         console.log(response);

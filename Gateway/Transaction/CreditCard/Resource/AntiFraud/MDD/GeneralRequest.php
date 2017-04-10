@@ -46,7 +46,15 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
 
     public function getProductCategory()
     {
-        return null;
+        $quote = $this->getConfig()->getQuote();
+        $result = [];
+
+        foreach ($quote->getAllVisibleItems() as $item) {
+            $product = $item->getProduct();
+            $result[] = $product->getData($this->getConfig()->getCategoryAttributeCode());
+        }
+
+        return implode(', ', $result);
     }
 
     public function getShippingMethod()

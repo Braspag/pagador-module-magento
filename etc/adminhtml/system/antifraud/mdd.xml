@@ -34,5 +34,10 @@
             <comment />
         </field>
 
+        <field id="category_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+            <label>Category Attribute Code</label>
+            <comment />
+        </field>
+
     </group>
 </include>
