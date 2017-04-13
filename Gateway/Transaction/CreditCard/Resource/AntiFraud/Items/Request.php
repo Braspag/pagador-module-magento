@@ -63,7 +63,14 @@ class Request implements BraspaglibRequestInterface
 
     public function getUnitPrice()
     {
-        $amount = $this->getItemAdapter()->getPrice() * 100;
+        $price = $this->getItemAdapter()->getPrice();
+
+        if (! $price && $this->getItemAdapter()->getParentItem()) {
+            $price = $this->getItemAdapter()->getParentItem()->getPrice();
+        }
+
+        $amount = $price * 100;
+
         return str_replace('.', '', $amount);
     }
 
