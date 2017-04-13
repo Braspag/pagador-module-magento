@@ -103,8 +103,15 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getCartItems()
     {
         $items = [];
+        /** @var \Magento\Sales\Model\Order\Item $item */
         foreach ($this->getOrderAdapter()->getItems() as $item) {
-            $items[] = $this->getRequestItemFactory()->create($item);
+            if ($item->getProductType() !== 'simple') {
+                continue;
+            }
+
+            if (!$item->isDeleted() && !$item->getParentItemId()) {
+                $items[] = $this->getRequestItemFactory()->create($item);
+            }
         }
 
         return $items;
