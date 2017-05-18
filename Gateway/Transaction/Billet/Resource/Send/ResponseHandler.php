@@ -6,6 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
 use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
 
 /**
  * Braspag Transaction Billet Send Response Handler
@@ -36,6 +37,16 @@ class ResponseHandler implements HandlerInterface
 
         /** @var ResponseInterface $response */
         $response = $response['response'];
+
+
+        if (in_array($response->getPaymentStatus(), [
+            Validator::NOTFINISHED,
+            Validator::DENIED,
+            Validator::ABORTED,
+            ])) {
+            throw new \InvalidArgumentException(__('An error has occurred, please try again later.'));
+        }
+
         $paymentDO = $handlingSubject['payment'];
         $payment = $paymentDO->getPayment();
 
