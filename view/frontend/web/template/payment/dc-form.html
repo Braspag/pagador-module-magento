@@ -22,15 +22,24 @@
             <div class="fields">
                 <div class="field type">
                     <div class="control">
-                        <select  name="payment[cc_type]"
-                                 class="select select-cc-type"
-                                 data-bind="attr: {id: getCode() + '_cc_type', 'data-container': getCode() + '-cc-type', 'data-validate': JSON.stringify({required:true})},
-                                            enable: isActive($parents),
-                                            options: getCcAvailableTypesValues(),
-                                            optionsValue: 'value',
-                                            optionsText: 'type',
-                                            value: creditCardType">
-                        </select>
+                        <ul class="credit-card-types">
+                            <!-- ko foreach: {data: getCcAvailableTypesValues(), as: 'item'} -->
+                            <li class="item">
+                                <label>
+                                    <input name="payment[cc_type]" type="radio" data-bind="
+                                        attr: {
+                                            'id': $parent.getCode() + '_cc_type_' + item.value,
+                                            'data-container': $parent.getCode() + '-cc_type',
+                                            'data-validate': JSON.stringify({required:true}),
+                                            'title': item.type,
+                                            'value': item.value
+                                        },
+                                        checked: $parent.creditCardType" />
+                                    <!-- ko i18n: item.type--><!-- /ko -->
+                                </label>
+                            </li>
+                            <!--/ko-->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -47,7 +56,7 @@
                                     id: getCode() + '_cc_number',
                                     title: $t('Credit Card Number'),
                                     'data-container': getCode() + '-cc-number',
-                                    'data-validate': JSON.stringify({'required-number':true, 'validate-card-type':getCcAvailableTypesValues(), 'validate-card-number':'#' + getCode() + '_cc_type', 'validate-cc-type':'#' + getCode() + '_cc_type'})},
+                                    'data-validate': JSON.stringify({'required-number':true})},
                               enable: isActive($parents),
                               value: creditCardNumber,
                               valueUpdate: 'keyup' "/>
@@ -80,7 +89,7 @@
                     <div class="control">
                         <select  name="payment[cc_exp_month]"
                                  class="select select-month"
-                                 data-bind="attr: {id: getCode() + '_expiration', 'data-container': getCode() + '-cc-month', 'data-validate': JSON.stringify({required:true, 'validate-cc-exp':'#' + getCode() + '_expiration_yr'})},
+                                 data-bind="attr: {id: getCode() + '_expiration', 'data-container': getCode() + '-cc-month', 'data-validate': JSON.stringify({required:true})},
                                             enable: isActive($parents),
                                             options: getCcMonthsValues(),
                                             optionsValue: 'value',
@@ -122,7 +131,7 @@
                    data-bind="attr: {id: getCode() + '_cc_cid',
                         title: $t('Card Verification Number'),
                         'data-container': getCode() + '-cc-cvv',
-                        'data-validate': JSON.stringify({'required-number':true, 'validate-card-cvv':'#' + getCode() + '_cc_type'})},
+                        'data-validate': JSON.stringify({'required-number':true})},
                         enable: isActive($parents),
                         event: { keypress: maskCvv },
                         value: creditCardVerificationNumber" />
