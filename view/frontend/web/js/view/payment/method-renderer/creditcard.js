@@ -130,6 +130,7 @@ define(
                         'additional_data': {
                             'cc_cid': this.creditCardVerificationNumber (),
                             'cc_type': this.creditCardType(),
+                            'cc_owner': this.creditCardOwner(),
                             'cc_installments': this.creditCardInstallments(),
                             'cc_savecard': this.creditCardsavecard() ? 1 : 0,
                             'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
