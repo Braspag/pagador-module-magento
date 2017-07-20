@@ -54,6 +54,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 	public function getCustomerName()
 	{
         return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
+//        return trim($this->getQuote()->getCustomer()->getFirstname() . ' ' . $this->getQuote()->getCustomer()->getLastname());
 	}
 
     public function getCustomerIdentity()
@@ -203,6 +204,15 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         }
 
         return $this->quote;
+    }
+
+    /**
+     * @todo
+     * @return \Magento\Customer\Api\Data\CustomerInterface|\Magento\Framework\Api\ExtensibleDataInterface
+     */
+    public function getCustomerBillet()
+    {
+        return $this->getQuote()->getCustomer();
     }
 
     protected function getBillingAddressAttribute($attribute)
