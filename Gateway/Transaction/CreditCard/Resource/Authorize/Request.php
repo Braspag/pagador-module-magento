@@ -16,6 +16,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInt
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Webjump\BraspagPagador\Helper\Validator;
 
 use Magento\Payment\Model\InfoInterface;
 
@@ -30,13 +31,16 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     protected $antiFraudRequest;
     protected $quote;
     protected $avsRequest;
+    protected $validator;
 
     public function __construct(
         ConfigInterface $config,
-        InstallmentsConfigInterface $installmentsConfig
+        InstallmentsConfigInterface $installmentsConfig,
+        Validator $validator
     ) {
         $this->setConfig($config);
         $this->setInstallmentsConfig($installmentsConfig);
+        $this->validator = $validator;
     }
 
     public function getMerchantId()
@@ -108,7 +112,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerAddressDistrict()
     {
-        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
+        return $this->validator->sanitizeDistrict($this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute()));
     }
 
     public function getCustomerAddressCity()
