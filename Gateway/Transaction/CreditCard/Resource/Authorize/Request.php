@@ -65,7 +65,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getCustomerName()
     {
-        return trim($this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname());
+        return trim($this->getQuote()->getCustomer()->getFirstname() . ' ' . $this->getQuote()->getCustomer()->getLastname());
     }
 
     public function getCustomerIdentity()
@@ -428,6 +428,15 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         }
 
         return $this->quote;
+    }
+
+    /**
+     * @todo
+     * @return ConfigInterface
+     */
+    public function getCustomerCreditCard()
+    {
+        return $this->getQuote()->getCustomer();
     }
 
     protected function getQuoteBillingAddress()
