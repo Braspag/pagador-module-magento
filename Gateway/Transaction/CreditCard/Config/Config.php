@@ -66,4 +66,13 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE);
     }
+
+    public function getDecimalGrandTotal()
+    {
+        if !($config = $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_DECIMAL_GRAND_TOTAL)) {
+            return self::DEFAULT_DECIMAL_GRAND_TOTAL;
+        }
+
+        return $config;
+    }
 }
