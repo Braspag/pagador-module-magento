@@ -17,9 +17,9 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     const XML_PATH_SHOULD_SANITIZE = 'address/braspag_pagador_customer_address/address_sanitize';
 
     /**
-     * Config path to get word dictionary;
+     * Config path to get district dictionary;
      */
-    const XML_PATH_SHOULD_SANITIZE_DICTIONARY = 'address/braspag_pagador_customer_address/address_sanitize_dictionary';
+    const XML_PATH_SANITIZE_DISTRICT_DICTIONARY = 'address/braspag_pagador_customer_address/address_sanitize_district_dictionary';
 
     /**
      * @var bool|mixed
@@ -33,6 +33,7 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * Validator constructor.
+     *
      * @param Context $context
      */
     public function __construct(
@@ -40,23 +41,23 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     )
     {
         $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+        $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
 
         parent::__construct($context);
     }
-
+    
     /**
+     * Sanitize District value based on configuration
+     *
      * @param $district
-     * @return array
+     * @return string | array
      */
     public function sanitizeDistrict($district)
     {
-        $this->sanitizeDictionary = $this->prepareDictionay();
-
         if($this->isSanitizeActive && is_string($district))
         {
-            preg_match_all("/\w+/", $district, $districtArray);
-
+            $this->sanitizeDictionary = $this->prepareDictionay();
+            preg_match_all("/[^ ]+/", $district, $districtArray);
             $result = [];
             foreach ($districtArray[0] as $word)
             {
@@ -65,26 +66,28 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
                 } else {
                     $result[] = $word;
                  }
-
             }
-            return implode(" ",$result);
+            $result = implode(" ", $result);
+            $resultLength = strlen($result);
+
+            return ($resultLength > 50 ? substr($result, ($resultLength - 50)) : $result);
         }
+        return $district;
     }
 
     /**
      * Prepare Dictionary data;
      *
-     * @return bool
+     * @return array
      */
     protected function prepareDictionay()
     {
         $data = [];
         foreach ($this->sanitizeDictionary as $item)
         {
-            preg_match_all("/\w+/", $item, $keyValue);
+            preg_match_all("/[^-]+/", $item, $keyValue);
             $data[$keyValue[0][0]] = $keyValue[0][1];
         }
-
         return $data;
     }
 }

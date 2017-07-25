@@ -1,14 +1,26 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
+
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="webjump_braspag_pagador_customer_address" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Address</label>
-            <field id="street_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+
+        <field id="address_sanitize" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="select">
+            <label>Should we sanitize address data?</label>
+            <comment><![CDATA[Short address fields to they character limits (Please see Braspag documentation.]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>address/braspag_pagador_customer_address/address_sanitize</config_path>
+        </field>
+        
+        <field id="address_sanitize_district_dictionary" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="text">
+            <label>District dictionary</label>
+            <comment><![CDATA[Include separate words in this format: Neighborhood-Nb.;Housing-Hs.]]></comment>
+            <config_path>address/braspag_pagador_customer_address/address_sanitize_district_dictionary</config_path>
+            <depends>
+                <field id="address_sanitize">1</field>
+            </depends>
+        </field>
+
+        <field id="street_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
             <label>Street Attibute</label>
             <comment><![CDATA[<b> for example: </b> street_1]]></comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -34,21 +46,6 @@
             <comment><![CDATA[<b> for example: </b> street_4]]></comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_customer_address/district_attribute</config_path>
-        </field>
-
-        <field id="address_sanitize" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="select">
-            <label>Should we sanitize address data?</label>
-            <comment><![CDATA[Short address to 50 characters.]]></comment>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <config_path>address/braspag_pagador_customer_address/address_sanitize</config_path>
-        </field>
-        <field id="address_sanitize_dictionary" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="text">
-            <label>Dictionary</label>
-            <comment><![CDATA[Include separate words in this format: Street-St;Avennue-Av]]></comment>
-            <config_path>address/braspag_pagador_customer_address/address_sanitize_dictionary</config_path>
-            <depends>
-                <field id="address_sanitize">1</field>
-            </depends>
         </field>
     </group>
 </include>

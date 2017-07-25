@@ -8,6 +8,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\RequestInterface as Bras
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+use Webjump\BraspagPagador\Helper\Validator;
 
 /**
  * Braspag Transaction Billet Send Request
@@ -20,158 +21,270 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
  */
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
-	protected $orderAdapter;
-	protected $quote;
-	protected $config;
-	protected $billingAddress;
+    /**
+     * @var
+     */
+    protected $orderAdapter;
+    /**
+     * @var
+     */
+    protected $quote;
+    /**
+     * @var
+     */
+    protected $config;
+    /**
+     * @var
+     */
+    protected $billingAddress;
+    /**
+     * Helper validator.
+     *
+     * @var Validator
+     */
+    protected $validator;
 
-	public function __construct(
-		ConfigInterface $config
-	) { 
+    /**
+     * Request constructor.
+     *
+     * @param ConfigInterface $config
+     * @param Validator $validator
+     */
+    public function __construct(
+		ConfigInterface $config,
+        Validator $validator
+
+    ) {
 		$this->setConfig($config);
-	}
+        $this->validator = $validator;
+    }
 
-	public function getMerchantId()
+    /**
+     * @return mixed
+     */
+    public function getMerchantId()
 	{
 		return $this->getConfig()->getMerchantId();
 	}
 
-	public function getMerchantKey()
+    /**
+     * @return mixed
+     */
+    public function getMerchantKey()
 	{
 		return $this->getConfig()->getMerchantKey();
 	}
 
+    /**
+     * @return mixed
+     */
     public function isTestEnvironment()
     {
         return $this->getConfig()->getIsTestEnvironment();
     }
 
+    /**
+     * @return mixed
+     */
     public function getMerchantOrderId()
 	{
 		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
-	public function getCustomerName()
+    /**
+     * @return string
+     */
+    public function getCustomerName()
 	{
         return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
 //        return trim($this->getQuote()->getCustomer()->getFirstname() . ' ' . $this->getQuote()->getCustomer()->getLastname());
 	}
 
+    /**
+     * @return mixed
+     */
     public function getCustomerIdentity()
     {
         return $this->getQuote()->getData($this->getConfig()->getIdentityAttributeCode());
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerIdentityType()
     {
         $identity = (int) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
         return (strlen($identity) === 14) ? 'CNPJ' : 'CPF';
     }
 
+    /**
+     * @return mixed
+     */
     public function getCustomerEmail()
     {
         return $this->getBillingAddress()->getEmail();
     }
 
+    /**
+     * @return null
+     */
     public function getCustomerBirthDate()
     {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerAddressStreet()
     {
         return $this->getBillingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerAddressNumber()
     {
         return $this->getBillingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
 
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerAddressComplement()
     {
         return $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
     }
 
+    /**
+     * @return mixed
+     */
     public function getCustomerAddressZipCode()
     {
         return preg_replace('/[^0-9]/','', $this->getBillingAddress()->getPostcode());
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerAddressDistrict()
     {
-        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
+        return $this->validator->sanitizeDistrict($this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute()));
     }
 
+    /**
+     * @return mixed
+     */
     public function getCustomerAddressCity()
     {
         return $this->getBillingAddress()->getCity();
     }
 
+    /**
+     * @return mixed
+     */
     public function getCustomerAddressState()
     {
         return $this->getBillingAddress()->getRegionCode();
     }
 
+    /**
+     * @return string
+     */
     public function getCustomerAddressCountry()
     {
         return 'BRA';
     }
 
-	public function getPaymentAmount()
+    /**
+     * @return mixed
+     */
+    public function getPaymentAmount()
 	{
 		$amount = (float) $this->getOrderAdapter()->getGrandTotalAmount() * 100;
 		return str_replace('.', '', $amount);
 	}
 
-	public function getPaymentAddress()
+    /**
+     * @return string
+     */
+    public function getPaymentAddress()
 	{
 		$address = $this->getBillingAddress();
 
 		return sprintf("%s %s %s/%s - %s", $this->getCustomerAddressStreet(), $this->getCustomerAddressNumber(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
 	}
 
-	public function getPaymentProvider()
+    /**
+     * @return mixed
+     */
+    public function getPaymentProvider()
 	{
 		return $this->getConfig()->getPaymentProvider();
 	}
 
-	public function getPaymentBoletoNumber()
+    /**
+     * @return mixed
+     */
+    public function getPaymentBoletoNumber()
 	{
 		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
-	public function getPaymentAssignor()
+    /**
+     * @return mixed
+     */
+    public function getPaymentAssignor()
 	{
 		return $this->getConfig()->getPaymentAssignor();
 	}
 
-	public function getPaymentDemonstrative()
+    /**
+     * @return mixed
+     */
+    public function getPaymentDemonstrative()
 	{
 		return $this->getConfig()->getPaymentDemonstrative();
 	}
 
-	public function getPaymentExpirationDate()
+    /**
+     * @return mixed
+     */
+    public function getPaymentExpirationDate()
 	{
 		return $this->getConfig()->getExpirationDate();
 	}
 
-	public function getPaymentIdentification()
+    /**
+     * @return mixed
+     */
+    public function getPaymentIdentification()
 	{
 		return $this->getOrderAdapter()->getOrderIncrementId();
 	}
 
-	public function getPaymentInstructions()
+    /**
+     * @return mixed
+     */
+    public function getPaymentInstructions()
 	{
 		return $this->getConfig()->getPaymentInstructions();
 	}
 
+    /**
+     * @return mixed
+     */
     protected function getOrderAdapter()
     {
         return $this->order;
     }
 
+    /**
+     * @param OrderAdapterInterface $order
+     * @return $this
+     */
     public function setOrderAdapter(OrderAdapterInterface $order)
     {
         $this->order = $order;
@@ -187,6 +300,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $this->config;
     }
 
+    /**
+     * @param ConfigInterface $config
+     * @return $this
+     */
     protected function setConfig(ConfigInterface $config)
     {
         $this->config = $config;
@@ -215,6 +332,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $this->getQuote()->getCustomer();
     }
 
+    /**
+     * @param $attribute
+     * @return string
+     */
     protected function getBillingAddressAttribute($attribute)
     {
         if (preg_match('/^street_/', $attribute)) {
@@ -225,11 +346,17 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         $this->getQuoteBillingAddress()->getData($attribute);
     }
 
+    /**
+     * @return \Magento\Quote\Model\Quote\Address
+     */
     protected function getQuoteBillingAddress()
     {
         return $this->getQuote()->getBillingAddress();
     }
 
+    /**
+     * @return mixed
+     */
     protected function getBillingAddress()
     {
         if (!$this->billingAddress) {
