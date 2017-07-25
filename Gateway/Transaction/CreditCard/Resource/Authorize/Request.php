@@ -187,7 +187,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     public function getPaymentAmount()
     {
-        $amount = $this->getOrderAdapter()->getGrandTotalAmount() * 100;
+        $grandTotalAmount = number_format($this->getOrderAdapter()->getGrandTotalAmount(), 2, '.', '');
+        $amount = $grandTotalAmount * 100;
 
         return str_replace('.', '', $amount);
     }
