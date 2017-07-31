@@ -18,6 +18,11 @@
             <label>Title</label>
             <config_path>payment/braspag_pagador_creditcard/title</config_path>
         </field>
+        <field id="decimal_grand_total" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Decimal Grand Total</label>
+            <comment>If null default 2</comment>
+            <config_path>payment/braspag_pagador_creditcard/decimal_grand_total</config_path>
+        </field>
         <field id="customer_identity_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
             <label>Customer Identity (CPF/CNPJ) Attribute</label>
             <config_path>payment/braspag_pagador_creditcard/customer_identity_attribute_code</config_path>
