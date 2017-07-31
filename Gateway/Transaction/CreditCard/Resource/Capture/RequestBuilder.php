@@ -30,8 +30,12 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
+        $paymentId = $buildSubject['payment']->getPayment()->getAdditionalInformation('PaymentId');
         $paymentDataObject = $buildSubject['payment'];
         $orderAdapter = $paymentDataObject->getOrder();
+
+        $this->getRequest()->setPaymentId($paymentId);
+        $this->getRequest()->setOrderAdapter($orderAdapter);
 
         $this->getRequest()->setOrderAdapter($orderAdapter);
 

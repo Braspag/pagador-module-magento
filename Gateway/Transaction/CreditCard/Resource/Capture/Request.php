@@ -22,6 +22,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected $orderAdapter;
 
+    protected $paymentId;
+
     public function __construct(
         ConfigInterface $config
     ) {
@@ -45,7 +47,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getPaymentId()
     {
-        return $this->getOrderAdapter()->getOrderIncrementId();
+        return $this->paymentId;
     }
 
     public function getAdditionalRequest()
@@ -66,6 +68,13 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function setOrderAdapter(OrderAdapterInterface $orderAdapter)
     {
         $this->orderAdapter = $orderAdapter;
+
+        return $this;
+    }
+
+    public function setPaymentId($paymentId)
+    {
+        $this->paymentId = $paymentId;
 
         return $this;
     }
