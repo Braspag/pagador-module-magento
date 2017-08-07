@@ -50,7 +50,7 @@ define(
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
-                creditCardSoptPaymentken: '',
+                creditCardSoptPaymentToken: '',
                 allInstallments: ko.observableArray([])
             },
 
@@ -208,6 +208,14 @@ define(
                     };
 
                     self.creditCardSoptPaymentToken(sopt.getPaymentToken(options));
+
+                    for (var i = 0; i < 5; i++){
+                        if(!self.creditCardSoptPaymentToken()){
+                            return self.updateCreditCardSoptPaymentToken();
+                        } else {
+                            break;
+                        }
+                    }
 
                     $.when(
                         placeOrderAction(self.getData(), self.messageContainer)
