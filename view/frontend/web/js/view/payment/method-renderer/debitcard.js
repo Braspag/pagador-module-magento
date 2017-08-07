@@ -89,15 +89,21 @@ define(
                     };
 
                     var stoken = sopt.getPaymentToken(options);
-                    console.log(stoken);
+                    // console.log(stoken);
                     self.creditCardSoptPaymentToken(stoken);
 
 
-                    console.log(self.creditCardSoptPaymentToken());
+                    // console.log(self.creditCardSoptPaymentToken());
 
-                    console.log(self.creditCardSoptPaymentToken());
+                    // console.log(self.creditCardSoptPaymentToken());
 
-
+                    for (var i = 0; i < 5; i++){
+                        if(!self.creditCardSoptPaymentToken()){
+                            return self.updateCreditCardSoptPaymentToken();
+                        } else {
+                            break;
+                        }
+                    }
 
                     $.when(
                         placeOrderAction(self.getData(), self.messageContainer)
