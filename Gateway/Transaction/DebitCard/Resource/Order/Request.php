@@ -116,6 +116,23 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $brand;
     }
 
+    public function getPaymentCreditSoptpaymenttoken()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('cc_soptpaymenttoken');
+    }
+
+    public function getPaymentCreditCardBrand()
+    {
+        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+
+        return ($brand) ? $brand : 'Visa';
+    }
+
+    public function getPaymentCreditCardSaveCard()
+    {
+        return (boolean) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
+    }
+
     /**
      * @return ConfigInterface
      */

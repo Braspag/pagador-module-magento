@@ -19,7 +19,9 @@ define(
         'Magento_Checkout/js/model/error-processor',
         'jquery',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Magento_Checkout/js/action/place-order'
+        'Magento_Checkout/js/action/place-order',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken'
     ],
     function (
         Component,
@@ -32,7 +34,9 @@ define(
         errorProcessor,
         $,
         fullScreenLoader,
-        placeOrderAction
+        placeOrderAction,
+        sopt,
+        soptToken
     ) {
         'use strict';
 
@@ -53,13 +57,99 @@ define(
                         'creditCardVerificationNumber',
                         'merchantOrderNumber',
                         'customerName',
+                        'creditCardSoptPaymentToken',
                         'amount'
                     ]);
 
                 return this;
             },
 
+            updateCreditCardSoptPaymentToken: function () {
+                var self = this;
+
+                fullScreenLoader.startLoader();
+
+                return $.when(
+                    soptToken()
+                ).done(function (transport) {
+
+                    var options = {
+                        holderName: self.creditCardOwner(),
+                        rawNumber: self.creditCardNumber(),
+                        expiration: self.creditCardExpDate(),
+                        securityCode: self.creditCardVerificationNumber(),
+                        code: 'braspag_pagador_creditcard',
+                        authToken: transport,
+                        successCallBack: function () {
+                            fullScreenLoader.stopLoader();
+                        },
+                        failCallBack: function () {
+                            fullScreenLoader.stopLoader();
+                        }
+                    };
+
+                    var stoken = sopt.getPaymentToken(options);
+                    console.log(stoken);
+                    self.creditCardSoptPaymentToken(stoken);
+
+
+                    console.log(self.creditCardSoptPaymentToken());
+
+                    console.log(self.creditCardSoptPaymentToken());
+
+
+
+                    $.when(
+                        placeOrderAction(self.getData(), self.messageContainer)
+                    )
+                        .fail(
+                            function () {
+                                self.isPlaceOrderActionAllowed(true);
+                            }
+                        ).done(
+                        function (orderId) {
+                            self.afterPlaceOrder();
+
+                            fullScreenLoader.startLoader();
+                            $.when(
+                                RedirectAfterPlaceOrder(orderId)
+                            ).done(
+                                function (url) {
+                                    if (url.length) {
+                                        window.location.replace(url);
+                                        return true;
+                                    }
+
+                                    if (self.redirectAfterPlaceOrder) {
+                                        redirectOnSuccessAction.execute();
+                                    }
+                                }
+                            ).fail(
+                                function (response) {
+                                    errorProcessor.process(response, messageContainer);
+                                }
+                            ).always(function () {
+                                fullScreenLoader.stopLoader();
+                            });
+                        }
+                    );
+                });
+            },
+
             getData: function () {
+
+                if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
+                    return {
+                        'method': this.item.method,
+                        'additional_data': {
+                            'cc_cid': this.creditCardVerificationNumber(),
+                            'cc_type': this.creditCardType(),
+                            'cc_owner': this.creditCardOwner(),
+                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                        }
+                    };
+                }
+
                 return {
                     'method': this.item.method,
                     'additional_data': {
@@ -82,6 +172,11 @@ define(
             },
 
             updateCreditCardExpData: function () {
+                if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
+                    this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
+                    return true;
+                }
+
                 this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear().slice(-2));
             },
 
@@ -113,31 +208,14 @@ define(
             getPlaceOrderDeferredObject: function () {
                 this.updateCreditCardExpData();
 
-                return $.when(
-                    placeOrderAction(this.getData(), this.messageContainer)
-                );
-            },
-
-            placeOrder: function (data, event) {
-                var self = this;
-
-                if (! this.validateForm('#'+ this.getCode() + '-form')) {
-                    return;
-                }
-
-                if (event) {
-                    event.preventDefault();
-                }
-
-                if (this.validate() && additionalValidators.validate()) {
-                    this.isPlaceOrderActionAllowed(false);
-
-                    this.getPlaceOrderDeferredObject()
-                        .fail(
-                            function () {
-                                self.isPlaceOrderActionAllowed(true);
-                            }
-                        ).done(
+                if (! (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive())) {
+                    return $.when(
+                        placeOrderAction(this.getData(), this.messageContainer)
+                    ).fail(
+                        function () {
+                            self.isPlaceOrderActionAllowed(true);
+                        }
+                    ).done(
                         function (orderId) {
                             if (SuperDebito.isActive(self.getCode())) {
                                 return self.placeOrderWithSuperDebito(orderId);
@@ -167,6 +245,27 @@ define(
                             });
                         }
                     );
+                }
+
+                this.updateCreditCardSoptPaymentToken();
+            },
+
+
+            placeOrder: function (data, event) {
+                var self = this;
+
+                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                    return;
+                }
+
+                if (event) {
+                    event.preventDefault();
+                }
+
+                if (this.validate() && additionalValidators.validate()) {
+                    this.isPlaceOrderActionAllowed(false);
+
+                    this.getPlaceOrderDeferredObject();
                 }
 
                 return false;

@@ -55,6 +55,9 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    /**
+     * @return SilentOrderPostConfigInterface
+     */
     protected function getConfig()
     {
         return $this->config;
@@ -67,6 +70,9 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    /**
+     * @return TransferBuilder
+     */
     protected function getTransferBuilder()
     {
         return $this->transferBuilder;
