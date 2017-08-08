@@ -2,7 +2,7 @@
     "name": "webjump/magento2-module-braspagpagador",
     "license": "MIT",
     "type": "magento2-module",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "description": "Braspag Pagador integration for Magento 2",
     "repositories": [
         {
@@ -22,7 +22,7 @@
         "zendframework/zend-stdlib": "~2.4.6",
         "zendframework/zend-escaper":"~2.4.6",
         "zendframework/zend-http":"~2.4.6",
-        "webjump/braspagpagador-sdk-adapter":"~0.2.15",
+        "webjump/braspagpagador-sdk-adapter":"^0.2.15",
         "luderson/mobiledetectlib": "^3.0"
     },
     "require-dev": {
