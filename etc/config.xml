@@ -76,7 +76,7 @@
         <address>
             <braspag_pagador_customer_address>
                 <address_sanitize>1</address_sanitize>
-                <address_sanitize_dictionary>Rua-R;Avenida-Av;Condomínio-Cdo;Conjunto-Cj</address_sanitize_dictionary>
+                <address_sanitize_district_dictionary>Neighborhood-Nb.;Housing-Hs</address_sanitize_district_dictionary>
             </braspag_pagador_customer_address>
         </address>
         <webjump_braspag>
