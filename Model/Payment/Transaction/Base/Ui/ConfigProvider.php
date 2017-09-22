@@ -29,7 +29,8 @@ final class ConfigProvider implements ConfigProviderInterface
         return [
             'payment' => [
         		'braspag' => [
-                    'merchantId' => $this->getBaseConfig()->getMerchantId()
+                    'merchantId'    => $this->getBaseConfig()->getMerchantId(),
+                    'merchantKey'   => $this->getBaseConfig()->getMerchantKey()
                 ]
         	]
         ];
