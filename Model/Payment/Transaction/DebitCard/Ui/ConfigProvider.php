@@ -34,7 +34,8 @@ final class ConfigProvider implements ConfigProviderInterface
                     'superdebito' => [
                         'active' => [self::CODE => $this->getDebitConfig()->isSuperDebitoActive()]
                     ],
-                ]
+                ],
+                'redirect_after_place_order' => $this->getDebitConfig()->getRedirectAfterPlaceOrder()
             ]
         ];
 

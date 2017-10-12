@@ -31,4 +31,9 @@ class Config extends AbstractConfig implements ConfigInterface
     {
         return $this->_getConfig(BaseConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT);
     }
+
+    public function getRedirectAfterPlaceOrder()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_REDIRECT_AFTER_PLACE_ORDER);
+    }
 }

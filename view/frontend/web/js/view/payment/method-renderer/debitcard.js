@@ -43,7 +43,7 @@ define(
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/debitcard',
-                redirectAfterPlaceOrder: false
+                redirectAfterPlaceOrder: window.checkoutConfig.payment.redirect_after_place_order
             },
 
             initObservable: function () {
