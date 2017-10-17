@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace Webjump\BraspagPagador\Setup;
 
 use Magento\Framework\Setup\UpgradeSchemaInterface;
@@ -20,91 +19,122 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $setup->startSetup();
 
         if (version_compare($context->getVersion(), '2.0.1') < 0) {
-
-            $table = $setup->getConnection()->newTable(
-                $setup->getTable('webjump_braspagpagador_cardtoken')
-            )->addColumn(
-                'entity_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
-                null,
-                ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
-                'Entity ID'
-            )->addColumn(
-                'alias',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                255,
-                ['nullable' => true],
-                'Alias'
-            )->addColumn(
-                'token',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                255,
-                [],
-                'Token'
-            )->addColumn(
-                'customer_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                null,
-                ['unsigned' => true],
-                'Customer Id'
-            )->addColumn(
-                'store_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
-                null,
-                ['unsigned' => true, 'default' => '0'],
-                'Store Id'
-            )->addColumn(
-                'active',
-                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                null,
-                ['nullable' => false, 'default' => 0],
-                'Active'
-            )->addForeignKey(
-                $setup->getFkName('webjump_braspagpagador_cardtoken', 'store_id', 'store', 'store_id'),
-                'store_id',
-                $setup->getTable('store'),
-                'store_id',
-                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-            )->addForeignKey(
-                $setup->getFkName('webjump_braspagpagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
-                'customer_id',
-                $setup->getTable('customer_entity'),
-                'entity_id',
-                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-            )->setComment(
-                'Webjump Braspag Pagador'
-            );
-
-            $setup->getConnection()->createTable($table);
-
+            $this->upgradeTwoZeroOne($setup, $context);
         }
 
         if (version_compare($context->getVersion(), '2.0.2') < 0) {
+            $this->upgradeTwoZeroTwo($setup, $context);
+        }
 
-            $setup->getConnection()->addColumn(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
-                'provider',
-                [
-                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    'length'    => 60,
-                    'nullable' => false,
-                    'comment' => 'Provider'
-                ]
-            );
-
-            $setup->getConnection()->addColumn(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
-                'brand',
-                [
-                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    'length'    => 60,
-                    'nullable' => false,
-                    'comment' => 'Brands'
-                ]
-            );
-            
+        if (version_compare($context->getVersion(), '3.5.2') < 0) {
+            $this->upgradeThreeFiveTwo($setup, $context);
         }
 
         $setup->endSetup();        
+    }
+
+    protected function upgradeTwoZeroOne(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+
+        $table = $setup->getConnection()->newTable(
+            $setup->getTable('webjump_braspagpagador_cardtoken')
+        )->addColumn(
+            'entity_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
+            'Entity ID'
+        )->addColumn(
+            'alias',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            ['nullable' => true],
+            'Alias'
+        )->addColumn(
+            'token',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            [],
+            'Token'
+        )->addColumn(
+            'customer_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['unsigned' => true],
+            'Customer Id'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'default' => '0'],
+            'Store Id'
+        )->addColumn(
+            'active',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['nullable' => false, 'default' => 0],
+            'Active'
+        )->addForeignKey(
+            $setup->getFkName('webjump_braspagpagador_cardtoken', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $setup->getTable('store'),
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $setup->getFkName('webjump_braspagpagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
+            'customer_id',
+            $setup->getTable('customer_entity'),
+            'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->setComment(
+            'Webjump Braspag Pagador'
+        );
+
+        $setup->getConnection()->createTable($table);
+    }
+
+    protected function upgradeTwoZeroTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $setup->getConnection()->addColumn(
+            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            'provider',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'length'    => 60,
+                'nullable' => false,
+                'comment' => 'Provider'
+            ]
+        );
+
+        $setup->getConnection()->addColumn(
+            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            'brand',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'length'    => 60,
+                'nullable' => false,
+                'comment' => 'Brands'
+            ]
+        );
+    }
+
+    protected function upgradeThreeFiveTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $setup->getConnection()->addColumn(
+            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            'method',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'length' => 60,
+                'comment' => 'Payment method'
+            ]
+        );
+
+        $setup->getConnection()->addIndex(
+            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            $setup->getIdxName('webjump_braspagpagador_cardtoken', ['customer_id', 'method']),
+            ['customer_id', 'method'],
+            \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+        );
     }
 }
