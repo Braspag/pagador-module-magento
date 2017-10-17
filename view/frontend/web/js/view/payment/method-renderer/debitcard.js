@@ -213,7 +213,7 @@ define(
 
             getPlaceOrderDeferredObject: function () {
                 this.updateCreditCardExpData();
-
+                var self = this;
                 if (! (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive())) {
                     return $.when(
                         placeOrderAction(this.getData(), this.messageContainer)
