@@ -22,6 +22,11 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\GeneralRequest" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfig" />
 
+    <preference for="Webjump\BraspagPagador\Api\NotificationManagerInterface" type="Webjump\BraspagPagador\Model\NotificationManager" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request" />
+
+    <preference for="Webjump\Braspag\Pagador\Transaction\FacadeInterface" type="Webjump\Braspag\Pagador\Transaction\BraspagFacade" />
+
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
         <arguments>
             <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
@@ -176,8 +181,6 @@
         </arguments>
     </virtualType>
 
-
-
     <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardSendRequest</argument>
@@ -186,7 +189,6 @@
             <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
         </arguments>
     </virtualType>
-
 
     <type name="Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint">
         <arguments>
