@@ -30,6 +30,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeFiveTwo($setup, $context);
         }
 
+        if (version_compare($context->getVersion(), '3.5.3') < 0) {
+            $this->upgradeThreeFiveThree($setup, $context);
+        }
+
         $setup->endSetup();        
     }
 
@@ -135,6 +139,21 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $setup->getIdxName('webjump_braspagpagador_cardtoken', ['customer_id', 'method']),
             ['customer_id', 'method'],
             \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+        );
+    }
+
+    protected function upgradeThreeFiveThree(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $setup->getConnection()->changeColumn(
+            $setup->getTable('sales_order_payment'),
+            'last_trans_id',
+            'last_trans_id',
+            [
+                'type'     => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'length'   => 36,
+                'nullable' => true,
+                'comment'  => 'Last Trans Id'
+            ]
         );
     }
 }
