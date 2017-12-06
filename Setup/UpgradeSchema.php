@@ -34,6 +34,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeFiveThree($setup, $context);
         }
 
+        if (version_compare($context->getVersion(), '3.5.4') < 0) {
+            $this->upgradeThreeFiveFour($setup, $context);
+        }
+
         $setup->endSetup();        
     }
 
@@ -155,5 +159,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'comment'  => 'Last Trans Id'
             ]
         );
+    }
+
+    protected function upgradeThreeFiveFour(SchemaSetupInterface $setup){
+        $connection = $setup->getConnection();
+        $connection->query("UPDATE core_config_data SET value = replace(value,'Redecard','Rede') WHERE path like '%payment/braspag_pagador%' and '%Redecard%';");
     }
 }
