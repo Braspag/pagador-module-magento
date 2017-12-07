@@ -15,7 +15,9 @@ interface ConfigInterface
 {
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_DEMONSTRATIVE = 'payment/braspag_pagador_billet/demonstrative';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_INSTRUCTIONS = 'payment/braspag_pagador_billet/instructions';
+    const CONFIG_XML_BRASPAG_PAGADOR_BILLET_IDENTIFICATION = 'payment/braspag_pagador_billet/identification';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR = 'payment/braspag_pagador_billet/assignor';
+    const CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR_ADDRESS = 'payment/braspag_pagador_billet/assignor_address';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE = 'payment/braspag_pagador_billet/expiration_days';
 	const CONFIG_XML_BRASPAG_PAGADOR_BILLET_PROVIDER = 'payment/braspag_pagador_billet/types';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_STREET_ATTRIBUTE = 'payment/braspag_pagador_customer_address/street_attribute';
@@ -33,7 +35,11 @@ interface ConfigInterface
 
 	public function getPaymentInstructions();
 
+	public function getPaymentIdentification();
+
 	public function getPaymentAssignor();
+
+    public function getPaymentAssignorAddress();
 
 	public function getExpirationDate();
 
