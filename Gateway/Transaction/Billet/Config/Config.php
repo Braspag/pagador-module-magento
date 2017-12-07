@@ -26,12 +26,22 @@ class Config extends BaseConfig implements ConfigInterface
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_INSTRUCTIONS);
 	}
 
+    public function getPaymentIdentification()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_IDENTIFICATION);
+    }
+
 	public function getPaymentAssignor()
 	{
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR);
 	}
 
-	public function getExpirationDate()
+    public function getPaymentAssignorAddress()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_ASSIGNOR_ADDRESS);
+    }
+
+    public function getExpirationDate()
 	{
 		return $this->getDateTime()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BILLET_EXPIRATION_DATE))));
 	}
