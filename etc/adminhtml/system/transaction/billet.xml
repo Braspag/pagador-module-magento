@@ -51,6 +51,22 @@
                 <field id="active">1</field>
             </depends>
 	    </field>
+		<field id="assignor_address" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Assignor Address</label>
+			<comment />
+			<config_path>payment/braspag_pagador_billet/assignor_address</config_path>
+			<depends>
+				<field id="active">1</field>
+			</depends>
+		</field>
+		<field id="identification" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Identification</label>
+			<comment />
+			<config_path>payment/braspag_pagador_billet/identification</config_path>
+			<depends>
+				<field id="active">1</field>
+			</depends>
+		</field>
 	    <field id="expiration_days" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 	        <label>Expirations Day</label>
 	        <comment />

@@ -212,9 +212,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getPaymentAddress()
 	{
-		$address = $this->getBillingAddress();
-
-		return sprintf("%s %s %s/%s - %s", $this->getCustomerAddressStreet(), $this->getCustomerAddressNumber(), $address->getCity(), $address->getRegionCode(), $address->getPostcode());
+        return $this->getConfig()->getPaymentAssignorAddress();
 	}
 
     /**
@@ -262,7 +260,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getPaymentIdentification()
 	{
-		return $this->getOrderAdapter()->getOrderIncrementId();
+		return $this->getConfig()->getPaymentIdentification();
 	}
 
     /**
