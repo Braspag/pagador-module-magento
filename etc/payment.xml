@@ -38,20 +38,20 @@
         <type id="Cielo-Discover" order="8">
             <label>Cielo Discover</label>
         </type>
-        <type id="Redecard-Visa" order="9">
-            <label>Redecard Visa</label>
+        <type id="Rede-Visa" order="9">
+            <label>Rede Visa</label>
         </type>
-        <type id="Redecard-Master" order="10">
-            <label>Redecard Master</label>
+        <type id="Rede-Master" order="10">
+            <label>Rede Master</label>
         </type>
-        <type id="Redecard-Hipercard" order="11">
-            <label>Redecard Hipercard</label>
+        <type id="Rede-Hipercard" order="11">
+            <label>Rede Hipercard</label>
         </type>
-        <type id="Redecard-Hiper" order="12">
-            <label>Redecard Hiper</label>
+        <type id="Rede-Hiper" order="12">
+            <label>Rede Hiper</label>
         </type>
-        <type id="Redecard-Diners" order="13">
-            <label>Redecard Diners</label>
+        <type id="Rede-Diners" order="13">
+            <label>Rede Diners</label>
         </type>
         <type id="RedeSitef-Visa" order="14">
             <label>RedeSitef Visa</label>
