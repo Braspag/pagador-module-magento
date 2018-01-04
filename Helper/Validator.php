@@ -31,10 +31,6 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $sanitizeDictionary = [];
 
-    /**
-     * @var array
-     */
-    protected $sanitizeCache = [];
 
     /**
      * Validator constructor.
@@ -47,7 +43,7 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
-        $this->sanitizeCache = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+
 
         parent::__construct($context);
     }
@@ -60,23 +56,25 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function sanitizeDistrict($district)
     {
+        
+        $sanitizeCache = array();
+        $sanitizeCache = $this->sanitizeDictionary;
+
         if($this->isSanitizeActive && is_string($district))
         {
-            $this->sanitizeDictionary = $this->prepareDictionay();
+            $sanitizeCache = $this->prepareDictionay();
             preg_match_all("/[^ ]+/", $district, $districtArray);
             $result = [];
             foreach ($districtArray[0] as $word)
             {
-                if(array_key_exists($word,$this->sanitizeDictionary)){
-                    $result[] = $this->sanitizeDictionary[$word];
+                if(array_key_exists($word,$sanitizeCache)){
+                    $result[] = $sanitizeCache[$word];
                 } else {
                     $result[] = $word;
                  }
             }
             $result = implode(" ", $result);
             $resultLength = strlen($result);
-
-            $this->sanitizeDictionary = $this->sanitizeCache;
 
             return ($resultLength > 50 ? substr($result, ($resultLength - 50)) : $result);
         }
