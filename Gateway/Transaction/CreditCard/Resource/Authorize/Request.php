@@ -267,7 +267,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressDistrict()
     {
-        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
+        return $this->validator->sanitizeDistrict($this->getShippingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute()));
     }
 
     /**

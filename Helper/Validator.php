@@ -32,6 +32,11 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     protected $sanitizeDictionary = [];
 
     /**
+     * @var array
+     */
+    protected $sanitizeCache = [];
+
+    /**
      * Validator constructor.
      *
      * @param Context $context
@@ -42,6 +47,7 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+        $this->sanitizeCache = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
 
         parent::__construct($context);
     }
@@ -69,6 +75,8 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
             }
             $result = implode(" ", $result);
             $resultLength = strlen($result);
+
+            $this->sanitizeDictionary = $this->sanitizeCache;
 
             return ($resultLength > 50 ? substr($result, ($resultLength - 50)) : $result);
         }
