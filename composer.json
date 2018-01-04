@@ -2,6 +2,7 @@
     "name": "webjump/magento2-module-braspagpagador",
     "license": "MIT",
     "type": "magento2-module",
+    "version": "3.6.6",
     "description": "Braspag Pagador integration for Magento 2",
     "repositories": [
         {
