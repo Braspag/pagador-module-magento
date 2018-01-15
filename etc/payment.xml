@@ -109,7 +109,7 @@
         <type id="CitiBank" order="30">
             <label>CitiBank</label>
         </type>
-        <type id="Itau" order="31">
+        <type id="ItauShopline" order="31">
             <label>Itau</label>
         </type>
         <type id="Brb" order="32">
