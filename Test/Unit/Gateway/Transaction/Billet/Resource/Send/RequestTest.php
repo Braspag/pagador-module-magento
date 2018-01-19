@@ -6,18 +6,24 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
+    protected $objectManagerHelper;
+
     public function setUp()
     {
+        $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
     	$this->billetConfigInterfaceMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
 
         $this->dateMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\DateTime')
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->request = new Request(
-    		$this->billetConfigInterfaceMock,
-            $this->dateMock
-    	);
+    	$this->request = $this->objectManagerHelper->getObject(
+            Request::class,
+            [
+                'config' => $this->billetConfigInterfaceMock
+            ]
+        );
     }
 
     public function tearDown()

@@ -7,6 +7,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Stdlib\DateTime;
+use Magento\Framework\Stdlib\DateTime\DateTime as CurrentDate;
 
 class ContextTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,6 +15,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     private $sessionMock;
     private $storeMock;
     private $dateTimeMock;
+    private $currentDateMock;
     private $context;
 
     public function setUp()
@@ -25,6 +27,9 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $this->dateTimeMock     = $this->getMockBuilder(DateTime::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->currentDateMock = $this->getMockBuilder(CurrentDate::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     public function testGetScopeConfig()
@@ -33,7 +38,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             $this->scopeConfigMock,
             $this->sessionMock,
             $this->storeMock,
-            $this->dateTimeMock
+            $this->dateTimeMock,
+            $this->currentDateMock
         );
         $this->assertInstanceOf(ScopeConfigInterface::class, $this->context->getConfig());
     }
@@ -44,7 +50,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             $this->scopeConfigMock,
             $this->sessionMock,
             $this->storeMock,
-            $this->dateTimeMock
+            $this->dateTimeMock,
+            $this->currentDateMock
         );
         $this->assertInstanceOf(SessionManagerInterface::class, $this->context->getSession());
     }
@@ -55,7 +62,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             $this->scopeConfigMock,
             $this->sessionMock,
             $this->storeMock,
-            $this->dateTimeMock
+            $this->dateTimeMock,
+            $this->currentDateMock
         );
 
         $this->assertInstanceOf(StoreManagerInterface::class, $this->context->getStoreManager());

@@ -10,14 +10,21 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     private $creaditCardConfig;
 
+    protected $objectManagerHelper;
+
     public function setUp()
     {
+        $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
         $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
         $this->installmentsconfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
-    	$this->request = new Request(
-            $this->configMock,
-            $this->installmentsconfigMock
+        $this->request = $this->objectManagerHelper->getObject(
+            Request::class,
+            [
+                'config' => $this->billetConfigInterfaceMock,
+                'installmentsConfig' => $this->installmentsconfigMock
+            ]
         );
     }
 

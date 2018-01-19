@@ -6,6 +6,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as Braspagl
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 
 /**
  * Capture Request
@@ -24,10 +25,17 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected $paymentId;
 
+    /**
+     * @var GrandTotalPricingHelper
+     */
+    protected $grandTotalPricingHelper;
+
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        GrandTotalPricingHelper $grandTotalPricingHelper
     ) {
         $this->setConfig($config);
+        $this->grandTotalPricingHelper = $grandTotalPricingHelper;
     }
 
     public function getMerchantId()
@@ -52,12 +60,11 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getAdditionalRequest()
     {
-        $grandTotalAmount = number_format($this->getOrderAdapter()->getGrandTotalAmount(), $this->getConfig()->getDecimalGrandTotal(), '.', '');
-        $amount = $grandTotalAmount * 100;
-        $amount = str_replace('.', '', $amount);
+        $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
+        $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
 
     	return [
-            'amount' => $amount 
+            'amount' => $integerValue
         ];
     }
 

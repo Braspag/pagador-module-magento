@@ -90,7 +90,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $payment->getMethod());
         $searchCriteriaBuilder->addFilter('customer_id', $payment->getOrder()->getCustomerId());
-        $searchCriteria = $this->searchCriteriaBuilder->create();
+        $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
