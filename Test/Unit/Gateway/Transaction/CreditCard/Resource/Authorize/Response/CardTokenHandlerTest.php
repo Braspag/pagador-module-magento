@@ -2,6 +2,7 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
 
+use Magento\Sales\Model\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler;
 use Magento\Framework\DataObject;
 
@@ -13,15 +14,28 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
 
     private $cardTokenRepositoryMock;
 
+    protected $objectManagerHelper;
+
+    protected $orderMock;
+
     public function setUp()
     {
+        $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
         $this->cardTokenRepositoryMock = $this->getMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
 
         $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
 
-    	$this->handler = new CardTokenHandler(
-            $this->cardTokenRepositoryMock,
-            $this->eventManagerMock
+        $this->orderMock = $this->getMockBuilder(Order::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = $this->objectManagerHelper->getObject(
+            CardTokenHandler::class,
+            [
+                'cardTokenRepository' => $this->cardTokenRepositoryMock,
+                'eventManager' => $this->eventManagerMock
+            ]
         );
     }
 
@@ -68,6 +82,11 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
+
+        $paymentMock
+            ->expects($this->atLeastOnce())
+            ->method('getOrder')
+            ->will($this->returnValue($this->orderMock));
 
         $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
@@ -117,6 +136,11 @@ class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
+
+        $paymentMock
+            ->expects($this->atLeastOnce())
+            ->method('getOrder')
+            ->willReturn($this->orderMock);
 
         $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()

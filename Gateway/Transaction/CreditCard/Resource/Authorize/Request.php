@@ -18,6 +18,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterfac
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
 use Webjump\BraspagPagador\Helper\Validator;
 use Magento\Payment\Model\InfoInterface;
+use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 
 /**
  * Class Request
@@ -69,6 +70,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     protected $validator;
 
     /**
+     * @var GrandTotalPricingHelper
+     */
+    protected $grandTotalPricingHelper;
+
+    /**
      * Request constructor.
      * @param ConfigInterface $config
      * @param InstallmentsConfigInterface $installmentsConfig
@@ -77,11 +83,13 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function __construct(
         ConfigInterface $config,
         InstallmentsConfigInterface $installmentsConfig,
-        Validator $validator
+        Validator $validator,
+        GrandTotalPricingHelper $grandTotalPricingHelper
     ) {
         $this->setConfig($config);
         $this->setInstallmentsConfig($installmentsConfig);
         $this->validator = $validator;
+        $this->grandTotalPricingHelper = $grandTotalPricingHelper;
     }
 
     /**
@@ -315,10 +323,10 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentAmount()
     {
-        $grandTotalAmount = number_format($this->getOrderAdapter()->getGrandTotalAmount(), $this->getConfig()->getDecimalGrandTotal(), '.', '');
-        $amount = $grandTotalAmount * 100;
+        $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
+        $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
 
-        return str_replace('.', '', $amount);
+        return $integerValue;
     }
 
     /**
