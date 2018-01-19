@@ -52,7 +52,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getAdditionalRequest()
     {
-        $amount = $this->getOrderAdapter()->getGrandTotalAmount() * 100;
+        $grandTotalAmount = number_format($this->getOrderAdapter()->getGrandTotalAmount(), $this->getConfig()->getDecimalGrandTotal(), '.', '');
+        $amount = $grandTotalAmount * 100;
         $amount = str_replace('.', '', $amount);
 
     	return [
