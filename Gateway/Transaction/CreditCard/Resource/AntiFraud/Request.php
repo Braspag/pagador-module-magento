@@ -105,7 +105,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         $items = [];
         /** @var \Magento\Sales\Model\Order\Item $item */
         foreach ($this->getOrderAdapter()->getItems() as $item) {
-            if ($item->getProductType() !== 'simple' OR $item->getProductType() !== 'grouped') {
+            if ($item->getProductType() !== 'simple' && $item->getProductType() !== 'grouped') {
                 continue;
             }
 
