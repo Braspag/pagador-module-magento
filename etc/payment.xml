@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
-    
+
     <methods>
         <method name="braspag_pagador_billet">
             <allow_multiple_address>1</allow_multiple_address>
@@ -9,7 +9,7 @@
             <allow_multiple_address>1</allow_multiple_address>
         </method>
     </methods>
-    
+
     <credit_cards>
         <type id="Simulado" order="0">
             <label>Simulado*</label>
@@ -112,6 +112,9 @@
         <type id="ItauShopline" order="31">
             <label>Itau</label>
         </type>
+        <type id="Itau2" order="31">
+            <label>Itau 2</label>
+        </type>
         <type id="Brb" order="32">
             <label>Brb</label>
         </type>
@@ -124,7 +127,7 @@
         <type id="HSBC" order="35">
             <label>HSBC</label>
         </type>
-        
+
         <!-- Debit Card -->
         <type id="Cielo" order="1">
             <label>Cielo</label>
