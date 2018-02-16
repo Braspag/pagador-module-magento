@@ -145,8 +145,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerIdentityType()
     {
-        $identity = (int) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
-        return (strlen($identity) === 14) ? 'CNPJ' : 'CPF';
+        $identity = (string) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
+        return (strlen($identity) > 11) ? 'CNPJ' : 'CPF';
     }
 
     /**
