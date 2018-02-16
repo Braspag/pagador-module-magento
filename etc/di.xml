@@ -354,7 +354,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="">
+    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="Magento\Framework\App\Config">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
         </arguments>
