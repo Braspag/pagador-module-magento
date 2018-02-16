@@ -23,11 +23,6 @@
             <comment>If null default 2</comment>
             <config_path>payment/braspag_pagador_creditcard/decimal_grand_total</config_path>
         </field>
-        <field id="customer_identity_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
-            <label>Customer Identity (CPF/CNPJ) Attribute</label>
-            <config_path>payment/braspag_pagador_creditcard/customer_identity_attribute_code</config_path>
-            <comment>object from \Magento\Quote\Model\Quote</comment>
-        </field>
         <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
             <label>Payment Action</label>
             <comment />

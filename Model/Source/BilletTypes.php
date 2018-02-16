@@ -24,6 +24,7 @@ class BilletTypes extends \Magento\Payment\Model\Source\Cctype
             'BancoDoBrasil',
             'CitiBank',
             'ItauShopline',
+            'Itau2',
             'Brb',
             'Caixa',
             'Santander',
