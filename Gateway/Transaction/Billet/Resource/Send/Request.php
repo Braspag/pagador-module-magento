@@ -203,7 +203,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getPaymentAmount()
 	{
-		$amount = (float) $this->getOrderAdapter()->getGrandTotalAmount() * 100;
+		$amount = (float) round($this->getOrderAdapter()->getGrandTotalAmount(), 2) * 100;
 		return str_replace('.', '', $amount);
 	}
 
