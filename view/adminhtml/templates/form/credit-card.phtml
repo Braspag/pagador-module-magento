@@ -32,13 +32,13 @@ $ccExpYear = $block->getInfoData('cc_exp_year');
         </div>
     </div>
     <div class="field-type admin__field _required">
-        <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_customer_name">
+        <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_cc_owner">
             <span><?= $block->escapeHtml(__('Card Holder Name')) ?></span>
         </label>
         <div class="admin__field-control">
-            <input type="text" id="<?= /* @noEscape */ $code ?>_customer_name" name="payment[customer_name]"
+            <input type="text" id="<?= /* @noEscape */ $code ?>_cc_owner" name="payment[cc_owner]"
                    title="<?= $block->escapeHtml(__('Card Holder Name')) ?>" class="admin__control-text"
-                   value="<?= /* @noEscape */ $block->getInfoData('customer_name') ?>"/>
+                   value="<?= /* @noEscape */ $block->getInfoData('cc_owner') ?>"/>
         </div>
     </div>
     <div class="field-number admin__field _required">
