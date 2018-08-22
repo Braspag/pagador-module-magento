@@ -18,6 +18,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
     <preference for="Webjump\BraspagPagador\Model\Payment\Info\BilletFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\BilletFactory" />
+    <preference for="Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactory" />
 
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\GeneralRequest" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfig" />
@@ -157,7 +158,7 @@
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\CreditCard</argument>
         </arguments>
     </virtualType>
 
