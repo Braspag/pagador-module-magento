@@ -2,6 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
+use Magento\Framework\App\State;
 
 /**
  * Braspag Transaction Base AbstractConfig
@@ -19,18 +20,31 @@ abstract class AbstractConfig
     protected $config;
 	protected $context;
 
+    /**
+     * @var State
+     */
+	protected $appState;
+
+    /**
+     * @var ContextInterface
+     */
+	protected $contextAdmin;
+
 	public function __construct(
-	    ContextInterface $context,
+        ContextInterface $context,
+        ContextInterface $contextAdmin,
+	    State $appState,
 	    array $data = []
     )
     {
         $this->setContext($context);
+        $this->setContextAdmin($contextAdmin);
+        $this->setAppState($appState);
         $this->_construct($data);
     }
 
     protected function _construct(array $data = [])
-    {
-    }
+    {}
 
     protected function _getConfig($uri)
     {
@@ -60,7 +74,11 @@ abstract class AbstractConfig
 
     public function getSession()
     {
-        return $this->getContext()->getSession();
+        $session = $this->getContext()->getSession();
+        if ($this->getAppState()->getAreaCode() == 'adminhtml') {
+            $session = $this->getContextAdmin()->getSession();
+        }
+        return $session;
     }
 
     protected function getStoreManager()
@@ -71,5 +89,37 @@ abstract class AbstractConfig
     protected function getDateTime()
     {
         return $this->getContext()->getDateTime();
+    }
+
+    /**
+     * @return ContextInterface
+     */
+    public function getContextAdmin(): ContextInterface
+    {
+        return $this->contextAdmin;
+    }
+
+    /**
+     * @param ContextInterface $contextAdmin
+     */
+    protected function setContextAdmin(ContextInterface $contextAdmin)
+    {
+        $this->contextAdmin = $contextAdmin;
+    }
+
+    /**
+     * @return State
+     */
+    protected function getAppState(): State
+    {
+        return $this->appState;
+    }
+
+    /**
+     * @param State $appState
+     */
+    protected function setAppState(State $appState)
+    {
+        $this->appState = $appState;
     }
 }

@@ -35,6 +35,13 @@
         </arguments>
     </type>
 
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Backend\Model\Session\Quote</argument>
+            <argument name="dateTime" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
+        </arguments>
+    </type>
+
     <virtualType name="BraspagTransactionBilletSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request" />
     <virtualType name="BraspagTransactionCreditCardSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request" />
     <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request" />
@@ -281,7 +288,7 @@
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardTokenValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
-            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form\Cc</argument>
             <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
         </arguments>
     </virtualType>
@@ -313,7 +320,7 @@
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionDebitCardValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionDebitCardCommandPool</argument>
-            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="formBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Form\CreditCard</argument>
             <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
         </arguments>
     </virtualType>
@@ -370,4 +377,49 @@
 
     <type name="Webjump\BraspagPagador\Model\CardToken" shared="false" />
 
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
 </config>
