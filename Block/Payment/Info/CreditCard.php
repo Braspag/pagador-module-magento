@@ -62,7 +62,7 @@ class CreditCard extends Info
         $priceFormatted = $this->getPriceHelper()->currency($amountAuthorized, true, false);
         $time = count($installments) > 1 ? 'times' : 'time';
 
-        return __('%1 Spplited in %2 '. $time, $priceFormatted, $installments);
+        return __('%1 Splitted in %2 '. $time, $priceFormatted, $installments);
     }
 
     protected function getPriceHelper()

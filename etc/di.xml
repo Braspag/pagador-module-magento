@@ -157,7 +157,7 @@
             <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
             <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
-            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="formBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Form\CreditCard</argument>
             <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\CreditCard</argument>
         </arguments>
     </virtualType>
