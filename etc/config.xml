@@ -13,6 +13,7 @@
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
                 <can_initialize>1</can_initialize>
+                <can_use_internal>1</can_use_internal>
             </braspag_pagador_billet>
             <braspag_pagador_creditcard>
                 <active>1</active>
@@ -39,6 +40,7 @@
                 <silentorderpost_accesstoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_homolog>
                 <silentorderpost_accesstoken_url_production>https://www.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_production>
                 <can_initialize>1</can_initialize>
+                <can_use_internal>1</can_use_internal>
             </braspag_pagador_creditcard>
             <braspag_pagador_creditcardtoken>
                 <active>1</active>
@@ -58,6 +60,7 @@
                 <installment_min_amount>10.00</installment_min_amount>
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
+                <can_use_internal>1</can_use_internal>
             </braspag_pagador_creditcardtoken>            
             <braspag_pagador_debitcard>
                 <active>1</active>
@@ -71,6 +74,7 @@
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
                 <can_initialize>1</can_initialize>
+                <can_use_internal>1</can_use_internal>
             </braspag_pagador_debitcard>
         </payment>
         <address>

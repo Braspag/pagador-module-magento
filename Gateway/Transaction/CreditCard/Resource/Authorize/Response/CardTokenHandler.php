@@ -99,10 +99,11 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         }
 
         $data = new DataObject([
-            'alias' => $payment->getCcNumber(),
+            'alias' => 'xxxx-xxxx-xxxx-' . $payment->getCcLast4(),
             'token' => $response->getPaymentCardToken(),
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
+            'method' => $payment->getMethod(),
         ]);
 
         $this->getEventManager()->dispatch(
