@@ -22,7 +22,7 @@
         "zendframework/zend-escaper":"~2.4.6|^2.5",
         "zendframework/zend-http":"~2.4.6|^2.5.4",
         "webjump/braspagpagador-sdk-adapter":"^0.4.2",
-        "luderson/mobiledetectlib": "^3.0"
+        "webjump/mobiledetectlib": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.0",
