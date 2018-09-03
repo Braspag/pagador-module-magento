@@ -185,7 +185,7 @@ class NotificationManager implements NotificationManagerInterface
 
         $order->setState('processing')->setStatus('processing');
         $order->save();
-        $this->eventManager->dispatch('webjump_braspagPagador_createinvoice_after', ['order' => $order]);
+        $this->eventManager->dispatch('webjump_braspagPagador_setstate_after', ['order' => $order]);
 
         return true;
     }
