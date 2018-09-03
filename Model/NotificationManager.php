@@ -21,6 +21,7 @@ use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 use Magento\Sales\Model\Service\OrderService;
 use Magento\Sales\Model\Order\CreditmemoFactory;
 use Magento\Sales\Model\Service\CreditmemoService;
+use Magento\Framework\Event\Manager;
 
 class NotificationManager implements NotificationManagerInterface
 {
@@ -69,6 +70,11 @@ class NotificationManager implements NotificationManagerInterface
      */
     protected $creditmemoService;
 
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
+
     public function __construct(
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
@@ -78,7 +84,8 @@ class NotificationManager implements NotificationManagerInterface
         InvoiceSender $invoiceSender,
         OrderService $orderService,
         CreditmemoFactory $creditmemoFactory,
-        CreditmemoService $creditmemoService
+        CreditmemoService $creditmemoService,
+        Manager $eventManager
     )
     {
         $this
@@ -91,6 +98,7 @@ class NotificationManager implements NotificationManagerInterface
             ->setOrderService($orderService)
             ->setCreditmemoFactory($creditmemoFactory)
             ->setCreditmemoService($creditmemoService);
+        $this->eventManager = $eventManager;
     }
 
     /**
@@ -177,6 +185,7 @@ class NotificationManager implements NotificationManagerInterface
 
         $order->setState('processing')->setStatus('processing');
         $order->save();
+        $this->eventManager->dispatch('webjump_braspagPagador_setstate_after', ['order' => $order]);
 
         return true;
     }
