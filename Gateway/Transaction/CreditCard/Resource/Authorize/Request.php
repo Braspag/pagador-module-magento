@@ -129,7 +129,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerName()
     {
-        return trim($this->getQuote()->getCustomer()->getFirstname() . ' ' . $this->getQuote()->getCustomer()->getLastname());
+        return trim($this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname());
     }
 
     /**
