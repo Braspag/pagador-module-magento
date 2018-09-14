@@ -27,6 +27,7 @@
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request" />
 
     <preference for="Webjump\Braspag\Pagador\Transaction\FacadeInterface" type="Webjump\Braspag\Pagador\Transaction\BraspagFacade" />
+    <preference for="Webjump\BraspagPagador\Api\CardTokenManagerInterface" type="Webjump\BraspagPagador\Model\CardTokenManager" />
 
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
         <arguments>
