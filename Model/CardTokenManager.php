@@ -1,26 +1,22 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
-
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
-use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
-use Magento\Framework\Event\ManagerInterface;
-use Magento\Framework\DataObject;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-
-
 /**
- * Braspag Transaction CreditCard Authorize Response Handler
- *
- * @author      Webjump Core Team <dev@webjump.com>
- * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @author      Webjump Core Team <dev@webjump.com.br>
+ * @copyright   2017 Webjump (http://www.webjump.com.br)
  * @license     http://www.webjump.com.br  Copyright
  *
  * @link        http://www.webjump.com.br
  */
-class CardTokenHandler extends AbstractHandler implements HandlerInterface
+
+namespace Webjump\BraspagPagador\Model;
+
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\DataObject;
+use Magento\Framework\Event\ManagerInterface;
+use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
+use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+
+class CardTokenManager implements CardTokenManagerInterface
 {
     /**
      * @var
@@ -36,11 +32,6 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
      * @var
      */
     protected $searchCriteriaBuilder;
-
-    /**
-     * @var
-     */
-    protected $cardTokenId = null;
 
 
     /**
@@ -61,50 +52,28 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
     }
 
-    /**
-     * @param $payment
-     * @param $response
-     *
-     * @return $this
-     */
-    protected function _handle($payment, $response)
-    {
-        if ($response->getPaymentCardToken()) {
-            $this->saveCardToken($payment, $response);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $payment
-     * @param $response
-     *
-     * @return mixed
-     * @todo: refact to use Webjump\BraspagPagador\Model\CardTokenManager
-     */
-    protected function saveCardToken($payment, $response)
+    public function registerCardToken($customerId, $paymentMethod, $response)
     {
         if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
             return $cardToken;
         }
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
-        $searchCriteriaBuilder->addFilter('method', $payment->getMethod());
-        $searchCriteriaBuilder->addFilter('customer_id', $payment->getOrder()->getCustomerId());
+        $searchCriteriaBuilder->addFilter('method', $paymentMethod);
+        $searchCriteriaBuilder->addFilter('customer_id', $customerId);
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->getCardTokenRepository()->delete($item);
+            $this->deleteCardToken($item);
         }
 
         $data = new DataObject([
-            'alias' => 'xxxx-xxxx-xxxx-' . $payment->getCcLast4(),
+            'alias' => $response->getPaymentCardNumberEncrypted(),
             'token' => $response->getPaymentCardToken(),
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
-            'method' => $payment->getMethod(),
+            'method' => $paymentMethod,
         ]);
 
         $this->getEventManager()->dispatch(
@@ -119,10 +88,15 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         return $cardToken;
     }
 
+    protected function deleteCardToken($cardToken)
+    {
+        $this->getCardTokenRepository()->delete($cardToken);
+    }
+
     /**
      * @return mixed
      */
-    public function getSearchCriteriaBuilder()
+    protected function getSearchCriteriaBuilder()
     {
         return $this->searchCriteriaBuilder;
     }
@@ -130,7 +104,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
     /**
      * @param mixed $searchCriteriaBuilder
      */
-    public function setSearchCriteriaBuilder($searchCriteriaBuilder)
+    protected function setSearchCriteriaBuilder($searchCriteriaBuilder)
     {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
