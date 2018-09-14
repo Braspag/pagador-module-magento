@@ -76,11 +76,6 @@ class CardTokenManager implements CardTokenManagerInterface
             'method' => $paymentMethod,
         ]);
 
-        $this->getEventManager()->dispatch(
-            'braspag_creditcard_token_handler_save_before',
-            ['card_data' => $data, 'payment' => $payment, 'response' => $response]
-        );
-
         $cardToken = $this->getCardTokenRepository()->create($data->toArray());
 
         $this->getCardTokenRepository()->save($cardToken);
