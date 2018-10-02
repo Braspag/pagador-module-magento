@@ -35,9 +35,9 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
                 <silentorderpost_active>0</silentorderpost_active>
-                <silentorderpost_paymenttoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_homolog>
+                <silentorderpost_paymenttoken_url_homolog>https://transactionsandbox.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_homolog>
                 <silentorderpost_paymenttoken_url_production>https://www.pagador.com.br/post/api/public/v1/card</silentorderpost_paymenttoken_url_production>
-                <silentorderpost_accesstoken_url_homolog>https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_homolog>
+                <silentorderpost_accesstoken_url_homolog>https://transactionsandbox.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_homolog>
                 <silentorderpost_accesstoken_url_production>https://www.pagador.com.br/post/api/public/v1/accesstoken?merchantid=</silentorderpost_accesstoken_url_production>
                 <can_initialize>1</can_initialize>
                 <can_use_internal>1</can_use_internal>
