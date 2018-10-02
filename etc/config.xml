@@ -5,8 +5,8 @@
             <braspag_pagador_billet>
                 <active>1</active>
                 <model>BraspagTransactionBilletRemoteMethodAdapter</model>
-                <order_status>pending_payment</order_status>
-                <payment_action>authorize</payment_action>
+                <order_status>pending</order_status>
+                <payment_action>order</payment_action>
                 <title>Braspag transaction Boleto</title>
                 <can_authorize>1</can_authorize>
                 <can_use_checkout>1</can_use_checkout>
@@ -61,7 +61,7 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
                 <can_use_internal>1</can_use_internal>
-            </braspag_pagador_creditcardtoken>            
+            </braspag_pagador_creditcardtoken>
             <braspag_pagador_debitcard>
                 <active>1</active>
                 <model>BraspagTransactionDebitCardsRemoteMethodAdapter</model>
