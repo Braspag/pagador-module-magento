@@ -46,6 +46,12 @@
             <config_path>payment/braspag_pagador_creditcard/review_order_status</config_path>
         </field>
 
+        <field id="not_create_invoice_on_notification_capture" translate="label" type="select" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>Create Invoice on Notification Return Captured Status</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/create_invoice_on_notification_captured</config_path>
+        </field>
+
         <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
             <label>Sort Order</label>
             <comment />
