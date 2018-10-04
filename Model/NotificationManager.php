@@ -75,6 +75,11 @@ class NotificationManager implements NotificationManagerInterface
      */
     private $eventManager;
 
+    /**
+     * @var string
+     **/
+    protected $config;
+
     public function __construct(
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
@@ -85,7 +90,8 @@ class NotificationManager implements NotificationManagerInterface
         OrderService $orderService,
         CreditmemoFactory $creditmemoFactory,
         CreditmemoService $creditmemoService,
-        Manager $eventManager
+        Manager $eventManager,
+        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config
     )
     {
         $this
@@ -98,6 +104,9 @@ class NotificationManager implements NotificationManagerInterface
             ->setOrderService($orderService)
             ->setCreditmemoFactory($creditmemoFactory)
             ->setCreditmemoService($creditmemoService);
+
+        $this->config = $config;
+
         $this->eventManager = $eventManager;
     }
 
@@ -140,8 +149,8 @@ class NotificationManager implements NotificationManagerInterface
         // @todo Use command pattern
         $paymentStatus = $paymentInfo->getPaymentStatus();
 
-        // 2 = Authorized
-        if (true || $paymentStatus == 2) {
+        // 2 = caoture
+        if ($this->config->isCreateInvoiceOnNotificationCaptured() && $paymentStatus == 2) {
             return $this->createInvoice($orderPayment->getOrder());
         }
 
