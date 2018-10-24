@@ -10,18 +10,19 @@
 namespace Webjump\BraspagPagador\Model;
 
 use Magento\Framework\DB\Transaction;
-use Magento\Sales\Model\Order;
-use Magento\Sales\Model\Order\Invoice;
-use Magento\Sales\Model\Service\InvoiceService;
-use Webjump\BraspagPagador\Api\NotificationManagerInterface;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
-use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory as OrderPaymentCollectionFactory;
-use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
-use Magento\Sales\Model\Service\OrderService;
-use Magento\Sales\Model\Order\CreditmemoFactory;
-use Magento\Sales\Model\Service\CreditmemoService;
 use Magento\Framework\Event\Manager;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\CreditmemoFactory;
+use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
+use Magento\Sales\Model\Order\Invoice;
+use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory as OrderPaymentCollectionFactory;
+use Magento\Sales\Model\Service\CreditmemoService;
+use Magento\Sales\Model\Service\InvoiceService;
+use Magento\Sales\Model\Service\OrderService;
+use Psr\Log\LoggerInterface;
+use Webjump\BraspagPagador\Api\NotificationManagerInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
+use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 
 class NotificationManager implements NotificationManagerInterface
 {
@@ -80,6 +81,18 @@ class NotificationManager implements NotificationManagerInterface
      **/
     protected $config;
 
+    /**
+     * @var LoggerInterface
+     **/
+    protected $logger;
+
+    /** @var array $types  */
+    protected $types = [
+        'braspag_pagador_creditcard' => 'creditCard',
+        'braspag_pagador_creditcardtoken' => 'creditCard',
+        'braspag_pagador_billet' => 'billet'
+    ];
+
     public function __construct(
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
@@ -91,7 +104,8 @@ class NotificationManager implements NotificationManagerInterface
         CreditmemoFactory $creditmemoFactory,
         CreditmemoService $creditmemoService,
         Manager $eventManager,
-        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config
+        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
+        LoggerInterface $logger
     )
     {
         $this
@@ -106,6 +120,7 @@ class NotificationManager implements NotificationManagerInterface
             ->setCreditmemoService($creditmemoService);
 
         $this->config = $config;
+        $this->logger = $logger;
 
         $this->eventManager = $eventManager;
     }
@@ -115,6 +130,8 @@ class NotificationManager implements NotificationManagerInterface
      */
     public function save($PaymentId, $ChangeType, $RecurrentPaymentId = '')
     {
+        $this->logger->info("Payment Notification: $PaymentId $ChangeType $RecurrentPaymentId");
+
         // @todo more handlers of notification actions
         if ($ChangeType == self::NOTIFICATION_PAYMENT_STATUS_CHANGED) {
             return $this->paymentStatusChanged($PaymentId);
@@ -140,7 +157,14 @@ class NotificationManager implements NotificationManagerInterface
         $request = $this->getPaymentStatusRequest();
         $request->setPaymentId($paymentId);
 
-        $paymentInfo = $this->getApi()->checkPaymentStatus($request, 'billet');
+        $type = 'billet';
+        $method = $orderPayment->getMethod();
+        
+        if (!empty($this->types[$method])) {
+            $type = $this->types[$method];
+        }        
+
+        $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
         if (!$paymentInfo) {
             return false;
         }
@@ -150,7 +174,12 @@ class NotificationManager implements NotificationManagerInterface
         $paymentStatus = $paymentInfo->getPaymentStatus();
 
         // 2 = caoture
-        if ($this->config->isCreateInvoiceOnNotificationCaptured() && $paymentStatus == 2) {
+        if ($type == 'billet' && $paymentStatus == 2) {
+            return $this->createInvoice($orderPayment->getOrder());
+        }
+
+        // 2 = caoture
+        if ($this->config->isCreateInvoiceOnNotificationCaptured() && $type == 'creditCard' && $paymentStatus == 2) {
             return $this->createInvoice($orderPayment->getOrder());
         }
 
