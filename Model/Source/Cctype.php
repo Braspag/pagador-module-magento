@@ -33,6 +33,7 @@ class Cctype extends \Magento\Payment\Model\Source\Cctype
 			'Rede-Master',
 			'Rede-Hipercard',
 			'Rede-Hiper',
+            'Rede-Elo',
 			'Rede-Diners',
 			'RedeSitef-Visa',
 			'RedeSitef-Master',
