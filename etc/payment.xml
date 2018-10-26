@@ -53,6 +53,9 @@
         <type id="Rede-Diners" order="13">
             <label>Rede Diners</label>
         </type>
+        <type id="Rede-Elo" order="13">
+            <label>Rede Elo</label>
+        </type>
         <type id="RedeSitef-Visa" order="14">
             <label>RedeSitef Visa</label>
         </type>
