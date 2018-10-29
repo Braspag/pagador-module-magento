@@ -87,8 +87,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->setAdditionalInformation('cc_savecard', (boolean) $additionalData->getCcSavecard());
         }
 
-        if ($additionalData->getCcToken()) {
-            $cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken());
+        if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {
             $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
         }
