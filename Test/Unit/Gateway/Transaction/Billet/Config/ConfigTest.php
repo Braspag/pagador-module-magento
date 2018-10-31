@@ -7,7 +7,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config;
 use Magento\Framework\Stdlib\DateTime;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $dateTimeMock;
     private $config;

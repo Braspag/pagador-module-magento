@@ -17,12 +17,14 @@
     <testsuite name="Webjump Braspag Pagador">
         <directory suffix="Test.php">Test/Unit/Gateway/Transaction/CreditCard</directory>
         <directory suffix="Test.php">Test/Unit/Gateway/Transaction/DebitCard</directory>
+        <directory suffix="Test.php">Test/Unit/Model</directory>
     </testsuite>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./Gateway/Transaction/CreditCard</directory>
             <directory suffix=".php">./Gateway/Transaction/DebitCard</directory>
+            <directory suffix=".php">./Model</directory>
             <exclude>
                 <file>registration.php</file>
                 <directory suffix=".php">./Test</directory>
@@ -38,9 +40,7 @@
     </filter>
 
 	<logging>
-        <!--coverage_html_placeholder
 	    <log type="coverage-html" target="Test/output/coverage" charset="UTF-8" yui="true" highlight="true"/>
-	    coverage_html_placeholder-->
 	</logging>
 
 </phpunit>

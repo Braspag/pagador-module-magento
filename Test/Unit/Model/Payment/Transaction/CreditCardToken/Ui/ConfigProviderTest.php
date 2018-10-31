@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCardT
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider;
 use Magento\Framework\Phrase;
 
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 
@@ -13,9 +13,9 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
-        $this->tokensBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
-        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+        $this->installmentsBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
+        $this->tokensBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
+        $this->installmentsConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
             $this->installmentsBuilderMock,
@@ -26,7 +26,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConfig()
     {
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments1->expects($this->once())
             ->method('getId')
@@ -36,7 +36,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('1x R$10,00 without interest')));
 
-        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments2->expects($this->once())
             ->method('getId')
@@ -46,7 +46,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('2x R$5,00 without interest')));
 
-        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments3->expects($this->once())
             ->method('getId')
@@ -64,27 +64,35 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                 $installments3,
             ]));
 
-        $token1 = $this->getMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
+        // $token1 = $this->createMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
 
-        $token1->expects($this->once())
+        $token1 = $this->getMockBuilder(\Webjump\BraspagPagador\Model\CardToken::class)
+            ->setMethods(['getToken', 'getAlias'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $token1->expects($this->exactly(2))
             ->method('getToken')
             ->will($this->returnValue('token 1'));
 
-        $token1->expects($this->once())
+        $token1->expects($this->exactly(2))
             ->method('getAlias')
             ->will($this->returnValue(__('alias 1')));
 
-        $token2 = $this->getMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
+        $token2 = $this->getMockBuilder(\Webjump\BraspagPagador\Model\CardToken::class)
+            ->setMethods(['getToken', 'getAlias'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $token2->expects($this->once())
+        $token2->expects($this->exactly(2))
             ->method('getToken')
             ->will($this->returnValue('token 2'));
 
-        $token2->expects($this->once())
+        $token2->expects($this->exactly(2))
             ->method('getAlias')
             ->will($this->returnValue(__('alias 2')));
 
-        $this->tokensBuilderMock->expects($this->once())
+        $this->tokensBuilderMock->expects($this->any())
             ->method('build')
             ->will($this->returnValue([
                 $token1,
@@ -115,6 +123,16 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                                 'token 2' => __('alias 2'),
                             ]],
                         ],
+                        'cardtokensaved' => [
+                            '' => [
+                                'brand' => null,
+                                'card_alias' => __('alias 2'),
+                                'card_holder_name' => null,
+                                'cpf' => null,
+                                'provider' => null,
+                                'token' => 'token 2'
+                            ]
+                        ]
                     ]
                 ]
             ],
@@ -128,7 +146,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->method('build')
             ->will($this->returnValue([]));
 
-        $this->tokensBuilderMock->expects($this->once())
+        $this->tokensBuilderMock->expects($this->exactly(2))
             ->method('build')
             ->will($this->returnValue([]));
 
@@ -147,6 +165,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                         'tokens' => [
                             'list' => ['braspag_pagador_creditcardtoken' => []],
                         ],
+                        'cardtokensaved' => []
                     ]
                 ]
             ],

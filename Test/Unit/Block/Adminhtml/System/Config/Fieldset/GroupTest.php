@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Test\Unit\Block\Adminhtml\System\Config\Fieldset;
 
 
-class GroupTest extends \PHPUnit_Framework_TestCase
+class GroupTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Group

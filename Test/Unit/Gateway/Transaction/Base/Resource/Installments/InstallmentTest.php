@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
 
-class InstallmentTest extends \PHPUnit_Framework_TestCase
+class InstallmentTest extends \PHPUnit\Framework\TestCase
 {
 	protected $installment;
 

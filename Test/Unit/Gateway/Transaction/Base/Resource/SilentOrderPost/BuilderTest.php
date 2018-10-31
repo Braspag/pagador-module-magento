@@ -12,7 +12,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Bui
  *
  * @link        http://www.webjump.com.br
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

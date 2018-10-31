@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand;
 
-class SendCommandTest extends \PHPUnit_Framework_TestCase
+class SendCommandTest extends \PHPUnit\Framework\TestCase
 {
 	private $command;
 	private $apiMock;
