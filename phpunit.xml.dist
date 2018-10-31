@@ -14,29 +14,21 @@
          colors="true"
          bootstrap="./Test/Unit/bootstrap.php"
         >
-    <testsuite name="Webjump Braspag Pagador">
-        <directory suffix="Test.php">Test/Unit/Gateway/Transaction/CreditCard</directory>
-        <directory suffix="Test.php">Test/Unit/Gateway/Transaction/DebitCard</directory>
-        <directory suffix="Test.php">Test/Unit/Model</directory>
+    <testsuite name="Webjump Magento 2 Module">
+        <directory suffix="Test.php">Test/Unit</directory>
     </testsuite>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./Gateway/Transaction/CreditCard</directory>
-            <directory suffix=".php">./Gateway/Transaction/DebitCard</directory>
-            <directory suffix=".php">./Model</directory>
+            <directory suffix=".php">./</directory>
             <exclude>
-                <file>registration.php</file>
                 <directory suffix=".php">./Test</directory>
                 <directory suffix=".php">./Setup</directory>
+                <directory suffix=".php">./Model/ResourceModel</directory>
                 <directory suffix=".php">./vendor</directory>
+                <directory suffix="registration.php">.</directory>
             </exclude>
         </whitelist>
-
-        <blacklist>
-            <directory>Test</directory>
-            <directory>vendor</directory>
-        </blacklist>
     </filter>
 
 	<logging>
