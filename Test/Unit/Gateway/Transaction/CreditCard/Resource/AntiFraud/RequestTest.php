@@ -2,11 +2,13 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\AntiFraud;
 
+use Magento\Quote\Model\Quote;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request;
 use PHPUnit\Framework\TestCase;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
+use Magento\Framework\Session\SessionManagerInterface;
 
 class RequestTest extends TestCase
 {
@@ -25,13 +27,38 @@ class RequestTest extends TestCase
      */
     private $adapterGeneralMock;
 
+    /**
+     * @var SessionManagerInterface
+     */
+    private $sessionMock;
+
+    /**
+     * @var Quote
+     */
+    private $quoteMock;
+
     protected function setUp()
     {
-        $this->configMock = $this->createMock(AntiFraudConfigInterface::class);
+        $this->configMock = $this->getMockBuilder(AntiFraudConfigInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getSequence', 'getSequenceCriteria', 'userOrderIdToFingerPrint', 'getSession'
+            ])
+            ->getMockForAbstractClass();
 
         $this->requestItemFactoryMock = $this->createMock(RequestFactory::class);
 
         $this->adapterGeneralMock = $this->createMock(AdapterGeneralInterface::class);
+
+        $this->sessionMock = $this->getMockBuilder(SessionManagerInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getQuote', 'getSessionId'])
+            ->getMockForAbstractClass();
+
+        $this->quoteMock = $this->getMockBuilder(Quote::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
     }
 
     /**
@@ -148,12 +175,85 @@ class RequestTest extends TestCase
 
     public function testGetSequenceCriteria()
     {
+        $valueExpected = rand();
 
+        $this->configMock
+            ->expects($this->once())
+            ->method('getSequenceCriteria')
+            ->willReturn($valueExpected);
+
+        $model = $this->getModel();
+        $valueActual = $model->getSequenceCriteria();
+
+        $this->assertSame($valueExpected, $valueActual);
     }
 
     public function testGetFingerPrintId()
     {
+        $userOrderIdToFingerPrint = true;
+        $reservedOrderId = (string) rand();
 
+        $this->configMock
+            ->expects($this->once())
+            ->method('userOrderIdToFingerPrint')
+            ->willReturn($userOrderIdToFingerPrint);
+
+        $this->configMock
+            ->expects($this->once())
+            ->method('getSession')
+            ->willReturn($this->sessionMock);
+
+        $this->sessionMock
+            ->expects($this->once())
+            ->method('getQuote')
+            ->willReturn($this->quoteMock);
+
+        $this->quoteMock
+            ->expects($this->exactly(2))
+            ->method('getReservedOrderId')
+            ->willReturnOnConsecutiveCalls(null, $reservedOrderId);
+
+        $this->quoteMock
+            ->expects($this->once())
+            ->method('reserveOrderId')
+            ->willReturnSelf();
+
+        $this->quoteMock
+            ->expects($this->once())
+            ->method('save')
+            ->willReturnSelf();
+
+        $model = $this->getModel();
+        $valueActual = $model->getFingerPrintId();
+
+        $this->assertSame($reservedOrderId, $valueActual);
+    }
+
+    public function testGetFingerPrintIdShouldReturnSessionIdWhenDisabled()
+    {
+        $userOrderIdToFingerPrint = false;
+        $sessionId = (string) rand();
+
+        $this->configMock
+            ->expects($this->once())
+            ->method('userOrderIdToFingerPrint')
+            ->willReturn($userOrderIdToFingerPrint);
+
+        $this->configMock
+            ->expects($this->once())
+            ->method('getSession')
+            ->willReturn($this->sessionMock);
+
+        $this->sessionMock
+            ->expects($this->once())
+            ->method('getSessionId')
+            ->willReturn($sessionId);
+
+
+        $model = $this->getModel();
+        $valueActual = $model->getFingerPrintId();
+
+        $this->assertSame($sessionId, $valueActual);
     }
 
     public function testGetBrowserHostName()
