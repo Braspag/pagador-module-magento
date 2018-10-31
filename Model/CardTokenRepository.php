@@ -143,7 +143,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
      *
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete($cardToken)
+    public function delete(CardTokenInterface  $cardToken)
     {
         try {
             $this->getResource()->delete($cardToken);
