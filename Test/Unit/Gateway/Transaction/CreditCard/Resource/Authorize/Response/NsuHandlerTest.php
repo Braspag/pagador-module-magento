@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler;
 
-class NsuHandlerTest extends \PHPUnit_Framework_TestCase
+class NsuHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 

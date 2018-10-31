@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\InstallmentsConfigProvider;
 use Magento\Framework\Phrase;
 
-class InstallmentsConfigProviderTest extends \PHPUnit_Framework_TestCase
+class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 

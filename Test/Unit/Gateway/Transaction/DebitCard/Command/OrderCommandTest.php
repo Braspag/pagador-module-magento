@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Command
 
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\OrderCommand;
 
-class OrderCommandTest extends \PHPUnit_Framework_TestCase
+class OrderCommandTest extends \PHPUnit\Framework\TestCase
 {
 	protected $command;
 

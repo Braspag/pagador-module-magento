@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;

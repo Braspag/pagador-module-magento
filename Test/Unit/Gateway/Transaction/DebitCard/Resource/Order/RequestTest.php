@@ -13,7 +13,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
  *
  * @link        http://www.webjump.com.br
  */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends \PHPUnit\Framework\TestCase
 {
     private $request;
 

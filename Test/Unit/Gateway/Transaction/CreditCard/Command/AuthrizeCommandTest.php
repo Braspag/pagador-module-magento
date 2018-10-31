@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand;
 
-class AuthorizeCommandTest extends \PHPUnit_Framework_TestCase
+class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 {
 	private $command;
 

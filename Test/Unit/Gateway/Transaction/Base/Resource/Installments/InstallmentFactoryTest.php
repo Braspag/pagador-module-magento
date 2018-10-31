@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory;
 
-class InstallmentFactoryTest extends \PHPUnit_Framework_TestCase
+class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 {
 	private $factory;
 

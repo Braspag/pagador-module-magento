@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resourc
 
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\ResponseHandler;
 
-class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
+class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 

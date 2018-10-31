@@ -6,7 +6,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;

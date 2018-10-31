@@ -14,7 +14,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
  *
  * @link        http://www.webjump.com.br
  */
-class SilentOrderPostConfigTest extends \PHPUnit_Framework_TestCase
+class SilentOrderPostConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;

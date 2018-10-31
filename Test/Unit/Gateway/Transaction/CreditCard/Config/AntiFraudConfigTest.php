@@ -6,7 +6,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class AntiFraudConfigTest extends \PHPUnit_Framework_TestCase
+class AntiFraudConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;

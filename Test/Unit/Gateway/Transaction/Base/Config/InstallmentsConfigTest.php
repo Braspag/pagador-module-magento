@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class InstallmentsConfigTest extends \PHPUnit_Framework_TestCase
+class InstallmentsConfigTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  InstallmentsConfig */
     private $config;

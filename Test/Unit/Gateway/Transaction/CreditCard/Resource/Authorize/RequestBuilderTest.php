@@ -9,7 +9,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Req
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as AvsRequest;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $requestBuilder;
     private $requestMock;

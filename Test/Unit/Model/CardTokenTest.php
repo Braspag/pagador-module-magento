@@ -6,7 +6,7 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHe
 use Webjump\BraspagPagador\Model\CardToken;
 use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
-class CardTokenTest extends \PHPUnit_Framework_TestCase
+class CardTokenTest extends \PHPUnit\Framework\TestCase
 {
 	private $model;
 

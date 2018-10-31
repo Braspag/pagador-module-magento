@@ -15,7 +15,7 @@ use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 
-class FingerPrintTest extends \PHPUnit_Framework_TestCase
+class FingerPrintTest extends \PHPUnit\Framework\TestCase
 {
     const SRC_PNG_IMG_URL = 'https://h.online-metrix.net/fp/clear.png';
     const SRC_JS_URL = 'https://h.online-metrix.net/fp/clear.png';

@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\Base\Ui;
 
 use Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui\ConfigProvider;
 
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 	private $BaseConfig;

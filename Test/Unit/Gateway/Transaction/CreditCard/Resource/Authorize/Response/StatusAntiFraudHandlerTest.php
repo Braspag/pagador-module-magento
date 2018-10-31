@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\StatusAntiFraudHandler;
 use Webjump\BraspagPagador\Model\AntiFraud\Status\Config\ConfigInterface;
 
-class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
+class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
     /** @var StatusAntiFraudHandler  */
 	private $handler;

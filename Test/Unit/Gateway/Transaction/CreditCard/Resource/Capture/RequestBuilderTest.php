@@ -6,7 +6,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Reque
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $requestBuilder;
 

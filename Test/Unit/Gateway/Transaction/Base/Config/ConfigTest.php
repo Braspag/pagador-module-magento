@@ -6,7 +6,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
 	private $config;
     private $contextMock;

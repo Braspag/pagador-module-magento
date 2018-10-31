@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Billet\Resource\S
 
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends \PHPUnit\Framework\TestCase
 {
     protected $objectManagerHelper;
 

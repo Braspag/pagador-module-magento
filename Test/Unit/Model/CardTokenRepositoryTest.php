@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model;
 use Webjump\BraspagPagador\Model\CardTokenRepository;
 use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
-class CardTokenRepositoryTest extends \PHPUnit_Framework_TestCase
+class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
 {
 	private $repository;
 

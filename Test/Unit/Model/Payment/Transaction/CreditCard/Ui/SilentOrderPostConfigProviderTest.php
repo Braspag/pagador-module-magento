@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider;
 use Magento\Framework\Phrase;
 
-class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
+class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 

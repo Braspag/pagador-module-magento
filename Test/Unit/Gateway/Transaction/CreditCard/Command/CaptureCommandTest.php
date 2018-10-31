@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Comman
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand;
 
-class CaptureCommandTest extends \PHPUnit_Framework_TestCase
+class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 {
 	protected $command;
 

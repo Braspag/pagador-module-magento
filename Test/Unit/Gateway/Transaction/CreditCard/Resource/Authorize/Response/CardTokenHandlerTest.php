@@ -6,7 +6,7 @@ use Magento\Sales\Model\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler;
 use Magento\Framework\DataObject;
 
-class CardTokenHandlerTest extends \PHPUnit_Framework_TestCase
+class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 

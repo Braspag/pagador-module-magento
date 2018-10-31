@@ -9,7 +9,7 @@ use Magento\Payment\Model\MethodInterface;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Webjump\BraspagPagador\Observer\DataAssignObserver;
 
-class DataAssignObserverTest extends \PHPUnit_Framework_TestCase
+class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 {
     public function testExectute()
     {
