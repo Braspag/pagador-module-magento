@@ -58,3 +58,4 @@ composer.phar
 /build/
 
 Test/output/
+Test/_Coverage
