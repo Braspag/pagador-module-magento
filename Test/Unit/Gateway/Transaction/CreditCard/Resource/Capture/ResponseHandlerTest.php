@@ -20,7 +20,7 @@ class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
 
     	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
     		->disableOriginalConstructor()

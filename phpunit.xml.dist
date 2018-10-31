@@ -15,11 +15,15 @@
          bootstrap="./Test/Unit/bootstrap.php"
         >
     <testsuite name="Webjump Braspag Pagador">
+        <directory suffix="Test.php">Test/Unit/Gateway/Transaction/CreditCard</directory>
+        <directory suffix="Test.php">Test/Unit/Gateway/Transaction/DebitCard</directory>
         <directory suffix="Test.php">Test/Unit/Model</directory>
     </testsuite>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./Gateway/Transaction/CreditCard</directory>
+            <directory suffix=".php">./Gateway/Transaction/DebitCard</directory>
             <directory suffix=".php">./Model</directory>
             <exclude>
                 <file>registration.php</file>

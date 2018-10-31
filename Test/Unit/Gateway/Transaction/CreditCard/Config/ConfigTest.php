@@ -16,18 +16,19 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->storeManagerMock = $this->getMock(StoreManagerInterface::class);
+        $this->scopeConfigMock = $this->createMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
         $this->storeMock = $this->getMockBuilder(\Magento\Store\Model\StoreManager::class)
             ->setMethods(['getUrl'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->contextMock = $this->getMock(ContextInterface::class);
+        $this->contextMock = $this->createMock(ContextInterface::class);
 
-        $this->config = new Config(
-            $this->contextMock
-        );
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $this->config = $objectManager->getObject(Config::class, [
+            'context' => $this->contextMock
+        ]);
     }
 
     public function testGetData()
@@ -69,7 +70,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(7))
             ->method('getValue')
-            ->with('payment/braspag_pagador_config/return_url')
+            ->with('webjump_braspag/pagador/return_url')
             ->will($this->returnValue('checkout/onepage/success'));
 
         $this->scopeConfigMock->expects($this->at(8))
@@ -97,22 +98,9 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
             ->with('payment/braspag_pagador_customer_address/district_attribute')
             ->will($this->returnValue('street_4'));
 
-        $this->storeMock->expects($this->once())
-            ->method('getUrl')
-            ->with('checkout/onepage/success')
-            ->will($this->returnValue('http://www.braspagreturnurl.com.br/index.php/checkout/onepage/success/'));
-
-        $this->storeManagerMock->expects($this->once())
-            ->method('getStore')
-            ->will($this->returnValue($this->storeMock));
-
         $this->contextMock->expects($this->exactly(13))
             ->method('getConfig')
             ->will($this->returnValue($this->scopeConfigMock));
-
-        $this->contextMock->expects($this->once())
-            ->method('getStoreManager')
-            ->will($this->returnValue($this->storeManagerMock));
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->config->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->config->getMerchantKey());
@@ -121,7 +109,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         static::assertTrue($this->config->hasAntiFraud());
         static::assertTrue($this->config->hasAvs());
         static::assertTrue($this->config->isAuthenticate3DsVbv());
-        static::assertEquals('http://www.braspagreturnurl.com.br/checkout/onepage/success', $this->config->getReturnUrl());
+        static::assertEquals('checkout/onepage/success', $this->config->getReturnUrl());
         static::assertEquals('customer_taxvat', $this->config->getIdentityAttributeCode());
         static::assertEquals('street_1', $this->config->getCustomerStreetAttribute());
         static::assertEquals('street_2', $this->config->getCustomerNumberAttribute());

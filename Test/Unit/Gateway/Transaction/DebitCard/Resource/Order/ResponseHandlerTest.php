@@ -20,7 +20,7 @@ class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface');
 
         $responseMock->expects($this->once())
             ->method('getPaymentPaymentId')

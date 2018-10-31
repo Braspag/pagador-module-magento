@@ -16,10 +16,10 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-    	$this->apiMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
-    	$this->requestBuilderMock = $this->getMock('Magento\Payment\Gateway\Request\BuilderInterface');
-    	$this->responseHandlerMock = $this->getMock('Magento\Payment\Gateway\Response\HandlerInterface');
-        $this->validatorMock = $this->getMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
+    	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
+    	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+    	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
+        $this->validatorMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
 
     }
 
@@ -79,7 +79,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->getMock();
 
-        $resultMock = $this->getMock('Magento\Payment\Gateway\Validator\ResultInterface');
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
         $resultMock->expects($this->once())
             ->method('isValid')
@@ -128,7 +128,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->getMock();
 
-        $resultMock = $this->getMock('Magento\Payment\Gateway\Validator\ResultInterface');
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
         $resultMock->expects($this->once())
             ->method('isValid')
