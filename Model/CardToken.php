@@ -14,6 +14,7 @@ use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceMod
  * @license     http://www.webjump.com.br  Copyright
  *
  * @link        http://www.webjump.com.br
+ * @codeCoverageIgnore
  */
 class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webjump\BraspagPagador\Api\Data\CardTokenInterface
 {
@@ -52,6 +53,11 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
     public function getStoreId()
     {
     	return $this->getData(self::STORE_ID);
+    }
+
+    public function getMethod()
+    {
+        return $this->getData(self::METHOD);
     }
 
     public function setId($id)
@@ -107,5 +113,10 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
     public function setProvider($provider)
     {
         return $this->setData(self::PROVIDER, $provider);
+    }
+
+    public function setMethod($method)
+    {
+        return $this->setData(self::METHOD, $method);
     }
 }

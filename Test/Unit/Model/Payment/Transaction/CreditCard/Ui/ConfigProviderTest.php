@@ -13,7 +13,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-        $this->creditCardConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->creditCardConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
             $this->creditCardConfig

@@ -13,6 +13,7 @@ use Webjump\BraspagPagador\Model\CardToken as CardTokenModel;
  * @license     http://www.webjump.com.br  Copyright
  *
  * @link        http://www.webjump.com.br
+ * @codeCoverageIgnore
  */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {

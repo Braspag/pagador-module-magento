@@ -33,8 +33,6 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->requestMock
-            ->method('setAntiFraudRequest');
 
         $this->requestBuilder = new RequestBuilder(
             $this->requestMock,
@@ -50,7 +48,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -68,24 +66,18 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($infoMock));
 
         $this->antiFraudRequestMock->expects($this->once())
-            ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->method('setOrderAdapter');
 
         $this->antiFraudRequestMock->expects($this->once())
             ->method('setPaymentData')
             ->with($infoMock);
 
         $this->requestMock->expects($this->once())
-            ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->method('setOrderAdapter');
 
         $this->requestMock->expects($this->once())
             ->method('setPaymentData')
             ->with($infoMock);
-
-        $this->requestMock->expects($this->once())
-            ->method('setAntiFraudRequest')
-            ->with($this->antiFraudRequestMock);
 
 
         $buildSubject = ['payment' => $paymentDataObjectMock];
@@ -100,7 +92,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -118,24 +110,18 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($infoMock));
 
         $this->antiFraudRequestMock->expects($this->never())
-            ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->method('setOrderAdapter');
 
         $this->antiFraudRequestMock->expects($this->never())
             ->method('setPaymentData')
             ->with($infoMock);
 
         $this->requestMock->expects($this->once())
-            ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->method('setOrderAdapter');
 
         $this->requestMock->expects($this->once())
             ->method('setPaymentData')
             ->with($infoMock);
-
-        $this->requestMock->expects($this->never())
-            ->method('setAntiFraudRequest')
-            ->with($this->antiFraudRequestMock);
 
         $buildSubject = ['payment' => $paymentDataObjectMock];
 

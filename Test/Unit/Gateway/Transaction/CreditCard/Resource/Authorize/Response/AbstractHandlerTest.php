@@ -21,7 +21,7 @@ class AbstractHandlerTest extends \PHPUnit\Framework\TestCase
         $this->handler = $this->getMockForAbstractClass('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AbstractHandler');
         
 
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -54,7 +54,7 @@ class AbstractHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $this->handler = $this->getMockForAbstractClass('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AbstractHandler');
 
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
  
         $this->handler->expects($this->never())
              ->method('_handle');
@@ -73,7 +73,7 @@ class AbstractHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $this->handler = $this->getMockForAbstractClass('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AbstractHandler');
 
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
  
         $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
             ->getMock();

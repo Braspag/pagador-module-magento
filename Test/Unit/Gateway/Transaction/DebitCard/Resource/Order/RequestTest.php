@@ -21,7 +21,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
 
         $this->request = new Request(
             $this->configMock
@@ -47,7 +47,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getPaymentReturnUrl')
             ->will($this->returnValue('http://test.com.br/'));
 
-        $billingAddressMock = $this->getMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
+        $billingAddressMock = $this->createMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
 
         $billingAddressMock->expects($this->once())
             ->method('getFirstname')

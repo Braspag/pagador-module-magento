@@ -15,8 +15,8 @@ class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-        $this->installmentsBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
-        $this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+        $this->installmentsBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
+        $this->installmentsConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
 		$this->configProvider = new InstallmentsConfigProvider(
             $this->installmentsBuilderMock,
@@ -26,7 +26,7 @@ class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetConfig()
     {
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments1->expects($this->once())
             ->method('getId')
@@ -36,7 +36,7 @@ class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('1x R$10,00 without interest')));
 
-        $installments2 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments2->expects($this->once())
             ->method('getId')
@@ -46,7 +46,7 @@ class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('2x R$5,00 without interest')));
 
-        $installments3 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments3->expects($this->once())
             ->method('getId')
@@ -116,7 +116,7 @@ class InstallmentsConfigProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetConfigInstallmentsDisabled()
     {
-        $installments1 = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentsBuilderMock->expects($this->never())
             ->method('build');

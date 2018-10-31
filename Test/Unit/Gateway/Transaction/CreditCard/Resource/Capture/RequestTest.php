@@ -8,15 +8,17 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 {
     private $request;
 
-    private $creaditCardConfig;
+    private $configMock;
 
     public function setUp()
     {
-        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
 
-    	$this->request = new Request(
-            $this->configMock
-        );
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
+    	$this->request = $objectManager->getObject(Request::class, [
+    	    'config' => $this->configMock
+        ]);
     }
 
     public function tearDown()
@@ -34,17 +36,12 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getMerchantKey')
             ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
-        $orderAdapterMock = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
-
-        $orderAdapterMock->expects($this->once())
-            ->method('getOrderIncrementId')
-            ->will($this->returnValue('2016000001'));
+        $orderAdapterMock = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $this->request->setOrderAdapter($orderAdapterMock);
 
         static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
         static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
-        static::assertEquals('2016000001', $this->request->getPaymentId());
         static::assertEquals(['amount' => 0], $this->request->getAdditionalRequest());
     }
 }

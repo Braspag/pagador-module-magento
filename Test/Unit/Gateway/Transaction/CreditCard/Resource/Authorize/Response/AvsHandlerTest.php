@@ -20,9 +20,9 @@ class AvsHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-        $avsResponseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
+        $avsResponseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
 
         $avsResponseMock->expects($this->once())
             ->method('getStatus')

@@ -14,12 +14,12 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         // $this->markTestIncomplete();
-        
+
         $this->cardTokenFactoryMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardTokenFactory')
             ->setMethods(['create'])
             ->getMock();
 
-        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
+        $this->storeManagerMock = $this->createMock('Magento\Store\Model\StoreManagerInterface');
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->setMethods(['getCustomerId'])
@@ -31,7 +31,7 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['save'])
             ->getMock();
 
-        $this->searchresultMock = $this->getMock('Magento\Framework\Api\SearchResultsInterface');
+        $this->searchresultMock = $this->createMock('Magento\Framework\Api\SearchResultsInterface');
 
     	$this->repository = new CardTokenRepository(
             $this->cardTokenFactoryMock,
@@ -115,7 +115,7 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
             'brand' => $brand,
         ];
 
-        $storeMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
+        $storeMock = $this->createMock('Magento\Store\Api\Data\StoreInterface');
 
         $storeMock->expects($this->once())
             ->method('getId')
@@ -203,7 +203,7 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
             ->will($this->throwException(new \Exception));
 
          try {
-            $this->repository->save($cardTokenMock);             
+            $this->repository->save($cardTokenMock);
          } catch (\Magento\Framework\Exception\CouldNotSaveException $e) {
              $this->assertEquals($e->getMessage(), 'Unable to save Card Token');
              return;

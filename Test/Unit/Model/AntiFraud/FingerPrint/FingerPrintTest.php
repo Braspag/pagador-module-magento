@@ -39,7 +39,7 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->getMockForAbstractClass();
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
-            ->setMethods(['getQuote', 'getSessionId'])
+            ->setMethods(['getQuote', 'getSessionId', 'getId'])
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -104,13 +104,9 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
-        $this->sessionMock->expects($this->once())
-            ->method('getSessionId')
-            ->will($this->returnValue(self::SESSION_ID));
-
         $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
 
-        $sessionIdExpected = self::SESSION_ID . self::MERCHANT_ID;
+        $sessionIdExpected = self::MERCHANT_ID;
 
         $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
     }
@@ -146,13 +142,9 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $this->sessionMock->expects($this->once())
-            ->method('getSessionId')
-            ->will($this->returnValue(self::SESSION_ID));
-
         $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
 
-        $sessionIdExpected = self::SESSION_ID . self::MERCHANT_ID;
+        $sessionIdExpected = self::MERCHANT_ID;
 
         $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
     }

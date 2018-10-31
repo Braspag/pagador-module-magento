@@ -18,7 +18,7 @@ use Webjump\BraspagPagador\Block\AntiFraud\FingerPrint;
 class FingerPrintTest extends \PHPUnit\Framework\TestCase
 {
     const ORG_ID = '1snn5n9w';
-    const SESSION_ID = '123456789987654321BC5D3432-527F-40C6-84BF-C549285536BE';
+    const SESSION_ID = 'BC5D3432-527F-40C6-84BF-C549285536BE';
 
     private $fingerPrintInterfaceMock;
     private $contextMock;

@@ -13,9 +13,9 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
+        $this->silentorderPostBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
 
-        $this->silentorderPostConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
+        $this->silentorderPostConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
 		$this->configProvider = new SilentOrderPostConfigProvider(
             'braspag_pagador_creditcard',

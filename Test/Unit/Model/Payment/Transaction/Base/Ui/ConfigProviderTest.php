@@ -11,7 +11,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-		$this->BaseConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface');
+		$this->BaseConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->BaseConfig
@@ -29,6 +29,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 	            'payment' => [
 	                'braspag' => [
 	                    'merchantId' => 'BC5D3432-527F-40C6-84BF-C549285536BE',
+                        'merchantKey' => null
 	                ]
 	            ],
             ],

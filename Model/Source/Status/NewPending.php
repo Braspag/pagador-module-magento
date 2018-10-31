@@ -5,6 +5,9 @@ namespace Webjump\BraspagPagador\Model\Source\Status;
 
 use Magento\Sales\Model\Config\Source\Order\Status;
 
+/**
+ * @codeCoverageIgnore
+ */
 class NewPending extends Status
 {
     /**

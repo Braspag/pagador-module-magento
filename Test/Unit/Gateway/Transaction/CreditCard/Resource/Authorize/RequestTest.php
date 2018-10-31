@@ -16,13 +16,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
-        $this->installmentsconfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->installmentsconfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
         $this->request = $this->objectManagerHelper->getObject(
             Request::class,
             [
-                'config' => $this->billetConfigInterfaceMock,
+                'config' => $this->configMock,
                 'installmentsConfig' => $this->installmentsconfigMock
             ]
         );
@@ -52,7 +52,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getSoftDescriptor')
             ->will($this->returnValue('Texto que será impresso na fatura do portador'));
 
-        $billingAddressMock = $this->getMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
+        $billingAddressMock = $this->createMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
 
         $billingAddressMock->expects($this->once())
             ->method('getFirstname')
@@ -87,7 +87,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue('johndoe@webjump.com.br'));
 
 
-        $shippingAddressMock = $this->getMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
+        $shippingAddressMock = $this->createMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
 
         $shippingAddressMock->expects($this->exactly(2))
             ->method('getStreetLine1')

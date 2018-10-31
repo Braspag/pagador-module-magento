@@ -29,6 +29,8 @@ interface CardTokenInterface
 
     const BRAND = 'brand';
 
+    const METHOD = 'method';
+
     public function getId();
 
     public function getAlias();
@@ -44,6 +46,8 @@ interface CardTokenInterface
     public function isActive();
 
     public function getProvider();
+
+    public function getMethod();
 
     public function setId($id);
 
@@ -61,5 +65,6 @@ interface CardTokenInterface
 
     public function setProvider($provider);
 
+    public function setMethod($method);
 }
 
