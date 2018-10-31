@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /src/Model</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href=".css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href=".css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href=".css/style.css" rel="stylesheet" type="text/css">
+  <!--[if lt IE 9]>
+  <script src=".js/html5shiv.min.js"></script>
+  <script src=".js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/src/Model</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CardTokenManager.php.html#19">Webjump\BraspagPagador\Model\CardTokenManager</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Installments.php.html#10">Webjump\BraspagPagador\Model\Installments</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#27">Webjump\BraspagPagador\Model\NotificationManager</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#9">Webjump\BraspagPagador\Model\Payment\Info\CreditCard</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCardFactory.php.html#8">Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactory</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#18">Webjump\BraspagPagador\Model\RedirectPayment</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SilentAuthToken.php.html#9">Webjump\BraspagPagador\Model\SilentAuthToken</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#26">Webjump\BraspagPagador\Model\CardTokenRepository</a></td><td class="text-right">57%</td></tr>
+       <tr><td><a href="Payment/Info/Billet.php.html#18">Webjump\BraspagPagador\Model\Payment\Info\Billet</a></td><td class="text-right">77%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="NotificationManager.php.html#27">Webjump\BraspagPagador\Model\NotificationManager</a></td><td class="text-right">1260</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#19">Webjump\BraspagPagador\Model\CardTokenManager</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#26">Webjump\BraspagPagador\Model\CardTokenRepository</a></td><td class="text-right">81</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#18">Webjump\BraspagPagador\Model\RedirectPayment</a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Installments.php.html#10">Webjump\BraspagPagador\Model\Installments</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#9">Webjump\BraspagPagador\Model\Payment\Info\CreditCard</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Payment/Info/Billet.php.html#18">Webjump\BraspagPagador\Model\Payment\Info\Billet</a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CardTokenManager.php.html#44"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/Billet.php.html#33"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\Billet::setOrder">setOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#318"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setInvoiceService">setInvoiceService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#327"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getTransaction">getTransaction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#336"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setTransaction">setTransaction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#345"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getInvoiceSender">getInvoiceSender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#355"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setInvoiceSender">setInvoiceSender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#365"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getOrderService">getOrderService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#375"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setOrderService">setOrderService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#385"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getCreditmemoFactory">getCreditmemoFactory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#395"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setCreditmemoFactory">setCreditmemoFactory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#405"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getCreditmemoService">getCreditmemoService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#415"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setCreditmemoService">setCreditmemoService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#16"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCard::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#300"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setOrderPaymentCollectionFactory">setOrderPaymentCollectionFactory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#24"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCard::setOrder">setOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#32"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCard::getOrder">getOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#40"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCard::getPayment">getPayment</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Payment/Info/CreditCardFactory.php.html#14"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactory::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#22"><abbr title="Webjump\BraspagPagador\Model\RedirectPayment::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#28"><abbr title="Webjump\BraspagPagador\Model\RedirectPayment::getLink">getLink</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#45"><abbr title="Webjump\BraspagPagador\Model\RedirectPayment::getOrderRepository">getOrderRepository</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#50"><abbr title="Webjump\BraspagPagador\Model\RedirectPayment::setOrderRepository">setOrderRepository</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SilentAuthToken.php.html#13"><abbr title="Webjump\BraspagPagador\Model\SilentAuthToken::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SilentAuthToken.php.html#21"><abbr title="Webjump\BraspagPagador\Model\SilentAuthToken::getToken">getToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SilentAuthToken.php.html#26"><abbr title="Webjump\BraspagPagador\Model\SilentAuthToken::setBuilder">setBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#309"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getInvoiceService">getInvoiceService</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#291"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getOrderPaymentCollectionFactory">getOrderPaymentCollectionFactory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#55"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::registerCardToken">registerCardToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#282"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setPaymentStatusRequest">setPaymentStatusRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#86"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::deleteCardToken">deleteCardToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#94"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::getSearchCriteriaBuilder">getSearchCriteriaBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#102"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::setSearchCriteriaBuilder">setSearchCriteriaBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#110"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::getCardTokenRepository">getCardTokenRepository</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#120"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::setCardTokenRepository">setCardTokenRepository</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#130"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::getEventManager">getEventManager</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#140"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::setEventManager">setEventManager</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#146"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#160"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::getList">getList</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#194"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::addFilterGroupToCollection">addFilterGroupToCollection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#289"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::getSearchResults">getSearchResults</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Installments.php.html#14"><abbr title="Webjump\BraspagPagador\Model\Installments::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Installments.php.html#22"><abbr title="Webjump\BraspagPagador\Model\Installments::getInstallments">getInstallments</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Installments.php.html#37"><abbr title="Webjump\BraspagPagador\Model\Installments::setBuilder">setBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Installments.php.html#46"><abbr title="Webjump\BraspagPagador\Model\Installments::getBuilder">getBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#96"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#131"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::save">save</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#146"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::paymentStatusChanged">paymentStatusChanged</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#203"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::createInvoice">createInvoice</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#235"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::cancelOrder">cancelOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#244"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::createCreditMemo">createCreditMemo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#255"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getApi">getApi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#264"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::setApi">setApi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotificationManager.php.html#273"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::getPaymentStatusRequest">getPaymentStatusRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SilentAuthToken.php.html#35"><abbr title="Webjump\BraspagPagador\Model\SilentAuthToken::getBuilder">getBuilder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#128"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::save">save</abbr></a></td><td class="text-right">80%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="NotificationManager.php.html#146"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::paymentStatusChanged">paymentStatusChanged</abbr></a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#160"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::getList">getList</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="CardTokenManager.php.html#55"><abbr title="Webjump\BraspagPagador\Model\CardTokenManager::registerCardToken">registerCardToken</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#194"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::addFilterGroupToCollection">addFilterGroupToCollection</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="RedirectPayment.php.html#28"><abbr title="Webjump\BraspagPagador\Model\RedirectPayment::getLink">getLink</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#146"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::delete">delete</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Installments.php.html#22"><abbr title="Webjump\BraspagPagador\Model\Installments::getInstallments">getInstallments</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="NotificationManager.php.html#131"><abbr title="Webjump\BraspagPagador\Model\NotificationManager::save">save</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Payment/Info/CreditCard.php.html#40"><abbr title="Webjump\BraspagPagador\Model\Payment\Info\CreditCard::getPayment">getPayment</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CardTokenRepository.php.html#128"><abbr title="Webjump\BraspagPagador\Model\CardTokenRepository::save">save</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 5.3.2</a> using <a href="https://secure.php.net/" target="_top">PHP 7.0.26</a> with <a href="https://xdebug.org/">Xdebug 2.5.5</a> and <a href="https://phpunit.de/">PHPUnit 6.2.4</a> at Wed Oct 31 18:49:43 UTC 2018.</small>
+    </p>
+   </footer>
+  </div>
+  <script src=".js/jquery.min.js" type="text/javascript"></script>
+  <script src=".js/bootstrap.min.js" type="text/javascript"></script>
+  <script src=".js/holder.min.js" type="text/javascript"></script>
+  <script src=".js/d3.min.js" type="text/javascript"></script>
+  <script src=".js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([7,0,0,0,0,0,1,0,1,0,0,23], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([55,0,0,0,0,0,0,0,0,1,0,100], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[100,13,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#16\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint<\/a>"],[100,6,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#17\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract<\/a>"],[100,20,"<a href=\"CardToken.php.html#19\">Webjump\\BraspagPagador\\Model\\CardToken<\/a>"],[0,11,"<a href=\"CardTokenManager.php.html#19\">Webjump\\BraspagPagador\\Model\\CardTokenManager<\/a>"],[57.8125,27,"<a href=\"CardTokenRepository.php.html#26\">Webjump\\BraspagPagador\\Model\\CardTokenRepository<\/a>"],[0,5,"<a href=\"Installments.php.html#10\">Webjump\\BraspagPagador\\Model\\Installments<\/a>"],[0,35,"<a href=\"NotificationManager.php.html#27\">Webjump\\BraspagPagador\\Model\\NotificationManager<\/a>"],[77.777777777778,6,"<a href=\"Payment\/Info\/Billet.php.html#18\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet<\/a>"],[100,1,"<a href=\"Payment\/Info\/BilletFactory.php.html#15\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\BilletFactory<\/a>"],[0,5,"<a href=\"Payment\/Info\/CreditCard.php.html#9\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCard<\/a>"],[0,1,"<a href=\"Payment\/Info\/CreditCardFactory.php.html#8\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCardFactory<\/a>"],[100,9,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#18\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider<\/a>"],[100,4,"<a href=\"Payment\/Transaction\/Base\/Ui\/ConfigProvider.php.html#17\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\ConfigProvider<\/a>"],[100,4,"<a href=\"Payment\/Transaction\/Billet\/Ui\/ConfigProvider.php.html#17\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Billet\\Ui\\ConfigProvider<\/a>"],[100,4,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/ConfigProvider.php.html#17\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\ConfigProvider<\/a>"],[100,0,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/InstallmentsConfigProvider.php.html#18\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\InstallmentsConfigProvider<\/a>"],[100,9,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#18\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider<\/a>"],[100,14,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#21\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider<\/a>"],[100,4,"<a href=\"Payment\/Transaction\/DebitCard\/Ui\/ConfigProvider.php.html#17\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\DebitCard\\Ui\\ConfigProvider<\/a>"],[0,6,"<a href=\"RedirectPayment.php.html#18\">Webjump\\BraspagPagador\\Model\\RedirectPayment<\/a>"],[100,1,"<a href=\"ResourceModel\/CardToken.php.html#15\">Webjump\\BraspagPagador\\Model\\ResourceModel\\CardToken<\/a>"],[100,1,"<a href=\"ResourceModel\/CardToken\/Collection.php.html#18\">Webjump\\BraspagPagador\\Model\\ResourceModel\\CardToken\\Collection<\/a>"],[0,4,"<a href=\"SilentAuthToken.php.html#9\">Webjump\\BraspagPagador\\Model\\SilentAuthToken<\/a>"],[100,1,"<a href=\"Source\/BilletTypes.php.html#13\">Webjump\\BraspagPagador\\Model\\Source\\BilletTypes<\/a>"],[100,1,"<a href=\"Source\/Cctype.php.html#15\">Webjump\\BraspagPagador\\Model\\Source\\Cctype<\/a>"],[100,1,"<a href=\"Source\/Dctype.php.html#15\">Webjump\\BraspagPagador\\Model\\Source\\Dctype<\/a>"],[100,1,"<a href=\"Source\/PaymentAction.php.html#7\">Webjump\\BraspagPagador\\Model\\Source\\PaymentAction<\/a>"],[100,1,"<a href=\"Source\/Sequence.php.html#15\">Webjump\\BraspagPagador\\Model\\Source\\Sequence<\/a>"],[100,1,"<a href=\"Source\/SequenceCriteria.php.html#15\">Webjump\\BraspagPagador\\Model\\Source\\SequenceCriteria<\/a>"],[100,0,"<a href=\"Source\/Status\/NewPending.php.html#11\">Webjump\\BraspagPagador\\Model\\Source\\Status\\NewPending<\/a>"],[100,0,"<a href=\"Source\/Status\/Review.php.html#11\">Webjump\\BraspagPagador\\Model\\Source\\Status\\Review<\/a>"],[100,1,"<a href=\"Source\/VerticalSegment.php.html#7\">Webjump\\BraspagPagador\\Model\\Source\\VerticalSegment<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,2,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#22\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getSrcPngImageUrl<\/a>"],[100,2,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#34\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getSrcJsUrl<\/a>"],[100,2,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#46\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getSrcFlashUrl<\/a>"],[100,2,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#55\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getOrgId<\/a>"],[100,3,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#64\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getSessionId<\/a>"],[100,2,"<a href=\"AntiFraud\/FingerPrint\/FingerPrint.php.html#78\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrint::getReservedOrderId<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#36\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::__construct<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#46\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::setScopeConfig<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#55\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::getScopeConfig<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#64\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::setSession<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#73\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::getSession<\/a>"],[100,1,"<a href=\"AntiFraud\/FingerPrint\/FingerPrintAbstract.php.html#78\">Webjump\\BraspagPagador\\Model\\AntiFraud\\FingerPrint\\FingerPrintAbstract::getQuote<\/a>"],[100,1,"<a href=\"CardToken.php.html#23\">Webjump\\BraspagPagador\\Model\\CardToken::_construct<\/a>"],[100,1,"<a href=\"CardToken.php.html#28\">Webjump\\BraspagPagador\\Model\\CardToken::getIdentities<\/a>"],[100,1,"<a href=\"CardToken.php.html#33\">Webjump\\BraspagPagador\\Model\\CardToken::getId<\/a>"],[100,1,"<a href=\"CardToken.php.html#38\">Webjump\\BraspagPagador\\Model\\CardToken::getAlias<\/a>"],[100,1,"<a href=\"CardToken.php.html#43\">Webjump\\BraspagPagador\\Model\\CardToken::getToken<\/a>"],[100,1,"<a href=\"CardToken.php.html#48\">Webjump\\BraspagPagador\\Model\\CardToken::getCustomerId<\/a>"],[100,1,"<a href=\"CardToken.php.html#53\">Webjump\\BraspagPagador\\Model\\CardToken::getStoreId<\/a>"],[100,1,"<a href=\"CardToken.php.html#58\">Webjump\\BraspagPagador\\Model\\CardToken::getMethod<\/a>"],[100,1,"<a href=\"CardToken.php.html#63\">Webjump\\BraspagPagador\\Model\\CardToken::setId<\/a>"],[100,1,"<a href=\"CardToken.php.html#68\">Webjump\\BraspagPagador\\Model\\CardToken::setAlias<\/a>"],[100,1,"<a href=\"CardToken.php.html#73\">Webjump\\BraspagPagador\\Model\\CardToken::setToken<\/a>"],[100,1,"<a href=\"CardToken.php.html#78\">Webjump\\BraspagPagador\\Model\\CardToken::setCustomerId<\/a>"],[100,1,"<a href=\"CardToken.php.html#83\">Webjump\\BraspagPagador\\Model\\CardToken::setStoreId<\/a>"],[100,1,"<a href=\"CardToken.php.html#88\">Webjump\\BraspagPagador\\Model\\CardToken::isActive<\/a>"],[100,1,"<a href=\"CardToken.php.html#93\">Webjump\\BraspagPagador\\Model\\CardToken::setActive<\/a>"],[100,1,"<a href=\"CardToken.php.html#98\">Webjump\\BraspagPagador\\Model\\CardToken::getBrand<\/a>"],[100,1,"<a href=\"CardToken.php.html#103\">Webjump\\BraspagPagador\\Model\\CardToken::setBrand<\/a>"],[100,1,"<a href=\"CardToken.php.html#108\">Webjump\\BraspagPagador\\Model\\CardToken::getProvider<\/a>"],[100,1,"<a href=\"CardToken.php.html#113\">Webjump\\BraspagPagador\\Model\\CardToken::setProvider<\/a>"],[100,1,"<a href=\"CardToken.php.html#118\">Webjump\\BraspagPagador\\Model\\CardToken::setMethod<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#44\">Webjump\\BraspagPagador\\Model\\CardTokenManager::__construct<\/a>"],[0,3,"<a href=\"CardTokenManager.php.html#55\">Webjump\\BraspagPagador\\Model\\CardTokenManager::registerCardToken<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#86\">Webjump\\BraspagPagador\\Model\\CardTokenManager::deleteCardToken<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#94\">Webjump\\BraspagPagador\\Model\\CardTokenManager::getSearchCriteriaBuilder<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#102\">Webjump\\BraspagPagador\\Model\\CardTokenManager::setSearchCriteriaBuilder<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#110\">Webjump\\BraspagPagador\\Model\\CardTokenManager::getCardTokenRepository<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#120\">Webjump\\BraspagPagador\\Model\\CardTokenManager::setCardTokenRepository<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#130\">Webjump\\BraspagPagador\\Model\\CardTokenManager::getEventManager<\/a>"],[0,1,"<a href=\"CardTokenManager.php.html#140\">Webjump\\BraspagPagador\\Model\\CardTokenManager::setEventManager<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#67\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::__construct<\/a>"],[100,4,"<a href=\"CardTokenRepository.php.html#88\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::get<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#109\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::create<\/a>"],[80,2,"<a href=\"CardTokenRepository.php.html#128\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::save<\/a>"],[0,2,"<a href=\"CardTokenRepository.php.html#146\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::delete<\/a>"],[0,4,"<a href=\"CardTokenRepository.php.html#160\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getList<\/a>"],[0,3,"<a href=\"CardTokenRepository.php.html#194\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::addFilterGroupToCollection<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#209\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getSession<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#219\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::setSession<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#229\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getCardTokenFactory<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#239\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::setCardTokenFactory<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#249\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getStoreManager<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#259\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::setStoreManager<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#269\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getResource<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#279\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::setResource<\/a>"],[0,1,"<a href=\"CardTokenRepository.php.html#289\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::getSearchResults<\/a>"],[100,1,"<a href=\"CardTokenRepository.php.html#299\">Webjump\\BraspagPagador\\Model\\CardTokenRepository::setSearchResults<\/a>"],[0,1,"<a href=\"Installments.php.html#14\">Webjump\\BraspagPagador\\Model\\Installments::__construct<\/a>"],[0,2,"<a href=\"Installments.php.html#22\">Webjump\\BraspagPagador\\Model\\Installments::getInstallments<\/a>"],[0,1,"<a href=\"Installments.php.html#37\">Webjump\\BraspagPagador\\Model\\Installments::setBuilder<\/a>"],[0,1,"<a href=\"Installments.php.html#46\">Webjump\\BraspagPagador\\Model\\Installments::getBuilder<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#96\">Webjump\\BraspagPagador\\Model\\NotificationManager::__construct<\/a>"],[0,2,"<a href=\"NotificationManager.php.html#131\">Webjump\\BraspagPagador\\Model\\NotificationManager::save<\/a>"],[0,11,"<a href=\"NotificationManager.php.html#146\">Webjump\\BraspagPagador\\Model\\NotificationManager::paymentStatusChanged<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#203\">Webjump\\BraspagPagador\\Model\\NotificationManager::createInvoice<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#235\">Webjump\\BraspagPagador\\Model\\NotificationManager::cancelOrder<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#244\">Webjump\\BraspagPagador\\Model\\NotificationManager::createCreditMemo<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#255\">Webjump\\BraspagPagador\\Model\\NotificationManager::getApi<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#264\">Webjump\\BraspagPagador\\Model\\NotificationManager::setApi<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#273\">Webjump\\BraspagPagador\\Model\\NotificationManager::getPaymentStatusRequest<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#282\">Webjump\\BraspagPagador\\Model\\NotificationManager::setPaymentStatusRequest<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#291\">Webjump\\BraspagPagador\\Model\\NotificationManager::getOrderPaymentCollectionFactory<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#300\">Webjump\\BraspagPagador\\Model\\NotificationManager::setOrderPaymentCollectionFactory<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#309\">Webjump\\BraspagPagador\\Model\\NotificationManager::getInvoiceService<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#318\">Webjump\\BraspagPagador\\Model\\NotificationManager::setInvoiceService<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#327\">Webjump\\BraspagPagador\\Model\\NotificationManager::getTransaction<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#336\">Webjump\\BraspagPagador\\Model\\NotificationManager::setTransaction<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#345\">Webjump\\BraspagPagador\\Model\\NotificationManager::getInvoiceSender<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#355\">Webjump\\BraspagPagador\\Model\\NotificationManager::setInvoiceSender<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#365\">Webjump\\BraspagPagador\\Model\\NotificationManager::getOrderService<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#375\">Webjump\\BraspagPagador\\Model\\NotificationManager::setOrderService<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#385\">Webjump\\BraspagPagador\\Model\\NotificationManager::getCreditmemoFactory<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#395\">Webjump\\BraspagPagador\\Model\\NotificationManager::setCreditmemoFactory<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#405\">Webjump\\BraspagPagador\\Model\\NotificationManager::getCreditmemoService<\/a>"],[0,1,"<a href=\"NotificationManager.php.html#415\">Webjump\\BraspagPagador\\Model\\NotificationManager::setCreditmemoService<\/a>"],[100,1,"<a href=\"Payment\/Info\/Billet.php.html#25\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet::__construct<\/a>"],[0,1,"<a href=\"Payment\/Info\/Billet.php.html#33\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet::setOrder<\/a>"],[100,1,"<a href=\"Payment\/Info\/Billet.php.html#41\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet::getOrder<\/a>"],[100,2,"<a href=\"Payment\/Info\/Billet.php.html#49\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet::getPayment<\/a>"],[100,1,"<a href=\"Payment\/Info\/Billet.php.html#61\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\Billet::getBilletUrl<\/a>"],[100,1,"<a href=\"Payment\/Info\/BilletFactory.php.html#21\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\BilletFactory::create<\/a>"],[0,1,"<a href=\"Payment\/Info\/CreditCard.php.html#16\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCard::__construct<\/a>"],[0,1,"<a href=\"Payment\/Info\/CreditCard.php.html#24\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCard::setOrder<\/a>"],[0,1,"<a href=\"Payment\/Info\/CreditCard.php.html#32\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCard::getOrder<\/a>"],[0,2,"<a href=\"Payment\/Info\/CreditCard.php.html#40\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCard::getPayment<\/a>"],[0,1,"<a href=\"Payment\/Info\/CreditCardFactory.php.html#14\">Webjump\\BraspagPagador\\Model\\Payment\\Info\\CreditCardFactory::create<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#28\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#36\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::getConfig<\/a>"],[100,3,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#52\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::getInstallments<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#65\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::getInstallmentsBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#70\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::setInstallmentsBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#77\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::getInstallmentsConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/AbstractInstallmentsConfigProvider.php.html#82\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\AbstractInstallmentsConfigProvider::setInstallmentsConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/ConfigProvider.php.html#21\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\ConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/ConfigProvider.php.html#27\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\ConfigProvider::getConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/ConfigProvider.php.html#39\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\ConfigProvider::getBaseConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Base\/Ui\/ConfigProvider.php.html#44\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Base\\Ui\\ConfigProvider::setBaseConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Billet\/Ui\/ConfigProvider.php.html#23\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Billet\\Ui\\ConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Billet\/Ui\/ConfigProvider.php.html#29\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Billet\\Ui\\ConfigProvider::getConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Billet\/Ui\/ConfigProvider.php.html#43\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Billet\\Ui\\ConfigProvider::getBilletConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/Billet\/Ui\/ConfigProvider.php.html#48\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\Billet\\Ui\\ConfigProvider::setBilletConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/ConfigProvider.php.html#23\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\ConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/ConfigProvider.php.html#29\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\ConfigProvider::getConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/ConfigProvider.php.html#47\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\ConfigProvider::getCreditCardConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/ConfigProvider.php.html#52\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\ConfigProvider::setCreditCardConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#26\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::__construct<\/a>"],[100,2,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#36\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::getConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#63\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::getSilentorderPostBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#68\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::setSilentorderPostBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#75\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::getCode<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#80\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::setCode<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#87\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::getSilentOrderPostConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCard\/Ui\/SilentOrderPostConfigProvider.php.html#92\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCard\\Ui\\SilentOrderPostConfigProvider::setSilentOrderPostConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#60\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#76\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getConfig<\/a>"],[100,2,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#99\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getInstallments<\/a>"],[100,2,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#111\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getTokens<\/a>"],[100,2,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#125\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getCardTokenSaved<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#144\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getInstallmentsBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#154\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::setInstallmentsBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#164\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getTokensBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#174\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::setTokensBuilder<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#184\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::getInstallmentsConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/CreditCardToken\/Ui\/ConfigProvider.php.html#194\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\CreditCardToken\\Ui\\ConfigProvider::setInstallmentsConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/DebitCard\/Ui\/ConfigProvider.php.html#23\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\DebitCard\\Ui\\ConfigProvider::__construct<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/DebitCard\/Ui\/ConfigProvider.php.html#29\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\DebitCard\\Ui\\ConfigProvider::getConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/DebitCard\/Ui\/ConfigProvider.php.html#45\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\DebitCard\\Ui\\ConfigProvider::getDebitConfig<\/a>"],[100,1,"<a href=\"Payment\/Transaction\/DebitCard\/Ui\/ConfigProvider.php.html#50\">Webjump\\BraspagPagador\\Model\\Payment\\Transaction\\DebitCard\\Ui\\ConfigProvider::setDebitConfig<\/a>"],[0,1,"<a href=\"RedirectPayment.php.html#22\">Webjump\\BraspagPagador\\Model\\RedirectPayment::__construct<\/a>"],[0,3,"<a href=\"RedirectPayment.php.html#28\">Webjump\\BraspagPagador\\Model\\RedirectPayment::getLink<\/a>"],[0,1,"<a href=\"RedirectPayment.php.html#45\">Webjump\\BraspagPagador\\Model\\RedirectPayment::getOrderRepository<\/a>"],[0,1,"<a href=\"RedirectPayment.php.html#50\">Webjump\\BraspagPagador\\Model\\RedirectPayment::setOrderRepository<\/a>"],[100,1,"<a href=\"ResourceModel\/CardToken.php.html#17\">Webjump\\BraspagPagador\\Model\\ResourceModel\\CardToken::_construct<\/a>"],[100,1,"<a href=\"ResourceModel\/CardToken\/Collection.php.html#20\">Webjump\\BraspagPagador\\Model\\ResourceModel\\CardToken\\Collection::_construct<\/a>"],[0,1,"<a href=\"SilentAuthToken.php.html#13\">Webjump\\BraspagPagador\\Model\\SilentAuthToken::__construct<\/a>"],[0,1,"<a href=\"SilentAuthToken.php.html#21\">Webjump\\BraspagPagador\\Model\\SilentAuthToken::getToken<\/a>"],[0,1,"<a href=\"SilentAuthToken.php.html#26\">Webjump\\BraspagPagador\\Model\\SilentAuthToken::setBuilder<\/a>"],[0,1,"<a href=\"SilentAuthToken.php.html#35\">Webjump\\BraspagPagador\\Model\\SilentAuthToken::getBuilder<\/a>"],[100,1,"<a href=\"Source\/BilletTypes.php.html#18\">Webjump\\BraspagPagador\\Model\\Source\\BilletTypes::getAllowedTypes<\/a>"],[100,1,"<a href=\"Source\/Cctype.php.html#20\">Webjump\\BraspagPagador\\Model\\Source\\Cctype::getAllowedTypes<\/a>"],[100,1,"<a href=\"Source\/Dctype.php.html#20\">Webjump\\BraspagPagador\\Model\\Source\\Dctype::getAllowedTypes<\/a>"],[100,1,"<a href=\"Source\/PaymentAction.php.html#9\">Webjump\\BraspagPagador\\Model\\Source\\PaymentAction::toOptionArray<\/a>"],[100,1,"<a href=\"Source\/Sequence.php.html#20\">Webjump\\BraspagPagador\\Model\\Source\\Sequence::toOptionArray<\/a>"],[100,1,"<a href=\"Source\/SequenceCriteria.php.html#20\">Webjump\\BraspagPagador\\Model\\Source\\SequenceCriteria::toOptionArray<\/a>"],[100,1,"<a href=\"Source\/VerticalSegment.php.html#9\">Webjump\\BraspagPagador\\Model\\Source\\VerticalSegment::toOptionArray<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
