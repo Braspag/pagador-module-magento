@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-    	$this->billetConfigInterfaceMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
+    	$this->billetConfigInterfaceMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
 
         $this->dateMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\DateTime')
             ->disableOriginalConstructor()
@@ -61,10 +61,10 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getPaymentProvider')
             ->will($this->returnValue('Simulado'));
 
-    	$paymentMock = $this->getMock('Magento\Sales\Api\Data\OrderPaymentInterface');
+    	$paymentMock = $this->createMock('Magento\Sales\Api\Data\OrderPaymentInterface');
 
 
-        $billingAddressMock = $this->getMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
+        $billingAddressMock = $this->createMock('Magento\Payment\Gateway\Data\AddressAdapterInterface');
 
         $billingAddressMock->expects($this->once())
             ->method('getFirstname')
@@ -74,38 +74,14 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getLastname')
             ->will($this->returnValue('Doe'));
 
-        $billingAddressMock->expects($this->once())
-            ->method('getStreetLine1')
-            ->will($this->returnValue('Avenida Paulista, 13'));
-
-        $billingAddressMock->expects($this->once())
-            ->method('getStreetLine2')
-            ->will($this->returnValue('Bela Vista'));
-
-        $billingAddressMock->expects($this->once())
-            ->method('getCity')
-            ->will($this->returnValue('São Paulo'));
-
-        $billingAddressMock->expects($this->once())
-            ->method('getRegionCode')
-            ->will($this->returnValue('SP'));
-
-        $billingAddressMock->expects($this->once())
-            ->method('getPostcode')
-            ->will($this->returnValue('01311-300'));
-
         $orderAdapterMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
-
-        $orderAdapterMock->expects($this->exactly(3))
-            ->method('getBillingAddress')
-            ->will($this->returnValue($billingAddressMock));
 
     	$orderAdapterMock->expects($this->once())
     	    ->method('getGrandTotalAmount')
     	    ->will($this->returnValue('157.00'));
 
-    	$orderAdapterMock->expects($this->exactly(3))
+    	$orderAdapterMock->expects($this->exactly(2))
     	    ->method('getOrderIncrementId')
     	    ->will($this->returnValue('2016000001'));
 
@@ -113,20 +89,37 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->request->setOrderAdapter($orderAdapterMock);
+        $expectedAddress = "Avenida Paulista, 13 Bela Vista São Paulo/SP - 01311-300";
+        $expectedPaymentNotification = "2016000001";
+        $expectedCustomerName = "John Doe";
+
+        $this->billetConfigInterfaceMock->expects($this->once())
+            ->method('getPaymentAssignorAddress')
+            ->willReturn($expectedAddress);
+
+        $this->billetConfigInterfaceMock->expects($this->once())
+            ->method('getPaymentIdentification')
+            ->willReturn($expectedPaymentNotification);
+
+
+        $orderAdapterMock->expects($this->atLeastOnce())
+            ->method('getBillingAddress')
+            ->willReturn($billingAddressMock);
+
+        $this->request->setOrderAdapter($orderAdapterMock);
 
 		static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
 		static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
 		static::assertEquals('2016000001', $this->request->getMerchantOrderId());
-		static::assertEquals('John Doe', $this->request->getCustomerName());
+		static::assertEquals($expectedCustomerName, $this->request->getCustomerName());
 		static::assertEquals('15700', $this->request->getPaymentAmount());
-		static::assertEquals("Avenida Paulista, 13 Bela Vista São Paulo/SP - 01311-300", $this->request->getPaymentAddress());
+		static::assertEquals($expectedAddress, $this->request->getPaymentAddress());
 		static::assertEquals('Simulado', $this->request->getPaymentProvider());
 		static::assertEquals('2016000001', $this->request->getPaymentBoletoNumber());
 		static::assertEquals('Empresa Teste', $this->request->getPaymentAssignor());
 		static::assertEquals('Desmonstrative Teste', $this->request->getPaymentDemonstrative());
 		static::assertEquals('2015-01-05', $this->request->getPaymentExpirationDate());
-		static::assertEquals('2016000001', $this->request->getPaymentIdentification());
+		static::assertEquals($expectedPaymentNotification, $this->request->getPaymentIdentification());
 		static::assertEquals('Aceitar somente até a data de vencimento, após essa data juros de 1% dia.', $this->request->getPaymentInstructions());
     }
 }

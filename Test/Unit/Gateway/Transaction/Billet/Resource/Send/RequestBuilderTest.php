@@ -16,7 +16,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-    	$this->requestMock = $this->getMock(
+    	$this->requestMock = $this->createMock(
     		RequestInterface::class
     	);
 
@@ -30,7 +30,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -47,7 +47,8 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
         $this->requestMock->expects($this->once())
             ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->with($orderAdapter)
+            ->willReturnSelf();
 
     	$result = $this->requestBuilder->build($buildSubject);
 

@@ -16,7 +16,7 @@ class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-    	$this->installmentsConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+    	$this->installmentsConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
     	$this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->getMockForAbstractClass();
@@ -40,7 +40,7 @@ class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+    	$installmentMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
     	$installmentMock->expects($this->once())
     	    ->method('setIndex')
@@ -70,7 +70,7 @@ class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testCreateWithInterest()
     {
-    	$installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+    	$installmentMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installmentMock->expects($this->once())
             ->method('setIndex')
@@ -104,7 +104,7 @@ class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testCreateWithInterestWithMaxWithouInterest()
     {
-        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installmentMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installmentMock->expects($this->once())
             ->method('setIndex')
@@ -138,7 +138,7 @@ class InstallmentFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testCreateWithCustomClass()
     {
-        $installmentMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installmentMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->factory = new InstallmentFactory(
             $this->objectManagerMock,

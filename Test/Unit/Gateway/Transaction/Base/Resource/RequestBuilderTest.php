@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Resource;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
-use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,7 +14,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-    	$this->requestMock = $this->getMock(
+    	$this->requestMock = $this->createMock(
     		RequestInterface::class
     	);
 
@@ -25,10 +25,10 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testBuilder()
     {
-        $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
+        $orderMock = $this->getMockBuilder(OrderAdapterInterface::class)
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -39,7 +39,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getOrder')
-            ->will($this->returnValue($orderAdapter));
+            ->willReturn($orderAdapter);
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
@@ -49,7 +49,8 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
         $this->requestMock->expects($this->once())
             ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->with($orderAdapter)
+            ->willReturnSelf();
 
         $this->requestMock->expects($this->once())
             ->method('setPaymentData')

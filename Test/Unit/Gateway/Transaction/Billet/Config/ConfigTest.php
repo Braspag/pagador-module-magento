@@ -6,6 +6,8 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Billet\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config;
 use Magento\Framework\Stdlib\DateTime;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Magento\Framework\App\State;
+
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -13,17 +15,22 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     private $config;
     private $contextMock;
     private $scopeConfigMock;
+    private $stateMock;
 
     public function setUp()
     {
-        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->contextMock = $this->getMock(ContextInterface::class);
+        $this->scopeConfigMock = $this->createMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->contextMock = $this->createMock(ContextInterface::class);
+        $this->stateMock = $this->createMock(State::class);
+
         $this->dateTimeMock =  $this->getMockBuilder(DateTime::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->config = new Config(
-            $this->contextMock
+            $this->contextMock,
+            $this->contextMock,
+            $this->stateMock
         );
     }
 

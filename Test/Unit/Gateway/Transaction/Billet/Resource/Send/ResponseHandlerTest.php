@@ -13,39 +13,95 @@ class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
     	$this->handler = new ResponseHandler();
     }
 
-    public function tearDown()
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @@expectedExceptionMessage An error has occurred, please try again later.
+     */
+    public function testHandleWithExpectedGenericError()
     {
-
-    }
-
-    public function testHandle()
-    {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface');
-
-    	$responseMock->expects($this->once())
-    	    ->method('getPaymentPaymentId')
-    	    ->will($this->returnValue(123));
-
-    	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
-    		->disableOriginalConstructor()
-    	    ->getMock();
-
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface');
 
     	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
     		->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
     		->getMock();
 
-    	$paymentDataObjectMock->expects($this->once())
-    	    ->method('getPayment')
-    	    ->will($this->returnValue($paymentMock));
-
-    	$paymentMock->expects($this->once())
-    	    ->method('setTransactionId')
-    	    ->with(123);
-
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
     	$response = ['response' => $responseMock];
 
     	$this->handler->handle($handlingSubject, $response);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @@expectedExceptionMessage Payment data object should be provided
+     */
+    public function testHandleWithExpectedPaymentDataError()
+    {
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface');
+        $handlingSubject = [];
+
+        $response = ['response' => $responseMock];
+
+        $this->handler->handle($handlingSubject, $response);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @@expectedExceptionMessage Braspag Billet Send Response Lib object should be provided
+     */
+    public function testHandleWithExpectedBilletResponseError()
+    {
+
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
+
+
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = [];
+
+        $this->handler->handle($handlingSubject, $response);
+    }
+
+    /**
+     * @test
+     */
+    public function testHandleSuccessfully()
+    {
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Billet\Send\ResponseInterface');
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentPaymentId')
+            ->will($this->returnValue(123));
+
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentStatus')
+            ->willReturn(1);
+
+
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
+
+        $paymentDataObjectMock->expects($this->once())
+            ->method('getPayment')
+            ->will($this->returnValue($paymentMock));
+
+        $paymentMock->expects($this->once())
+            ->method('setTransactionId')
+            ->with(123);
+
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $responseMock];
+
+        $this->handler->handle($handlingSubject, $response);
     }
 }

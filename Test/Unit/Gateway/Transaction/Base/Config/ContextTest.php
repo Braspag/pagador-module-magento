@@ -21,9 +21,9 @@ class ContextTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         // $this->markTestIncomplete();
-        $this->scopeConfigMock  = $this->getMock(ScopeConfigInterface::class);
-        $this->sessionMock      = $this->getMock(SessionManagerInterface::class);
-        $this->storeMock        = $this->getMock(StoreManagerInterface::class);
+        $this->scopeConfigMock  = $this->createMock(ScopeConfigInterface::class);
+        $this->sessionMock      = $this->createMock(SessionManagerInterface::class);
+        $this->storeMock        = $this->createMock(StoreManagerInterface::class);
         $this->dateTimeMock     = $this->getMockBuilder(DateTime::class)
             ->disableOriginalConstructor()
             ->getMock();
