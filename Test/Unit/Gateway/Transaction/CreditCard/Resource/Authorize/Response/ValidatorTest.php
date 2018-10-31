@@ -4,16 +4,16 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
 
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
 	private $validator;
 
     public function setUp()
     {
-    	$this->result = $this->getMock('Magento\Payment\Gateway\Validator\ResultInterface');
+    	$result = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
     	$this->validator = new Validator(
-    		$this->result
+    		$result
     	);
     }
 
@@ -24,7 +24,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testValidate()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
     	$responseMock->expects($this->once())
     	    ->method('getPaymentStatus')
@@ -39,7 +39,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateWithError()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
     	$responseMock->expects($this->once())
     	    ->method('getPaymentStatus')
@@ -63,7 +63,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateWithoutResponse()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $this->validator->validate([]);
     }

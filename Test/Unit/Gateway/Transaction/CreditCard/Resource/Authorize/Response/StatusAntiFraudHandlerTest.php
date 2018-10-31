@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\StatusAntiFraudHandler;
 use Webjump\BraspagPagador\Model\AntiFraud\Status\Config\ConfigInterface;
 
-class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
+class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
     /** @var StatusAntiFraudHandler  */
 	private $handler;
@@ -17,7 +17,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleAccept()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -39,7 +39,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $antiFraudAnalisysMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
+        $antiFraudAnalisysMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
 
         $antiFraudAnalisysMock->expects($this->once())
             ->method('getStatus')
@@ -57,7 +57,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleReject()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -80,7 +80,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $antiFraudAnalisysMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
+        $antiFraudAnalisysMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
 
         $antiFraudAnalisysMock->expects($this->once())
             ->method('getStatus')
@@ -98,7 +98,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleReview()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -121,7 +121,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $antiFraudAnalisysMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
+        $antiFraudAnalisysMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
 
         $antiFraudAnalisysMock->expects($this->once())
             ->method('getStatus')
@@ -139,7 +139,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleWithoutAntiFraud()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
