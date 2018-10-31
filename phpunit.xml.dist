@@ -26,9 +26,9 @@
     </filter>
 
 	<logging>
-        <logging>
-            <log type="coverage-html" target="./Test/Unit/_Coverage" lowUpperBound="35" highLowerBound="80"/>
-        </logging>
+        <!--coverage_html_placeholder
+	    <log type="coverage-html" target="Test/output/coverage" charset="UTF-8" yui="true" highlight="true"/>
+	    coverage_html_placeholder-->
 	</logging>
 
 </phpunit>
