@@ -148,7 +148,17 @@ class RequestTest extends TestCase
 
     public function testGetSequenceCriteria()
     {
+        $valueExpected = rand();
 
+        $this->configMock
+            ->expects($this->once())
+            ->method('getSequence')
+            ->willReturn($valueExpected);
+
+        $model = $this->getModel();
+        $valueActual = $model->getSequenceCriteria();
+
+        $this->assertSame($valueExpected, $valueActual);
     }
 
     public function testGetFingerPrintId()
