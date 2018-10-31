@@ -11,7 +11,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-		$this->billetConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
+		$this->billetConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->billetConfig
