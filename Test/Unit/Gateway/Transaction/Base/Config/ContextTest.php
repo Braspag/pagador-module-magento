@@ -9,7 +9,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Stdlib\DateTime;
 use Magento\Framework\Stdlib\DateTime\DateTime as CurrentDate;
 
-class ContextTest extends \PHPUnit_Framework_TestCase
+class ContextTest extends \PHPUnit\Framework\TestCase
 {
     private $scopeConfigMock;
     private $sessionMock;

@@ -4,14 +4,14 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\Base\Ui;
 
 use Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui\ConfigProvider;
 
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 	private $BaseConfig;
 
 	public function setUp()
 	{
-		$this->BaseConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface');
+		$this->BaseConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->BaseConfig
@@ -29,6 +29,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
 	            'payment' => [
 	                'braspag' => [
 	                    'merchantId' => 'BC5D3432-527F-40C6-84BF-C549285536BE',
+                        'merchantKey' => null
 	                ]
 	            ],
             ],
