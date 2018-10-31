@@ -15,13 +15,20 @@
          bootstrap="./Test/Unit/bootstrap.php"
         >
     <testsuite name="Webjump Braspag Pagador">
-        <directory suffix="Test.php">Test/Unit</directory>
+        <directory suffix="Test.php">Test/Unit/Model</directory>
     </testsuite>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">Model/</directory>
+            <directory suffix=".php">./Model</directory>
+            <exclude>
+                <file>registration.php</file>
+                <directory suffix=".php">./Test</directory>
+                <directory suffix=".php">./Setup</directory>
+                <directory suffix=".php">./vendor</directory>
+            </exclude>
         </whitelist>
+
         <blacklist>
             <directory>Test</directory>
             <directory>vendor</directory>
