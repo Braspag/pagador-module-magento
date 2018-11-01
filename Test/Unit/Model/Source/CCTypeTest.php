@@ -13,9 +13,9 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Model\Source;
 
-use Webjump\BraspagPagador\Model\Source\CCType;
+use Webjump\BraspagPagador\Model\Source\Cctype;
 
-class CCTypeTest extends \PHPUnit\Framework\TestCase
+class CctypeTest extends \PHPUnit\Framework\TestCase
 {
     private $model;
 
@@ -26,7 +26,7 @@ class CCTypeTest extends \PHPUnit\Framework\TestCase
         // mocks
 
         $this->model = $objectManager->getObject(
-            CCType::class,
+            Cctype::class,
             []
         );
     }
