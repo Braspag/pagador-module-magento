@@ -91,7 +91,7 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
     	$this->cardTokenMock->expects($this->once())
     	    ->method('load')
     	    ->with($token, CardTokenInterface::TOKEN)
-    	    ->will($this->returnValue($cardToken));
+    	    ->will($this->returnSelf());
 
     	$this->cardTokenFactoryMock->expects($this->once())
     	    ->method('create')
