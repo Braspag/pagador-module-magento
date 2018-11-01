@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler;
 
-class AvsHandlerTest extends \PHPUnit_Framework_TestCase
+class AvsHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 
@@ -20,9 +20,9 @@ class AvsHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-        $avsResponseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
+        $avsResponseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
 
         $avsResponseMock->expects($this->once())
             ->method('getStatus')

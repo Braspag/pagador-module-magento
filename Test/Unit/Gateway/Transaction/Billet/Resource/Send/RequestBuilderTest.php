@@ -6,7 +6,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestBuild
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\RequestInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
 	private $requestBuilder;
 
@@ -16,7 +16,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-    	$this->requestMock = $this->getMock(
+    	$this->requestMock = $this->createMock(
     		RequestInterface::class
     	);
 
@@ -30,7 +30,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -47,7 +47,8 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->requestMock->expects($this->once())
             ->method('setOrderAdapter')
-            ->with($orderMock);
+            ->with($orderAdapter)
+            ->willReturnSelf();
 
     	$result = $this->requestBuilder->build($buildSubject);
 

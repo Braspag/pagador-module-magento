@@ -5,8 +5,9 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Payment\Model\InfoInterface;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $requestBuilder;
 
@@ -14,11 +15,18 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
 
     private $OrderRepositoryMock;
 
+    private $paymentMock;
+
     public function setUp()
     {
-        $this->requestMock = $this->getMock(
+        $this->requestMock = $this->createMock(
             RequestInterface::class
         );
+
+        $this->paymentMock = $this->getMockBuilder(InfoInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
 
         $this->requestBuilder = new RequestBuilder(
             $this->requestMock
@@ -30,7 +38,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
 
-        $orderAdapter = $this->getMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -43,11 +51,15 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getOrder')
             ->will($this->returnValue($orderAdapter));
 
+        $paymentDataObjectMock
+            ->expects($this->once())
+            ->method('getPayment')
+            ->willReturn($this->paymentMock);
+
         $buildSubject = ['payment' => $paymentDataObjectMock];
 
-        $this->requestMock->expects($this->once())
-            ->method('setOrderAdapter')
-            ->with($orderMock);
+        $this->requestMock->expects($this->atLeastOnce())
+            ->method('setOrderAdapter');
 
         $result = $this->requestBuilder->build($buildSubject);
 

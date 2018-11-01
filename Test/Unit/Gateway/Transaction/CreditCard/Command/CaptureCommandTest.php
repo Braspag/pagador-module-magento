@@ -4,16 +4,16 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Comman
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand;
 
-class CaptureCommandTest extends \PHPUnit_Framework_TestCase
+class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 {
 	protected $command;
 
     public function setUp()
     {
-    	$this->apiMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
-    	$this->requestBuilderMock = $this->getMock('Magento\Payment\Gateway\Request\BuilderInterface');
-    	$this->responseHandlerMock = $this->getMock('Magento\Payment\Gateway\Response\HandlerInterface');
-        $this->validatorMock = $this->getMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
+    	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
+    	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+    	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
+        $this->validatorMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
     }
 
     public function tearDown()
@@ -72,7 +72,7 @@ class CaptureCommandTest extends \PHPUnit_Framework_TestCase
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->getMock();
 
-        $resultMock = $this->getMock('Magento\Payment\Gateway\Validator\ResultInterface');
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
         $resultMock->expects($this->once())
             ->method('isValid')
@@ -121,7 +121,7 @@ class CaptureCommandTest extends \PHPUnit_Framework_TestCase
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->getMock();
 
-        $resultMock = $this->getMock('Magento\Payment\Gateway\Validator\ResultInterface');
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
         $resultMock->expects($this->once())
             ->method('isValid')

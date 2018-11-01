@@ -17,7 +17,7 @@ use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
 use Magento\Checkout\Model\Session  as Session;
 use Magento\Framework\View\Element\Template\Context;
 
-class LinkTest extends \PHPUnit_Framework_TestCase
+class LinkTest extends \PHPUnit\Framework\TestCase
 {
     const RETURN_URL = 'http://www.url-de-retorno.com.br/';
     private $context;

@@ -16,7 +16,7 @@ use Webjump\BraspagPagador\Model\Payment\Info\BilletFactory;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Framework\ObjectManagerInterface;
 
-class BilletFactoryTest extends \PHPUnit_Framework_TestCase
+class BilletFactoryTest extends \PHPUnit\Framework\TestCase
 {
     private $billetFactory;
     private $orderMock;

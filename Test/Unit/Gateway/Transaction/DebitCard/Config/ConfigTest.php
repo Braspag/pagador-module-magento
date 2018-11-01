@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;
@@ -13,12 +13,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->contextMock = $this->getMock(ContextInterface::class);
+        $this->scopeConfigMock = $this->createMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->contextMock = $this->createMock(ContextInterface::class);
 
-        $this->config = new Config(
-            $this->contextMock
-        );
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
+        $this->config = $objectManager->getObject(Config::class, [
+            'context' => $this->contextMock
+        ]);
     }
 
     public function testGetData()
@@ -35,7 +37,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('payment/braspag_pagador_debitcard/return_url')
+            ->with('webjump_braspag/pagador/return_url')
             ->will($this->returnValue('http://test.com'));
 
         $this->scopeConfigMock->expects($this->at(3))

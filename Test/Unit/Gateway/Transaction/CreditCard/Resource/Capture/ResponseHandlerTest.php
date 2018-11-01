@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler;
 
-class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
+class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 
@@ -20,7 +20,7 @@ class ResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
 
     	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
     		->disableOriginalConstructor()
