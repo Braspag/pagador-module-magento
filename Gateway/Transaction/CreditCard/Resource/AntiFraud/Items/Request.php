@@ -26,22 +26,37 @@ class Request implements BraspaglibRequestInterface
         $this->setSession($session);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getGiftCategory()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getHostHedge()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getNonSensicalHedge()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getObscenitiesHedge()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPhoneHedge()
     {
     }
@@ -74,48 +89,79 @@ class Request implements BraspaglibRequestInterface
         return str_replace('.', '', $amount);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getRisk()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getTimeHedge()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getType()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getVelocityHedge()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerEmail()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerIdentity()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerName()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerRating()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerPhone()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getPassengerStatus()
     {
     }
 
     /**
      * @return SessionManagerInterface
+     * @codeCoverageIgnore
      */
     protected function getSession()
     {
@@ -150,6 +196,7 @@ class Request implements BraspaglibRequestInterface
 
     /**
      * @return \Magento\Quote\Model\Quote
+     * @codeCoverageIgnore
      */
     protected function getQuote()
     {

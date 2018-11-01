@@ -9,6 +9,10 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
 use Magento\Framework\Session\SessionManagerInterface;
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+use Magento\Payment\Gateway\Data\AddressAdapterInterface;
+use Magento\Payment\Model\InfoInterface;
+use \Magento\Sales\Model\Order\Item;
 
 class RequestTest extends TestCase
 {
@@ -37,6 +41,26 @@ class RequestTest extends TestCase
      */
     private $quoteMock;
 
+    /**
+     * @var OrderAdapterInterface
+     */
+    private $orderAdapterMock;
+
+    /**
+     * @var
+     */
+    private $billingAddressMock;
+
+    /**
+     * @var InfoInterface
+     */
+    private $infoInterfaceMock;
+
+    /**
+     * @var Item
+     */
+    private $itemMock;
+
     protected function setUp()
     {
         $this->configMock = $this->getMockBuilder(AntiFraudConfigInterface::class)
@@ -46,6 +70,10 @@ class RequestTest extends TestCase
             ])
             ->getMockForAbstractClass();
 
+        $this->orderAdapterMock = $this->createMock(OrderAdapterInterface::class);
+        $this->billingAddressMock = $this->createMock(AddressAdapterInterface::class);
+        $this->infoInterfaceMock = $this->createMock(InfoInterface::class);
+        $this->itemMock = $this->createMock(Item::class);
         $this->requestItemFactoryMock = $this->createMock(RequestFactory::class);
 
         $this->adapterGeneralMock = $this->createMock(AdapterGeneralInterface::class);
@@ -80,58 +108,64 @@ class RequestTest extends TestCase
 
     public function testGetCartShippingPhone()
     {
+        $phone = "1145454545";
+        $expectedResult = "55".$phone;
 
-    }
 
-    public function testGetCartReturnsAccepted()
-    {
+        $this->orderAdapterMock->expects($this->once())
+            ->method('getShippingAddress')
+            ->willReturn($this->billingAddressMock);
 
-    }
+        $this->billingAddressMock->expects($this->once())
+            ->method('getTelephone')
+            ->willReturn($phone);
 
-    public function testGetPaymentData()
-    {
+        $requestModel = $this->getModel();
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $result = $requestModel->getCartShippingPhone();
 
-    }
-
-    public function testSetRequestItemFactory()
-    {
-
+        $this->assertSame($result, $expectedResult);
     }
 
     public function testGetCaptureOnLowRisk()
     {
+        $expectedResult = true;
 
+        $this->configMock
+            ->expects($this->once())
+            ->method('getCaptureOnLowRisk')
+            ->willReturn(true);
+
+        $requestModel = $this->getModel();
+        $result = $requestModel->getCaptureOnLowRisk();
+
+        $this->assertSame($result, $expectedResult);
     }
 
     public function testGetMerchantDefinedFields()
     {
+        $expectedResult = $this->adapterGeneralMock;
 
+        $this->adapterGeneralMock
+            ->expects($this->once())
+            ->method('setPaymentData')
+            ->with($this->infoInterfaceMock)
+            ->willReturnSelf();
+
+        $this->adapterGeneralMock
+            ->expects($this->once())
+            ->method('setOrderAdapter')
+            ->with($this->orderAdapterMock)
+            ->willReturnSelf();
+
+        $requestModel = $this->getModel();
+
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $requestModel->setPaymentData($this->infoInterfaceMock);
+        $result = $requestModel->getMerchantDefinedFields();
+        $this->assertSame($result, $expectedResult);
     }
 
-    public function testGetBrowserCookiesAccepted()
-    {
-
-    }
-
-    public function testGetCartIsGift()
-    {
-
-    }
-
-    public function testGetRequestItemFactory()
-    {
-
-    }
-
-    public function testGetBrowserType()
-    {
-
-    }
-
-    public function testGetCartShippingMethod()
-    {
-
-    }
 
     public function testGetSequence()
     {
@@ -150,27 +184,76 @@ class RequestTest extends TestCase
 
     public function testGetCartItems()
     {
+        $expectedResult = [$this->itemMock];
 
+        $items = [$this->itemMock, $this->itemMock];
+
+        $this->orderAdapterMock
+            ->expects($this->once())
+            ->method('getItems')
+            ->willReturn($items);
+
+        $this->itemMock
+            ->expects($this->exactly(3))
+            ->method('getProductType')
+            ->will($this->onConsecutiveCalls("configurable", "configurable","simple"));
+
+        $this->itemMock
+            ->expects($this->once())
+            ->method('isDeleted')
+            ->willReturn(false);
+
+        $this->itemMock
+            ->expects($this->once())
+            ->method('getParentItemId')
+            ->willReturn(false);
+
+        $this->requestItemFactoryMock
+            ->expects($this->once())
+            ->method('create')
+            ->with($this->itemMock)
+            ->willReturn($this->itemMock);
+
+        $requestModel = $this->getModel();
+
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $requestModel->setRequestItemFactory($this->requestItemFactoryMock);
+        $result = $requestModel->getCartItems();
+        $this->assertSame($result, $expectedResult);
     }
 
     public function testGetBrowserIpAddress()
     {
 
-    }
+        $expectedResult = "123.456.789.123";
 
-    public function testSetPaymentData()
-    {
+        $this->orderAdapterMock
+            ->expects($this->once())
+            ->method('getRemoteIp')
+            ->willReturn($expectedResult);
 
+
+        $requestModel = $this->getModel();
+
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $result = $requestModel->getBrowserIpAddress();
+        $this->assertSame($result, $expectedResult);
     }
 
     public function testGetVoidOnHighRisk()
     {
 
-    }
+        $expectedResult = true;
 
-    public function testSetOrderAdapter()
-    {
+        $this->configMock
+            ->expects($this->once())
+            ->method('getVoidOnHighRisk')
+            ->willReturn(true);
 
+        $requestModel = $this->getModel();
+        $result = $requestModel->getVoidOnHighRisk();
+
+        $this->assertSame($result, $expectedResult);
     }
 
     public function testGetSequenceCriteria()
@@ -256,18 +339,33 @@ class RequestTest extends TestCase
         $this->assertSame($sessionId, $valueActual);
     }
 
-    public function testGetBrowserHostName()
-    {
-
-    }
 
     public function testGetCartShippingAddressee()
     {
+        $firstName = "John";
+        $lastName="Doe";
+        $expectedResult = trim($firstName." ".$lastName);
 
+        $this->orderAdapterMock
+            ->expects($this->once())
+            ->method('getShippingAddress')
+            ->willReturn($this->billingAddressMock);
+
+        $this->billingAddressMock
+            ->expects($this->once())
+            ->method('getFirstName')
+            ->willReturn($firstName);
+
+        $this->billingAddressMock
+            ->expects($this->once())
+            ->method('getLastName')
+            ->willReturn($lastName);
+
+        $requestModel = $this->getModel();
+
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $result = $requestModel->getCartShippingAddressee();
+        $this->assertSame($result, $expectedResult);
     }
 
-    public function testGetBrowserEmail()
-    {
-
-    }
 }
