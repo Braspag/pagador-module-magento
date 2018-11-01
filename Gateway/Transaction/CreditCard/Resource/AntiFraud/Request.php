@@ -219,6 +219,10 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->shippingAddress;
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     protected function getBillingAddress()
     {
         if (!$this->billingAddress) {

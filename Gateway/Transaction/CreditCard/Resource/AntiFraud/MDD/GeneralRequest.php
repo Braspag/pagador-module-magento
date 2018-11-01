@@ -97,11 +97,19 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return ($result) ? 'Sim' : 'Não';
     }
 
+    /**
+     * @return null
+     * @codeCoverageIgnore
+     */
     public function getSecondPaymentMethod()
     {
         return null;
     }
 
+    /**
+     * @return int
+     * @codeCoverageIgnore
+     */
     public function getPaymentMethodQTY()
     {
         return 1;
@@ -113,6 +121,10 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return number_format($quote->getShippingAddress()->getShippingAmount(), 2, '.', '');
     }
 
+    /**
+     * @return null
+     * @codeCoverageIgnore
+     */
     public function getSecondPaymentMethodAmount()
     {
         return null;
@@ -129,6 +141,10 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return (int) $this->getPaymentData()->getAdditionalInformation('cc_installments');
     }
 
+    /**
+     * @return String
+     * @codeCoverageIgnore
+     */
     public function getCreditCardIsPrivateLabel()
     {
         return 'Não';
@@ -152,16 +168,28 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return $this->getConfig()->getStoreIdentity();
     }
 
+    /**
+     * @return null
+     * @codeCoverageIgnore
+     */
     public function getProvider()
     {
         return null;
     }
 
+    /**
+     * @return null
+     * @codeCoverageIgnore
+     */
     public function getCustomerIsRisk()
     {
         return null;
     }
 
+    /**
+     * @return null
+     * @codeCoverageIgnore
+     */
     public function getCustomerIsVIP()
     {
         return null;
