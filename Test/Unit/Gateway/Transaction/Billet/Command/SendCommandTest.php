@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Command\SendCommand;
 
-class SendCommandTest extends \PHPUnit_Framework_TestCase
+class SendCommandTest extends \PHPUnit\Framework\TestCase
 {
 	private $command;
 	private $apiMock;
@@ -12,9 +12,9 @@ class SendCommandTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-    	$this->apiMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
-    	$this->requestBuilderMock = $this->getMock('Magento\Payment\Gateway\Request\BuilderInterface');
-    	$this->responseHandlerMock = $this->getMock('Magento\Payment\Gateway\Response\HandlerInterface');
+    	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
+    	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+    	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
 
     	$this->command = new SendCommand(
     		$this->apiMock,

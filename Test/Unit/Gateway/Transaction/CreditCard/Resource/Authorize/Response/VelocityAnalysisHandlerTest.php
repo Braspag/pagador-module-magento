@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler;
 
-class VelocityAnalysisHandlerTest extends \PHPUnit_Framework_TestCase
+class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 
@@ -20,9 +20,9 @@ class VelocityAnalysisHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-        $velocityReasonMock1 = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
+        $velocityReasonMock1 = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
 
         $velocityReasonMock1->expects($this->once())
             ->method('getRuleId')
@@ -40,7 +40,7 @@ class VelocityAnalysisHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getExpirationBlockTimeInSeconds')
             ->will($this->returnValue(200));
 
-        $velocityMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface');
+        $velocityMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface');
 
         $velocityMock->expects($this->once())
             ->method('getId')
@@ -100,7 +100,7 @@ class VelocityAnalysisHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleWithoutVelocity()
     {
-        $responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $responseMock->expects($this->once())
             ->method('getVelocityAnalysis')

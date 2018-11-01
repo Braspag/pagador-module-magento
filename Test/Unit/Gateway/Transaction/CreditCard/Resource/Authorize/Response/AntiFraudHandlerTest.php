@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler;
 
-class AntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
+class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 
@@ -20,7 +20,7 @@ class AntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -34,7 +34,7 @@ class AntiFraudHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $antiFraudAnalisysMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
+        $antiFraudAnalisysMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface');
 
         $antiFraudAnalisysMock->expects($this->once())
             ->method('getId')

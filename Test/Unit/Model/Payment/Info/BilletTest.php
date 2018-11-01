@@ -16,7 +16,7 @@ use Magento\Sales\Api\Data\OrderPaymentInterface;
 use Webjump\BraspagPagador\Model\Payment\Info\Billet;
 use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\ResponseHandler;
 
-class BilletTest extends \PHPUnit_Framework_TestCase
+class BilletTest extends \PHPUnit\Framework\TestCase
 {
     const RETURN_URL = 'http://www.url-de-retorno.com.br/';
 

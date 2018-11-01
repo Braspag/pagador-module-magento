@@ -4,14 +4,14 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\DebitCard\U
 
 use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider;
 
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 	private $debitcardConfig;
 
 	public function setUp()
 	{
-		$this->debitcardConfig = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+		$this->debitcardConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->debitcardConfig
@@ -31,7 +31,8 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => true]
                         ],
-                    ]
+                    ],
+                    'redirect_after_place_order' => null
                 ]
             ],
             $this->configProvider->getConfig()
@@ -43,7 +44,7 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
     	$this->debitcardConfig->expects($this->once())
     		->method('isSuperDebitoActive')
     		->will($this->returnValue(false));
-    		
+
         static::assertEquals(
             [
                 'payment' => [
@@ -51,7 +52,8 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => false]
                         ],
-                    ]
+                    ],
+                    'redirect_after_place_order' => null
                 ]
             ],
             $this->configProvider->getConfig()

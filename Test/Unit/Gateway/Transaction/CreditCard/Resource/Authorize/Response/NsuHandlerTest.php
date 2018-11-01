@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler;
 
-class NsuHandlerTest extends \PHPUnit_Framework_TestCase
+class NsuHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
 
@@ -20,7 +20,7 @@ class NsuHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->getMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $responseMock->expects($this->once())
             ->method('getPaymentProofOfSale')

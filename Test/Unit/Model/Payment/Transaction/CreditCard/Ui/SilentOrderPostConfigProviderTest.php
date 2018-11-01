@@ -5,7 +5,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider;
 use Magento\Framework\Phrase;
 
-class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
+class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
 	private $configProvider;
 
@@ -13,9 +13,9 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-        $this->silentorderPostBuilderMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
+        $this->silentorderPostBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
 
-        $this->silentorderPostConfigMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
+        $this->silentorderPostConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
 		$this->configProvider = new SilentOrderPostConfigProvider(
             'braspag_pagador_creditcard',

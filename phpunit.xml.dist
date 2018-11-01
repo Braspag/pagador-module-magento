@@ -14,21 +14,25 @@
          colors="true"
          bootstrap="./Test/Unit/bootstrap.php"
         >
-    <testsuite name="Webjump Braspag Pagador">
+    <testsuite name="Webjump Magento 2 Module">
         <directory suffix="Test.php">Test/Unit</directory>
     </testsuite>
 
     <filter>
-        <blacklist>
-            <directory>Test</directory>
-            <directory>vendor</directory>
-        </blacklist>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./</directory>
+            <exclude>
+                <directory suffix=".php">./Test</directory>
+                <directory suffix=".php">./Setup</directory>
+                <directory suffix=".php">./Model/ResourceModel</directory>
+                <directory suffix=".php">./vendor</directory>
+                <directory suffix="registration.php">.</directory>
+            </exclude>
+        </whitelist>
     </filter>
 
 	<logging>
-        <!--coverage_html_placeholder
 	    <log type="coverage-html" target="Test/output/coverage" charset="UTF-8" yui="true" highlight="true"/>
-	    coverage_html_placeholder-->
 	</logging>
 
 </phpunit>

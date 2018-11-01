@@ -12,15 +12,15 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Bui
  *
  * @link        http://www.webjump.com.br
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
-        $this->configMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
+        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
-        $this->transferBuilderMock = $this->getMock('Magento\Payment\Gateway\Http\TransferBuilder');
+        $this->transferBuilderMock = $this->createMock('Magento\Payment\Gateway\Http\TransferBuilder');
 
-        $this->clientMock = $this->getMock('Magento\Payment\Gateway\Http\ClientInterface');
+        $this->clientMock = $this->createMock('Magento\Payment\Gateway\Http\ClientInterface');
 
     	$this->builder =  new Builder(
             $this->configMock,
@@ -40,7 +40,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     	$accessToken = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
         $uri = 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=BC5D3432-527F-40C6-84BF-C549285536BE';
 
-        $this->tranferMock = $this->getMock('Magento\Payment\Gateway\Http\TransferInterface');
+        $this->tranferMock = $this->createMock('Magento\Payment\Gateway\Http\TransferInterface');
 
         $this->configMock->expects($this->once())
             ->method('getAccessTokenUrl')
@@ -73,7 +73,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ->method('build')
             ->will($this->returnValue($this->tranferMock));
 
-        $this->responseMock = $this->getMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\SilentOrderPostInterface');
+        $this->responseMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\SilentOrderPostInterface');
 
         $this->responseMock->expects($this->once())
             ->method('getAccessToken')

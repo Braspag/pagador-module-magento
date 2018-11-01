@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Tokens
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder;
 
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

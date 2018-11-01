@@ -6,7 +6,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfig
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
-class AntiFraudConfigTest extends \PHPUnit_Framework_TestCase
+class AntiFraudConfigTest extends \PHPUnit\Framework\TestCase
 {
     private $config;
     private $contextMock;
@@ -14,12 +14,13 @@ class AntiFraudConfigTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->contextMock = $this->getMock(ContextInterface::class);
+        $this->scopeConfigMock = $this->createMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->contextMock = $this->createMock(ContextInterface::class);
 
-        $this->config = new AntiFraudConfig(
-            $this->contextMock
-        );
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $this->config = $objectManager->getObject(AntiFraudConfig::class, [
+            'context' => $this->contextMock
+        ]);
     }
 
     public function testGetData()

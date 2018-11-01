@@ -71,34 +71,46 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return (boolean) $this->getConfig()->getVoidOnHighRisk();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getBrowserCookiesAccepted()
-    {
-    }
+    {}
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getBrowserEmail()
-    {
-    }
+    {}
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getBrowserHostName()
-    {
-    }
+    {}
 
     public function getBrowserIpAddress()
     {
         return $this->getOrderAdapter()->getRemoteIp();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getBrowserType()
-    {
-    }
+    {}
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getCartIsGift()
-    {
-    }
+    {}
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getCartReturnsAccepted()
-    {
-    }
+    {}
 
     public function getCartItems()
     {
@@ -133,9 +145,11 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         );
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getCartShippingMethod()
-    {
-    }
+    {}
 
     public function getCartShippingPhone()
     {
@@ -165,7 +179,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this;
     }
 
-    protected   function getMdd()
+    protected function getMdd()
     {
         return $this->mdd;
     }
@@ -205,6 +219,10 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->shippingAddress;
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     protected function getBillingAddress()
     {
         if (!$this->billingAddress) {
