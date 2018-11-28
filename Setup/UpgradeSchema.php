@@ -38,6 +38,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeFiveFour($setup, $context);
         }
 
+        if (version_compare($context->getVersion(), '3.5.5') < 0) {
+            $this->upgradeThreeFiveFive($setup, $context);
+        }
+
         $setup->endSetup();        
     }
 
@@ -164,5 +168,67 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeThreeFiveFour(SchemaSetupInterface $setup){
         $connection = $setup->getConnection();
         $connection->query("UPDATE core_config_data SET value = replace(value,'Redecard','Rede') WHERE path like '%payment/braspag_pagador%' and value like '%Redecard%';");
+    }
+
+    protected function upgradeThreeFiveFive(SchemaSetupInterface $setup, ModuleContextInterface $context) {
+
+        if ($setup->getConnection()->isTableExists($setup->getTable('webjump_braspagpagador_cardtoken'))) {
+
+            $setup->getConnection()->dropForeignKey(
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getFkName(
+                    'webjump_braspagpagador_cardtoken',
+                    'customer_id',
+                    'customer_entity',
+                    'entity_id'
+                )
+            );
+
+            $setup->getConnection()->dropIndex(
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getIdxName(
+                    'webjump_braspagpagador_cardtoken',
+                    ['customer_id', 'method'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+                )
+            );
+
+            $setup->getConnection()->addForeignKey(
+                $setup->getFkName(
+                    'webjump_braspagpagador_cardtoken',
+                    'customer_id',
+                    'customer_entity',
+                    'entity_id'
+                ),
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                'customer_id',
+                $setup->getTable('customer_entity'),
+                'entity_id',
+                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+            );
+
+            $setup->getConnection()->addIndex(
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getIdxName(
+                    'webjump_braspagpagador_cardtoken',
+                    ['customer_id', 'method'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+                ),
+                ['customer_id', 'method'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            );
+
+            $setup->getConnection()->addColumn(
+                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                'mask',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'length' => 255,
+                    'comment' => 'Payment method Mask'
+                ]
+            );
+
+        }
+
     }
 }
