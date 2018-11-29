@@ -91,12 +91,14 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $payment->getMethod());
         $searchCriteriaBuilder->addFilter('customer_id', $payment->getOrder()->getCustomerId());
+        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
+        $searchCriteriaBuilder->addFilter('alias', $response->getPaymentCardToken());
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->getCardTokenRepository()->delete($item);
+            $this->getCardTokenRepository()->disable($item);
         }
 
         $data = new DataObject([
@@ -105,6 +107,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $payment->getMethod(),
+            'mask'   => $response->getPaymentAuthorizationCode()
         ]);
 
         $this->getEventManager()->dispatch(

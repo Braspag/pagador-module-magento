@@ -60,12 +60,14 @@ class CardTokenManager implements CardTokenManagerInterface
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $paymentMethod);
         $searchCriteriaBuilder->addFilter('customer_id', $customerId);
+        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
+        $searchCriteriaBuilder->addFilter('alias', $response->getPaymentCardToken());
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->deleteCardToken($item);
+            $this->disableCardToken($item);
         }
 
         $data = new DataObject([
@@ -74,6 +76,7 @@ class CardTokenManager implements CardTokenManagerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $paymentMethod,
+            'mask'   => $response->getPaymentAuthorizationCode()
         ]);
 
         $cardToken = $this->getCardTokenRepository()->create($data->toArray());
@@ -86,6 +89,12 @@ class CardTokenManager implements CardTokenManagerInterface
     protected function deleteCardToken($cardToken)
     {
         $this->getCardTokenRepository()->delete($cardToken);
+    }
+
+
+    protected function disableCardToken($cardToken)
+    {
+        $this->getCardTokenRepository()->disable($cardToken);
     }
 
     /**

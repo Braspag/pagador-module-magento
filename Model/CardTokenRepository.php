@@ -153,6 +153,24 @@ class CardTokenRepository implements CardTokenRepositoryInterface
     }
 
     /**
+     * @param $cardToken
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function disable(CardTokenInterface  $cardToken)
+    {
+        try {
+            $cardToken = $this->getCardTokenRepository()->get($cardToken->getToken());
+            if (!isset($cardToken)) {
+                $cardToken->setActive(false);
+            }
+
+        } catch (Exception $e) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('Unable to disable Card Token'));
+        }
+    }
+
+    /**
      * @param SearchCriteriaInterface $searchCriteria
      *
      * @return mixed
