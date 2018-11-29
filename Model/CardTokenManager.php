@@ -60,8 +60,6 @@ class CardTokenManager implements CardTokenManagerInterface
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $paymentMethod);
         $searchCriteriaBuilder->addFilter('customer_id', $customerId);
-        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
-        $searchCriteriaBuilder->addFilter('alias', $response->getPaymentCardToken());
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);

@@ -160,9 +160,10 @@ class CardTokenRepository implements CardTokenRepositoryInterface
     public function disable(CardTokenInterface  $cardToken)
     {
         try {
-            $cardToken = $this->getCardTokenRepository()->get($cardToken->getToken());
-            if (!isset($cardToken)) {
-                $cardToken->setActive(false);
+            $cardTokenId = $cardToken->getId();
+            if (!empty($cardTokenId)) {
+                $cardToken->setActive(0);
+                $this->save($cardToken);
             }
 
         } catch (Exception $e) {
