@@ -91,7 +91,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
             $cardToken = $this->getCardTokenFactory()->create();
             $cardToken->load($token, CardTokenInterface::TOKEN);
 
-            if (!$cardTokenId = $cardToken->getId()) {
+            if (!$cardToken->getId()) {
                 return false;
             }
 
