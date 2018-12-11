@@ -15,6 +15,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Event\ManagerInterface;
 use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
 class CardTokenManager implements CardTokenManagerInterface
 {
@@ -66,7 +67,7 @@ class CardTokenManager implements CardTokenManagerInterface
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->disableCardToken($item);
+            $this->disable($item);
         }
 
         $data = new DataObject([
@@ -90,11 +91,25 @@ class CardTokenManager implements CardTokenManagerInterface
         $this->getCardTokenRepository()->delete($cardToken);
     }
 
-
-    protected function disableCardToken($cardToken)
+    /**
+     * @param $cardToken
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function disable(CardTokenInterface  $cardToken)
     {
-        $this->getCardTokenRepository()->disable($cardToken);
+        try {
+            $cardTokenId = $cardToken->getId();
+            if (!empty($cardTokenId)) {
+                $cardToken->setActive(0);
+                $this->getCardTokenRepository()->save($cardToken);
+            }
+
+        } catch (Exception $e) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('Unable to disable Card Token'));
+        }
     }
+
 
     /**
      * @return mixed

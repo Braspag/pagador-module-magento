@@ -50,10 +50,4 @@ interface CardTokenRepositoryInterface
      */
     public function delete(CardTokenInterface  $cardToken);
 
-    /**
-     * @param $cardToken
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function disable(CardTokenInterface  $cardToken);
 }
