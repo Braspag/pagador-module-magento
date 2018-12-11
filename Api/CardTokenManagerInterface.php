@@ -10,7 +10,16 @@
 
 namespace Webjump\BraspagPagador\Api;
 
+use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+
 interface CardTokenManagerInterface
 {
     public function registerCardToken($customerId, $paymentMethod, $response);
+
+    /**
+     * @param $cardToken
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function disable(CardTokenInterface  $cardToken);
 }

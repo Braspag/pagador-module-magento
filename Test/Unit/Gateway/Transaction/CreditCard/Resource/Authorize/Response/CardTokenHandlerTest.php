@@ -93,7 +93,9 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             'token' => '6e1bf77a-b28b-4660-b14f-455e2a1c95e9',
             'provider' => 'Cielo',
             'brand' => 'Visa',
+            'mask'  => '364135'
         ]);
+
 
         $this->cardTokenRepositoryMock
             ->expects($this->once())
@@ -125,9 +127,13 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPaymentCardProvider')
             ->will($this->returnValue('Cielo'));
 
-        $this->responseMock->expects($this->once())
+        $this->responseMock->expects($this->exactly(2))
             ->method('getPaymentCardBrand')
             ->will($this->returnValue('Visa'));
+
+        $this->responseMock->expects($this->once())
+            ->method('getPaymentAuthorizationCode')
+            ->will($this->returnValue('364135'));
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()

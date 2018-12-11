@@ -49,4 +49,5 @@ interface CardTokenRepositoryInterface
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function delete(CardTokenInterface  $cardToken);
+
 }
