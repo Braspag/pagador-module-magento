@@ -15,6 +15,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Event\ManagerInterface;
 use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
 
 class CardTokenManager implements CardTokenManagerInterface
 {
@@ -60,12 +61,13 @@ class CardTokenManager implements CardTokenManagerInterface
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $paymentMethod);
         $searchCriteriaBuilder->addFilter('customer_id', $customerId);
+        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->deleteCardToken($item);
+            $this->disable($item);
         }
 
         $data = new DataObject([
@@ -74,6 +76,7 @@ class CardTokenManager implements CardTokenManagerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $paymentMethod,
+            'mask'   => $response->getPaymentAuthorizationCode()
         ]);
 
         $cardToken = $this->getCardTokenRepository()->create($data->toArray());
@@ -87,6 +90,26 @@ class CardTokenManager implements CardTokenManagerInterface
     {
         $this->getCardTokenRepository()->delete($cardToken);
     }
+
+    /**
+     * @param $cardToken
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function disable(CardTokenInterface  $cardToken)
+    {
+        try {
+            $cardTokenId = $cardToken->getId();
+            if (!empty($cardTokenId)) {
+                $cardToken->setActive(0);
+                $this->getCardTokenRepository()->save($cardToken);
+            }
+
+        } catch (Exception $e) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('Unable to disable Card Token'));
+        }
+    }
+
 
     /**
      * @return mixed

@@ -60,6 +60,11 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
         return $this->getData(self::METHOD);
     }
 
+    public function getMask()
+    {
+        return $this->getData(self::MASK);
+    }
+
     public function setId($id)
     {
         return $this->setData(self::ENTITY_ID, $id);
@@ -118,5 +123,10 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
     public function setMethod($method)
     {
         return $this->setData(self::METHOD, $method);
+    }
+
+    public function setMask($mask)
+    {
+        return $this->setData(self::MASK, $mask);
     }
 }

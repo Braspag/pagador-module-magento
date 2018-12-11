@@ -9,7 +9,7 @@ use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-
+use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -26,6 +26,11 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
      * @var
      */
     protected $cardTokenRepository;
+
+    /**
+     * @var
+     */
+    protected $cardTokenManager;
 
     /**
      * @var
@@ -49,16 +54,19 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
      * @param CardTokenRepositoryInterface $cardTokenRepository
      * @param ManagerInterface             $eventManager
      * @param SearchCriteriaBuilder        $searchCriteriaBuilder
+     * @param CardTokenManagerInterface    $cardTokenManager
      */
     public function __construct(
         CardTokenRepositoryInterface $cardTokenRepository,
         ManagerInterface $eventManager,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        CardTokenManagerInterface $cardTokenManager
     )
     {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
+        $this->setCardTokenManager($cardTokenManager);
     }
 
     /**
@@ -88,15 +96,17 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
             return $cardToken;
         }
+
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
         $searchCriteriaBuilder->addFilter('method', $payment->getMethod());
         $searchCriteriaBuilder->addFilter('customer_id', $payment->getOrder()->getCustomerId());
+        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
         $searchCriteria = $searchCriteriaBuilder->create();
 
         $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
 
         foreach ($searchResult->getItems() as $item) {
-            $this->getCardTokenRepository()->delete($item);
+            $this->getCardTokenManager()->disable($item);
         }
 
         $data = new DataObject([
@@ -105,6 +115,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $payment->getMethod(),
+            'mask'   => $response->getPaymentAuthorizationCode()
         ]);
 
         $this->getEventManager()->dispatch(
@@ -174,4 +185,22 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
 
         return $this;
     }
+
+    /**
+     * @param mixed $cardTokenManager
+     */
+    public function setCardTokenManager($cardTokenManager)
+    {
+        $this->cardTokenManager = $cardTokenManager;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardTokenManager()
+    {
+        return $this->cardTokenManager;
+    }
+
+
 }

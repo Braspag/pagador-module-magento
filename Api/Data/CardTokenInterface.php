@@ -31,6 +31,8 @@ interface CardTokenInterface
 
     const METHOD = 'method';
 
+    const MASK  =  'mask';
+
     public function getId();
 
     public function getAlias();
@@ -49,6 +51,8 @@ interface CardTokenInterface
 
     public function getMethod();
 
+    public function getMask();
+
     public function setId($id);
 
     public function setAlias($alias);
@@ -66,5 +70,7 @@ interface CardTokenInterface
     public function setProvider($provider);
 
     public function setMethod($method);
+
+    public function setMask($mask);
 }
 
