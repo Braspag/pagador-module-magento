@@ -13,8 +13,7 @@ require_once realpath(__DIR__ . '/../../vendor/autoload.php');
  * @SuppressWarnings(PHPMD.ShortMethodName)
  */
 
-if (function_exists('bootsrap.php')) {
-
+if (!function_exists('__')) {
     function __()
     {
         $argc = func_get_args();
