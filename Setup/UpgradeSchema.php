@@ -38,7 +38,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeFiveFour($setup, $context);
         }
 
-        if (version_compare($context->getVersion(), '3.5.5') < 0) {
+        if (version_compare($context->getVersion(), '3.7.4') < 0) {
             $this->upgradeThreeFiveFive($setup, $context);
         }
 
