@@ -75,7 +75,7 @@ class InitializeCommand implements CommandInterface
         $stateObject->setData('is_notified', false);
 
         $invoice = false;
-        if ($this->config->isAuthorizeAndCapture() && !$isFraudDetected && !$isTransactionPending) {
+        if ($this->config->isAuthorizeAndCapture() && !$isFraudDetected && !$isTransactionPending && $payment->getOrder()->getId()) {
             $invoice = $this->invoiceService->prepareInvoice($payment->getOrder());
             $invoice->setRequestedCaptureCase(Invoice::CAPTURE_OFFLINE);
             $invoice->register();
