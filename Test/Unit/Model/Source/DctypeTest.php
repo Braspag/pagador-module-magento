@@ -42,7 +42,9 @@ class DctypeTest extends \PHPUnit\Framework\TestCase
             'Cielo-Master',
             'Cielo-Elo',
             'Rede-Visa',
-            'Rede-Master'
+            'Rede-Master',
+            'Rede2-Visa',
+            'Rede2-Master'
         ];
 
         // perform the changes
