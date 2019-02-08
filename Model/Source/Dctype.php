@@ -25,7 +25,9 @@ class Dctype extends \Magento\Payment\Model\Source\Cctype
             'Cielo-Master',
             'Cielo-Elo',
             'Rede-Visa',
-            'Rede-Master'
+            'Rede-Master',
+            'Rede2-Visa',
+            'Rede2-Master'
         ];
     }
 }
