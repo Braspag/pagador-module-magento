@@ -132,8 +132,14 @@
         </type>
 
         <!-- Debit Card -->
-        <type id="Cielo" order="1">
+        <type id="Cielo" order="36">
             <label>Cielo</label>
+        </type>
+        <type id="Rede2-Visa" order="37">
+            <label>Rede2 Visa</label>
+        </type>
+        <type id="Rede2-Master" order="38">
+            <label>Rede2 Master</label>
         </type>
 
     </credit_cards>
