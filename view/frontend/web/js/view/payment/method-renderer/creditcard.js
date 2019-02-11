@@ -13,6 +13,7 @@ define(
         'mage/translate',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
+        'Webjump_BraspagPagador/js/card',
         'jquery',
         'Magento_Checkout/js/action/place-order',
         'Magento_Checkout/js/model/full-screen-loader',
@@ -30,6 +31,7 @@ define(
         $t,
         sopt,
         soptToken,
+        card,
         $,
         placeOrderAction,
         fullScreenLoader,
@@ -95,7 +97,6 @@ define(
                         'creditCardsavecard',
                         'creditCardSoptPaymentToken'
                     ]);
-
                 return this;
             },
 
@@ -105,6 +106,49 @@ define(
 
             isActive: function() {
                 return true;
+            },
+
+            loadCardForm: function() {
+                new Card({
+                    form: document.querySelector('.braspag-card'),
+                    container: '.card-wrapper'
+                });
+
+                this.checkNumberCard();
+                this.checkNameCard();
+                this.checkExpirationDateCard();
+                this.checkCvvCard();
+            },
+
+            checkNumberCard: function() {
+                $(".number-card").keyup(function(){
+                    $(".bp-sop-cardnumber").val($(".number-card").val().replace(/ /g,''));
+                });
+            },
+
+            checkNameCard: function() {
+                $(".full-name-card").keyup(function(){
+                    $(".bp-sop-cardholdername").val($(".full-name-card").val());
+                });
+            },
+
+            checkExpirationDateCard: function() {
+                $( document ).ready(function() {
+                    $(".date-card").focusout(function(){
+                        var fields = $('.date-card').val().split('/');
+                        var month = parseInt(fields[0].replace("0", ""));
+                        var year = parseInt(fields[1]);
+
+                        $('.select-month').val(month).change();
+                        $('.select-year').val(year).change();
+                    });
+                });
+            },
+
+            checkCvvCard: function() {
+                $(".cvv-card").keyup(function(){
+                    $(".cvv").val($(".cvv-card").val());
+                });
             },
 
             getData: function () {

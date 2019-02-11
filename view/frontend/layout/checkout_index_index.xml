@@ -8,6 +8,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Webjump_BraspagPagador::css/style.css"/>
+        <css src="Webjump_BraspagPagador::css/card.css"/>
     </head>
     <body>
         <referenceBlock name="after.body.start">

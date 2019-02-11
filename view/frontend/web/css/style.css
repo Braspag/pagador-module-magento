@@ -11,3 +11,38 @@
 .checkout-payment-method .ccard .installments .select {
 	width: 225px;
 }
+.checkout-payment-method #braspag_pagador_creditcard_cc_type,
+.checkout-payment-method .field.number,
+.checkout-payment-method .field.owner,
+.checkout-payment-method .field.date,
+.checkout-payment-method .field.cvv
+ {
+	display: none;
+}
+.checkout-payment-method .card-container .card-wrapper,
+.checkout-payment-method .card-container .form-container { 
+	float: left;
+	max-width: 50%;
+}
+.payment-method-billing-address, .card-container {
+	display: inline-block;
+	margin: 0 0 20px 0;
+}
+.braspag-card {
+	padding: 0 25px 0 0;
+}
+
+.checkout-payment-method .card-container input[type="text"], 
+.checkout-payment-method .card-container input[type="password"], 
+.checkout-payment-method .card-container input[type="url"], 
+.checkout-payment-method .card-container input[type="tel"], 
+.checkout-payment-method .card-container input[type="search"], 
+.checkout-payment-method .card-container input[type="number"], 
+.checkout-payment-method .card-container input[type="datetime"], 
+.checkout-payment-method .card-container input[type="email"] {
+	margin: 0 0 25px 0;
+}
+
+
+
+
