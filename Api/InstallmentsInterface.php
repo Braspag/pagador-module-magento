@@ -6,7 +6,7 @@ namespace Webjump\BraspagPagador\Api;
 interface InstallmentsInterface
 {
     /**
-     * @return array
+     * @return mixed
      */
     public function getInstallments();
 }

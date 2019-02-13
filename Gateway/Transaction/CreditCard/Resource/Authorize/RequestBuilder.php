@@ -2,12 +2,17 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
+use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
+use Magento\Quote\Model\Quote\ItemFactory;
+use Magento\Quote\Model\QuoteFactory;
+
 /**
  * Braspag Transaction Billet Send Request Builder
  *
@@ -19,22 +24,29 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as
  */
 class RequestBuilder implements BuilderInterface
 {
-    protected $request;
+    protected $requestFactory;
     protected $requestAntiFraud;
     protected $requestAvs;
     protected $orderRepository;
     protected $config;
+    protected $quoteItemFactory;
+    protected $quoteFactory;
 
-    public function __construct (
-        BaseRequestInterface $request,
+    public function __construct(
+        RequestFactory $requestFactory,
         RequestAntiFraudLibInterface $requestAntiFraud,
         RequestAvsLibInterface $requestAvs,
-        ConfigInterface $config
-    ) {
-        $this->setRequest($request);
+        ConfigInterface $config,
+        QuoteFactory $quoteFactory,
+        ItemFactory $quoteItemFactory
+    )
+    {
+        $this->setRequestFactory($requestFactory);
         $this->setAntiFraudRequest($requestAntiFraud);
         $this->setAvsRequest($requestAvs);
         $this->setConfig($config);
+        $this->setQuoteFactory($quoteFactory);
+        $this->setQuoteItemFactory($quoteItemFactory);
     }
 
     public function build(array $buildSubject)
@@ -43,37 +55,43 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
+        $request = $this->getRequestFactory()->create();
+
         $paymentDataObject = $buildSubject['payment'];
-        $orderAdapter = $paymentDataObject->getOrder();
         $paymentData = $paymentDataObject->getPayment();
 
-        if($this->getConfig()->hasAntiFraud()) {
+        /** @var OrderAdapter $orderAdapter */
+        $orderAdapter = $paymentDataObject->getOrder();
+        $quote = $this->getQuoteByOrderItem($orderAdapter);
+
+        if ($this->getConfig()->hasAntiFraud()) {
             $this->getRequestAntiFraud()->setOrderAdapter($orderAdapter);
             $this->getRequestAntiFraud()->setPaymentData($paymentData);
-            $this->getRequest()->setAntiFraudRequest($this->getRequestAntiFraud());
+            $request->setAntiFraudRequest($this->getRequestAntiFraud());
         }
 
-        if($this->getConfig()->hasAvs()) {
+        if ($this->getConfig()->hasAvs()) {
             $this->getRequestAvs()->setOrderAdapter($orderAdapter);
             $this->getRequestAvs()->setPaymentData($paymentData);
-            $this->getRequest()->setAvsRequest($this->getRequestAvs());
+            $request->setAvsRequest($this->getRequestAvs());
         }
 
-        $this->getRequest()->setOrderAdapter($orderAdapter);
-        $this->getRequest()->setPaymentData($paymentData);
+        $request->setOrderAdapter($orderAdapter);
+        $request->setPaymentData($paymentData);
+        $request->setQuote($quote);
 
-        return $this->getRequest();
+        return $request;
     }
 
-    protected function setRequest(BaseRequestInterface $request)
+    protected function setRequestFactory(RequestFactory $requestFactory)
     {
-        $this->request = $request;
+        $this->requestFactory = $requestFactory;
         return $this;
     }
 
-    protected function getRequest()
+    protected function getRequestFactory()
     {
-        return $this->request;
+        return $this->requestFactory;
     }
 
     protected function setAntiFraudRequest(RequestAntiFraudLibInterface $requestAntiFraud)
@@ -104,8 +122,72 @@ class RequestBuilder implements BuilderInterface
         return $this;
     }
 
-    protected  function getConfig()
+    protected function getConfig()
     {
         return $this->config;
     }
+
+    /**
+     * @return QuoteFactory
+     */
+    public function getQuoteFactory()
+    {
+        return $this->quoteFactory;
+    }
+
+    /**
+     * @param QuoteFactory $quoteFactory
+     */
+    public function setQuoteFactory($quoteFactory)
+    {
+        $this->quoteFactory = $quoteFactory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuoteItemFactory()
+    {
+        return $this->quoteItemFactory;
+    }
+
+    /**
+     * @param mixed $quoteItemFactory
+     */
+    public function setQuoteItemFactory($quoteItemFactory)
+    {
+        $this->quoteItemFactory = $quoteItemFactory;
+    }
+
+    /**
+     * @param $orderAdapter
+     * @return \Magento\Quote\Model\Quote
+     * @deprecated
+     */
+    protected function getQuoteByOrderItem($orderAdapter)
+    {
+        $quoteItemId = $this->getQuoteIdByFirstItem($orderAdapter);
+
+        /** @var \Magento\Quote\Model\Quote\Item $quoteItem */
+        $quoteItem = $this->getQuoteItemFactory()->create();
+
+        $quoteItem->load($quoteItemId);
+        $quoteId = $quoteItem->getQuoteId();
+        $quote = $this->getQuoteFactory()->create()->load($quoteId);
+        return $quote;
+    }
+
+    /**
+     * @param $orderAdapter
+     * @return mixed
+     * @deprecated
+     */
+    protected function getQuoteIdByFirstItem($orderAdapter)
+    {
+        $items = $orderAdapter->getItems();
+        $firstItem = array_pop($items);
+        $quoteItemId = $firstItem->getQuoteItemId();
+        return $quoteItemId;
+    }
+
 }
