@@ -8,24 +8,46 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request as AntiFraudRequest;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as AvsRequest;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
+use Magento\Quote\Model\Quote\ItemFactory;
+use Magento\Quote\Model\QuoteFactory;
+
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $requestBuilder;
-    private $requestMock;
+    private $requestFactoryMock;
     private $configMock;
     private $antiFraudRequestMock;
     private $avsRequestMock;
+    private $quoteFactoryMock;
+    private $quoteItemFactoryMock;
+    private $orderAdapter;
+    private $itemMock;
+    private $requestBuilderMock;
 
     public function setUp()
     {
-        $this->requestMock = $this->getMockBuilder(RequestInterface::class)
-            ->getMockForAbstractClass();
+        $this->requestFactoryMock = $this->getMockBuilder(RequestFactory::class)
+            ->setMethods(['create'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->configMock = $this->getMockBuilder(ConfigInterface::class)
             ->getMockForAbstractClass();
 
         $this->antiFraudRequestMock = $this->getMockBuilder(AntiFraudRequest::class)
+            ->setMethods(['setOrderAdapter', 'setPaymentData'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->quoteItemFactoryMock = $this->getMockBuilder(ItemFactory::class)
+            ->setMethods(['create', 'load'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->quoteFactoryMock = $this->getMockBuilder(QuoteFactory::class)
+            ->setMethods(['create', 'load'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -33,22 +55,38 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
+
+        $this->requestBuilderMock = $this->getMockBuilder(RequestBuilder::class)
+            ->setMethods(['setOrderAdapter', 'setPaymentData', 'setQuote'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->itemMock = $this->getMockBuilder(Magento\Sales\Api\Data\OrderItemInterface::class)
+            ->setMethods(['create', 'load', 'getQuoteItemId', 'getQuoteId'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->requestBuilder = new RequestBuilder(
-            $this->requestMock,
+            $this->requestFactoryMock,
             $this->antiFraudRequestMock,
             $this->avsRequestMock,
-            $this->configMock
+            $this->configMock,
+            $this->quoteFactoryMock,
+            $this->quoteItemFactoryMock
         );
     }
 
     public function testBuilder()
     {
+
+        $itemsMock = [$this->itemMock, $this->itemMock, $this->itemMock];
+        $quoteIdItemMock = 76534;
+        $quoteIdMock = 22;
+
         $this->markTestIncomplete();
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
-
-        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -61,6 +99,10 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getOrder')
             ->will($this->returnValue($orderAdapter));
 
+        $this->expects($this->once())
+            ->method('getQuoteByOrderItem')
+            ->with($this->orderAdapter);
+
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($infoMock));
@@ -72,27 +114,60 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->method('setPaymentData')
             ->with($infoMock);
 
-        $this->requestMock->expects($this->once())
-            ->method('setOrderAdapter');
+        $this->requestBuilderMock->expects($this->once())
+            ->method('setOrderAdapter')
+            ->willReturn($this->orderAdapter);
 
-        $this->requestMock->expects($this->once())
+        $this->requestBuilderMock->expects($this->once())
             ->method('setPaymentData')
             ->with($infoMock);
 
+        $this->orderAdapter->expects($this->once())
+            ->method('getItems')
+            ->willReturn($itemsMock);
+
+        $this->itemMock->expects($this->any())
+            ->method('getQuoteItemId')
+            ->will($this->returnValue($quoteIdItemMock));
+
+        $this->quoteItemFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($this->itemMock));
+
+        $this->itemMock->expects($this->once())
+            ->method('load')
+            ->with($quoteIdItemMock)
+            ->will($this->returnSelf());
+
+        $this->itemMock->expects($this->once())
+            ->method('getQuoteId')
+            ->will($this->returnValue($quoteIdMock));
+
+        $this->quoteFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnSelf());
+
+        $this->quoteFactoryMock->expects($this->once())
+            ->method('load')
+            ->with($quoteIdMock)
+            ->willReturn($this->returnSelf());
 
         $buildSubject = ['payment' => $paymentDataObjectMock];
 
         $result = $this->requestBuilder->build($buildSubject);
 
-        static::assertSame($this->requestMock, $result);
+        static::assertSame($this->requestFactoryMock, $result);
     }
 
     public function testAntiFraudDisable()
     {
+
+        $itemsMock = [$this->itemMock, $this->itemMock, $this->itemMock];
+        $quoteIdItemMock = 76534;
+        $quoteIdMock = 22;
+
         $orderMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\OrderAdapterInterface')
             ->getMock();
-
-        $orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
@@ -103,23 +178,60 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getOrder')
-            ->will($this->returnValue($orderAdapter));
+            ->will($this->returnValue($this->orderAdapter));
+
+        $this->orderAdapter->expects($this->once())
+            ->method('getItems')
+            ->willReturn($itemsMock);
+
+        $this->itemMock->expects($this->any())
+            ->method('getQuoteItemId')
+            ->will($this->returnValue($quoteIdItemMock));
+
+        $this->quoteItemFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($this->itemMock));
+
+        $this->itemMock->expects($this->once())
+            ->method('load')
+            ->with($quoteIdItemMock)
+            ->will($this->returnSelf());
+
+        $this->itemMock->expects($this->once())
+            ->method('getQuoteId')
+            ->will($this->returnValue($quoteIdMock));
+
+        $this->quoteFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnSelf());
+
+        $this->quoteFactoryMock->expects($this->once())
+            ->method('load')
+            ->with($quoteIdMock)
+            ->willReturn($this->returnSelf());
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getPayment')
             ->will($this->returnValue($infoMock));
 
         $this->antiFraudRequestMock->expects($this->never())
-            ->method('setOrderAdapter');
+            ->method('setOrderAdapter')
+            ->willReturn($this->orderAdapter);
+
 
         $this->antiFraudRequestMock->expects($this->never())
             ->method('setPaymentData')
             ->with($infoMock);
 
-        $this->requestMock->expects($this->once())
-            ->method('setOrderAdapter');
+        $this->requestFactoryMock->expects($this->once())
+            ->method('create')
+            ->willReturn($this->requestBuilderMock);
 
-        $this->requestMock->expects($this->once())
+        $this->requestBuilderMock->expects($this->once())
+            ->method('setOrderAdapter')
+            ->willReturn($this->orderAdapter);
+
+        $this->requestBuilderMock->expects($this->once())
             ->method('setPaymentData')
             ->with($infoMock);
 
