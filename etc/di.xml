@@ -44,7 +44,6 @@
     </type>
 
     <virtualType name="BraspagTransactionBilletSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request" />
-    <!--<virtualType name="BraspagTransactionCreditCardSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request" />-->
     <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request" />
     <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request" />
 
@@ -192,7 +191,6 @@
 
     <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
         <arguments>
-            <argument name="requestFactory" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory</argument>
             <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudRequest</argument>
             <argument name="requestAvs" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAvsRequest</argument>
             <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>

@@ -3,7 +3,6 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
-use Magento\Sales\Model\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
@@ -57,10 +56,6 @@ class RequestBuilder implements BuilderInterface
         }
 
         $request = $this->getRequestFactory()->create();
-
-//        if (!$request instanceof BaseRequestInterface) {
-//            throw new \InvalidArgumentException('RequestFactory should create an BaseRequestInterface');
-//        }
 
         $paymentDataObject = $buildSubject['payment'];
         $paymentData = $paymentDataObject->getPayment();
@@ -126,7 +121,7 @@ class RequestBuilder implements BuilderInterface
         $this->config = $config;
         return $this;
     }
-    
+
     protected function getConfig()
     {
         return $this->config;
@@ -167,6 +162,7 @@ class RequestBuilder implements BuilderInterface
     /**
      * @param $orderAdapter
      * @return \Magento\Quote\Model\Quote
+     * @deprecated
      */
     protected function getQuoteByOrderItem($orderAdapter)
     {
@@ -184,6 +180,7 @@ class RequestBuilder implements BuilderInterface
     /**
      * @param $orderAdapter
      * @return mixed
+     * @deprecated
      */
     protected function getQuoteIdByFirstItem($orderAdapter)
     {
