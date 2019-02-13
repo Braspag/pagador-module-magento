@@ -654,13 +654,16 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     protected function getQuote()
     {
-        if (!$this->quote) {
-            $config = $this->getConfig();
-            $session = $config->getSession();
-            $this->quote = $session->getQuote();
-        }
-
         return $this->quote;
+    }
+
+    /**
+     * @param \Magento\Quote\Model\Quote $quote
+     */
+    public function setQuote($quote)
+    {
+        $this->quote = $quote;
+        return $this;
     }
 
     /**
