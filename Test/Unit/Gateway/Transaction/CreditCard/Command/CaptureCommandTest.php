@@ -148,4 +148,58 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $this->command->execute($buildObject);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Braspag Credit Card Request Lib object should be provided
+     */
+    public function testExecuteWithInterfaceWrong()
+    {
+        $this->command = new CaptureCommand(
+            $this->apiMock,
+            $this->requestBuilderMock,
+            $this->responseHandlerMock,
+            $this->validatorMock
+        );
+
+        $buildObject = [];
+
+        $requestWrongMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\AuthRequestInterface')
+            ->getMock();
+
+        $this->command->execute($buildObject);
+    }
+
+    /**
+     * @expectedException \Magento\Sales\Exception\CouldNotInvoiceException
+     */
+    public function testExecuteWithGuzzleException()
+    {
+        $this->command = new CaptureCommand(
+            $this->apiMock,
+            $this->requestBuilderMock,
+            $this->responseHandlerMock,
+            $this->validatorMock
+        );
+
+        $buildObject = [];
+        $message ="Any Error Message";
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+            ->getMock();
+
+        $psrRequestInterface = $this->createMock(\Psr\Http\Message\RequestInterface::class);
+
+        $this->requestBuilderMock->expects($this->once())
+            ->method('build')
+            ->with($buildObject)
+            ->will($this->returnValue($requestMock));
+
+        $this->apiMock->expects($this->once())
+            ->method('captureCreditCard')
+            ->with($requestMock)
+            ->willThrowException(new \GuzzleHttp\Exception\ClientException($message, $psrRequestInterface));
+
+        $this->command->execute($buildObject);
+    }
+
 }

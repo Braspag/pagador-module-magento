@@ -16,12 +16,24 @@ use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface;
  */
 class CaptureCommand extends AbstractApiCommand
 {
-	protected function sendRequest($request)
-	{
+    /**
+     * @param $request
+     * @return mixed
+     * @throws \Magento\Sales\Exception\CouldNotInvoiceException Avoid the SDK throw to \Exception
+     */
+    protected function sendRequest($request)
+    {
         if (!isset($request) || !$request instanceof RequestInterface) {
             throw new \InvalidArgumentException('Braspag Credit Card Request Lib object should be provided');
         }
 
-		return $this->getApi()->captureCreditCard($request);
-	}
+        try {
+            return $this->getApi()->captureCreditCard($request);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            throw new \Magento\Sales\Exception\CouldNotInvoiceException(
+                __('Braspag communication error. Error code: ' . $e->getCode())
+            );
+        }
+    }
 }
+

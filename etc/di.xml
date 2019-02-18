@@ -267,6 +267,7 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\Validator</argument>
         </arguments>
     </virtualType>
 
