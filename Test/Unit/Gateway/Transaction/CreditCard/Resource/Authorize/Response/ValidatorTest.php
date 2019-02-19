@@ -17,11 +17,6 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     	);
     }
 
-    public function tearDown()
-    {
-
-    }
-
     public function testValidate()
     {
     	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
