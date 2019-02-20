@@ -42,6 +42,7 @@
                 <can_initialize>1</can_initialize>
                 <can_use_internal>1</can_use_internal>
                 <create_invoice_on_notification_captured>1</create_invoice_on_notification_captured>
+                <customer_identity_attribute_code>vat_id</customer_identity_attribute_code>
             </braspag_pagador_creditcard>
             <braspag_pagador_creditcardtoken>
                 <active>1</active>
