@@ -105,7 +105,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerIdentity()
     {
-        return $this->getQuote()->getData($this->getConfig()->getIdentityAttributeCode());
+        $attribute = $this->getConfig()->getIdentityAttributeCode();
+        return $this->getQuote()->getBillingAddress()->getData($attribute) ?: $this->getQuote()->getData($attribute);
     }
 
     /**
