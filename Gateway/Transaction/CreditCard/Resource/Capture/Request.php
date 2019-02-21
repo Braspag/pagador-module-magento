@@ -32,12 +32,20 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getMerchantId()
     {
-        return $this->getConfig()->getMerchantId();
+        return $this->getConfig()->getConfig()->getValue(
+            \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORES,
+            $this->getOrderAdapter()->getStoreId()
+        );
     }
 
     public function getMerchantKey()
     {
-        return $this->getConfig()->getMerchantKey();
+        return $this->getConfig()->getConfig()->getValue(
+            \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORES,
+            $this->getOrderAdapter()->getStoreId()
+        );
     }
 
     public function isTestEnvironment()

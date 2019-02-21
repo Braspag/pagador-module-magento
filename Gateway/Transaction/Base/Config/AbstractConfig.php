@@ -53,7 +53,7 @@ abstract class AbstractConfig
         return $this;
     }
 
-    protected function getConfig()
+    public function getConfig()
     {
         return $this->getContext()->getConfig();
     }
