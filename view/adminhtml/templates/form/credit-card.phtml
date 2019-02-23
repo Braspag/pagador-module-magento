@@ -90,4 +90,20 @@ $ccExpYear = $block->getInfoData('cc_exp_year');
             </div>
         </div>
     <?php endif; ?>
+
+    <?php if ($block->isInstallmentsActive()): ?>
+        <?php $allInstallments = $block->getAllInstallments();?>
+        <div class="field installments required admin__field _required" id="<?php echo $code;?>_cc_installments">
+            <label for="<?php echo $code;?>_installments" class="admin__field-label">
+                <span><?= $block->escapeHtml(__('Installments')) ?></span>
+            </label>
+            <div class="admin__field-control">
+                <select  name="payment[cc_installments]" class=" select admin__control-select select-installments" id="<?php echo $code;?>_installments">
+                    <?php foreach($allInstallments as $installment) :?>
+                        <option value="<?php echo $installment['id']; ?>"><?php echo $block->escapeHtml(__($installment['label']));?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+    <?php endif; ?>
 </fieldset>

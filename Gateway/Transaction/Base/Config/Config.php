@@ -13,13 +13,21 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
  */
 class Config extends AbstractConfig implements ConfigInterface
 {
-	public function getMerchantId()
+	public function getMerchantId($scopeId = null, $scopeType = \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
 	{
+		if (!empty($scopeId)) {
+			return $this->getConfig()->getValue(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID, $scopeType, $scopeId);
+		}
+
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID);
 	}
 
-	public function getMerchantKey()
+	public function getMerchantKey($scopeId = null, $scopeType = \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
 	{
+		if (!empty($scopeId)) {
+			return $this->getConfig()->getValue(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY, $scopeType, $scopeId);
+		}
+
 		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY);
 	}
 

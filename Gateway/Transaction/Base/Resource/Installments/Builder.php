@@ -6,37 +6,53 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Instal
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface;
 use Magento\Checkout\Model\Session;
+use Magento\Framework\App\State;
+use \Magento\Backend\Model\Session\Quote as SessionAdmin;
 
 class Builder implements BuilderInterface
 {
-	protected $installments = [];
+    protected $installments = [];
 
-	protected $instalLmentfactory;
+    protected $instalLmentfactory;
 
-	protected $installmentsConfig;
+    protected $installmentsConfig;
 
-	protected $installmentFactory;
+    protected $installmentFactory;
 
-	protected $session;
+    protected $session;
 
-	protected $grandTotal;
+    /**
+     * @var State
+     */
+    private $state;
 
-	protected $installmentsNumber = 0;
+    /**
+     * @var SessionAdmin
+     */
+    private $sessionAdmin;
 
-	public function __construct(
-		InstallmentFactoryInterface $instalLmentfactory,
-		InstallmentsConfigInterface $installmentsConfig,
-		Session $session
-	) {
-		$this->setInstalLmentfactory($instalLmentfactory);
-		$this->setInstallmentsConfig($installmentsConfig);
-		$this->setSession($session);
-	}
+    protected $grandTotal;
+
+    protected $installmentsNumber = 0;
+
+    public function __construct(
+        InstallmentFactoryInterface $instalLmentfactory,
+        InstallmentsConfigInterface $installmentsConfig,
+        Session $session,
+        State $state,
+        SessionAdmin $sessionAdmin
+    ) {
+        $this->setInstalLmentfactory($instalLmentfactory);
+        $this->setInstallmentsConfig($installmentsConfig);
+        $this->setSession($session);
+        $this->setSessionAdmin($sessionAdmin);
+        $this->setState($state);
+    }
 
     public function build()
     {
         $installmentItems = $this->getInstallmentsNumber();
-    	for ($i = 1; $i < $installmentItems ; $i++) {
+        for ($i = 1; $i < $installmentItems ; $i++) {
 
             if (!$this->canProcessInstallment($i)) {
                 break;
@@ -44,9 +60,9 @@ class Builder implements BuilderInterface
 
             $installment = $this->getInstallmentFactory()->create($i, $this->getGrandTotal(), $this->getInstallmentsConfig());
             $this->addInstallment($installment);
-    	}
+        }
 
-    	return $this->installments;
+        return $this->installments;
     }
 
     protected function addInstallment(InstallmentInterface $installment)
@@ -64,21 +80,26 @@ class Builder implements BuilderInterface
 
     protected function getInstallmentsNumber()
     {
-    	if (!$this->installmentsNumber) {
-    		$this->installmentsNumber = (int) $this->getInstallmentsConfig()->getInstallmentsNumber();
-    		$this->installmentsNumber++;
-    	}
+        if (!$this->installmentsNumber) {
+            $this->installmentsNumber = (int) $this->getInstallmentsConfig()->getInstallmentsNumber();
+            $this->installmentsNumber++;
+        }
 
-    	return $this->installmentsNumber;
+        return $this->installmentsNumber;
     }
 
     protected function getGrandTotal()
     {
-    	if (!$this->grandTotal) {
-    		$this->grandTotal = $this->getSession()->getQuote()->getGrandTotal();
-    	}
+        $session = $this->getSession();
+        if ($this->getState()->getAreaCode() === 'adminhtml') {
+            $session = $this->getSessionAdmin();
+        }
 
-    	return $this->grandTotal;
+        if (!$this->grandTotal) {
+            $this->grandTotal = $session->getQuote()->getGrandTotal();
+        }
+
+        return $this->grandTotal;
     }
 
     protected function getInstallmentsConfig()
@@ -116,4 +137,38 @@ class Builder implements BuilderInterface
 
         return $this;
     }
+
+    /**
+     * @return State
+     */
+    private function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param State $state
+     */
+    private function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return SessionAdmin
+     */
+    private function getSessionAdmin()
+    {
+        return $this->sessionAdmin;
+    }
+
+    /**
+     * @param SessionAdmin $sessionAdmin
+     */
+    private function setSessionAdmin($sessionAdmin)
+    {
+        $this->sessionAdmin = $sessionAdmin;
+    }
+
+
 }
