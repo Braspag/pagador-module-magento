@@ -56,91 +56,104 @@
         <type id="Rede-Elo" order="13">
             <label>Rede Elo</label>
         </type>
-        <type id="RedeSitef-Visa" order="14">
+
+        <type id="Rede2-Visa" order="14">
+            <label>Rede2 Visa</label>
+        </type>
+        <type id="Rede2-Master" order="15">
+            <label>Rede2 Master</label>
+        </type>
+        <type id="Rede2-Hipercard" order="16">
+            <label>Rede2 Hipercard</label>
+        </type>
+        <type id="Rede2-Hiper" order="17">
+            <label>Rede2 Hiper</label>
+        </type>
+        <type id="Rede2-Diners" order="18">
+            <label>Rede2 Diners</label>
+        </type>
+        <type id="Rede2-Elo" order="19">
+            <label>Rede2 Elo</label>
+        </type>
+
+        <type id="RedeSitef-Visa" order="20">
             <label>RedeSitef Visa</label>
         </type>
-        <type id="RedeSitef-Master" order="15">
+        <type id="RedeSitef-Master" order="21">
             <label>RedeSitef Master</label>
         </type>
-        <type id="RedeSitef-Hipercard" order="16">
+        <type id="RedeSitef-Hipercard" order="22">
             <label>RedeSitef Hipercard</label>
         </type>
-        <type id="RedeSitef-Diners" order="17">
+        <type id="RedeSitef-Diners" order="23">
             <label>RedeSitef Diners</label>
         </type>
-        <type id="CieloSitef-Visa" order="18">
+        <type id="CieloSitef-Visa" order="24">
             <label>CieloSitef Visa</label>
         </type>
-        <type id="CieloSitef-Master" order="19">
+        <type id="CieloSitef-Master" order="25">
             <label>CieloSitef Master</label>
         </type>
-        <type id="CieloSitef-Amex" order="20">
+        <type id="CieloSitef-Amex" order="26">
             <label>CieloSitef Amex</label>
         </type>
-        <type id="CieloSitef-Elo" order="21">
+        <type id="CieloSitef-Elo" order="27">
             <label>CieloSitef Elo</label>
         </type>
-        <type id="CieloSitef-Aura" order="22">
+        <type id="CieloSitef-Aura" order="28">
             <label>CieloSitef Aura</label>
         </type>
-        <type id="CieloSitef-Jcb" order="23">
+        <type id="CieloSitef-Jcb" order="29">
             <label>CieloSitef Jcb</label>
         </type>
-        <type id="CieloSitef-Diners" order="24">
+        <type id="CieloSitef-Diners" order="30">
             <label>CieloSitef Diners</label>
         </type>
-        <type id="CieloSitef-Discover" order="25">
+        <type id="CieloSitef-Discover" order="31">
             <label>CieloSitef Discover</label>
         </type>
-        <type id="SantanderSitef-Visa" order="26">
+        <type id="SantanderSitef-Visa" order="32">
             <label>SantanderSitef Visa</label>
         </type>
-        <type id="SantanderSitef-Master" order="27">
+        <type id="SantanderSitef-Master" order="33">
             <label>SantanderSitef Master</label>
         </type>
 
         <!-- Billet -->
-        <type id="Bradesco" order="28">
+        <type id="Bradesco" order="34">
             <label>Bradesco</label>
         </type>
-        <type id="Bradesco2" order="28">
+        <type id="Bradesco2" order="35">
             <label>Bradesco 2</label>
         </type>
-        <type id="BancoDoBrasil" order="29">
+        <type id="BancoDoBrasil" order="36">
             <label>Banco do Brasil</label>
         </type>
-        <type id="CitiBank" order="30">
+        <type id="CitiBank" order="37">
             <label>CitiBank</label>
         </type>
-        <type id="ItauShopline" order="31">
+        <type id="ItauShopline" order="38">
             <label>Itau</label>
         </type>
-        <type id="Itau2" order="31">
+        <type id="Itau2" order="39">
             <label>Itau 2</label>
         </type>
-        <type id="Brb" order="32">
+        <type id="Brb" order="40">
             <label>Brb</label>
         </type>
-        <type id="Caixa" order="33">
+        <type id="Caixa" order="41">
             <label>Caixa</label>
         </type>
-        <type id="Santander" order="34">
+        <type id="Santander" order="42">
             <label>Santander</label>
         </type>
-        <type id="HSBC" order="35">
+        <type id="HSBC" order="43">
             <label>HSBC</label>
         </type>
 
         <!-- Debit Card -->
-        <type id="Cielo" order="36">
+        <type id="Cielo" order="44">
             <label>Cielo</label>
         </type>
-        <type id="Rede2-Visa" order="37">
-            <label>Rede2 Visa</label>
-        </type>
-        <type id="Rede2-Master" order="38">
-            <label>Rede2 Master</label>
-        </type>
-
     </credit_cards>
 </payment>
