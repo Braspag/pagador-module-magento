@@ -2,6 +2,8 @@ language: php
 
 php:
     - 7.0
+    - 7.1
+    - 7.2
 
 env:
     global:
@@ -15,7 +17,7 @@ cache:
 
 install:
     - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then echo '{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}' > auth.json; fi"
-    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then composer install --prefer-dist; fi"
+    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then composer install --prefer-dist -vvv; fi"
 
 script:
     - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text; fi"
