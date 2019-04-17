@@ -119,41 +119,69 @@
             <label>SantanderSitef Master</label>
         </type>
 
+        <type id="Cielo30-Visa" order="34">
+            <label>Cielo30 Visa</label>
+        </type>
+        <type id="Cielo30-Master" order="35">
+            <label>Cielo30 Master</label>
+        </type>
+        <type id="Cielo30-Amex" order="36">
+            <label>Cielo30 Amex</label>
+        </type>
+        <type id="Cielo30-Elo" order="37">
+            <label>Cielo30 Elo</label>
+        </type>
+        <type id="Cielo30-Aura" order="38">
+            <label>Cielo30 Aura</label>
+        </type>
+        <type id="Cielo30-Jcb" order="39">
+            <label>Cielo30 Jcb</label>
+        </type>
+        <type id="Cielo30-Diners" order="40">
+            <label>Cielo30 Diners</label>
+        </type>
+        <type id="Cielo30-Discover" order="41">
+            <label>Cielo30 Discover</label>
+        </type>
+
         <!-- Billet -->
-        <type id="Bradesco" order="34">
+        <type id="Bradesco" order="42">
             <label>Bradesco</label>
         </type>
-        <type id="Bradesco2" order="35">
+        <type id="Bradesco2" order="43">
             <label>Bradesco 2</label>
         </type>
-        <type id="BancoDoBrasil" order="36">
+        <type id="BancoDoBrasil" order="44">
             <label>Banco do Brasil</label>
         </type>
-        <type id="CitiBank" order="37">
+        <type id="CitiBank" order="45">
             <label>CitiBank</label>
         </type>
-        <type id="ItauShopline" order="38">
+        <type id="ItauShopline" order="46">
             <label>Itau</label>
         </type>
-        <type id="Itau2" order="39">
+        <type id="Itau2" order="47">
             <label>Itau 2</label>
         </type>
-        <type id="Brb" order="40">
+        <type id="Brb" order="48">
             <label>Brb</label>
         </type>
-        <type id="Caixa" order="41">
+        <type id="Caixa" order="49">
             <label>Caixa</label>
         </type>
-        <type id="Santander" order="42">
+        <type id="Santander" order="50">
             <label>Santander</label>
         </type>
-        <type id="HSBC" order="43">
+        <type id="HSBC" order="51">
             <label>HSBC</label>
         </type>
 
         <!-- Debit Card -->
         <type id="Cielo" order="44">
             <label>Cielo</label>
+        </type>
+        <type id="Cielo30" order="45">
+            <label>Cielo30</label>
         </type>
     </credit_cards>
 </payment>
