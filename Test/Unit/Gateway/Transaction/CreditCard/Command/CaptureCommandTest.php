@@ -119,6 +119,16 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
+            ->setMethods(
+                [
+                    'getStatus',
+                    'getPaymentAuthenticate',
+                    'getReasonCode',
+                    'getReasonMessage',
+                    'getProviderReturnCode',
+                    'getProviderReturnMessage',
+                    'getLinks'
+                ])
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -130,6 +140,10 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $resultMock->expects($this->once())
             ->method('getFailsDescription')
             ->will($this->returnValue(['Error Message']));
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentAuthenticate')
+            ->will($this->returnValue(false));
 
         $this->validatorMock->expects($this->once())
             ->method('validate')

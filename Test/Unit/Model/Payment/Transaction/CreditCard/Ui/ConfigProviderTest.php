@@ -23,12 +23,40 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     public function testGetConfig()
     {
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthenticate3DsVbv')
+            ->method('isSaveCardActive')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isSaveCardActive')
+            ->method('isAuthenticate3Ds20Active')
             ->will($this->returnValue(true));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('isAuthenticate3Ds20AuthorizeOnFailure')
+            ->will($this->returnValue(true));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('isAuthenticate3Ds20AuthorizeOnUnenrolled')
+            ->will($this->returnValue(true));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuthenticate3Ds20Mdd1')
+            ->will($this->returnValue('mdd 1'));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuthenticate3Ds20Mdd2')
+            ->will($this->returnValue('mdd 2'));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuthenticate3Ds20Mdd3')
+            ->will($this->returnValue('mdd 3'));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuthenticate3Ds20Mdd4')
+            ->will($this->returnValue('mdd 4'));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuthenticate3Ds20Mdd5')
+            ->will($this->returnValue('mdd 5'));
 
         static::assertEquals(
             [
@@ -37,9 +65,17 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'savecard' => [
                             'active' => ['braspag_pagador_creditcard' => true]
                         ],
-                        'authenticate' => [
-                            'active' => ['braspag_pagador_creditcard' => true]
-                        ],
+
+                        'bpmpi_authenticate' => [
+                            'active' => true,
+                            'authorize_on_failure' => true,
+                            'authorize_on_unenrolled' => true,
+                            'mdd1' => 'mdd 1',
+                            'mdd2' => 'mdd 2',
+                            'mdd3' => 'mdd 3',
+                            'mdd4' => 'mdd 4',
+                            'mdd5' => 'mdd 5'
+                        ]
                     ]
                 ]
             ],

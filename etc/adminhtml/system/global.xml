@@ -13,6 +13,21 @@
 	        <comment>Public key for Double Authentication Braspag. Contact Braspag to get your own merchant id.</comment>
 	        <config_path>webjump_braspag/pagador/merchant_key</config_path>
 	    </field>
+	    <field id="merchant_name" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Merchant Name</label>
+	        <comment>Name of establishment registered in Braspag. Contact Braspag to get your own Merchant Name.</comment>
+	        <config_path>webjump_braspag/pagador/merchant_name</config_path>
+	    </field>
+	    <field id="establishment_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Establishment Code</label>
+	        <comment>Code of Establishment of the Cielo E-Commerce 3.0. Contact Braspag to get your own Establishment Code.</comment>
+	        <config_path>webjump_braspag/pagador/establishment_code</config_path>
+	    </field>
+	    <field id="mcc" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>MCC</label>
+	        <comment>Establishment Category Code. Contact Braspag to get your own Establishment Category Code.</comment>
+	        <config_path>webjump_braspag/pagador/mcc</config_path>
+	    </field>
         <field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Test Mode Active</label>
             <comment />

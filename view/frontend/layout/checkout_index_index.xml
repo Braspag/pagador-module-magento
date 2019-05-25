@@ -8,6 +8,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Webjump_BraspagPagador::css/style.css"/>
+        <script src="Webjump_BraspagPagador::js/vendor/BP.Mpi.3ds20.conf.js"/>
+        <script src="Webjump_BraspagPagador::js/vendor/BP.Mpi.3ds20.min.js"/>
     </head>
     <body>
         <referenceBlock name="after.body.start">
@@ -23,6 +25,11 @@
                     <item name="components" xsi:type="array">
                         <item name="checkout" xsi:type="array">
                             <item name="children" xsi:type="array">
+                                <item name="authBpmpi" xsi:type="array">
+                                    <item name="sortOrder" xsi:type="string">5</item>
+                                    <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/auth/bpmpi</item>
+                                    <item name="displayArea" xsi:type="string">authentication</item>
+                                </item>
                                 <item name="steps" xsi:type="array">
                                     <item name="children" xsi:type="array">
                                         <item name="billing-step" xsi:type="array">

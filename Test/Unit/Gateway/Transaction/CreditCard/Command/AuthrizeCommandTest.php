@@ -126,7 +126,36 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+            ->setMethods(
+                [
+                    'getPayment',
+                    'getPaymentPaymentId',
+                    'getPaymentProofOfSale',
+                    'getPaymentAcquirerTransactionId',
+                    'getPaymentAuthorizationCode',
+                    'getPaymentReceivedDate',
+                    'getPaymentCapturedDate',
+                    'getPaymentStatus',
+                    'getPaymentAuthenticate',
+                    'getPaymentReasonCode',
+                    'getPaymentReasonMessage',
+                    'getPaymentProviderReturnCode',
+                    'getPaymentProviderReturnMessage',
+                    'getPaymentLinks',
+                    'getPaymentFraudAnalysis',
+                    'getPaymentCardToken',
+                    'getPaymentCardNumberEncrypted',
+                    'getPaymentCardBrand',
+                    'getAuthenticationUrl',
+                    'getPaymentCardProvider',
+                    'getVelocityAnalysis',
+                    'getAvs'
+                ])
             ->getMock();
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentAuthenticate')
+            ->will($this->returnValue(false));
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 

@@ -23,7 +23,10 @@ define(
         'Magento_Checkout/js/model/quote',
         'ko',
         'Magento_Checkout/js/model/error-processor',
-        'mage/validation'
+        'mage/validation',
+        'mage/url',
+        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-renderer'
     ],
     function (
         Component,
@@ -40,7 +43,10 @@ define(
         quote,
         ko,
         errorProcessor,
-        mageValidation
+        mageValidation,
+        mageUrl,
+        bpmpiAuthenticate,
+        bpmpiRenderer
     ) {
         'use strict';
 
@@ -51,13 +57,20 @@ define(
                 creditCardsavecard: 0,
                 creditCardExpDate: '',
                 creditCardSoptPaymentToken: '',
-                allInstallments: ko.observableArray([])
+                allInstallments: ko.observableArray([]),
+                bpmpiInitControl: 0,
+                bpmpiAuthFailureType: ko.observable(),
+                bpmpiAuthCavv: ko.observable(),
+                bpmpiAuthXid: ko.observable(),
+                bpmpiAuthEci: ko.observable(),
+                bpmpiAuthVersion: ko.observable(),
+                bpmpiAuthReferenceId: ko.observable()
             },
 
             initialize: function () {
                 this._super();
-
                 this.getCcInstallments();
+                this.bpmpiPlaceOrderInit();
             },
 
             maskCvv: function (data, event) {
@@ -120,7 +133,13 @@ define(
                         'cc_owner': this.creditCardOwner(),
                         'cc_installments': this.creditCardInstallments(),
                         'cc_savecard': this.creditCardsavecard() ? 1 : 0,
-                        'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                        'cc_soptpaymenttoken': this.creditCardSoptPaymentToken(),
+                        'authentication_failure_type': this.bpmpiAuthFailureType(),
+                        'authentication_cavv': this.bpmpiAuthCavv(),
+                        'authentication_xid': this.bpmpiAuthXid(),
+                        'authentication_eci': this.bpmpiAuthEci(),
+                        'authentication_version': this.bpmpiAuthVersion(),
+                        'authentication_reference_id': this.bpmpiAuthReferenceId()
                     }
                 };
 
@@ -226,6 +245,7 @@ define(
                             }
                         ).done(
                         function (orderId) {
+
                             self.afterPlaceOrder();
 
                             fullScreenLoader.startLoader();
@@ -310,12 +330,87 @@ define(
                 return true;
             },
 
-            placeOrder: function (data, event) {
+            isBpmpiEnabled: function() {
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active;
+            },
+
+            bpmpiAuthorizeOnFailure: function() {
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.authorize_on_failure;
+            },
+
+            bpmpiAuthorizeOnUnenrolled: function() {
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.authorize_on_unenrolled;
+            },
+
+            bpmpiPlaceOrderInit: function() {
                 var self = this;
 
-                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                if (self.isBpmpiEnabled()) {
+                    if (self.bpmpiInitControl >= 1) {
+                        return false;
+                    }
+                    self.bpmpiInitControl = 1;
+
+                    $('.bpmpi_auth_failure_type').change(function () {
+
+                        if (!$("#" + self.item.method).is(':checked')) {
+                            return false;
+                        }
+
+                        self.bpmpiAuthFailureType($('.bpmpi_auth_failure_type').val());
+                        self.bpmpiAuthCavv($('.bpmpi_auth_cavv').val());
+                        self.bpmpiAuthXid($('.bpmpi_auth_xid').val());
+                        self.bpmpiAuthEci($('.bpmpi_auth_eci').val());
+                        self.bpmpiAuthVersion($('.bpmpi_auth_version').val());
+                        self.bpmpiAuthReferenceId($('.bpmpi_auth_reference_id').val());
+
+                        if ((self.bpmpiAuthFailureType() == '1' || self.bpmpiAuthFailureType() == '4') && self.bpmpiAuthorizeOnFailure()) {
+                            self.getPlaceOrderDeferredObject();
+                            fullScreenLoader.stopLoader();
+                            return false;
+                        }
+
+                        if (self.bpmpiAuthFailureType() == '2' && self.bpmpiAuthorizeOnUnenrolled()) {
+                            self.getPlaceOrderDeferredObject();
+                            fullScreenLoader.stopLoader();
+                            return false;
+                        }
+
+                        if (self.bpmpiAuthFailureType() == '0') {
+                            self.getPlaceOrderDeferredObject();
+                            fullScreenLoader.stopLoader();
+                            return false;
+                        }
+
+                        errorProcessor.process({"status": '404', "responseText": '{"message":"Authentication Failed"}'}, self.messageContainer);
+                        fullScreenLoader.stopLoader();
+
+                        return false;
+                    });
+                }
+
+                return false;
+            },
+
+            placeOrder: function (data, event) {
+
+                var self = this;
+
+                if (!this.validateForm('#'+ this.getCode() + '-form')) {
                     return;
                 }
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', $("#"+this.item.method+"_cc_number"));
+                bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', $("#"+this.item.method+"_cc_owner"));
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', $("#"+this.item.method+"_expiration"));
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', $("#"+this.item.method+"_expiration_yr"));
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd3);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd4);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd5);
 
                 if (event) {
                     event.preventDefault();
@@ -327,7 +422,22 @@ define(
 
                 this.isPlaceOrderActionAllowed(false);
 
-                this.getPlaceOrderDeferredObject();
+                if (!bpmpiAuthenticate.isBpmpiEnabled('credit')) {
+                    fullScreenLoader.startLoader();
+                    self.getPlaceOrderDeferredObject();
+                    fullScreenLoader.stopLoader();
+                    return true;
+                }
+
+                fullScreenLoader.startLoader();
+
+                bpmpiAuthenticate.execute()
+                    .then(function (data){
+                        return false;
+                    }).catch(function(){
+                        fullScreenLoader.stopLoader();
+                        return false;
+                    });
 
                 return true;
             },
@@ -516,7 +626,6 @@ define(
                     }
                 ];
             }
-
         });
     }
 );

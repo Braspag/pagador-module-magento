@@ -5,6 +5,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authori
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
 
 /**
  * Validator
@@ -28,6 +29,13 @@ class Validator implements ValidatorInterface
 	const SCHEDULED = 20;
 
     protected $statusDenied;
+    protected $creditCardConfigInterface;
+
+    public function __construct(
+        CreditCardConfigInterface $creditCardConfigInterface
+    ) {
+        $this->creditCardConfigInterface = $creditCardConfigInterface;
+    }
 
     public function validate(array $validationSubject)
     {
@@ -40,11 +48,11 @@ class Validator implements ValidatorInterface
         $message = [];
 
         if (in_array($response->getPaymentStatus(), $this->getStatusDenied($response))) {
-        	$status = false;
-        	$message = [$response->getPaymentProviderReturnMessage()];
+            $status = false;
+            $message = $response->getPaymentProviderReturnMessage();
         }
 
-    	return new Result($status, $message);
+        return new Result($status, [$message]);
     }
 
     /**
@@ -54,6 +62,7 @@ class Validator implements ValidatorInterface
     protected function getStatusDenied(ResponseInterface $response)
     {
         if (! $this->statusDenied) {
+
             $this->statusDenied = [self::DENIED, self::VOIDED, self::ABORTED];
 
             if (! $response->getAuthenticationUrl()) {

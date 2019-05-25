@@ -36,4 +36,46 @@ class Config extends AbstractConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_REDIRECT_AFTER_PLACE_ORDER);
     }
+
+    public function isAuthenticate3Ds20Active()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_AUTHENTICATE);
+    }
+
+    public function isAuthenticate3Ds20AuthorizeOnFailure()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_AUTHORIZE_ON_FAILURE);
+    }
+
+    public function isAuthenticate3Ds20AuthorizeOnUnenrolled()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_AUTHORIZE_ON_UNENROLLED);
+    }
+
+    public function getAuthenticate3Ds20Mdd1()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_MDD1);
+    }
+
+    public function getAuthenticate3Ds20Mdd2()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_MDD2);
+    }
+
+    public function getAuthenticate3Ds20Mdd3()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_MDD3);
+    }
+
+    public function getAuthenticate3Ds20Mdd4()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_MDD4);
+    }
+
+    public function getAuthenticate3Ds20Mdd5()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_3DS_20_MDD5);
+    }
+
+
 }

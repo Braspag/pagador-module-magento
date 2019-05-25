@@ -119,6 +119,21 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface')
+            ->setMethods(
+                [
+                    'getPaymentAuthenticationUrl',
+                    'getPaymentAcquirerTransactionId',
+                    'getPaymentPaymentId',
+                    'getPaymentReceivedDate',
+                    'getPaymentReasonCode',
+                    'getPaymentReasonMessage',
+                    'getPaymentStatus',
+                    'getPaymentAuthenticate',
+                    'getPaymentProviderReturnCode',
+                    'getPaymentProviderReturnMessage',
+                    'getPaymentLinks',
+                    'getPaymentCardProvider'
+                ])
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -130,6 +145,10 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
         $resultMock->expects($this->once())
             ->method('getFailsDescription')
             ->will($this->returnValue(['Error Message']));
+
+        $responseMock->expects($this->once())
+            ->method('getPaymentAuthenticate')
+            ->will($this->returnValue(false));
 
         $this->validatorMock->expects($this->once())
             ->method('validate')

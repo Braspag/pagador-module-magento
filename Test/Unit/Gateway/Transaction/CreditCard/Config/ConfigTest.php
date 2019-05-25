@@ -65,7 +65,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(6))
             ->method('getValue')
-            ->with('payment/braspag_pagador_creditcard/authenticate_3ds_vbv')
+            ->with('payment/braspag_pagador_creditcard/authenticate_3ds_20')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(7))
@@ -108,7 +108,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('Texto que será impresso na fatura do portador', $this->config->getSoftDescriptor());
         static::assertTrue($this->config->hasAntiFraud());
         static::assertTrue($this->config->hasAvs());
-        static::assertTrue($this->config->isAuthenticate3DsVbv());
+        static::assertTrue($this->config->isAuthenticate3Ds20Active());
         static::assertEquals('checkout/onepage/success', $this->config->getReturnUrl());
         static::assertEquals('customer_taxvat', $this->config->getIdentityAttributeCode());
         static::assertEquals('street_1', $this->config->getCustomerStreetAttribute());

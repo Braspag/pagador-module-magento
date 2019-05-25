@@ -15,7 +15,14 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_VBV_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_vbv';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_20';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_authorize_on_failure';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_authorize_on_unenrolled';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD1 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd1';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD2 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd2';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD3 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd3';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD4 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd4';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD5 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd5';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION = 'payment/braspag_pagador_creditcard/payment_action';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SOFT_ACTION = 'payment/braspag_pagador_creditcard/soft_config';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
@@ -40,7 +47,11 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function hasAvs();
 
-    public function isAuthenticate3DsVbv();
+    public function isAuthenticate3Ds20Active();
+
+    public function isAuthenticate3Ds20AuthorizeOnFailure();
+
+    public function isAuthenticate3Ds20AuthorizeOnUnenrolled();
 
     public function getReturnUrl();
 
@@ -57,4 +68,14 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getCustomerDistrictAttribute();
 
     public function getDecimalGrandTotal();
+
+    public function getAuthenticate3Ds20Mdd1();
+
+    public function getAuthenticate3Ds20Mdd2();
+
+    public function getAuthenticate3Ds20Mdd3();
+
+    public function getAuthenticate3Ds20Mdd4();
+
+    public function getAuthenticate3Ds20Mdd5();
 }

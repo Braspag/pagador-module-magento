@@ -23,6 +23,7 @@ class InstallmentsConfigTest extends \PHPUnit\Framework\TestCase
         $this->config = new InstallmentsConfig(
             $this->contextMock,
             $this->contextMock,
+            $this->scopeConfigMock,
             $this->stateMock,
             [
                 'code' => 'payment_method_custom'

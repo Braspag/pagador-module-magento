@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
 use Magento\Framework\App\State;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
  * Braspag Transaction Base AbstractConfig
@@ -30,15 +31,19 @@ abstract class AbstractConfig
      */
 	protected $contextAdmin;
 
+	protected $scopeConfig;
+
 	public function __construct(
         ContextInterface $context,
         ContextInterface $contextAdmin,
+        ScopeConfigInterface $scopeConfig,
 	    State $appState,
 	    array $data = []
     )
     {
         $this->setContext($context);
         $this->setContextAdmin($contextAdmin);
+        $this->setScopeConfig($scopeConfig);
         $this->setAppState($appState);
         $this->_construct($data);
     }
@@ -121,5 +126,21 @@ abstract class AbstractConfig
     protected function setAppState(State $appState)
     {
         $this->appState = $appState;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScopeConfig()
+    {
+        return $this->scopeConfig;
+    }
+
+    /**
+     * @param mixed $scopeConfig
+     */
+    public function setScopeConfig($scopeConfig)
+    {
+        $this->scopeConfig = $scopeConfig;
     }
 }

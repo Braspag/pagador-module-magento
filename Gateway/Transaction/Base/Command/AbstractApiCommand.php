@@ -2,6 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\CommandInterface;
 use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
@@ -44,14 +45,22 @@ abstract class AbstractApiCommand implements CommandInterface
 	public function execute(array $commandSubject)
 	{
         $request = $this->getRequestBuilder()->build($commandSubject);
-
         $response = $this->sendRequest($request);
+
         if ($this->getValidator()) {
             $result = $this->getValidator()->validate(
                 array_merge($commandSubject, ['response' => $response])
             );
+
             if (!$result->isValid()) {
                 $errorMessage = $result->getFailsDescription();
+
+                if ($response->getPaymentAuthenticate()) {
+                    throw new LocalizedException(
+                        __(reset($errorMessage))
+                    );
+                }
+
                 throw new CommandException(
                     __(reset($errorMessage))
                 );

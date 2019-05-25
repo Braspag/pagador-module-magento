@@ -89,6 +89,9 @@
             <pagador>
                 <test_mode>1</test_mode>
             </pagador>
+            <auth>
+                <token>ZGJhM2E4ZGItZmE1NC00MGUwLThiYWItN2JmYjliNmYyZTJlOkQvaWxSc2ZvcUhsU1VDaHdBTW5seUtkRE5kN0ZNc003Y1Uvdm8wMlJFYWc9</token>
+            </auth>
         </webjump_braspag>
         <webjump_braspag_antifraud>
             <fingerprint>

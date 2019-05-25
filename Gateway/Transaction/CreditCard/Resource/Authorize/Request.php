@@ -268,7 +268,12 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressZipCode()
     {
-        return $this->getShippingAddress()->getPostcode();
+        if ($this->getShippingAddress()) {
+            return $this->getShippingAddress()->getPostcode();
+        }
+
+        return null;
+
     }
 
     /**
@@ -284,7 +289,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressCity()
     {
-        return $this->getShippingAddress()->getCity();
+        if ($this->getShippingAddress()) {
+            return $this->getShippingAddress()->getCity();
+        }
+
+        return null;
     }
 
     /**
@@ -292,7 +301,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressState()
     {
-        return $this->getShippingAddress()->getRegionCode();
+        if ($this->getShippingAddress()) {
+            return $this->getShippingAddress()->getRegionCode();
+        }
+
+        return null;
     }
 
     /**
@@ -393,14 +406,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     }
 
     /**
-     * @return bool
-     */
-    public function getPaymentAuthenticate()
-    {
-        return (bool) $this->getConfig()->isAuthenticate3DsVbv();
-    }
-
-    /**
      * @return mixed
      */
     public function getReturnUrl()
@@ -464,6 +469,62 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
         return ($brand) ? $brand : 'Visa';
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPaymentAuthenticate()
+    {
+        return (bool) $this->getConfig()->isAuthenticate3Ds20Active();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationFailureType()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_failure_type');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentExternalAuthenticationCavv()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_cavv');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationXid()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_xid');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationEci()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_eci');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentCardExternalAuthenticationVersion()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_version');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationReferenceId()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_reference-id');
     }
 
     /**

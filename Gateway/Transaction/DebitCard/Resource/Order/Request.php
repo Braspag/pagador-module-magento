@@ -166,4 +166,60 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
         return $this->billingAddress;
     }
+
+    /**
+     * @return bool
+     */
+    public function getPaymentAuthenticate()
+    {
+        return (bool) $this->getConfig()->isAuthenticate3Ds20Active();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationFailureType()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_failure_type');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentExternalAuthenticationCavv()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_cavv');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationXid()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_xid');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationEci()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_eci');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentCardExternalAuthenticationVersion()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_version');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentExternalAuthenticationReferenceId()
+    {
+        return $this->getPaymentData()->getAdditionalInformation('authentication_reference_id');
+    }
 }
