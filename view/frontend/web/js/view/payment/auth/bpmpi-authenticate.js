@@ -40,15 +40,15 @@ define(
                 });
             },
 
-            isBpmpiEnabled: function(type) {
+            isBpmpiEnabled: function() {
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active || window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
+            },
 
-                if (type == 'credit'){
-                    return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active;
-                }
+            disableBpmpi: function() {
+                window.checkoutConfig.payment.ccform.bpmpi_authenticate.active = false;
+                window.checkoutConfig.payment.dcform.bpmpi_authenticate.active = false;
 
-                if (type == 'debit') {
-                    return window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
-                }
+                return;
             }
         }
     }

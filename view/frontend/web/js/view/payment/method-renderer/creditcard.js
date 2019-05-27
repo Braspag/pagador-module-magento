@@ -364,25 +364,7 @@ define(
                         self.bpmpiAuthVersion($('.bpmpi_auth_version').val());
                         self.bpmpiAuthReferenceId($('.bpmpi_auth_reference_id').val());
 
-                        if ((self.bpmpiAuthFailureType() == '1' || self.bpmpiAuthFailureType() == '4') && self.bpmpiAuthorizeOnFailure()) {
-                            self.getPlaceOrderDeferredObject();
-                            fullScreenLoader.stopLoader();
-                            return false;
-                        }
-
-                        if (self.bpmpiAuthFailureType() == '2' && self.bpmpiAuthorizeOnUnenrolled()) {
-                            self.getPlaceOrderDeferredObject();
-                            fullScreenLoader.stopLoader();
-                            return false;
-                        }
-
-                        if (self.bpmpiAuthFailureType() == '0') {
-                            self.getPlaceOrderDeferredObject();
-                            fullScreenLoader.stopLoader();
-                            return false;
-                        }
-
-                        errorProcessor.process({"status": '404', "responseText": '{"message":"Authentication Failed"}'}, self.messageContainer);
+                        self.getPlaceOrderDeferredObject();
                         fullScreenLoader.stopLoader();
 
                         return false;
@@ -392,6 +374,28 @@ define(
                 return false;
             },
 
+            bpmpiPopulateCreditcardData: function() {
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
+                bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());
+
+                return true;
+            },
+
+            bpmpiPopulateAdditionalData: function() {
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd3);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd4);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd5);
+
+                return true;
+            },
+
             placeOrder: function (data, event) {
 
                 var self = this;
@@ -399,18 +403,6 @@ define(
                 if (!this.validateForm('#'+ this.getCode() + '-form')) {
                     return;
                 }
-
-                bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', $("#"+this.item.method+"_cc_number"));
-                bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', $("#"+this.item.method+"_cc_owner"));
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', $("#"+this.item.method+"_expiration"));
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', $("#"+this.item.method+"_expiration_yr"));
-
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd1);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd2);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd3);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd4);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd5);
 
                 if (event) {
                     event.preventDefault();
@@ -422,14 +414,16 @@ define(
 
                 this.isPlaceOrderActionAllowed(false);
 
-                if (!bpmpiAuthenticate.isBpmpiEnabled('credit')) {
-                    fullScreenLoader.startLoader();
+                fullScreenLoader.startLoader();
+
+                if (!self.isBpmpiEnabled()) {
                     self.getPlaceOrderDeferredObject();
                     fullScreenLoader.stopLoader();
                     return true;
                 }
 
-                fullScreenLoader.startLoader();
+                self.bpmpiPopulateCreditcardData();
+                self.bpmpiPopulateAdditionalData();
 
                 bpmpiAuthenticate.execute()
                     .then(function (data){
@@ -440,10 +434,6 @@ define(
                     });
 
                 return true;
-            },
-
-            isAuthenticated: function () {
-                return window.checkoutConfig.payment.ccform.authenticate.active[this.getCode()];
             },
 
             /**

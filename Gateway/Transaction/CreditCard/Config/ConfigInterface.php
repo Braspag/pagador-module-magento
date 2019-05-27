@@ -15,14 +15,14 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHENTICATE = 'payment/braspag_pagador_creditcard/authenticate_3ds_20';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_authorize_on_failure';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_authorize_on_unenrolled';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD1 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd1';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD2 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd2';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD3 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd3';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD4 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd4';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_3DS_20_MDD5 = 'payment/braspag_pagador_creditcard/authenticate_3ds_20_mdd5';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20 = 'payment/braspag_pagador_creditcard/authentication_3ds_20';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_failure';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unenrolled';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd1';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD2 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd2';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD3 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd3';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD4 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd4';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD5 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd5';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION = 'payment/braspag_pagador_creditcard/payment_action';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SOFT_ACTION = 'payment/braspag_pagador_creditcard/soft_config';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
@@ -36,6 +36,10 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/district_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CREATE_INVOICE_NOTIFICATION_CAPTURE = 'payment/braspag_pagador_creditcard/create_invoice_on_notification_captured';
     const DEFAULT_DECIMAL_GRAND_TOTAL = 2;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_SUCCESS = 0;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE = 1;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
 
     public function isAuthorizeAndCapture();
 
@@ -47,11 +51,11 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function hasAvs();
 
-    public function isAuthenticate3Ds20Active();
+    public function isAuthentication3Ds20Active();
 
-    public function isAuthenticate3Ds20AuthorizeOnFailure();
+    public function isAuthentication3Ds20AuthorizedOnFailure();
 
-    public function isAuthenticate3Ds20AuthorizeOnUnenrolled();
+    public function isAuthentication3Ds20AuthorizeOnUnenrolled();
 
     public function getReturnUrl();
 

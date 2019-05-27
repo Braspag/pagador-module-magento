@@ -27,41 +27,54 @@ abstract class AbstractApiCommand implements CommandInterface
 
 	protected $responseHandler;
 
-    protected $validator;
+    protected $requestValidator;
+
+    protected $responseValidator;
 
 	public function __construct(
 		BraspagApi $api,
 		RequestBuilder $requestBuilder,
 		ResponseHandler $responseHandler,
-        ValidatorInterface $validator = null
+        ValidatorInterface $requestValidator = null,
+        ValidatorInterface $responseValidator = null
 	)
 	{
 		$this->setApi($api);
 		$this->setRequestBuilder($requestBuilder);
 		$this->setResponseHandler($responseHandler);
-        $this->setValidator($validator);
+        $this->setRequestValidator($requestValidator);
+        $this->setResponseValidator($responseValidator);
 	}
 
 	public function execute(array $commandSubject)
 	{
         $request = $this->getRequestBuilder()->build($commandSubject);
+
+        if ($this->getRequestValidator()) {
+            $result = $this->getRequestValidator()->validate(
+                array_merge($commandSubject, ['request' => $request])
+            );
+
+            if (!$result->isValid()) {
+                $errorMessage = $result->getFailsDescription();
+
+                throw new LocalizedException(
+                    __(reset($errorMessage))
+                );
+            }
+        }
+
         $response = $this->sendRequest($request);
 
-        if ($this->getValidator()) {
-            $result = $this->getValidator()->validate(
+        if ($this->getResponseValidator()) {
+            $result = $this->getResponseValidator()->validate(
                 array_merge($commandSubject, ['response' => $response])
             );
 
             if (!$result->isValid()) {
                 $errorMessage = $result->getFailsDescription();
 
-                if ($response->getPaymentAuthenticate()) {
-                    throw new LocalizedException(
-                        __(reset($errorMessage))
-                    );
-                }
-
-                throw new CommandException(
+                throw new LocalizedException(
                     __(reset($errorMessage))
                 );
             }
@@ -110,14 +123,26 @@ abstract class AbstractApiCommand implements CommandInterface
         return $this;
     }
 
-    protected function getValidator()
+    protected function getRequestValidator()
     {
-        return $this->validator;
+        return $this->requestValidator;
     }
 
-    protected function setValidator(ValidatorInterface $validator = null)
+    protected function setRequestValidator(ValidatorInterface $validator = null)
     {
-        $this->validator = $validator;
+        $this->requestValidator = $validator;
+
+        return $this;
+    }
+
+    protected function getResponseValidator()
+    {
+        return $this->responseValidator;
+    }
+
+    protected function setResponseValidator(ValidatorInterface $validator = null)
+    {
+        $this->responseValidator = $validator;
 
         return $this;
     }

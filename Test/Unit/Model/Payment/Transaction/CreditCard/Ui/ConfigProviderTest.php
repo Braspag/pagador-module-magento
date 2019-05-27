@@ -27,15 +27,15 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthenticate3Ds20Active')
+            ->method('isAuthentication3Ds20Active')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthenticate3Ds20AuthorizeOnFailure')
+            ->method('isAuthentication3Ds20AuthorizedOnFailure')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthenticate3Ds20AuthorizeOnUnenrolled')
+            ->method('isAuthentication3Ds20AuthorizeOnUnenrolled')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())

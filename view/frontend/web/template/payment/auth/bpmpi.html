@@ -10,38 +10,39 @@
 <div id="bpmpi_data">
 
     <div id="bpmpi_data_auth">
-        <input type="hidden" name="bpmpiAccessToken" class="bpmpi_accesstoken" data-bind='textInput:bpmpiAuthToken'/>
-        <input type="hidden" name="bpmpiAuthEnabled" class="bpmpi_auth" value="true" data-bind="template: {afterRender: bpmpiAuthLoad()}"/>
-        <input type="hidden" name="bpmpiAuthFailureType" class="bpmpi_auth_failure_type" value=""/>
-        <input type="hidden" name="bpmpiAuthCavv" class="bpmpi_auth_cavv" value=""/>
-        <input type="hidden" name="bpmpiAuthXid" class="bpmpi_auth_xid" value=""/>
-        <input type="hidden" name="bpmpiAuthEci" class="bpmpi_auth_eci" value=""/>
-        <input type="hidden" name="bpmpiAuthVersion" class="bpmpi_auth_version" value=""/>
-        <input type="hidden" name="bpmpiAuthReferenceId" class="bpmpi_auth_reference_id" value=""/>
+        <input type="hidden" name="bpmpi_accesstoken" class="bpmpi_accesstoken" data-bind='textInput:bpmpiAuthToken'/>
+        <input type="hidden" name="bpmpi_auth" class="bpmpi_auth" value="true" data-bind="template: {afterRender: getBpmpiAuthToken()}"/>
+        <input type="hidden" name="bpmpi_auth_failure_type" class="bpmpi_auth_failure_type" value=""/>
+        <input type="hidden" name="bpmpi_auth_cavv" class="bpmpi_auth_cavv" value=""/>
+        <input type="hidden" name="bpmpi_auth_xid" class="bpmpi_auth_xid" value=""/>
+        <input type="hidden" name="bpmpi_auth_eci" class="bpmpi_auth_eci" value=""/>
+        <input type="hidden" name="bpmpi_auth_version" class="bpmpi_auth_version" value=""/>
+        <input type="hidden" name="bpmpi_auth_reference_id" class="bpmpi_auth_reference_id" value=""/>
     </div>
 
     <div id="bpmpi_data_payment">
-        <input type="hidden" name="bpmpiPaymentMethod" class="bpmpi_paymentmethod" value=""/>
-        <input type="hidden" name="bpmpiCardNumner" class="bpmpi_cardnumber" value=""/>
-        <input type="hidden" name="bpmpiBillToName" class="bpmpi_billto_name" value=""/>
-        <input type="hidden" name="bpmpiCardExpirationMonth" class="bpmpi_cardexpirationmonth" value=""/>
-        <input type="hidden" name="bpmpiCardExpirationYear" class="bpmpi_cardexpirationyear" value=""/>
+        <input type="hidden" name="bpmpi_paymentmethod" class="bpmpi_paymentmethod" value=""/>
+        <input type="hidden" name="bpmpi_cardnumber" class="bpmpi_cardnumber" value=""/>
+        <input type="hidden" name="bpmpi_billto_name" class="bpmpi_billto_name" value=""/>
+        <input type="hidden" name="bpmpi_cardexpirationmonth" class="bpmpi_cardexpirationmonth" value=""/>
+        <input type="hidden" name="bpmpi_cardexpirationyear" class="bpmpi_cardexpirationyear" value=""/>
 
-        <input type="hidden" name="bpmpiTotalAmount" class="bpmpi_totalamount" value=""/>
-        <input type="hidden" name="bpmpiCurrency" class="bpmpi_currency" value=""/>
-        <input type="hidden" name="bpmpiOrderNumber" class="bpmpi_ordernumber" value=""/>
-        <input type="hidden" name="bpmpiTransactionMode" class="bpmpi_transaction_mode" value=""/>
-        <input type="hidden" name="bpmpiMerchantUrl" class="bpmpi_merchant_url" value=""/>
+        <input type="hidden" name="bpmpi_totalamount" class="bpmpi_totalamount" value=""/>
+        <input type="hidden" name="bpmpi_currency" class="bpmpi_currency" value=""/>
+        <input type="hidden" name="bpmpi_ordernumber" class="bpmpi_ordernumber" value=""/>
+        <input type="hidden" name="bpmpi_transaction_mode" class="bpmpi_transaction_mode" value=""/>
+        <input type="hidden" name="bpmpi_merchant_url" class="bpmpi_merchant_url" value=""/>
     </div>
 
     <div id="bpmpi_data_billto">
-        <input type="hidden" name="bpmpi_billTo_phonenumber" class="bpmpi_billTo_phonenumber" value=""/>
+        <input type="hidden" name="bpmpi_billto_contactname" class="bpmpi_billto_contactname" value=""/>
+        <input type="hidden" name="bpmpi_billto_phonenumber" class="bpmpi_billto_phonenumber" value=""/>
         <input type="hidden" name="bpmpi_billto_customerid" class="bpmpi_billto_customerid" value=""/>
-        <input type="hidden" name="bpmpi_billTo_email" class="bpmpi_billTo_email" value=""/>
-        <input type="hidden" name="bpmpi_billTo_street1" class="bpmpi_billTo_street1" value=""/>
-        <input type="hidden" name="bpmpi_billTo_street2" class="bpmpi_billTo_street2" value=""/>
-        <input type="hidden" name="bpmpi_billTo_city" class="bpmpi_billTo_city" value=""/>
-        <input type="hidden" name="bpmpi_billTo_state" class="bpmpi_billTo_state" value=""/>
+        <input type="hidden" name="bpmpi_billto_email" class="bpmpi_billto_email" value=""/>
+        <input type="hidden" name="bpmpi_billto_street1" class="bpmpi_billto_street1" value=""/>
+        <input type="hidden" name="bpmpi_billto_street2" class="bpmpi_billto_street2" value=""/>
+        <input type="hidden" name="bpmpi_billto_city" class="bpmpi_billto_city" value=""/>
+        <input type="hidden" name="bpmpi_billto_state" class="bpmpi_billto_state" value=""/>
         <input type="hidden" name="bpmpi_billto_zipcode" class="bpmpi_billto_zipcode" value=""/>
         <input type="hidden" name="bpmpi_billto_country" class="bpmpi_billto_country" value=""/>
     </div>
@@ -49,12 +50,12 @@
     <div id="bpmpi_data_shipto">
         <input type="hidden" name="bpmpi_shipto_sameasbillto" class="bpmpi_shipto_sameasbillto" value=""/>
         <input type="hidden" name="bpmpi_shipto_addressee" class="bpmpi_shipto_addressee" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_phonenumber" class="bpmpi_shipTo_phonenumber" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_email" class="bpmpi_shipTo_email" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_street1" class="bpmpi_shipTo_street1" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_street2" class="bpmpi_shipTo_street2" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_city" class="bpmpi_shipTo_city" value=""/>
-        <input type="hidden" name="bpmpi_shipTo_state" class="bpmpi_shipTo_state" value=""/>
+        <input type="hidden" name="bpmpi_shipto_phonenumber" class="bpmpi_shipto_phonenumber" value=""/>
+        <input type="hidden" name="bpmpi_shipto_email" class="bpmpi_shipto_email" value=""/>
+        <input type="hidden" name="bpmpi_shipto_street1" class="bpmpi_shipto_street1" value=""/>
+        <input type="hidden" name="bpmpi_shipto_street2" class="bpmpi_shipto_street2" value=""/>
+        <input type="hidden" name="bpmpi_shipto_city" class="bpmpi_shipto_city" value=""/>
+        <input type="hidden" name="bpmpi_shipto_state" class="bpmpi_shipto_state" value=""/>
         <input type="hidden" name="bpmpi_shipto_zipcode" class="bpmpi_shipto_zipcode" value=""/>
         <input type="hidden" name="bpmpi_shipto_country" class="bpmpi_shipto_country" value=""/>
     </div>

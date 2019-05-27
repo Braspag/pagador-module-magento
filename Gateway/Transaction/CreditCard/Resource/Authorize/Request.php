@@ -476,7 +476,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentAuthenticate()
     {
-        return (bool) $this->getConfig()->isAuthenticate3Ds20Active();
+        return (bool) $this->getConfig()->isAuthentication3Ds20Active();
     }
 
     /**
