@@ -19,8 +19,8 @@ class TokenCommand implements CommandInterface
         $this->api = $api;
     }
 
-	public function execute(RequestInterface $request)
-	{
-		return $this->api->getToken($request);
-	}
+    public function execute(RequestInterface $request)
+    {
+        return $this->api->getToken($request);
+    }
 }

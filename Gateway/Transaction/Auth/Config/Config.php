@@ -10,27 +10,27 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
  */
 class Config extends AbstractConfig implements ConfigInterface
 {
-	public function getAuthenticationBasicToken()
-	{
+    public function getAuthenticationBasicToken()
+    {
         return $this->getScopeConfig()->getValue(self::CONFIG_BRASPAG_PAGADOR_GLOBAL_AUTHENTICATION_TOKEN);
-	}
+    }
 
-	public function getMerchantName()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_NAME);
-	}
+    public function getMerchantName()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_NAME);
+    }
 
-	public function getEstablishmentCode()
+    public function getEstablishmentCode()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_ESTABLISHMENT_CODE);
     }
 
-	public function getMCC()
+    public function getMCC()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MMC);
     }
 
-	public function getIsTestEnvironment()
+    public function getIsTestEnvironment()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT);
     }

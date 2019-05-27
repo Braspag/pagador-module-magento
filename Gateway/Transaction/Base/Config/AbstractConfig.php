@@ -19,26 +19,26 @@ abstract class AbstractConfig
     const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'webjump_braspag/pagador/test_mode';
 
     protected $config;
-	protected $context;
+    protected $context;
 
     /**
      * @var State
      */
-	protected $appState;
+    protected $appState;
 
     /**
      * @var ContextInterface
      */
-	protected $contextAdmin;
+    protected $contextAdmin;
 
-	protected $scopeConfig;
+    protected $scopeConfig;
 
-	public function __construct(
+    public function __construct(
         ContextInterface $context,
         ContextInterface $contextAdmin,
         ScopeConfigInterface $scopeConfig,
-	    State $appState,
-	    array $data = []
+        State $appState,
+        array $data = []
     )
     {
         $this->setContext($context);

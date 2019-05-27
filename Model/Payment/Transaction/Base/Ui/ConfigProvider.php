@@ -18,29 +18,29 @@ use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface 
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-	protected $baseConfig;
-	protected $creditCardConfig;
-	protected $debitCardConfig;
+    protected $baseConfig;
+    protected $creditCardConfig;
+    protected $debitCardConfig;
 
-	public function __construct(
-		BaseConfig $baseConfig,
+    public function __construct(
+        BaseConfig $baseConfig,
         CreditCardConfig $creditCardConfig,
         DebitCardConfig $debitCardConfig
-	) {
-		$this->setBaseConfig($baseConfig);
-		$this->creditCardConfig = $creditCardConfig;
-		$this->debitCardConfig = $debitCardConfig;
-	}
+    ) {
+        $this->setBaseConfig($baseConfig);
+        $this->creditCardConfig = $creditCardConfig;
+        $this->debitCardConfig = $debitCardConfig;
+    }
 
     public function getConfig()
     {
         return [
             'payment' => [
-        		'braspag' => [
+                'braspag' => [
                     'merchantId'    => $this->getBaseConfig()->getMerchantId(),
                     'merchantKey'   => $this->getBaseConfig()->getMerchantKey()
                 ]
-        	]
+            ]
         ];
     }
 

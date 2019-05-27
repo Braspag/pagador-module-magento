@@ -21,33 +21,33 @@ use Magento\Payment\Gateway\Command\CommandException;
  */
 abstract class AbstractApiCommand implements CommandInterface
 {
-	protected $api;
+    protected $api;
 
-	protected $requestBuilder;
+    protected $requestBuilder;
 
-	protected $responseHandler;
+    protected $responseHandler;
 
     protected $requestValidator;
 
     protected $responseValidator;
 
-	public function __construct(
-		BraspagApi $api,
-		RequestBuilder $requestBuilder,
-		ResponseHandler $responseHandler,
+    public function __construct(
+        BraspagApi $api,
+        RequestBuilder $requestBuilder,
+        ResponseHandler $responseHandler,
         ValidatorInterface $requestValidator = null,
         ValidatorInterface $responseValidator = null
-	)
-	{
-		$this->setApi($api);
-		$this->setRequestBuilder($requestBuilder);
-		$this->setResponseHandler($responseHandler);
+    )
+    {
+        $this->setApi($api);
+        $this->setRequestBuilder($requestBuilder);
+        $this->setResponseHandler($responseHandler);
         $this->setRequestValidator($requestValidator);
         $this->setResponseValidator($responseValidator);
-	}
+    }
 
-	public function execute(array $commandSubject)
-	{
+    public function execute(array $commandSubject)
+    {
         $request = $this->getRequestBuilder()->build($commandSubject);
 
         if ($this->getRequestValidator()) {
@@ -83,7 +83,7 @@ abstract class AbstractApiCommand implements CommandInterface
         $this->getResponseHandler()->handle($commandSubject, ['response' => $response]);
 
         return $this;
-	}
+    }
 
     abstract protected function sendRequest($request);
 
