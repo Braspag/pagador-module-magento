@@ -39,7 +39,8 @@ function bpmpi_config() {
         },
         onDisabled: function () {
             // Loja não requer autenticação do portador (classe "bpmpi_auth" false -> autenticação desabilitada).
-            jQuery('.bpmpi_auth_failure_type').val(3);
+            jQuery('.bpmpi_auth_failure_type').val(3)
+                .trigger('change');
         },
         onError: function (e) {
             // Erro no processo de autenticação.

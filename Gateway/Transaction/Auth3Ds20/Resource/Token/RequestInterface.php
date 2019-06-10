@@ -7,9 +7,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
-use Webjump\Braspag\Pagador\Transaction\Api\Auth\Token\RequestInterface as BraspaglibRequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface as BraspaglibRequestInterface;
 
 interface RequestInterface extends BraspaglibRequestInterface
 {

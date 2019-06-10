@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
 use \Magento\Framework\DataObject;
-use Webjump\Braspag\Pagador\Transaction\Resource\Auth\Token\Response as AuthTokenResponse;
+use Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
 
 /**
  * Class Builder
- * @package Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token
+ * @package Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token
  */
 class Builder implements BuilderInterface
 {
@@ -22,7 +22,7 @@ class Builder implements BuilderInterface
     /**
      * @return DataObject
      */
-    public function build(AuthTokenResponse $token)
+    public function build(Auth3Ds20TokenResponse $token)
     {
         $tokenObject = $this->dataObject;
         $tokenObject->setToken($token->getAccessToken());

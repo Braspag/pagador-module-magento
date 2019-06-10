@@ -20,8 +20,8 @@ class AuthTokenManagerTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->requestMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\RequestInterface::class);
-        $this->tokenCommandMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth\Command\TokenCommand::class);
+        $this->requestMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface::class);
+        $this->tokenCommandMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand::class);
         $this->cookieManagerMock = $this->createMock(\Magento\Framework\Stdlib\CookieManagerInterface::class);
         $this->publicCookieMetadata = $this->createMock(\Magento\Framework\Stdlib\Cookie\PublicCookieMetadata::class);
 
@@ -30,7 +30,7 @@ class AuthTokenManagerTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->responseMock = $this->createMock(\Webjump\Braspag\Pagador\Transaction\Resource\Auth\Token\Response::class);
-        $this->builderMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\BuilderInterface::class);
+        $this->builderMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface::class);
         $this->dataObjectMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
             ->setMethods(['getExpiresIn', 'getToken'])
             ->getMock();
@@ -59,7 +59,7 @@ class AuthTokenManagerTest extends \PHPUnit\Framework\TestCase
         $this->cookieManagerMock
             ->expects($this->once())
             ->method('getCookie')
-            ->with(\Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\RequestInterface::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false)
+            ->with(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false)
             ->will($this->returnValue(null));
         // perform the changes
 
@@ -118,7 +118,7 @@ class AuthTokenManagerTest extends \PHPUnit\Framework\TestCase
         $this->cookieManagerMock
             ->expects($this->exactly(2))
             ->method('getCookie')
-            ->with(\Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\RequestInterface::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false)
+            ->with(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false)
             ->will($this->returnValue($tokenData));
 
         // perform the changes

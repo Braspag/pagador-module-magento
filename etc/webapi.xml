@@ -15,8 +15,8 @@
         </resources>
     </route>
 
-    <route url="/V1/braspag/auth/token" method="GET">
-        <service class="Webjump\BraspagPagador\Api\AuthTokenManagerInterface" method="getToken"/>
+    <route url="/V1/braspag/auth3ds20/token" method="GET">
+        <service class="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" method="getToken"/>
         <resources>
             <resource ref="anonymous" />
         </resources>

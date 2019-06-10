@@ -10,16 +10,16 @@
 
 namespace Webjump\BraspagPagador\Model;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\Auth\Token\Response as AuthTokenResponse;
-use Webjump\BraspagPagador\Api\AuthTokenManagerInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
+use Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface;
 use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\RequestInterface as AuthTokenRequest;
+use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface as Auth3Ds20TokenRequest;
 use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth\Command\TokenCommand;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth\Resource\Token\BuilderInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand;
+use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface;
 use Magento\Framework\DataObject;
 
-class AuthTokenManager implements AuthTokenManagerInterface
+class Auth3Ds20TokenManager implements Auth3Ds20TokenManagerInterface
 {
     protected $request;
     protected $tokenCommand;
@@ -30,14 +30,14 @@ class AuthTokenManager implements AuthTokenManagerInterface
     protected $tokenObject;
 
     /**
-     * AuthTokenManager constructor.
-     * @param AuthTokenRequest $request
+     * Auth3Ds20TokenManager constructor.
+     * @param Auth3Ds20TokenRequest $request
      * @param BraspagApi $api
      * @param \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager
      * @param \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory
      */
     public function __construct(
-        AuthTokenRequest $request,
+        Auth3Ds20TokenRequest $request,
         TokenCommand $tokenCommand,
         \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory,
@@ -53,17 +53,17 @@ class AuthTokenManager implements AuthTokenManagerInterface
     }
 
     /**
-     * @return AuthTokenRequest
+     * @return Auth3Ds20TokenRequest
      */
-    protected function getRequest(): AuthTokenRequest
+    protected function getRequest(): Auth3Ds20TokenRequest
     {
         return $this->request;
     }
 
     /**
-     * @param AuthTokenRequest $request
+     * @param Auth3Ds20TokenRequest $request
      */
-    protected function setRequest(AuthTokenRequest $request)
+    protected function setRequest(Auth3Ds20TokenRequest $request)
     {
         $this->request = $request;
     }
@@ -182,7 +182,7 @@ class AuthTokenManager implements AuthTokenManagerInterface
     }
 
     /**
-     * @param AuthTokenResponse $authenticationResponse
+     * @param Auth3Ds20TokenResponse $authenticationResponse
      * @return $this
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Stdlib\Cookie\CookieSizeLimitReachedException
@@ -196,7 +196,7 @@ class AuthTokenManager implements AuthTokenManagerInterface
             ->setPath('/');
 
         $this->getCookieManager()->setPublicCookie(
-            AuthTokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME,
+            Auth3Ds20TokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME,
             $this->getTokenObject()->getToken(),
             $cookieMetadata
         );
@@ -206,7 +206,7 @@ class AuthTokenManager implements AuthTokenManagerInterface
 
     protected function validateSavedTokenLife()
     {
-        return (bool) $this->getCookieManager()->getCookie(AuthTokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false);
+        return (bool) $this->getCookieManager()->getCookie(Auth3Ds20TokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME, false);
     }
 
     protected function getSavedToken()
@@ -217,7 +217,7 @@ class AuthTokenManager implements AuthTokenManagerInterface
 
         return [['token' => 
             $this->getCookieManager()
-                ->getCookie(AuthTokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME, null)
+                ->getCookie(Auth3Ds20TokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME, null)
         ]];
     }
 }

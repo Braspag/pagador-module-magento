@@ -172,7 +172,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getPaymentAuthenticate()
     {
-        return (bool) $this->getConfig()->isAuthentication3Ds20Active();
+        return (bool) $this->getConfig()->isAuth3Ds20Active()
+            && $this->getPaymentExternalAuthenticationFailureType() != ConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED;
     }
 
     /**

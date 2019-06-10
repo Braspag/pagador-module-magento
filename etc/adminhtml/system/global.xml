@@ -28,6 +28,7 @@
 	        <comment>Establishment Category Code. Contact Braspag to get your own Establishment Category Code.</comment>
 	        <config_path>webjump_braspag/pagador/mcc</config_path>
 	    </field>
+
         <field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Test Mode Active</label>
             <comment />

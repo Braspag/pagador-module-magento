@@ -36,19 +36,30 @@ class Validator implements ValidatorInterface
         $status = true;
         $message = [];
 
-        if ($this->debitCardConfigInterface->isAuthentication3Ds20Active()) {
+        if ($this->debitCardConfigInterface->isAuth3Ds20Active()) {
 
             $failureType = $request->getPaymentExternalAuthenticationFailureType();
 
-            if (( $failureType == DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
-                    || $failureType == DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
-                ) && !$this->debitCardConfigInterface->isAuthentication3Ds20AuthorizedOnFailure()
+            if ($failureType == DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
+                && !$this->debitCardConfigInterface->isAuth3Ds20AuthorizedOnError()
+            ) {
+                return new Result(false, ["Debit Card Payment Failure. #MPI{$failureType}"]);
+            }
+
+            if ($failureType == DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
+                 && !$this->debitCardConfigInterface->isAuth3Ds20AuthorizedOnFailure()
             ) {
                 return new Result(false, ["Debit Card Payment Failure. #MPI{$failureType}"]);
             }
 
             if ($failureType == DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED
-                && !$this->debitCardConfigInterface->isAuthentication3Ds20AuthorizeOnUnenrolled()
+                && !$this->debitCardConfigInterface->isAuth3Ds20AuthorizeOnUnenrolled()
+            ) {
+                return new Result(false, ["Debit Card Payment Failure. #MPI{$failureType}"]);
+            }
+
+            if (!preg_match("#cielo#is", $request->getPaymentProvider())
+                && $failureType != DebitCardConfigInterface::BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED
             ) {
                 return new Result(false, ["Debit Card Payment Failure. #MPI{$failureType}"]);
             }

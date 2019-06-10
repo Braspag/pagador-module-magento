@@ -27,7 +27,20 @@ define(
                 if (item) {
                     $('.'+item).val(value);
                 }
-            }
+            },
+
+            createInputHiddenElement: function(appendToElement, elementName, elementClass, value) {
+                if (appendToElement.find("input[value='"+elementName+"']").length == 0) {
+                    appendToElement.append(
+                        $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', elementName)
+                            .addClass(elementClass)
+                    );
+                }
+
+                this.renderBpmpiData(elementClass, false, value);
+            },
         }
     }
 );

@@ -40,8 +40,14 @@ define(
                 });
             },
 
+            isBpmpiMasterCardNotifyOnlyEnabled: function() {
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.mastercard_notify_only
+                    || window.checkoutConfig.payment.dcform.bpmpi_authenticate.mastercard_notify_only;
+            },
+
             isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active || window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
+                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active
+                    || window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
             },
 
             disableBpmpi: function() {

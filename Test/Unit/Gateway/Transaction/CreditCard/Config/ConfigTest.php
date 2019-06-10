@@ -108,7 +108,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('Texto que será impresso na fatura do portador', $this->config->getSoftDescriptor());
         static::assertTrue($this->config->hasAntiFraud());
         static::assertTrue($this->config->hasAvs());
-        static::assertTrue($this->config->isAuthentication3Ds20Active());
+        static::assertTrue($this->config->isAuth3Ds20Active());
         static::assertEquals('checkout/onepage/success', $this->config->getReturnUrl());
         static::assertEquals('customer_taxvat', $this->config->getIdentityAttributeCode());
         static::assertEquals('street_1', $this->config->getCustomerStreetAttribute());

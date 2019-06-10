@@ -11,15 +11,15 @@ define(
     [
         'uiElement',
         'jquery',
-        'Webjump_BraspagPagador/js/action/auth/token',
+        'Webjump_BraspagPagador/js/action/auth3ds20/token',
         'mage/translate',
         'Magento_Checkout/js/model/quote',
         'mage/validation',
         'mage/url',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-authenticate',
-        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-renderer'
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
         Component,
@@ -38,7 +38,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/auth/bpmpi',
+                template: 'Webjump_BraspagPagador/payment/auth3ds20/bpmpi',
                 bpmpiAuthToken: ko.observable(),
                 bpmpiLoadControl: 0
             },
@@ -49,23 +49,8 @@ define(
 
             bpmpiAuthLoad: function () {
                 var self = this;
-
                 self.processBpmpiData();
-
                 bpmpi_load();
-            },
-
-            createInputHiddenElement: function(appendToElement, elementName, elementClass, value) {
-                if (appendToElement.find("input[value='"+elementName+"']").length == 0) {
-                    appendToElement.append(
-                        $('<input>')
-                            .attr('type', 'hidden')
-                            .attr('name', elementName)
-                            .addClass(elementClass)
-                    );
-                }
-
-                bpmpiRenderer.renderBpmpiData(elementClass, false, value);
             },
 
             getBpmpiAuthToken: function() {
@@ -105,13 +90,19 @@ define(
 
             processBpmpiData: function() {
                 var self = this;
-
                 let bpmpiAuth = false;
+                let bpmpiMasterCardNotifyOnly = false;
+
                 if (bpmpiAuthenticate.isBpmpiEnabled()) {
                     bpmpiAuth = true;
                 }
 
+                if (bpmpiAuthenticate.isBpmpiMasterCardNotifyOnlyEnabled()) {
+                    bpmpiMasterCardNotifyOnly = true;
+                }
+
                 bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, bpmpiAuth);
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth_notifyonly', false, bpmpiMasterCardNotifyOnly);
                 bpmpiRenderer.renderBpmpiData('bpmpi_totalamount', false, (quote.totals().grand_total*100));
                 bpmpiRenderer.renderBpmpiData('bpmpi_currency', false, quote.totals().quote_currency_code);
                 bpmpiRenderer.renderBpmpiData('bpmpi_ordernumber', false, quote.getQuoteId());
@@ -152,11 +143,11 @@ define(
                 var bpmpiDataCartItems = $('#bpmpi_data_cart');
 
                 $.each(window.checkoutConfig.quoteItemData, function(k, i){
-                    self.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_description[]', 'bpmpi_cart_'+k+'_description', i.description);
-                    self.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_name[]', 'bpmpi_cart_'+k+'_name', i.name);
-                    self.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_sku[]', 'bpmpi_cart_'+k+'_sku', i.sku);
-                    self.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_quantity[]', 'bpmpi_cart_'+k+'_quantity', i.qty);
-                    self.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_unitprice[]', 'bpmpi_cart_'+k+'_unitprice', i.price*100);
+                    bpmpiRenderer.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_description[]', 'bpmpi_cart_'+k+'_description', i.description);
+                    bpmpiRenderer.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_name[]', 'bpmpi_cart_'+k+'_name', i.name);
+                    bpmpiRenderer.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_sku[]', 'bpmpi_cart_'+k+'_sku', i.sku);
+                    bpmpiRenderer.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_quantity[]', 'bpmpi_cart_'+k+'_quantity', i.qty);
+                    bpmpiRenderer.createInputHiddenElement(bpmpiDataCartItems, 'bpmpi_cart_unitprice[]', 'bpmpi_cart_'+k+'_unitprice', i.price*100);
                 });
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_guest', false, !window.checkoutConfig.isCustomerLoggedIn);

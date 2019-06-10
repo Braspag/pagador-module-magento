@@ -33,22 +33,34 @@ class Validator implements ValidatorInterface
         }
 
         $request = $validationSubject['request'];
+
         $status = true;
         $message = [];
 
-        if ($this->creditCardConfigInterface->isAuthentication3Ds20Active()) {
+        if ($this->creditCardConfigInterface->isAuth3Ds20Active()) {
 
             $failureType = $request->getPaymentExternalAuthenticationFailureType();
 
-            if (( $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
-                    || $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
-                ) && !$this->creditCardConfigInterface->isAuthentication3Ds20AuthorizedOnFailure()
+            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
+                && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizedOnError()
+            ) {
+                return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
+            }
+
+            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
+                && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizedOnFailure()
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
             if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED
-                && !$this->creditCardConfigInterface->isAuthentication3Ds20AuthorizeOnUnenrolled()
+                && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizeOnUnenrolled()
+            ) {
+                return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
+            }
+
+            if (!preg_match("#cielo#is", $request->getPaymentProvider())
+                && $failureType != CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }

@@ -27,7 +27,7 @@
                             <item name="children" xsi:type="array">
                                 <item name="authBpmpi" xsi:type="array">
                                     <item name="sortOrder" xsi:type="string">5</item>
-                                    <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/auth/bpmpi</item>
+                                    <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi</item>
                                     <item name="displayArea" xsi:type="string">authentication</item>
                                 </item>
                                 <item name="steps" xsi:type="array">

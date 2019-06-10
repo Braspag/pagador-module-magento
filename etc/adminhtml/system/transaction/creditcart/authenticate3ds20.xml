@@ -10,10 +10,25 @@
         <label>Authentication 3DS 2.0</label>
         <field id="authentication_3ds_20" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Active</label>
-            <comment />
+            <comment>Currently the Authentication 3DS 2.0 is available only for acquirer Cielo.</comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20</config_path>
         </field>
+
+        <field id="authentication_3ds_20_mastercard_notify_only" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Master Card - Notify Only</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20_mastercard_notify_only</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_authorize_on_error" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Authorize On Error</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_error</config_path>
+        </field>
+
         <field id="authentication_3ds_20_authorize_on_failure" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Authorize On Failure</label>
             <comment />
@@ -22,7 +37,7 @@
         </field>
 
         <field id="authentication_3ds_20_authorize_on_unenrolled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
-            <label>Place Order On Unenrolled</label>
+            <label>Authorize On Unenrolled</label>
             <comment />
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unenrolled</config_path>

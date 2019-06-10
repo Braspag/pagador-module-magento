@@ -1,7 +1,7 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Auth\Command;
+namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Auth3Ds20\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Auth\Command\TokenCommand;
+use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand;
 
 class TokenCommandTest extends \PHPUnit\Framework\TestCase
 {

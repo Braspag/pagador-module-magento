@@ -20,7 +20,7 @@ define(
 
         return function () {
             var serviceUrl;
-            serviceUrl = urlBuilder.createUrl('/braspag/auth/token/', {});
+            serviceUrl = urlBuilder.createUrl('/braspag/auth3ds20/token/', {});
 
             return storage.get(
                 serviceUrl, false

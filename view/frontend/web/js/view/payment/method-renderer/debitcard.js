@@ -23,8 +23,8 @@ define(
         'Magento_Checkout/js/action/place-order',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
-        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-authenticate',
-        'Webjump_BraspagPagador/js/view/payment/auth/bpmpi-renderer'
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
         Component,
@@ -279,12 +279,8 @@ define(
                 return window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
             },
 
-            bpmpiAuthorizeOnFailure: function() {
-                return window.checkoutConfig.payment.dcform.bpmpi_authenticate.authorize_on_failure;
-            },
-
-            bpmpiAuthorizeOnUnenrolled: function() {
-                return window.checkoutConfig.payment.dcform.bpmpi_authenticate.authorize_on_unenrolled;
+            isBpmpiMasterCardNotifyOnlyEnabled: function() {
+                return window.checkoutConfig.payment.dcform.bpmpi_authenticate.mastercard_notify_only;
             },
 
             bpmpiPlaceOrderInit: function() {
@@ -322,10 +318,13 @@ define(
             bpmpiPopulateDebitcard: function(){
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', false, 'Debit');
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
                 bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());
+                bpmpiRenderer.renderBpmpiData('bpmpi_installments', false, 1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth_notifyonly', false, this.isBpmpiMasterCardNotifyOnlyEnabled());
 
                 return true;
             },
@@ -339,6 +338,15 @@ define(
                 bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd5);
 
                 return true;
+            },
+
+            isCieloProviderAvailable: function() {
+
+                if (this.creditCardType().indexOf("Cielo") >= 0) {
+                    return true;
+                }
+
+                return false;
             },
 
             placeOrder: function (data, event) {

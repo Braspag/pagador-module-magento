@@ -76,42 +76,52 @@ class Config extends BaseConfig implements ConfigInterface
         return $config;
     }
 
-    public function isAuthentication3Ds20Active()
+    public function isAuth3Ds20Active()
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20);
     }
 
-    public function isAuthentication3Ds20AuthorizedOnFailure()
+    public function isAuth3Ds20MCOnlyNotifyActive()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MASTERCARD_ONLY_NOTIFY);
+    }
+
+    public function isAuth3Ds20AuthorizedOnError()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_ERROR);
+    }
+
+    public function isAuth3Ds20AuthorizedOnFailure()
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_FAILURE);
     }
 
-    public function isAuthentication3Ds20AuthorizeOnUnenrolled()
+    public function isAuth3Ds20AuthorizeOnUnenrolled()
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED);
     }
 
-    public function getAuthenticate3Ds20Mdd1()
+    public function getAuth3Ds20Mdd1()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1);
     }
 
-    public function getAuthenticate3Ds20Mdd2()
+    public function getAuth3Ds20Mdd2()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD2);
     }
 
-    public function getAuthenticate3Ds20Mdd3()
+    public function getAuth3Ds20Mdd3()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD3);
     }
 
-    public function getAuthenticate3Ds20Mdd4()
+    public function getAuth3Ds20Mdd4()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD4);
     }
 
-    public function getAuthenticate3Ds20Mdd5()
+    public function getAuth3Ds20Mdd5()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD5);
     }

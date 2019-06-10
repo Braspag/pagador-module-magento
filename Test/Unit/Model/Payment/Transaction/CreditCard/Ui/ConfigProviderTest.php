@@ -27,35 +27,39 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthentication3Ds20Active')
+            ->method('isAuth3Ds20Active')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthentication3Ds20AuthorizedOnFailure')
+            ->method('isAuth3Ds20AuthorizedOnError')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('isAuthentication3Ds20AuthorizeOnUnenrolled')
+            ->method('isAuth3Ds20AuthorizedOnFailure')
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('getAuthenticate3Ds20Mdd1')
+            ->method('isAuth3Ds20AuthorizeOnUnenrolled')
+            ->will($this->returnValue(true));
+
+        $this->creditCardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd1')
             ->will($this->returnValue('mdd 1'));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('getAuthenticate3Ds20Mdd2')
+            ->method('getAuth3Ds20Mdd2')
             ->will($this->returnValue('mdd 2'));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('getAuthenticate3Ds20Mdd3')
+            ->method('getAuth3Ds20Mdd3')
             ->will($this->returnValue('mdd 3'));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('getAuthenticate3Ds20Mdd4')
+            ->method('getAuth3Ds20Mdd4')
             ->will($this->returnValue('mdd 4'));
 
         $this->creditCardConfig->expects($this->once())
-            ->method('getAuthenticate3Ds20Mdd5')
+            ->method('getAuth3Ds20Mdd5')
             ->will($this->returnValue('mdd 5'));
 
         static::assertEquals(
