@@ -5,7 +5,6 @@ function bpmpi_config() {
     return {
         onReady: function () {
             // Evento indicando quando a inicialização do script terminou.
-            // document.getElementById("btnSendOrder").disabled = false;
         },
         onSuccess: function (e) {
             // Cartão elegível para autenticação, e portador autenticou com sucesso.
