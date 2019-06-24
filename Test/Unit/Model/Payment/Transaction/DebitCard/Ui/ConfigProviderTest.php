@@ -11,7 +11,8 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-		$this->debitcardConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+		$this->debitcardConfig = $this
+            ->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->debitcardConfig
@@ -27,6 +28,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     	$this->debitcardConfig->expects($this->once())
     		->method('isAuth3Ds20Active')
     		->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20MCOnlyNotifyActive')
+            ->will($this->returnValue(true));
 
         $this->debitcardConfig->expects($this->once())
             ->method('isAuth3Ds20AuthorizedOnError')
@@ -69,6 +74,8 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         ],
                         'bpmpi_authenticate' => [
                             'active' => true,
+                            'mastercard_notify_only' => true,
+                            'authorize_on_error' => true,
                             'authorize_on_failure' => true,
                             'authorize_on_unenrolled' => true,
                             'mdd1' => 'mdd 1',
@@ -93,6 +100,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
         $this->debitcardConfig->expects($this->once())
             ->method('isAuth3Ds20Active')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20MCOnlyNotifyActive')
             ->will($this->returnValue(true));
 
         $this->debitcardConfig->expects($this->once())
@@ -136,6 +147,8 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         ],
                         'bpmpi_authenticate' => [
                             'active' => true,
+                            'mastercard_notify_only' => true,
+                            'authorize_on_error' => true,
                             'authorize_on_failure' => true,
                             'authorize_on_unenrolled' => true,
                             'mdd1' => 'mdd 1',

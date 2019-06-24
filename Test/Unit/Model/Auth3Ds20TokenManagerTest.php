@@ -29,14 +29,14 @@ class Auth3Ds20TokenManagerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->responseMock = $this->createMock(\Webjump\Braspag\Pagador\Transaction\Resource\Auth\Token\Response::class);
+        $this->responseMock = $this->createMock(\Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response::class);
         $this->builderMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface::class);
         $this->dataObjectMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
             ->setMethods(['getExpiresIn', 'getToken'])
             ->getMock();
 
         $this->model = $objectManager->getObject(
-            AuthTokenManager::class,
+            Auth3Ds20TokenManager::class,
             [
                 'request' => $this->requestMock ,
                 'tokenCommand' => $this->tokenCommandMock,

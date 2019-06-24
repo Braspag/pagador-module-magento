@@ -24,16 +24,17 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetConfig()
     {
-    	$this->baseConfig->expects($this->once())
-    	    ->method('getMerchantId')
-    	    ->will($this->returnValue('BC5D3432-527F-40C6-84BF-C549285536BE'));
+        $this->baseConfig->expects($this->once())
+            ->method('getIsTestEnvironment')
+            ->will($this->returnValue(true));
 
         static::assertEquals(
             [
 	            'payment' => [
 	                'braspag' => [
-	                    'merchantId' => 'BC5D3432-527F-40C6-84BF-C549285536BE',
-                        'merchantKey' => null
+	                    'merchantId' => '',
+                        'merchantKey' => '',
+                        'isTestEnvironment' => true
 	                ]
 	            ],
             ],

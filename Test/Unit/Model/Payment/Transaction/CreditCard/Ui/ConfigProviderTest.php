@@ -31,6 +31,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue(true));
 
         $this->creditCardConfig->expects($this->once())
+            ->method('isAuth3Ds20MCOnlyNotifyActive')
+            ->will($this->returnValue(true));
+
+        $this->creditCardConfig->expects($this->once())
             ->method('isAuth3Ds20AuthorizedOnError')
             ->will($this->returnValue(true));
 
@@ -72,6 +76,8 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
                         'bpmpi_authenticate' => [
                             'active' => true,
+                            'mastercard_notify_only' => true,
+                            'authorize_on_error' => true,
                             'authorize_on_failure' => true,
                             'authorize_on_unenrolled' => true,
                             'mdd1' => 'mdd 1',

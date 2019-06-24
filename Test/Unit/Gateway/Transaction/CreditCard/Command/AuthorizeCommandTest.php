@@ -7,20 +7,18 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeComma
 class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 {
 	private $command;
-
 	private $apiMock;
-
 	private $responseHandlerMock;
-    
-    private $validatorMock;
+    private $validatorRequestMock;
+    private $validatorResponseMock;
 
     public function setUp()
     {
     	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
     	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
-        $this->validatorMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
-
+        $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
+        $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
     }
 
     public function tearDown()
@@ -34,6 +32,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
     		$this->apiMock,
     		$this->requestBuilderMock,
     		$this->responseHandlerMock,
+            null,
             null
     	);
 
@@ -68,7 +67,8 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             $this->apiMock,
             $this->requestBuilderMock,
             $this->responseHandlerMock,
-            $this->validatorMock
+            $this->validatorRequestMock,
+            $this->validatorResponseMock
         );
 
         $buildObject = [];
@@ -81,24 +81,29 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
-        $resultMock->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue(true));
-
-        $this->validatorMock->expects($this->once())
-            ->method('validate')
-            ->with(array_merge($buildObject, ['response' => $responseMock]))
-            ->will($this->returnValue($resultMock));
-
         $this->requestBuilderMock->expects($this->once())
             ->method('build')
             ->with($buildObject)
             ->will($this->returnValue($requestMock));
 
+        $resultMock->expects($this->exactly(2))
+            ->method('isValid')
+            ->will($this->returnValue(true));
+
+        $this->validatorRequestMock->expects($this->once())
+            ->method('validate')
+            ->with(array_merge($buildObject, ['request' => $requestMock]))
+            ->will($this->returnValue($resultMock));
+
         $this->apiMock->expects($this->once())
             ->method('sendCreditCard')
             ->with($requestMock)
             ->will($this->returnValue($responseMock));
+
+        $this->validatorResponseMock->expects($this->once())
+            ->method('validate')
+            ->with(array_merge($buildObject, ['response' => $responseMock]))
+            ->will($this->returnValue($resultMock));
 
         $this->responseHandlerMock->expects($this->once())
             ->method('handle')
@@ -108,16 +113,17 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException Magento\Payment\Gateway\Command\CommandException
+     * @expectedException Magento\Framework\Exception\LocalizedException
      * @expectedExceptionMessage Error Message
      */
-    public function testExecuteWithValidatorError()
+    public function testExecuteWithValidatorErrorOnRequest()
     {
         $this->command = new AuthorizeCommand(
             $this->apiMock,
             $this->requestBuilderMock,
             $this->responseHandlerMock,
-            $this->validatorMock
+            $this->validatorRequestMock,
+            $this->validatorResponseMock
         );
 
         $buildObject = [];
@@ -153,10 +159,6 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
                 ])
             ->getMock();
 
-        $responseMock->expects($this->once())
-            ->method('getPaymentAuthenticate')
-            ->will($this->returnValue(false));
-
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
         $resultMock->expects($this->once())
@@ -167,9 +169,83 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             ->method('getFailsDescription')
             ->will($this->returnValue(['Error Message']));
 
-        $this->validatorMock->expects($this->once())
+        $this->validatorRequestMock->expects($this->once())
             ->method('validate')
-            ->with(array_merge($buildObject, ['response' => $responseMock]))
+            ->with(array_merge($buildObject, ['request' => $requestMock]))
+            ->will($this->returnValue($resultMock));
+
+        $this->requestBuilderMock->expects($this->once())
+            ->method('build')
+            ->with($buildObject)
+            ->will($this->returnValue($requestMock));
+
+        $this->command->execute($buildObject);
+    }
+
+    /**
+     * @expectedException Magento\Framework\Exception\LocalizedException
+     * @expectedExceptionMessage Error Message
+     */
+    public function testExecuteWithValidatorErrorOnResponse()
+    {
+        $this->command = new AuthorizeCommand(
+            $this->apiMock,
+            $this->requestBuilderMock,
+            $this->responseHandlerMock,
+            $this->validatorRequestMock,
+            $this->validatorResponseMock
+        );
+
+        $buildObject = [];
+
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
+            ->getMock();
+
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+            ->setMethods(
+                [
+                    'getPayment',
+                    'getPaymentPaymentId',
+                    'getPaymentProofOfSale',
+                    'getPaymentAcquirerTransactionId',
+                    'getPaymentAuthorizationCode',
+                    'getPaymentReceivedDate',
+                    'getPaymentCapturedDate',
+                    'getPaymentStatus',
+                    'getPaymentAuthenticate',
+                    'getPaymentReasonCode',
+                    'getPaymentReasonMessage',
+                    'getPaymentProviderReturnCode',
+                    'getPaymentProviderReturnMessage',
+                    'getPaymentLinks',
+                    'getPaymentFraudAnalysis',
+                    'getPaymentCardToken',
+                    'getPaymentCardNumberEncrypted',
+                    'getPaymentCardBrand',
+                    'getAuthenticationUrl',
+                    'getPaymentCardProvider',
+                    'getVelocityAnalysis',
+                    'getAvs'
+                ])
+            ->getMock();
+
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
+
+        $resultMock->expects($this->exactly(2))
+            ->method('isValid')
+            ->will($this->onConsecutiveCalls(true, false));
+
+        $resultMock->expects($this->once())
+            ->method('getFailsDescription')
+            ->will($this->returnValue(['Error Message']));
+
+        $resultMock->expects($this->once())
+            ->method('getFailsDescription')
+            ->will($this->returnValue(['Error Message']));
+
+        $this->validatorRequestMock->expects($this->once())
+            ->method('validate')
+            ->with(array_merge($buildObject, ['request' => $requestMock]))
             ->will($this->returnValue($resultMock));
 
         $this->requestBuilderMock->expects($this->once())
@@ -181,6 +257,11 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             ->method('sendCreditCard')
             ->with($requestMock)
             ->will($this->returnValue($responseMock));
+
+        $this->validatorResponseMock->expects($this->once())
+            ->method('validate')
+            ->with(array_merge($buildObject, ['response' => $responseMock]))
+            ->will($this->returnValue($resultMock));
 
         $this->command->execute($buildObject);
     }

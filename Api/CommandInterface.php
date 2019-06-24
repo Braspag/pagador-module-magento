@@ -5,7 +5,7 @@
  */
 namespace Webjump\BraspagPagador\Api;
 
-use Webjump\Braspag\Pagador\Transaction\Api\Auth\Token\RequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface;
 
 /**
  * Interface CommandInterface

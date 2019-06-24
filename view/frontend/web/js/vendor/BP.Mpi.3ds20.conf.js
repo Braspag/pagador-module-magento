@@ -52,8 +52,8 @@ function bpmpi_config() {
             jQuery('.bpmpi_auth_failure_type').val(4)
                 .trigger('change');
         },
-        Environment: env ? env : "SDB",
-        Debug: true
+        Environment: "PRD",
+        Debug: false
     };
 }
 

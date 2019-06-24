@@ -26,7 +26,7 @@ class TokenCommandTest extends \PHPUnit\Framework\TestCase
     {
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Auth\Token\RequestInterface')
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface')
             ->getMock();
 
         $this->command->execute($requestMock);
