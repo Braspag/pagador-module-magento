@@ -2,9 +2,9 @@
 
 namespace Webjump\BraspagPagador\Test\Unit\Model;
 
-use Webjump\BraspagPagador\Model\AuthTokenManager;
+use Webjump\BraspagPagador\Model\Auth3Ds20TokenManager;
 
-class AuthTokenManagerTest extends \PHPUnit\Framework\TestCase
+class Auth3Ds20TokenManagerTest extends \PHPUnit\Framework\TestCase
 {
     private $model;
     private $requestMock;
