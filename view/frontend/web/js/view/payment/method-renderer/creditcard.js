@@ -25,7 +25,7 @@ define(
         'Magento_Checkout/js/model/error-processor',
         'mage/validation',
         'mage/url',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
@@ -45,7 +45,7 @@ define(
         errorProcessor,
         mageValidation,
         mageUrl,
-        bpmpiAuthenticate,
+        authentication3ds20,
         bpmpiRenderer
     ) {
         'use strict';
@@ -331,11 +331,11 @@ define(
             },
 
             isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active;
+                return window.checkoutConfig.payment.ccform.bpmpi_authentication.active;
             },
 
             isBpmpiMasterCardNotifyOnlyEnabled: function() {
-                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.mastercard_notify_only;
+                return window.checkoutConfig.payment.ccform.bpmpi_authentication.mastercard_notify_only;
             },
 
             bpmpiPlaceOrderInit: function() {
@@ -386,11 +386,11 @@ define(
 
             bpmpiPopulateAdditionalData: function() {
 
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd1);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd2);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd3);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd4);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authenticate.mdd5);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd3);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd4);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd5);
 
                 return true;
             },
@@ -433,7 +433,7 @@ define(
                 self.bpmpiPopulateCreditcardData();
                 self.bpmpiPopulateAdditionalData();
 
-                bpmpiAuthenticate.execute()
+                authentication3ds20.bpmpiAuthenticate()
                     .then(function (data){
                         return false;
                     }).catch(function(){

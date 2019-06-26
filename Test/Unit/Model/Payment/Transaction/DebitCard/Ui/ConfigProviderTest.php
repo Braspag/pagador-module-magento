@@ -72,7 +72,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => true]
                         ],
-                        'bpmpi_authenticate' => [
+                        'bpmpi_authentication' => [
                             'active' => true,
                             'mastercard_notify_only' => true,
                             'authorize_on_error' => true,
@@ -145,7 +145,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => false]
                         ],
-                        'bpmpi_authenticate' => [
+                        'bpmpi_authentication' => [
                             'active' => true,
                             'mastercard_notify_only' => true,
                             'authorize_on_error' => true,

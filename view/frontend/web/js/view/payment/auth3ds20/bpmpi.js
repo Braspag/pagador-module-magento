@@ -18,7 +18,7 @@ define(
         'mage/url',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
@@ -31,7 +31,7 @@ define(
         mageUrl,
         ko,
         fullScreenLoader,
-        bpmpiAuthenticate,
+        authentication3ds20,
         bpmpiRenderer
     ) {
         'use strict';
@@ -50,7 +50,8 @@ define(
             bpmpiAuthLoad: function () {
                 var self = this;
                 self.processBpmpiData();
-                bpmpi_load();
+
+                authentication3ds20.bpmpiLoad();
             },
 
             getBpmpiAuthToken: function() {
@@ -61,7 +62,7 @@ define(
                 }
                 self.bpmpiLoadControl = 1;
 
-                if (!bpmpiAuthenticate.isBpmpiEnabled()) {
+                if (!authentication3ds20.isBpmpiEnabled()) {
                     self.bpmpiAuthLoad();
                     return false;
                 }
@@ -77,7 +78,7 @@ define(
                     });
 
                     if (self.bpmpiAuthToken() == '') {
-                        bpmpiAuthenticate.disableBpmpi();
+                        authentication3ds20.disableBpmpi();
                         return false;
                     }
 
@@ -93,11 +94,11 @@ define(
                 let bpmpiAuth = false;
                 let bpmpiMasterCardNotifyOnly = false;
 
-                if (bpmpiAuthenticate.isBpmpiEnabled()) {
+                if (authentication3ds20.isBpmpiEnabled()) {
                     bpmpiAuth = true;
                 }
 
-                if (bpmpiAuthenticate.isBpmpiMasterCardNotifyOnlyEnabled()) {
+                if (authentication3ds20.isBpmpiMasterCardNotifyOnlyEnabled()) {
                     bpmpiMasterCardNotifyOnly = true;
                 }
 

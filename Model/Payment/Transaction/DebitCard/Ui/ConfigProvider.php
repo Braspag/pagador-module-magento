@@ -34,7 +34,7 @@ final class ConfigProvider implements ConfigProviderInterface
                     'superdebito' => [
                         'active' => [self::CODE => $this->getDebitConfig()->isSuperDebitoActive()]
                     ],
-                    'bpmpi_authenticate' => [
+                    'bpmpi_authentication' => [
                         'active' => $this->getDebitConfig()->isAuth3Ds20Active(),
                         'mastercard_notify_only' => $this->getDebitConfig()->isAuth3Ds20MCOnlyNotifyActive(),
                         'authorize_on_error' => $this->getDebitConfig()->isAuth3Ds20AuthorizedOnError(),

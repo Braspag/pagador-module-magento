@@ -25,7 +25,7 @@ class Builder implements BuilderInterface
     public function build(Auth3Ds20TokenResponse $token)
     {
         $tokenObject = $this->dataObject;
-        $tokenObject->setToken($token->getAccessToken());
+        $tokenObject->setToken($token->getToken());
         $tokenObject->setExpiresIn($token->getExpiresIn());
 
         return $tokenObject;

@@ -23,7 +23,7 @@ define(
         'Magento_Checkout/js/action/place-order',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-authenticate',
+        'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
@@ -41,7 +41,7 @@ define(
         placeOrderAction,
         sopt,
         soptToken,
-        bpmpiAuthenticate,
+        authentication3ds20,
         bpmpiRenderer
     ) {
         'use strict';
@@ -276,11 +276,11 @@ define(
             },
 
             isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
+                return window.checkoutConfig.payment.dcform.bpmpi_authentication.active;
             },
 
             isBpmpiMasterCardNotifyOnlyEnabled: function() {
-                return window.checkoutConfig.payment.dcform.bpmpi_authenticate.mastercard_notify_only;
+                return window.checkoutConfig.payment.dcform.bpmpi_authentication.mastercard_notify_only;
             },
 
             bpmpiPlaceOrderInit: function() {
@@ -331,11 +331,11 @@ define(
 
             bpmpiPopulateAdditionalData: function(){
 
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd1);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd2);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd3);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd4);
-                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.dcform.bpmpi_authenticate.mdd5);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd3);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd4);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd5);
 
                 return true;
             },
@@ -379,7 +379,7 @@ define(
                     self.bpmpiPopulateDebitcard();
                     self.bpmpiPopulateAdditionalData();
 
-                    bpmpiAuthenticate.execute()
+                    authentication3ds20.bpmpiAuthenticate()
                         .then(function (data){
                             return false;
                         }).catch(function(){

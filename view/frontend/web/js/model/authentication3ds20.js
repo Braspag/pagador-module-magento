@@ -5,24 +5,40 @@
  *
  * @link        http://www.webjump.com.br
  */
-/*browser:true*/
+ /*browser:true*/
 /*global define*/
 define(
     [
-        'jquery'
+        "jquery",
+    	"Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf",
+    	"Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.lib"
     ],
     function(
-        $
+        $,
+        authentication3ds20conf,
+        authentication3ds20lib
     ) {
         'use strict';
 
         return {
 
-            execute: function () {
+            isBpmpiEnabled: function () {
+                return window.checkoutConfig.payment.ccform.bpmpi_authentication.active
+                    || window.checkoutConfig.payment.dcform.bpmpi_authentication.active;
+        	},
+
+            initialize: function () {
+            },
+
+            bpmpiLoad: function () {
+                authentication3ds20lib.bpmpi_load();
+            },
+
+            bpmpiAuthenticate: function () {
                 self = this;
 
                 return new Promise(function(resolve, reject){
-                    bpmpi_authenticate()
+                    authentication3ds20lib.bpmpi_authentication()
                         .then(function(){
 
                             var returnData = {
@@ -41,21 +57,20 @@ define(
             },
 
             isBpmpiMasterCardNotifyOnlyEnabled: function() {
-                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.mastercard_notify_only
-                    || window.checkoutConfig.payment.dcform.bpmpi_authenticate.mastercard_notify_only;
-            },
-
-            isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.ccform.bpmpi_authenticate.active
-                    || window.checkoutConfig.payment.dcform.bpmpi_authenticate.active;
+                return window.checkoutConfig.payment.ccform.bpmpi_authentication.mastercard_notify_only
+                    || window.checkoutConfig.payment.dcform.bpmpi_authentication.mastercard_notify_only;
             },
 
             disableBpmpi: function() {
-                window.checkoutConfig.payment.ccform.bpmpi_authenticate.active = false;
-                window.checkoutConfig.payment.dcform.bpmpi_authenticate.active = false;
+                window.checkoutConfig.payment.ccform.bpmpi_authentication.active = false;
+                window.checkoutConfig.payment.dcform.bpmpi_authentication.active = false;
 
                 return;
+            },
+
+            getConf: function () {
+                return authentication3ds20conf;
             }
-        }
+        };
     }
 );
