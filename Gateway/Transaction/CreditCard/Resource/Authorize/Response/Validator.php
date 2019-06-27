@@ -49,7 +49,11 @@ class Validator implements ValidatorInterface
 
         if (in_array($response->getPaymentStatus(), $this->getStatusDenied($response))) {
             $status = false;
+
             $message = $response->getPaymentProviderReturnMessage();
+            if (empty($message)) {
+                $message = "Credit Card Payment Failure. #BP{$response->getPaymentStatus()}";
+            }
         }
 
         return new Result($status, [$message]);
