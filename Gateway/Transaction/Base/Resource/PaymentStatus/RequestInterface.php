@@ -22,4 +22,14 @@ interface RequestInterface extends BraspaglibRequestInterface
      * @return string
      */
     public function getPaymentId() : string;
+
+    /**
+     * @param integer $storeId
+     */
+    public function setStoreId($storeId = null);
+
+    /**
+     * @return mixed
+     */
+    public function getStoreId();
 }

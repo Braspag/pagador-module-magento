@@ -24,10 +24,6 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetConfig()
     {
-        $this->baseConfig->expects($this->once())
-            ->method('getIsTestEnvironment')
-            ->will($this->returnValue(true));
-
         static::assertEquals(
             [
 	            'payment' => [
