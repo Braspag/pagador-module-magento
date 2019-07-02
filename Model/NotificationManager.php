@@ -156,6 +156,7 @@ class NotificationManager implements NotificationManagerInterface
 
         $request = $this->getPaymentStatusRequest();
         $request->setPaymentId($paymentId);
+        $request->setStoreId($orderPayment->getOrder()->getStoreId());
 
         $type = 'billet';
         $method = $orderPayment->getMethod();
