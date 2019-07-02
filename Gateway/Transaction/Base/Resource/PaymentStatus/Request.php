@@ -19,6 +19,11 @@ class Request extends Config implements RequestInterface
     protected $paymentId;
 
     /**
+     * @var int
+     */
+    protected $storeId;
+
+    /**
      * @var string
      */
     protected $additionalRequest;
@@ -42,6 +47,22 @@ class Request extends Config implements RequestInterface
     public function getPaymentId(): string
     {
         return $this->paymentId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStoreId($storeId = null)
+    {
+        $this->storeId = $storeId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
     }
 
     /**
