@@ -165,9 +165,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
-    protected function upgradeThreeFiveFour(SchemaSetupInterface $setup){
+    protected function upgradeThreeFiveFour(SchemaSetupInterface $setup) {
         $connection = $setup->getConnection();
-        $connection->query("UPDATE core_config_data SET value = replace(value,'Redecard','Rede') WHERE path like '%payment/braspag_pagador%' and value like '%Redecard%';");
+
+        $setup->startSetup();
+        $tableName = $setup->getTable('core_config_data');
+
+        $connection->query("UPDATE  $tableName  SET value = replace(value,'Redecard','Rede') WHERE path like '%payment/braspag_pagador%' and value like '%Redecard%';");
     }
 
     protected function upgradeThreeFiveFive(SchemaSetupInterface $setup, ModuleContextInterface $context) {
