@@ -15,6 +15,13 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/auth3ds20/token" method="GET">
+        <service class="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" method="getToken"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
     <route url="/V1/braspag/creditcard/installments" method="POST">
         <service class="Webjump\BraspagPagador\Api\InstallmentsInterface" method="getInstallments"/>
         <resources>

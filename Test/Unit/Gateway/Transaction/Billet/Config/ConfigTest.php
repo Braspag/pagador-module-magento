@@ -30,6 +30,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->config = new Config(
             $this->contextMock,
             $this->contextMock,
+            $this->scopeConfigMock,
             $this->stateMock
         );
     }

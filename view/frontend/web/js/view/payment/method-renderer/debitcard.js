@@ -18,10 +18,13 @@ define(
         'Magento_Checkout/js/action/redirect-on-success',
         'Magento_Checkout/js/model/error-processor',
         'jquery',
+        'ko',
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/action/place-order',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken'
+        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
+        'Webjump_BraspagPagador/js/model/authentication3ds20',
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
         Component,
@@ -33,17 +36,32 @@ define(
         redirectOnSuccessAction,
         errorProcessor,
         $,
+        ko,
         fullScreenLoader,
         placeOrderAction,
         sopt,
-        soptToken
+        soptToken,
+        authentication3ds20,
+        bpmpiRenderer
     ) {
         'use strict';
 
         return Component.extend({
             defaults: {
                 template: 'Webjump_BraspagPagador/payment/debitcard',
-                redirectAfterPlaceOrder: window.checkoutConfig.payment.redirect_after_place_order
+                redirectAfterPlaceOrder: window.checkoutConfig.payment.redirect_after_place_order,
+                bpmpiInitControl: 0,
+                bpmpiAuthFailureType: ko.observable(),
+                bpmpiAuthCavv: ko.observable(),
+                bpmpiAuthXid: ko.observable(),
+                bpmpiAuthEci: ko.observable(),
+                bpmpiAuthVersion: ko.observable(),
+                bpmpiAuthReferenceId: ko.observable()
+            },
+
+            initialize: function () {
+                this._super();
+                this.bpmpiPlaceOrderInit();
             },
 
             initObservable: function () {
@@ -89,13 +107,7 @@ define(
                     };
 
                     var stoken = sopt.getPaymentToken(options);
-                    // console.log(stoken);
                     self.creditCardSoptPaymentToken(stoken);
-
-
-                    // console.log(self.creditCardSoptPaymentToken());
-
-                    // console.log(self.creditCardSoptPaymentToken());
 
                     for (var i = 0; i < 5; i++){
                         if(!self.creditCardSoptPaymentToken()){
@@ -145,6 +157,7 @@ define(
             getData: function () {
 
                 if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
+
                     return {
                         'method': this.item.method,
                         'additional_data': {
@@ -164,7 +177,13 @@ define(
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
-                        'cc_owner': this.creditCardOwner()
+                        'cc_owner': this.creditCardOwner(),
+                        'authentication_failure_type': this.bpmpiAuthFailureType(),
+                        'authentication_cavv': this.bpmpiAuthCavv(),
+                        'authentication_xid': this.bpmpiAuthXid(),
+                        'authentication_eci': this.bpmpiAuthEci(),
+                        'authentication_version': this.bpmpiAuthVersion(),
+                        'authentication_reference_id': this.bpmpiAuthReferenceId()
                     }
                 };
             },
@@ -212,6 +231,7 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
+
                 this.updateCreditCardExpData();
                 var self = this;
                 if (! (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive())) {
@@ -232,7 +252,6 @@ define(
                                 RedirectAfterPlaceOrder(orderId)
                             ).done(
                                 function (url) {
-                                    console.log(url);
                                     if (url.length) {
                                         window.location.replace(url);
                                         return true;
@@ -256,11 +275,85 @@ define(
                 this.updateCreditCardSoptPaymentToken();
             },
 
+            isBpmpiEnabled: function() {
+                return window.checkoutConfig.payment.dcform.bpmpi_authentication.active;
+            },
 
-            placeOrder: function (data, event) {
+            isBpmpiMasterCardNotifyOnlyEnabled: function() {
+                return window.checkoutConfig.payment.dcform.bpmpi_authentication.mastercard_notify_only;
+            },
+
+            bpmpiPlaceOrderInit: function() {
                 var self = this;
 
-                if (! this.validateForm('#'+ this.getCode() + '-form')) {
+                if (self.isBpmpiEnabled()) {
+                    if (self.bpmpiInitControl >= 1) {
+                        return false;
+                    }
+                    self.bpmpiInitControl = 1;
+
+                    $('.bpmpi_auth_failure_type').change(function () {
+
+                        if (!$("#" + self.item.method).is(':checked')) {
+                            return false;
+                        }
+
+                        self.bpmpiAuthFailureType($('.bpmpi_auth_failure_type').val());
+                        self.bpmpiAuthCavv($('.bpmpi_auth_cavv').val());
+                        self.bpmpiAuthXid($('.bpmpi_auth_xid').val());
+                        self.bpmpiAuthEci($('.bpmpi_auth_eci').val());
+                        self.bpmpiAuthVersion($('.bpmpi_auth_version').val());
+                        self.bpmpiAuthReferenceId($('.bpmpi_auth_reference_id').val());
+
+                        self.getPlaceOrderDeferredObject();
+                        fullScreenLoader.stopLoader();
+
+                        return false;
+                    });
+                }
+
+                return false;
+            },
+
+            bpmpiPopulateDebitcard: function(){
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', false, 'Debit');
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
+                bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());
+                bpmpiRenderer.renderBpmpiData('bpmpi_installments', false, 1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth_notifyonly', false, this.isBpmpiMasterCardNotifyOnlyEnabled());
+
+                return true;
+            },
+
+            bpmpiPopulateAdditionalData: function(){
+
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd1', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd1);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd2', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd3', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd3);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd4', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd4);
+                bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.dcform.bpmpi_authentication.mdd5);
+
+                return true;
+            },
+
+            isCieloProviderAvailable: function() {
+
+                if (this.creditCardType().indexOf("Cielo") >= 0) {
+                    return true;
+                }
+
+                return false;
+            },
+
+            placeOrder: function (data, event) {
+
+                var self = this;
+
+                if (!this.validateForm('#'+ this.getCode() + '-form')) {
                     return;
                 }
 
@@ -268,10 +361,31 @@ define(
                     event.preventDefault();
                 }
 
+                if (! (this.validate() && additionalValidators.validate())) {
+                    return false;
+                }
+
                 if (this.validate() && additionalValidators.validate()) {
                     this.isPlaceOrderActionAllowed(false);
 
-                    this.getPlaceOrderDeferredObject();
+                    fullScreenLoader.startLoader();
+
+                    if (!self.isBpmpiEnabled()) {
+                        self.getPlaceOrderDeferredObject();
+                        fullScreenLoader.stopLoader();
+                        return false;
+                    }
+
+                    self.bpmpiPopulateDebitcard();
+                    self.bpmpiPopulateAdditionalData();
+
+                    authentication3ds20.bpmpiAuthenticate()
+                        .then(function (data){
+                            return false;
+                        }).catch(function(){
+                            fullScreenLoader.stopLoader();
+                            return false;
+                        });
                 }
 
                 return false;

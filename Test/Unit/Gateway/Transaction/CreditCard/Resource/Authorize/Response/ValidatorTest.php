@@ -7,26 +7,34 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Res
 class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
 	private $validator;
+	private $responseMock;
+	private $paymentDataObjectMock;
+	private $paymentMock;
 
     public function setUp()
     {
     	$result = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
+    	$configInterface = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $this->paymentDataObjectMock = $this->createMock('Magento\Payment\Gateway\Data\PaymentDataObject');
+        $this->paymentMock = $this->createMock('Magento\Sales\Model\Order\Payment');
 
     	$this->validator = new Validator(
-    		$result
+            $configInterface
     	);
     }
 
     public function testValidate()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
-    	$responseMock->expects($this->once())
+    	$this->responseMock->expects($this->once())
     	    ->method('getPaymentStatus')
     	    ->will($this->returnValue(2));
 
     	$result = $this->validator->validate(
-    		['response' => $responseMock]
+    		[
+    		    'response' => $this->responseMock,
+                'payment' => $this->paymentDataObjectMock
+            ]
     	);
 
     	static::assertTrue($result->isValid());
@@ -34,19 +42,20 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
     public function testValidateWithError()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
-    	$responseMock->expects($this->once())
+    	$this->responseMock->expects($this->once())
     	    ->method('getPaymentStatus')
     	    ->will($this->returnValue(0));
 
-    	$responseMock->expects($this->once())
+    	$this->responseMock->expects($this->once())
     	    ->method('getPaymentProviderReturnMessage')
     	    ->will($this->returnValue('Error Message'));
 
-    	$result = $this->validator->validate(
-    		['response' => $responseMock]
-    	);
+        $result = $this->validator->validate(
+            [
+                'response' => $this->responseMock,
+                'payment' => $this->paymentDataObjectMock
+            ]
+        );
 
     	static::assertFalse($result->isValid());
     	static::assertEquals(['Error Message'], $result->getFailsDescription());
@@ -58,8 +67,6 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
      */
     public function testValidateWithoutResponse()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $this->validator->validate([]);
     }
 }
