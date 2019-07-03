@@ -34,8 +34,17 @@ final class ConfigProvider implements ConfigProviderInterface
                     'savecard' => [
                         'active' => [self::CODE => $this->getCreditCardConfig()->isSaveCardActive()]
                     ],
-                    'authenticate' => [
-                        'active' => [self::CODE => $this->getCreditCardConfig()->isAuthenticate3DsVbv()]
+                    'bpmpi_authentication' => [
+                        'active' => $this->getCreditCardConfig()->isAuth3Ds20Active(),
+                        'mastercard_notify_only' => $this->getCreditCardConfig()->isAuth3Ds20MCOnlyNotifyActive(),
+                        'authorize_on_error' => $this->getCreditCardConfig()->isAuth3Ds20AuthorizedOnError(),
+                        'authorize_on_failure' => $this->getCreditCardConfig()->isAuth3Ds20AuthorizedOnFailure(),
+                        'authorize_on_unenrolled' => $this->getCreditCardConfig()->isAuth3Ds20AuthorizeOnUnenrolled(),
+                        'mdd1' => $this->getCreditCardConfig()->getAuth3Ds20Mdd1(),
+                        'mdd2' => $this->getCreditCardConfig()->getAuth3Ds20Mdd2(),
+                        'mdd3' => $this->getCreditCardConfig()->getAuth3Ds20Mdd3(),
+                        'mdd4' => $this->getCreditCardConfig()->getAuth3Ds20Mdd4(),
+                        'mdd5' => $this->getCreditCardConfig()->getAuth3Ds20Mdd5()
                     ],
                 ]
             ]

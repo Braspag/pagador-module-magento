@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
 use Magento\Framework\App\State;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
  * Braspag Transaction Base AbstractConfig
@@ -18,27 +19,31 @@ abstract class AbstractConfig
     const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'webjump_braspag/pagador/test_mode';
 
     protected $config;
-	protected $context;
+    protected $context;
 
     /**
      * @var State
      */
-	protected $appState;
+    protected $appState;
 
     /**
      * @var ContextInterface
      */
-	protected $contextAdmin;
+    protected $contextAdmin;
 
-	public function __construct(
+    protected $scopeConfig;
+
+    public function __construct(
         ContextInterface $context,
         ContextInterface $contextAdmin,
-	    State $appState,
-	    array $data = []
+        ScopeConfigInterface $scopeConfig,
+        State $appState,
+        array $data = []
     )
     {
         $this->setContext($context);
         $this->setContextAdmin($contextAdmin);
+        $this->setScopeConfig($scopeConfig);
         $this->setAppState($appState);
         $this->_construct($data);
     }
@@ -121,5 +126,21 @@ abstract class AbstractConfig
     protected function setAppState(State $appState)
     {
         $this->appState = $appState;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScopeConfig()
+    {
+        return $this->scopeConfig;
+    }
+
+    /**
+     * @param mixed $scopeConfig
+     */
+    public function setScopeConfig($scopeConfig)
+    {
+        $this->scopeConfig = $scopeConfig;
     }
 }

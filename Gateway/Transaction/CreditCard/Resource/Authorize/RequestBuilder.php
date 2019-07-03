@@ -2,6 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;

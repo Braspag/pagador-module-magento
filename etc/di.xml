@@ -26,6 +26,10 @@
     <preference for="Webjump\BraspagPagador\Api\NotificationManagerInterface" type="Webjump\BraspagPagador\Model\NotificationManager" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request" />
 
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Request" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" type="Webjump\BraspagPagador\Model\Auth3Ds20TokenManager" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder" />
+
     <preference for="Webjump\Braspag\Pagador\Transaction\FacadeInterface" type="Webjump\Braspag\Pagador\Transaction\BraspagFacade" />
     <preference for="Webjump\BraspagPagador\Api\CardTokenManagerInterface" type="Webjump\BraspagPagador\Model\CardTokenManager" />
 
@@ -258,7 +262,8 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardAuthorizeRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
-            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator</argument>
         </arguments>
     </virtualType>
 
@@ -267,7 +272,8 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
-            <argument name="validator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\Validator</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\Validator</argument>
         </arguments>
     </virtualType>
 
@@ -359,6 +365,8 @@
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionDebitCardOrderRequestBuilder</argument>
             <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\ResponseHandler</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\Validator</argument>
         </arguments>
     </virtualType>
 
@@ -420,6 +428,35 @@
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request">
         <arguments>
             <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\Auth3Ds20TokenManager">
+        <arguments>
+            <argument name="request" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface</argument>
+            <argument name="tokenCommand" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand</argument>
+            <argument name="cookieManager" xsi:type="object">\Magento\Framework\Stdlib\CookieManagerInterface</argument>
+            <argument name="cookieMetadataFactory" xsi:type="object">\Magento\Framework\Stdlib\Cookie\CookieMetadataFactory</argument>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface</argument>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand">
+        <arguments>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\FacadeInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder">
+        <arguments>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
         </arguments>
     </type>
 </config>
