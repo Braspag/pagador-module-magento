@@ -112,7 +112,7 @@ class RequestTest extends TestCase
         $expectedResult = "55".$phone;
 
 
-        $this->orderAdapterMock->expects($this->once())
+        $this->orderAdapterMock->expects($this->exactly(2))
             ->method('getShippingAddress')
             ->willReturn($this->billingAddressMock);
 

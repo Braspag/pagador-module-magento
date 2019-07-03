@@ -30,7 +30,8 @@ final class ConfigProvider implements ConfigProviderInterface
             'payment' => [
         		'braspag' => [
                     'merchantId'    => '',
-                    'merchantKey'   => ''
+                    'merchantKey'   => '',
+                    'isTestEnvironment'   => $this->getBaseConfig()->getIsTestEnvironment()
                 ]
         	]
         ];

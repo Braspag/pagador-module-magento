@@ -10,7 +10,6 @@
  */
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud;
 
-
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as BraspaglibRequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface as ConfigInterface;
@@ -139,9 +138,12 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getCartShippingAddressee()
     {
+        if (!$this->getShippingAddress()) {
+            return '';
+        }
+
         return trim(
-            $this->getShippingAddress()->getFirstname() . ' ' .
-            $this->getShippingAddress()->getLastname()
+            $this->getShippingAddress()->getFirstname() . ' ' .$this->getShippingAddress()->getLastname()
         );
     }
 
@@ -153,6 +155,10 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getCartShippingPhone()
     {
+        if (!$this->getOrderAdapter()->getShippingAddress()) {
+            return '';
+        }
+
         return ConfigInterface::COUNTRY_TELEPHONE_CODE .
                preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone());
     }
@@ -212,7 +218,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected function getShippingAddress()
     {
-        if (! $this->shippingAddress) {
+        if (!$this->shippingAddress) {
             $this->shippingAddress = $this->getOrderAdapter()->getShippingAddress();
         }
 
