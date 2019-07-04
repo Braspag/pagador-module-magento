@@ -2,6 +2,7 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\CommandInterface;
 use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
@@ -20,39 +21,60 @@ use Magento\Payment\Gateway\Command\CommandException;
  */
 abstract class AbstractApiCommand implements CommandInterface
 {
-	protected $api;
+    protected $api;
 
-	protected $requestBuilder;
+    protected $requestBuilder;
 
-	protected $responseHandler;
+    protected $responseHandler;
 
-    protected $validator;
+    protected $requestValidator;
 
-	public function __construct(
-		BraspagApi $api,
-		RequestBuilder $requestBuilder,
-		ResponseHandler $responseHandler,
-        ValidatorInterface $validator = null
-	)
-	{
-		$this->setApi($api);
-		$this->setRequestBuilder($requestBuilder);
-		$this->setResponseHandler($responseHandler);
-        $this->setValidator($validator);
-	}
+    protected $responseValidator;
 
-	public function execute(array $commandSubject)
-	{
+    public function __construct(
+        BraspagApi $api,
+        RequestBuilder $requestBuilder,
+        ResponseHandler $responseHandler,
+        ValidatorInterface $requestValidator = null,
+        ValidatorInterface $responseValidator = null
+    )
+    {
+        $this->setApi($api);
+        $this->setRequestBuilder($requestBuilder);
+        $this->setResponseHandler($responseHandler);
+        $this->setRequestValidator($requestValidator);
+        $this->setResponseValidator($responseValidator);
+    }
+
+    public function execute(array $commandSubject)
+    {
         $request = $this->getRequestBuilder()->build($commandSubject);
 
-        $response = $this->sendRequest($request);
-        if ($this->getValidator()) {
-            $result = $this->getValidator()->validate(
-                array_merge($commandSubject, ['response' => $response])
+        if ($this->getRequestValidator()) {
+            $result = $this->getRequestValidator()->validate(
+                array_merge($commandSubject, ['request' => $request])
             );
+
             if (!$result->isValid()) {
                 $errorMessage = $result->getFailsDescription();
-                throw new CommandException(
+
+                throw new LocalizedException(
+                    __(reset($errorMessage))
+                );
+            }
+        }
+
+        $response = $this->sendRequest($request);
+
+        if ($this->getResponseValidator()) {
+            $result = $this->getResponseValidator()->validate(
+                array_merge($commandSubject, ['response' => $response])
+            );
+
+            if (!$result->isValid()) {
+                $errorMessage = $result->getFailsDescription();
+
+                throw new LocalizedException(
                     __(reset($errorMessage))
                 );
             }
@@ -61,7 +83,7 @@ abstract class AbstractApiCommand implements CommandInterface
         $this->getResponseHandler()->handle($commandSubject, ['response' => $response]);
 
         return $this;
-	}
+    }
 
     abstract protected function sendRequest($request);
 
@@ -101,14 +123,26 @@ abstract class AbstractApiCommand implements CommandInterface
         return $this;
     }
 
-    protected function getValidator()
+    protected function getRequestValidator()
     {
-        return $this->validator;
+        return $this->requestValidator;
     }
 
-    protected function setValidator(ValidatorInterface $validator = null)
+    protected function setRequestValidator(ValidatorInterface $validator = null)
     {
-        $this->validator = $validator;
+        $this->requestValidator = $validator;
+
+        return $this;
+    }
+
+    protected function getResponseValidator()
+    {
+        return $this->responseValidator;
+    }
+
+    protected function setResponseValidator(ValidatorInterface $validator = null)
+    {
+        $this->responseValidator = $validator;
 
         return $this;
     }

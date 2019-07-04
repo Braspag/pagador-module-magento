@@ -41,5 +41,6 @@
 			<config_path>payment/braspag_pagador_debitcard/redirect_after_place_order</config_path>
 		</field>
 	    <include path="Webjump_BraspagPagador::system/transaction/debitcart/types.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcart/authenticate3ds20.xml"/>
     </group>
 </include>

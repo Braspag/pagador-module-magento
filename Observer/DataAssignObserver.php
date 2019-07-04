@@ -28,6 +28,11 @@ class DataAssignObserver extends AbstractDataAssignObserver
         $this->setCardTokenRepository($cardTokenRepository);
     }
 
+    /**
+     * @param Observer $observer
+     * @return $this|void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function execute(Observer $observer)
     {
         $method = $this->readMethodArgument($observer);
@@ -101,9 +106,36 @@ class DataAssignObserver extends AbstractDataAssignObserver
         return $this;
     }
 
+    /**
+     * @param $additionalData
+     * @param $info
+     * @return $this
+     */
     protected function processExtraData($additionalData, $info)
     {
-        return false;
+        $info->setAdditionalInformation('authentication_failure_type', $additionalData->getAuthenticationFailureType());
+
+        if (!empty($additionalData->getAuthenticationCavv())) {
+            $info->setAdditionalInformation('authentication_cavv', $additionalData->getAuthenticationCavv());
+        }
+
+        if (!empty($additionalData->getAuthenticationXid())) {
+            $info->setAdditionalInformation('authentication_xid', $additionalData->getAuthenticationXid());
+        }
+
+        if (!empty($additionalData->getAuthenticationEci())) {
+            $info->setAdditionalInformation('authentication_eci', $additionalData->getAuthenticationEci());
+        }
+
+        if (!empty($additionalData->getAuthenticationVersion())) {
+            $info->setAdditionalInformation('authentication_version', $additionalData->getAuthenticationVersion());
+        }
+
+        if (!empty($additionalData->getAuthenticationReferenceId())) {
+            $info->setAdditionalInformation('authentication_reference_id', $additionalData->getAuthenticationReferenceId());
+        }
+
+        return $this;
     }
 
     protected function getCardTokenRepository()

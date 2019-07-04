@@ -21,7 +21,7 @@
         </field>
 
         <field id="street_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
-            <label>Street Attibute</label>
+            <label>Street Attribute</label>
             <comment><![CDATA[<b> for example: </b> street_1]]></comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_customer_address/street_attribute</config_path>

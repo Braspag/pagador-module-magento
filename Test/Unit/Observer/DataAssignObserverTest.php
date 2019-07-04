@@ -13,14 +13,12 @@ use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 {
-
     protected $_observerMock;
     protected $_methodInterfaceMock;
     protected $_cardTokenRepositoryInterfaceMock;
     protected $_eventMock;
     protected $_infoInterfaceMock;
     protected $_dataObjectMock;
-
 
     public function setUp()
     {
@@ -51,7 +49,6 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 
     public function testExecuteShouldReturnBillingConfig()
     {
-
         $codeMock = 'braspag_pagador_billet';
 
         $this->_observerMock->expects($this->once())
@@ -85,7 +82,6 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 
     public function testExecuteShouldReturnDataConfig()
     {
-
         $codeMock = 'teste';
 
         $dataMock = [
@@ -115,7 +111,6 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
             ->method('getAdditionalInformation')
             ->willReturn(['0' => 1]);
 
-
         $this->_infoInterfaceMock->expects($this->once())
             ->method('getMethodInstance')
             ->willReturn($this->_methodInterfaceMock);
@@ -127,10 +122,6 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
         $this->_dataObjectMock->expects($this->once())
             ->method('getData')
             ->willReturn($dataMock);
-
-
-
-
 
         $observer = new DataAssignObserver($this->_cardTokenRepositoryInterfaceMock);
         $observer->execute($this->_observerMock);

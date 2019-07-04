@@ -197,6 +197,7 @@ define([], function() {
         },
 
         bpsd_popupCenterDual: function(url) {
+            var self = this;
             var _18 = bpsd_popupLeft();
             var top = bpsd_popupTop();
             var _1a = window.open(url, "", "scrollbars=yes, width=" + bpsd_options.windowWidth + ", height=" + bpsd_options.windowHeight + ", top=" + top + ", left=" + _18);
@@ -207,7 +208,7 @@ define([], function() {
             var _1b = setInterval(function() {
                 if (_1a.closed !== false) {
                     clearInterval(_1b);
-                    bpsd_popupStatusHandler("bpsd_Status_Closed");
+                    self.bpsd_popupStatusHandler("bpsd_Status_Closed");
                 }
             }, 500);
         },
@@ -306,6 +307,7 @@ define([], function() {
         },
 
         bpsd_init: function() {
+            var self = this;
             var _3a = document.createElement("div");
             _3a.id = "bpsd-lightbox-content";
             var _3b = document.createElement("iframe");
@@ -319,11 +321,11 @@ define([], function() {
             document.body.appendChild(_3c);
             document.addEventListener("click", function(e) {
                 if (e.target.id == "bpsd-lightbox-overlay") {
-                    bpsd_popupStatusHandler("bpsd_Status_Closed");
+                    self.bpsd_popupStatusHandler("bpsd_Status_Closed");
                 }
             });
             window.addEventListener("message", function(e) {
-                bpsd_popupStatusHandler(e.data);
+                self.bpsd_popupStatusHandler(e.data);
             }, false);
         }
 

@@ -31,6 +31,7 @@ class SilentOrderPostConfigTest extends \PHPUnit\Framework\TestCase
         $this->config = new SilentOrderPostConfig(
             $this->contextMock,
             $this->contextMock,
+            $this->scopeConfigMock,
             $this->stateMock,
             [
                 'code' => 'payment_method_custom'

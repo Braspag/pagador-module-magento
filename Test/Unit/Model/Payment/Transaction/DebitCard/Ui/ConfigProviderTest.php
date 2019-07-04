@@ -11,7 +11,8 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp()
 	{
-		$this->debitcardConfig = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+		$this->debitcardConfig = $this
+            ->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
 
 		$this->configProvider = new ConfigProvider(
 			$this->debitcardConfig
@@ -24,6 +25,46 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     		->method('isSuperDebitoActive')
     		->will($this->returnValue(true));
 
+    	$this->debitcardConfig->expects($this->once())
+    		->method('isAuth3Ds20Active')
+    		->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20MCOnlyNotifyActive')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizedOnError')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizedOnFailure')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizeOnUnenrolled')
+            ->will($this->returnValue(true));
+
+    	$this->debitcardConfig->expects($this->once())
+    		->method('getAuth3Ds20Mdd1')
+    		->will($this->returnValue('mdd 1'));
+
+    	$this->debitcardConfig->expects($this->once())
+    		->method('getAuth3Ds20Mdd2')
+    		->will($this->returnValue('mdd 2'));
+
+    	$this->debitcardConfig->expects($this->once())
+    		->method('getAuth3Ds20Mdd3')
+    		->will($this->returnValue('mdd 3'));
+
+    	$this->debitcardConfig->expects($this->once())
+    		->method('getAuth3Ds20Mdd4')
+    		->will($this->returnValue('mdd 4'));
+
+    	$this->debitcardConfig->expects($this->once())
+    		->method('getAuth3Ds20Mdd5')
+    		->will($this->returnValue('mdd 5'));
+
         static::assertEquals(
             [
                 'payment' => [
@@ -31,6 +72,18 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => true]
                         ],
+                        'bpmpi_authentication' => [
+                            'active' => true,
+                            'mastercard_notify_only' => true,
+                            'authorize_on_error' => true,
+                            'authorize_on_failure' => true,
+                            'authorize_on_unenrolled' => true,
+                            'mdd1' => 'mdd 1',
+                            'mdd2' => 'mdd 2',
+                            'mdd3' => 'mdd 3',
+                            'mdd4' => 'mdd 4',
+                            'mdd5' => 'mdd 5'
+                        ]
                     ],
                     'redirect_after_place_order' => null
                 ]
@@ -45,6 +98,46 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     		->method('isSuperDebitoActive')
     		->will($this->returnValue(false));
 
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20Active')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20MCOnlyNotifyActive')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizedOnError')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizedOnFailure')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20AuthorizeOnUnenrolled')
+            ->will($this->returnValue(true));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd1')
+            ->will($this->returnValue('mdd 1'));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd2')
+            ->will($this->returnValue('mdd 2'));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd3')
+            ->will($this->returnValue('mdd 3'));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd4')
+            ->will($this->returnValue('mdd 4'));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd5')
+            ->will($this->returnValue('mdd 5'));
+
         static::assertEquals(
             [
                 'payment' => [
@@ -52,6 +145,18 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'superdebito' => [
                             'active' => ['braspag_pagador_debitcard' => false]
                         ],
+                        'bpmpi_authentication' => [
+                            'active' => true,
+                            'mastercard_notify_only' => true,
+                            'authorize_on_error' => true,
+                            'authorize_on_failure' => true,
+                            'authorize_on_unenrolled' => true,
+                            'mdd1' => 'mdd 1',
+                            'mdd2' => 'mdd 2',
+                            'mdd3' => 'mdd 3',
+                            'mdd4' => 'mdd 4',
+                            'mdd5' => 'mdd 5'
+                        ]
                     ],
                     'redirect_after_place_order' => null
                 ]
