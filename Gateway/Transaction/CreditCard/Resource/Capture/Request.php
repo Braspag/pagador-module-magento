@@ -25,6 +25,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected $paymentId;
 
+    protected $storeId;
+
     /**
      * @var GrandTotalPricingHelper
      */
@@ -104,5 +106,21 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         $this->config = $config;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStoreId($storeId = null)
+    {
+        $this->storeId = $storeId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
     }
 }

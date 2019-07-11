@@ -19,6 +19,7 @@ class Request implements BraspaglibRequestInterface
     protected $itemAdapter;
     protected $session;
     protected $quote;
+    protected $storeId;
 
     public function __construct(OrderItemInterface $itemAdapter, SessionManagerInterface $session)
     {
@@ -207,4 +208,19 @@ class Request implements BraspaglibRequestInterface
         return $this->quote;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function setStoreId($storeId = null)
+    {
+        $this->storeId = $storeId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
+    }
 }

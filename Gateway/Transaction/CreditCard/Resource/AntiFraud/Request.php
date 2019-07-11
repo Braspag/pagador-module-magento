@@ -29,6 +29,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $quote;
     protected $fingerPrintId;
     protected $mdd;
+    protected $storeId;
 
     public function __construct(
         ConfigInterface $config,
@@ -257,5 +258,21 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         }
 
         return $quote->getReservedOrderId();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStoreId($storeId = null)
+    {
+        $this->storeId = $storeId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
     }
 }
