@@ -41,6 +41,7 @@ class BilletTypesTest extends \PHPUnit\Framework\TestCase
             'Bradesco',
             'Bradesco2',
             'BancoDoBrasil',
+            'BancoDoBrasil2',
             'CitiBank',
             'ItauShopline',
             'Itau2',
