@@ -27,10 +27,14 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     protected $billingAddress;
 
+    protected $helperData;
+
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        \Webjump\BraspagPagador\Helper\Data $helperData
     ){
         $this->setConfig($config);
+        $this->helperData = $helperData;
     }
 
     public function setOrderAdapter(OrderAdapterInterface $orderAdapter)
@@ -67,7 +71,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getCustomerName()
     {
-    	return $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
+        $customerName = $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
+    	return $this->helperData->removeSpecialCharacters($customerName);
     }
 
     public function getPaymentAmount()
