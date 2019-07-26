@@ -18,13 +18,16 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     private $request;
 
     private $configMock;
+    private $helperData;
 
     public function setUp()
     {
         $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+        $this->helperData = $this->createMock('\Webjump\BraspagPagador\Helper\Data');
 
         $this->request = new Request(
-            $this->configMock
+            $this->configMock,
+            $this->helperData
         );
     }
 
@@ -35,6 +38,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function testGetData() 
     {
+        $expectedCustomerName = 'John Doe';
+
         $this->configMock->expects($this->once())
             ->method('getMerchantId')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
@@ -109,6 +114,10 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $infoMock->expects($this->once())
             ->method('getCcCid')
             ->will($this->returnValue('123'));
+
+        $this->helperData->expects($this->once())
+            ->method('removeSpecialCharacters')
+            ->willReturn($expectedCustomerName);
 
         $this->request->setOrderAdapter($orderAdapterMock);
         $this->request->setPaymentData($infoMock);

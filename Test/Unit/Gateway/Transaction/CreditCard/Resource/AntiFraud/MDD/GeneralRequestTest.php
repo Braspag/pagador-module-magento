@@ -62,6 +62,11 @@ class GeneralRequestTest extends TestCase
      */
     private $paymentDataMock;
 
+    /**
+     * @var InfoInterface
+     */
+    protected $helperData;
+
     protected function setUp()
     {
         $this->mobileDetectMock = $this->createMock(MobileDetect::class);
@@ -81,6 +86,11 @@ class GeneralRequestTest extends TestCase
         $this->itemMock = $this->createMock(Item::class);
         $this->paymentDataMock = $this->createMock(InfoInterface::class);
         $this->productMock = $this->createMock(Product::class);
+
+        $this->helperData = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+            ->disableOriginalConstructor()
+            ->setMethods(['removeSpecialCharacters'])
+            ->getMock();
     }
 
     /**
@@ -94,7 +104,8 @@ class GeneralRequestTest extends TestCase
         $model = $objectManager->getObject(GeneralRequest::class, [
             'config' => $this->mddConfigInterfacetMock,
             'orderCollectionFactory' => $this->orderCollectionFactoryMock,
-            'mobileDetect' => $this->mobileDetectMock
+            'mobileDetect' => $this->mobileDetectMock,
+            'helperData' => $this->helperData
         ]);
 
         return $model;
@@ -121,6 +132,10 @@ class GeneralRequestTest extends TestCase
             ->expects($this->once())
             ->method('getLastName')
             ->willReturn($lastName);
+
+        $this->helperData->expects($this->once())
+            ->method('removeSpecialCharacters')
+            ->willReturn($expectedResult);
 
         $requestModel = $this->getModel();
         $result = $requestModel->getCustomerName();
