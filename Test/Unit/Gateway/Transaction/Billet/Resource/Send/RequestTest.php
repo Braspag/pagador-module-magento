@@ -7,12 +7,21 @@ use Webjump\BraspagPagador\Gateway\Transaction\Billet\Resource\Send\Request;
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
     protected $objectManagerHelper;
+    protected $billetConfigInterfaceMock;
+    protected $validatorMock;
+    protected $helperData;
 
     public function setUp()
     {
         $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
     	$this->billetConfigInterfaceMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\ConfigInterface');
+    	$this->validatorMock = $this->createMock('Webjump\BraspagPagador\Helper\Validator');
+
+    	$this->helperData = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+            ->disableOriginalConstructor()
+            ->setMethods(['removeSpecialCharacters'])
+            ->getMock();
 
         $this->dateMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\DateTime')
             ->disableOriginalConstructor()
@@ -21,7 +30,9 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     	$this->request = $this->objectManagerHelper->getObject(
             Request::class,
             [
-                'config' => $this->billetConfigInterfaceMock
+                'config' => $this->billetConfigInterfaceMock,
+                'validator' => $this->validatorMock,
+                'helperData' => $this->helperData
             ]
         );
     }
@@ -107,6 +118,10 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->willReturn($billingAddressMock);
 
         $this->request->setOrderAdapter($orderAdapterMock);
+
+        $this->helperData->expects($this->once())
+            ->method('removeSpecialCharacters')
+            ->willReturn($expectedCustomerName);
 
 		static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
 		static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
