@@ -397,7 +397,9 @@ define(
 
             isCieloProviderAvailable: function() {
 
-                if (this.creditCardType().indexOf("Cielo") >= 0) {
+                if (this.creditCardType().indexOf("Cielo") >= 0
+                  || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
+                ) {
                     return true;
                 }
 
