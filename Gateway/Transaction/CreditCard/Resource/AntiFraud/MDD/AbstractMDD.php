@@ -16,16 +16,19 @@ abstract class AbstractMDD
     private $paymentData;
     private $orderCollectionFactory;
     private $mobileDetect;
+    protected $helperData;
 
     public function __construct(
         MDDConfigInterface $config,
         OrderCollectionFactory $orderCollectionFactory,
-        MobileDetect $mobileDetect
+        MobileDetect $mobileDetect,
+        \Webjump\BraspagPagador\Helper\Data $helperData
     )
     {
         $this->setConfig($config);
         $this->setOrderCollectionFactory($orderCollectionFactory);
         $this->setMobileDetect($mobileDetect);
+        $this->helperData = $helperData;
     }
 
     /**

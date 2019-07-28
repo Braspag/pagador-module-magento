@@ -7,10 +7,13 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
 {
     public function getCustomerName()
     {
-        return trim(
-            $this->getConfig()->getCustomer()->getFirstname() .
-            ' ' .
-            $this->getConfig()->getCustomer()->getLastname()
+        return $this->helperData
+            ->removeSpecialCharacters(
+                trim(
+                $this->getConfig()->getCustomer()->getFirstname() .
+                ' ' .
+                $this->getConfig()->getCustomer()->getLastname()
+            )
         );
     }
 

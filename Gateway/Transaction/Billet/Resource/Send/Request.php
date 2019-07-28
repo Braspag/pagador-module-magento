@@ -44,6 +44,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     protected $validator;
 
+    protected $helperData;
+
     /**
      * Request constructor.
      *
@@ -52,11 +54,13 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function __construct(
 		ConfigInterface $config,
-        Validator $validator
+        Validator $validator,
+        \Webjump\BraspagPagador\Helper\Data $helperData
 
     ) {
 		$this->setConfig($config);
         $this->validator = $validator;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -96,8 +100,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerName()
 	{
-        return $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' . $this->getOrderAdapter()->getBillingAddress()->getLastname();
-//        return trim($this->getQuote()->getCustomer()->getFirstname() . ' ' . $this->getQuote()->getCustomer()->getLastname());
+	    $customerName = $this->getOrderAdapter()->getBillingAddress()->getFirstname(). ' ' .
+            $this->getOrderAdapter()->getBillingAddress()->getLastname();
+
+        return $this->helperData->removeSpecialCharacters($customerName);
 	}
 
     /**

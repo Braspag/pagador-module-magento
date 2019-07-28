@@ -74,6 +74,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     protected $grandTotalPricingHelper;
 
+    protected $helperData;
+
     /**
      * Request constructor.
      * @param ConfigInterface $config
@@ -84,12 +86,14 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         ConfigInterface $config,
         InstallmentsConfigInterface $installmentsConfig,
         Validator $validator,
-        GrandTotalPricingHelper $grandTotalPricingHelper
+        GrandTotalPricingHelper $grandTotalPricingHelper,
+        \Webjump\BraspagPagador\Helper\Data $helperData
     ) {
         $this->setConfig($config);
         $this->setInstallmentsConfig($installmentsConfig);
         $this->validator = $validator;
         $this->grandTotalPricingHelper = $grandTotalPricingHelper;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -129,7 +133,9 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerName()
     {
-        return trim($this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname());
+        return $this->helperData->removeSpecialCharacters(
+            trim($this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname())
+        );
     }
 
     /**
@@ -278,7 +284,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         }
 
         return null;
-
     }
 
     /**
