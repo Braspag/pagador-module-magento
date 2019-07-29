@@ -33,4 +33,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
         return $string = str_replace('-', ' ', $string);
     }
+
+    /**
+     * @param $taxvat
+     * @return null|string|string[]
+     */
+    public function removeSpecialCharactersFromTaxvat($taxvat)
+    {
+        return preg_replace('/[^A-Za-z0-9]/', '', $taxvat);
+    }
 }

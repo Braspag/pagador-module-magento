@@ -21,6 +21,7 @@ class Cctype extends \Magento\Payment\Model\Source\Cctype
     {
         return [
             'Simulado',
+            'SimuladoCielo',
             'Cielo-Visa',
             'Cielo-Master',
             'Cielo-Amex',

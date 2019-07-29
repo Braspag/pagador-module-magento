@@ -38,6 +38,7 @@ class DctypeTest extends \PHPUnit\Framework\TestCase
 
         $expected = [
             'Simulado',
+            'SimuladoCielo',
             'Cielo-Visa',
             'Cielo-Master',
             'Cielo-Elo',

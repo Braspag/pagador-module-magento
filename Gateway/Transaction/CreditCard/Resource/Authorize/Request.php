@@ -145,9 +145,9 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     {
         $attribute = $this->getConfig()->getIdentityAttributeCode();
 
-        return $this->helperData->removeSpecialCharacters(
+        return $this->helperData->removeSpecialCharactersFromTaxvat(
                 $this->getQuote()->getBillingAddress()->getData($attribute)
-            ) ?: $this->helperData->removeSpecialCharacters(
+            ) ?: $this->helperData->removeSpecialCharactersFromTaxvat(
                 $this->getQuote()->getData($attribute)
             );
     }
