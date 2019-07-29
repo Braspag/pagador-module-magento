@@ -14,6 +14,9 @@
         <type id="Simulado" order="0">
             <label>Simulado*</label>
         </type>
+        <type id="SimuladoCielo" order="0">
+            <label>Simulado Cielo (Auth 3DS 2.0 Tests)*</label>
+        </type>
         <type id="Cielo-Visa" order="1">
             <label>Cielo Visa</label>
         </type>
@@ -153,6 +156,9 @@
         </type>
         <type id="BancoDoBrasil" order="44">
             <label>Banco do Brasil</label>
+        </type>
+        <type id="BancoDoBrasil2" order="44">
+            <label>Banco do Brasil 2</label>
         </type>
         <type id="CitiBank" order="45">
             <label>CitiBank</label>
