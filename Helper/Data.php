@@ -28,10 +28,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             'o', 'o', 'o', 'o', 'O', 'O', 'O', 'O', 'i', 'i', 'i', 'I', 'I', 'I', 'I', 'I', 'u', 'u', 'u', 'u', 'U',
             'U', 'U', 'U', 'y', 'y', 'Y', 'o', 'O', 'a', 'A', 'A', 'c', 'C');
 
-        $string = preg_replace($pattern, $replace, $string);
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', preg_replace($pattern, $replace, $string));
 
-        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-        return $string = str_replace('-', ' ', $string);
+        return trim(str_replace('  ', ' ', str_replace('-', ' ', $string)));
     }
 
     /**
