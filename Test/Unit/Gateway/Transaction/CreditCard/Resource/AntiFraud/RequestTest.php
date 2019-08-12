@@ -52,6 +52,11 @@ class RequestTest extends TestCase
     private $billingAddressMock;
 
     /**
+     * @var
+     */
+    private $shippingAddressMock;
+
+    /**
      * @var InfoInterface
      */
     private $infoInterfaceMock;
@@ -60,6 +65,8 @@ class RequestTest extends TestCase
      * @var Item
      */
     private $itemMock;
+
+    private $helperDataMock;
 
     protected function setUp()
     {
@@ -72,11 +79,17 @@ class RequestTest extends TestCase
 
         $this->orderAdapterMock = $this->createMock(OrderAdapterInterface::class);
         $this->billingAddressMock = $this->createMock(AddressAdapterInterface::class);
+        $this->shippingAddressMock = $this->createMock(AddressAdapterInterface::class);
         $this->infoInterfaceMock = $this->createMock(InfoInterface::class);
         $this->itemMock = $this->createMock(Item::class);
         $this->requestItemFactoryMock = $this->createMock(RequestFactory::class);
 
         $this->adapterGeneralMock = $this->createMock(AdapterGeneralInterface::class);
+
+        $this->helperDataMock = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+            ->disableOriginalConstructor()
+            ->setMethods(['removeSpecialCharacters'])
+            ->getMock();
 
         $this->sessionMock = $this->getMockBuilder(SessionManagerInterface::class)
             ->disableOriginalConstructor()
@@ -101,6 +114,7 @@ class RequestTest extends TestCase
             'config' => $this->configMock,
             'requestItemFactory' => $this->requestItemFactoryMock,
             'adapterGeneral' => $this->adapterGeneralMock,
+            'helperData' => $this->helperDataMock
         ]);
 
         return $model;
@@ -194,9 +208,9 @@ class RequestTest extends TestCase
             ->willReturn($items);
 
         $this->itemMock
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(5))
             ->method('getProductType')
-            ->will($this->onConsecutiveCalls("configurable", "configurable","simple"));
+            ->will($this->onConsecutiveCalls("simple", "grouped", "virtual", "downloadable"));
 
         $this->itemMock
             ->expects($this->once())
@@ -342,24 +356,28 @@ class RequestTest extends TestCase
 
     public function testGetCartShippingAddressee()
     {
-        $firstName = "John";
-        $lastName="Doe";
-        $expectedResult = trim($firstName." ".$lastName);
+        $firstName = " Jôhn";
+        $lastName=" Doe. - ";
+        $expectedResult = "John Doe";
 
         $this->orderAdapterMock
             ->expects($this->once())
             ->method('getShippingAddress')
-            ->willReturn($this->billingAddressMock);
+            ->willReturn($this->shippingAddressMock);
 
-        $this->billingAddressMock
+        $this->shippingAddressMock
             ->expects($this->once())
             ->method('getFirstName')
             ->willReturn($firstName);
 
-        $this->billingAddressMock
+        $this->shippingAddressMock
             ->expects($this->once())
             ->method('getLastName')
             ->willReturn($lastName);
+
+        $this->helperDataMock->expects($this->once())
+            ->method('removeSpecialCharacters')
+            ->willReturn($expectedResult);
 
         $requestModel = $this->getModel();
 
@@ -367,5 +385,4 @@ class RequestTest extends TestCase
         $result = $requestModel->getCartShippingAddressee();
         $this->assertSame($result, $expectedResult);
     }
-
 }

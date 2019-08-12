@@ -323,6 +323,10 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressCountry()
     {
+        if (!$this->getShippingAddress()) {
+            return '';
+        }
+
         return 'BRA';
     }
 
@@ -359,6 +363,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentCurrency()
     {
         return 'BRL';
+
     }
 
     /**
