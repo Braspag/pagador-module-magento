@@ -30,16 +30,19 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $fingerPrintId;
     protected $mdd;
     protected $storeId;
+    protected $helperData;
 
     public function __construct(
         ConfigInterface $config,
         RequestFactory $requestItemFactory,
-        AdapterGeneralInterface $adapterGeneral
+        AdapterGeneralInterface $adapterGeneral,
+        \Webjump\BraspagPagador\Helper\Data $helperData
     )
     {
         $this->setConfig($config);
         $this->setRequestItemFactory($requestItemFactory);
         $this->setMdd($adapterGeneral);
+        $this->helperData = $helperData;
     }
 
     public function getSequence()
@@ -112,12 +115,19 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getCartReturnsAccepted()
     {}
 
+    /**
+     * @return array
+     */
     public function getCartItems()
     {
         $items = [];
         /** @var \Magento\Sales\Model\Order\Item $item */
         foreach ($this->getOrderAdapter()->getItems() as $item) {
-            if ($item->getProductType() !== 'simple' && $item->getProductType() !== 'grouped') {
+            if ($item->getProductType() !== 'simple'
+                && $item->getProductType() !== 'grouped'
+                && $item->getProductType() !== 'virtual'
+                && $item->getProductType() !== 'downloadable'
+            ) {
                 continue;
             }
 
@@ -129,6 +139,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $items;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMerchantDefinedFields()
     {
         $mdd = $this->getMdd();
@@ -137,13 +150,16 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $mdd;
     }
 
+    /**
+     * @return string
+     */
     public function getCartShippingAddressee()
     {
         if (!$this->getShippingAddress()) {
             return '';
         }
 
-        return trim(
+        return $this->helperData->removeSpecialCharacters(
             $this->getShippingAddress()->getFirstname() . ' ' .$this->getShippingAddress()->getLastname()
         );
     }
