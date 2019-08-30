@@ -19,7 +19,7 @@ use Magento\Sales\Model\Service\InvoiceService;
 class CheckoutSubmitAllAfterObserver implements ObserverInterface
 {
     protected $config;
-    
+
     protected $invoiceService;
 
     protected $orderManagement;
@@ -60,7 +60,11 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                     return $this;
                 }
 
-                if (!$payment->getIsFraudDetected() && !$payment->getIsTransactionPending() && $order->canInvoice()) {
+                if (!$payment->getIsFraudDetected()
+                    && !$payment->getIsTransactionPending()
+                    && $order->canInvoice()
+                    && !$order->hasInvoices()
+                ) {
                     $invoice = $this->invoiceService->prepareInvoice($order);
                     $invoice->setRequestedCaptureCase(Invoice::CAPTURE_OFFLINE);
                     $invoice->register();

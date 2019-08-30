@@ -160,10 +160,10 @@ class NotificationManager implements NotificationManagerInterface
 
         $type = 'billet';
         $method = $orderPayment->getMethod();
-        
+
         if (!empty($this->types[$method])) {
             $type = $this->types[$method];
-        }        
+        }
 
         $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
         if (!$paymentInfo) {
@@ -179,7 +179,7 @@ class NotificationManager implements NotificationManagerInterface
             return $this->createInvoice($orderPayment->getOrder());
         }
 
-        // 2 = caoture
+        // 2 = capture
         if ($this->config->isCreateInvoiceOnNotificationCaptured() && $type == 'creditCard' && $paymentStatus == 2) {
             return $this->createInvoice($orderPayment->getOrder());
         }
@@ -203,6 +203,10 @@ class NotificationManager implements NotificationManagerInterface
      */
     public function createInvoice(Order $order)
     {
+        if ($order->hasInvoices()) {
+            return true;
+        }
+
         $invoice = $this->getInvoiceService()->prepareInvoice($order);
         $invoice->setRequestedCaptureCase(Invoice::CAPTURE_OFFLINE);
         $invoice->register();
