@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_oauth2_accesstokengeneration" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Access Token Generation</label>
+
+        <field id="clientid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Client ID</label>
+            <comment>OAuth2 Client ID. Contact Braspag to get your own Client ID.</comment>
+            <config_path>webjump_braspag/oauth2_accesstokengeneration/clientid</config_path>
+        </field>
+
+        <field id="clientsecret" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Client Secret</label>
+            <comment>OAuth2 Client Secret. Contact Braspag to get your own Client Secret.</comment>
+            <config_path>webjump_braspag/oauth2_accesstokengeneration/clientsecret</config_path>
+        </field>
+    </group>
+</include>

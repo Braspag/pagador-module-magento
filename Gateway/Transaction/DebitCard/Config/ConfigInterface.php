@@ -24,6 +24,9 @@ interface  ConfigInterface
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD3 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd3';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD4 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd4';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD5 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd5';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT = 'payment/braspag_pagador_debitcard/paymentsplit';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_MDR = 'payment/braspag_pagador_debitcard/paymentsplit_mdr';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_FEE = 'payment/braspag_pagador_debitcard/paymentsplit_fee';
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_SUCCESS = 0;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE = 1;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;

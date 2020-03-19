@@ -57,10 +57,11 @@
             <comment />
             <config_path>payment/braspag_pagador_creditcard/sort_order</config_path>
         </field>
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/types.xml"/>
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/installments.xml"/>
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/silentorderpost.xml"/>
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcart/avs.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/creditcart/authenticate3ds20.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/types.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/installments.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/silentorderpost.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/avs.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/authenticate3ds20.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/paymentsplit.xml"/>
     </group>
 </include>

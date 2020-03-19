@@ -38,8 +38,8 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeFiveFour($setup, $context);
         }
 
-        if (version_compare($context->getVersion(), '3.7.4') < 0) {
-            $this->upgradeThreeFiveFive($setup, $context);
+        if (version_compare($context->getVersion(), '3.10.0') < 0) {
+            $this->upgradeThreeTenZero($setup, $context);
         }
 
         $setup->endSetup();        
@@ -234,5 +234,153 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         }
 
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
+    protected function upgradeThreeTenZero(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $splitTableName = $setup->getTable('braspag_paymentsplit_split');
+        $splitItemTableName = $setup->getTable('braspag_paymentsplit_split_item');
+
+        $setup->getConnection()->dropTable($splitTableName);
+        $setup->getConnection()->dropTable($splitItemTableName);
+
+        $splitTable = $setup->getConnection()->newTable($splitTableName)
+            ->addColumn('entity_id', \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT, null,
+                array(
+                    'identity' => true,
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'primary' => true,
+                ), 'Entity Id')
+            ->addColumn('subordinate_merchant_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 36, array(
+                'nullable' => false,
+            ),
+                'Subordinate Merchant Id')
+            ->addColumn('store_merchant_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 36, array(
+                'nullable' => true,
+            ),
+                'Store Merchant Id')
+            ->addColumn('sales_quote_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                ), 'Sales Quote Id')
+            ->addColumn('sales_order_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                ), 'Sales Order Id')
+            ->addColumn('mdr_applied', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4', array(
+                'nullable' => true,
+                'default' => '0',
+            ),
+                'MDR Applied')
+            ->addColumn('tax_applied', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4',
+                array(
+                    'nullable' => true,
+                    'default' => '0',
+                ), 'Tax Applied')
+            ->addColumn('total_amount', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4',
+                array(
+                    'nullable' => true,
+                    'default' => '0',
+                ), 'Total Amount')
+            ->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                ), 'Store Id')
+            ->addColumn('created_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                array(
+                    'nullable' => false,
+                    'default'  => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT
+                ), 'Created At')
+            ->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                array(
+                    'nullable'  => true
+                ), 'Updated At')
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_quote_id', 'store_merchant_id']),
+                ['sales_quote_id', 'store_merchant_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_quote_id']),
+                ['sales_quote_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_order_id']),
+                ['sales_order_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->setComment('Braspag Payment Split');
+
+        $setup->getConnection()->createTable($splitTable);
+
+        $splitItemTable = $setup->getConnection()
+            ->newTable($splitItemTableName)
+            ->addColumn('split_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT, null,
+                array(
+                    'identity' => true,
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'primary' => true,
+                ), 'Split Item Id')
+            ->addColumn('split_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'default' => '0',
+                ), 'Split Id')
+            ->addColumn('sales_quote_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'default' => '0',
+                ), 'Sales Quote Item Id')
+            ->addColumn('sales_order_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                array(
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'default' => '0',
+                ), 'Sales Order Item Id')
+            ->addColumn('created_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                array(
+                    'nullable' => false,
+                    'default'  => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT
+                ), 'Created At')
+            ->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                array(
+                    'nullable'  => true
+                ), 'Updated At')
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['split_id', 'sales_quote_item_id']),
+                ['split_id', 'sales_quote_item_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_quote_item_id', 'sales_order_item_id']),
+                ['sales_quote_item_id', 'sales_order_item_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_quote_item_id']),
+                ['sales_quote_item_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->addIndex(
+                $setup->getIdxName($splitTableName, ['sales_order_item_id']),
+                ['sales_order_item_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            )
+            ->setComment('Braspag Payment Split Item');
+
+        $setup->getConnection()->createTable($splitItemTable);
     }
 }

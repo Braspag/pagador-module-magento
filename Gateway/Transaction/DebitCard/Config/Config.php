@@ -87,5 +87,18 @@ class Config extends AbstractConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD5);
     }
 
+    public function hasPaymentSplit()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT);
+    }
 
+    public function getPaymentSplitDefaultMrd()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_MDR);
+    }
+
+    public function getPaymentSplitDefaultFee()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_FEE);
+    }
 }

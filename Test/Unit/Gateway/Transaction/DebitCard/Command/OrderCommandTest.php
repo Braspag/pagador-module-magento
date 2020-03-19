@@ -16,6 +16,7 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
     {
     	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+    	$this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
     	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
         $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
         $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
@@ -31,6 +32,7 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
     	$this->command = new OrderCommand(
     		$this->apiMock,
     		$this->requestBuilderMock,
+    		$this->requestHandlerMock,
     		$this->responseHandlerMock,
             null,
             null
@@ -66,6 +68,7 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new OrderCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -121,6 +124,7 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new OrderCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -181,6 +185,7 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new OrderCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock

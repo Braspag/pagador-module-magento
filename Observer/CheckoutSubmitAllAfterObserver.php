@@ -6,6 +6,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\InvoiceService;
+use Webjump\BraspagPagador\Model\SplitManager;
 
 /**
  * Checkout Submit All After Observer
@@ -26,16 +27,30 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
 
     protected $_transactionFactory;
 
+    /**
+     * @var
+     */
+    protected $objectFactory;
+
+    /**
+     * @var
+     */
+    protected $splitManager;
+
     public function __construct(
         \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Magento\Sales\Api\OrderManagementInterface $orderManagement,
-        \Magento\Framework\DB\TransactionFactory $transactionFactory
+        \Magento\Framework\DB\TransactionFactory $transactionFactory,
+        \Magento\Framework\DataObjectFactory $objectFactory,
+        SplitManager $splitManager
     ) {
         $this->config = $config;
         $this->invoiceService = $invoiceService;
         $this->orderManagement = $orderManagement;
         $this->_transactionFactory = $transactionFactory;
+        $this->objectFactory = $objectFactory;
+        $this->splitManager = $splitManager;
     }
 
     /**
@@ -75,6 +90,16 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
 
                     $transaction->save();
                 }
+            }
+
+            $dataSplitPayment = $payment->getAdditionalInformation('split_payments');
+
+            if (!empty($dataSplitPayment)) {
+
+                $dataSplitPaymentObject = $this->objectFactory->create();
+                $dataSplitPaymentObject->addData($dataSplitPayment);
+
+                $this->splitManager->createPaymentSplitByOrder($payment->getOrder(), $dataSplitPaymentObject);
             }
 
         } catch (\Exception $e) {

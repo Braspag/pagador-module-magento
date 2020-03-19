@@ -9,16 +9,19 @@ class SendCommandTest extends \PHPUnit\Framework\TestCase
 	private $command;
 	private $apiMock;
 	private $responseHandlerMock;
+	private $requestHandlerMock;
 
     public function setUp()
     {
     	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+        $this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
     	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
 
     	$this->command = new SendCommand(
     		$this->apiMock,
     		$this->requestBuilderMock,
+    		$this->requestHandlerMock,
     		$this->responseHandlerMock
     	);
     }

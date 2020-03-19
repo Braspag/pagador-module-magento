@@ -3,14 +3,22 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
+    private $responseMock;
 
     public function setUp()
     {
-    	$this->handler = new VelocityAnalysisHandler;
+        $this->responseMock = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = new VelocityAnalysisHandler(
+            $this->responseMock
+        );
     }
 
     public function tearDown()
@@ -20,8 +28,6 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $velocityReasonMock1 = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
 
         $velocityReasonMock1->expects($this->once())
@@ -60,7 +66,7 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
                 $velocityReasonMock1
             ]));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getVelocityAnalysis')
             ->will($this->returnValue($velocityMock));
 
@@ -93,16 +99,14 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($paymentMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+    	$response = ['response' => $this->responseMock];
 
     	$this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleWithoutVelocity()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getVelocityAnalysis')
             ->will($this->returnValue(null));
 
@@ -119,7 +123,7 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($paymentMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }

@@ -3,14 +3,22 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class NsuHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
+    private $responseMock;
 
     public function setUp()
     {
-    	$this->handler = new NsuHandler;
+        $this->responseMock = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = new NsuHandler(
+            $this->responseMock
+        );
     }
 
     public function tearDown()
@@ -20,17 +28,15 @@ class NsuHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandle()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentProofOfSale')
             ->will($this->returnValue('674532'));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentPaymentId')
             ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentCardProvider')
             ->will($this->returnValue('Rede-Visa'));
 
@@ -67,7 +73,7 @@ class NsuHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($paymentMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+    	$response = ['response' => $this->responseMock];
 
     	$this->handler->handle($handlingSubject, $response);
     }

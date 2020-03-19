@@ -5,6 +5,9 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authori
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface as VelocityResponseInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface as VelocityReasonsResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+
 /**
 
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -17,6 +20,12 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\Response
  */
 class VelocityAnalysisHandler extends AbstractHandler implements HandlerInterface
 {
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
+
     protected function _handle($payment, $response)
     {
         $velocityResponse = $response->getVelocityAnalysis();

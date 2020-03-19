@@ -2,6 +2,8 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens;
 
+use Magento\Store\Model\StoreManagerInterface;
+
 
 /**
  * Class Builder
@@ -55,7 +57,7 @@ class Builder implements BuilderInterface
         \Magento\Framework\Api\Search\FilterGroupBuilder $filterGroupBuilder,
         \Webjump\BraspagPagador\Api\CardTokenRepositoryInterface $cardTokenRepository,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager
     ) {
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
         $this->setFilterBuilder($filterBuilder);

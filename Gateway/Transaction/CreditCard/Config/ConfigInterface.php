@@ -15,6 +15,12 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT = 'payment/braspag_pagador_creditcard/paymentsplit';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TYPE = 'payment/braspag_pagador_creditcard/paymentsplit_type';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY = 'payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS = 'payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically_after_x_days';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_MDR = 'payment/braspag_pagador_creditcard/paymentsplit_mdr';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_FEE = 'payment/braspag_pagador_creditcard/paymentsplit_fee';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20 = 'payment/braspag_pagador_creditcard/authentication_3ds_20';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MASTERCARD_ONLY_NOTIFY = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mastercard_notify_only';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_ERROR = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_error';
@@ -54,6 +60,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function hasAvs();
 
+    public function hasPaymentSplit();
+
     public function getReturnUrl();
 
     public function isSaveCardActive();
@@ -89,4 +97,14 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getAuth3Ds20Mdd4();
 
     public function getAuth3Ds20Mdd5();
+
+    public function getPaymentSplitType();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomatically();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays();
+
+    public function getPaymentSplitDefaultMrd();
+
+    public function getPaymentSplitDefaultFee();
 }

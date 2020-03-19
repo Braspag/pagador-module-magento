@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
 
 /**
 
@@ -18,13 +17,31 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
  */
 abstract class AbstractHandler implements HandlerInterface
 {
+    protected $response;
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
+    }
+
     public function handle(array $handlingSubject, array $response)
     {
         if (!isset($handlingSubject['payment']) || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
-        if (!isset($response['response']) || !$response['response'] instanceof ResponseInterface) {
+        if (!isset($response['response']) || !$response['response'] instanceof $this->response) {
             throw new \InvalidArgumentException('Braspag CreditCard Send Response Lib object should be provided');
         }
 

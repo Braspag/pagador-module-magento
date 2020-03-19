@@ -9,10 +9,12 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
+use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction Billet Send Request Builder
@@ -28,6 +30,7 @@ class RequestBuilder implements BuilderInterface
     protected $requestFactory;
     protected $requestAntiFraud;
     protected $requestAvs;
+    protected $requestPaymentSplit;
     protected $orderRepository;
     protected $config;
     protected $quoteItemFactory;
@@ -37,6 +40,7 @@ class RequestBuilder implements BuilderInterface
         RequestFactory $requestFactory,
         RequestAntiFraudLibInterface $requestAntiFraud,
         RequestAvsLibInterface $requestAvs,
+        RequestPaymentSplitLibInterface $requestPaymentSplit,
         ConfigInterface $config,
         QuoteFactory $quoteFactory,
         ItemFactory $quoteItemFactory
@@ -45,6 +49,7 @@ class RequestBuilder implements BuilderInterface
         $this->setRequestFactory($requestFactory);
         $this->setAntiFraudRequest($requestAntiFraud);
         $this->setAvsRequest($requestAvs);
+        $this->setPaymentSplitRequest($requestPaymentSplit);
         $this->setConfig($config);
         $this->setQuoteFactory($quoteFactory);
         $this->setQuoteItemFactory($quoteItemFactory);
@@ -75,6 +80,13 @@ class RequestBuilder implements BuilderInterface
             $this->getRequestAvs()->setOrderAdapter($orderAdapter);
             $this->getRequestAvs()->setPaymentData($paymentData);
             $request->setAvsRequest($this->getRequestAvs());
+        }
+
+        if ($this->getConfig()->hasPaymentSplit()
+            && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
+        ) {
+            $this->getRequestPaymentSplit()->setConfig($this->getConfig());
+            $request->setPaymentSplitRequest($this->getRequestPaymentSplit());
         }
 
         $request->setOrderAdapter($orderAdapter);
@@ -115,6 +127,17 @@ class RequestBuilder implements BuilderInterface
     protected function getRequestAvs()
     {
         return $this->requestAvs;
+    }
+
+    protected function setPaymentSplitRequest(RequestPaymentSplitLibInterface $requestPaymentSplit)
+    {
+        $this->requestPaymentSplit = $requestPaymentSplit;
+        return $this;
+    }
+
+    protected function getRequestPaymentSplit()
+    {
+        return $this->requestPaymentSplit;
     }
 
     protected function setConfig(ConfigInterface $config)

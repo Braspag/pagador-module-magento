@@ -40,7 +40,8 @@
 			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 			<config_path>payment/braspag_pagador_debitcard/redirect_after_place_order</config_path>
 		</field>
-	    <include path="Webjump_BraspagPagador::system/transaction/debitcart/types.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/debitcart/authenticate3ds20.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/debitcard/types.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/authenticate3ds20.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/paymentsplit.xml"/>
     </group>
 </include>

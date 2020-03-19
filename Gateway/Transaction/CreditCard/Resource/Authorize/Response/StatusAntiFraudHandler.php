@@ -7,6 +7,8 @@ use Magento\Sales\Model\Order;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
 use Webjump\BraspagPagador\Model\AntiFraud\Status\Config\ConfigInterface as StatusConfigInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
 
@@ -25,6 +27,12 @@ class StatusAntiFraudHandler extends AbstractHandler implements HandlerInterface
     const STATUS_REVIEW = 3;
     const STATUS_ABORTED = 4;
     const STATUS_ERROR = 5;
+
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
 
     protected function _handle($payment, $response)
     {
