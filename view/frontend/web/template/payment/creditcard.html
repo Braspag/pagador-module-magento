@@ -23,9 +23,20 @@
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
 
-        <form class="form" data-bind="attr: {'id': getCode() + '-form'}">
-            <!-- ko template: 'Webjump_BraspagPagador/payment/cc-form' --><!-- /ko -->
-        </form>
+        <div class="card-container">
+            <div class="form-container active">
+                <form class="braspag-card" data-bind="afterRender: loadCardForm()" action="">
+                    <input placeholder="Número do cartão" class="number-card" type="tel" name="number">
+                    <input placeholder="Nome impresso no cartão" class="full-name-card" type="text" name="name">
+                    <input placeholder="MM/AAAA" class="date-card" type="tel" name="expiry">
+                    <input placeholder="CVV" class="cvv-card" type="number" name="cvv">
+                </form>
+                <form class="form" data-bind="attr: {'id': getCode() + '-form'}">
+                    <!-- ko template: 'Webjump_BraspagPagador/payment/cc-form' --><!-- /ko -->
+                </form>
+            </div>
+            <div class="card-wrapper"></div>
+        </div>
 
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
