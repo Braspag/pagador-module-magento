@@ -86,9 +86,7 @@
         </webjump_braspag>
         <webjump_braspag_antifraud>
             <fingerprint>
-                <src_png_img>https://h.online-metrix.net/fp/clear.png</src_png_img>
-                <src_js>https://h.online-metrix.net/fp/check.js</src_js>
-                <src_flash>https://h.online-metrix.net/fp/fp.swf</src_flash>
+                <src_js>https://h.online-metrix.net/fp/tags.js</src_js>
             </fingerprint>
 
             <options>

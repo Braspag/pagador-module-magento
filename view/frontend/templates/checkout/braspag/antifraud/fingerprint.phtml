@@ -11,13 +11,12 @@
  * @var \Webjump\BraspagPagador\Block\AntiFraud\FingerPrint $this;
  */
 ?>
-<p style="background:url(<?php echo $this->getFingerPrint()->getSrcPngImageUrl() ?>?<?php echo $this->getSrcParams() ?>&m=1)"></p>
-<img src="<?php echo $this->getFingerPrint()->getSrcPngImageUrl() ?>?<?php echo $this->getSrcParams() ?>&m=2" alt="">
 
-<object type="application/x-shockwave-flash" data="<?php echo $this->getFingerPrint()->getSrcFlashUrl() ?>?<?php echo $this->getSrcParams() ?> "width="1" height="1" id="thm_fp">
-<param name="movie" value="<?php echo $this->getFingerPrint()->getSrcFlashUrl() ?>?<?php echo $this->getSrcParams() ?>" />
-<div></div>
-</object>
+<noscript>
+    <iframe src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>"></iframe>
+</noscript>
 
 <script src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>" type="text/javascript">
 </script>
+
+
