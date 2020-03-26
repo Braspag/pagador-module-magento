@@ -24,7 +24,8 @@ define(
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
+        'Webjump_BraspagPagador/js/model/card.view'
     ],
     function (
         Component,
@@ -42,7 +43,8 @@ define(
         sopt,
         soptToken,
         authentication3ds20,
-        bpmpiRenderer
+        bpmpiRenderer,
+        cardView
     ) {
         'use strict';
 
@@ -196,13 +198,48 @@ define(
                 return true;
             },
 
-            updateCreditCardExpData: function () {
-                if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
-                    this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
-                    return true;
+            loadDebitCardForm: function() {
+
+                if (!cardView.isDebitCardViewEnabled()) {
+                    return false;
                 }
 
-                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear().slice(-2));
+                new Card({
+                    form: document.querySelector('.braspag-debitcard'),
+                    container: '.debitcard-wrapper',
+                    formSelectors: {
+                        numberInput: 'input[name="payment[cc_number]',
+                        expiryInput: 'input[name="payment[cc_exp_date]"]',
+                        cvcInput: 'input[name="payment[cc_cid]"]',
+                        nameInput: 'input[name="payment[cc_owner]"]'
+                    },
+                    debug: true,
+                    placeholders: {
+                        number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
+                        cvc: '&bull;&bull;&bull;',
+                        expiry: '&bull;&bull;/&bull;&bull;',
+                        name: 'Nome Completo'
+                    },
+                    messages: {
+                        validDate: 'sequência\nválida',
+                        monthYear: 'mês/ano'
+                    }
+                });
+            },
+
+            updateCreditCardExpData: function () {
+
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
+                let cardExpDate = cardExpMonth + '/' + cardExpYear;
+                this.creditCardExpDate(cardExpDate);
+
+                /**
+                 * @TODO alterar o card expiry para text ao inves de select
+                 */
+                if (cardView.isDebitCardViewEnabled()) {
+                    $('.debitcard-wrapper .jp-card-expiry').empty().append(cardExpDate);
+                }
             },
 
             updateCustomerName: function () {

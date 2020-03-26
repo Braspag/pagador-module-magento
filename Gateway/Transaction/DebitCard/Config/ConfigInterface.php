@@ -32,6 +32,7 @@ interface  ConfigInterface
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED = 3;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
+    const BRASPAG_PAGADOR_DEBIT_CARD_VIEW = 'payment/braspag_pagador_debitcard/card_view';
 
     public function getMerchantId();
 
@@ -64,4 +65,6 @@ interface  ConfigInterface
     public function getAuth3Ds20Mdd4();
 
     public function getAuth3Ds20Mdd5();
+
+    public function getCardViewIsActive();
 }

@@ -46,6 +46,9 @@ final class ConfigProvider implements ConfigProviderInterface
                         'mdd4' => $this->getCreditCardConfig()->getAuth3Ds20Mdd4(),
                         'mdd5' => $this->getCreditCardConfig()->getAuth3Ds20Mdd5()
                     ],
+                    'card_view' => [
+                        'active' => $this->getCreditCardConfig()->getCardViewIsActive()
+                    ]
                 ]
             ]
         ];

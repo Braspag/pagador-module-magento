@@ -13,7 +13,6 @@ define(
         'mage/translate',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
-        'Webjump_BraspagPagador/js/card',
         'jquery',
         'Magento_Checkout/js/action/place-order',
         'Magento_Checkout/js/model/full-screen-loader',
@@ -27,14 +26,14 @@ define(
         'mage/validation',
         'mage/url',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
+        'Webjump_BraspagPagador/js/model/card.view'
     ],
     function (
         Component,
         $t,
         sopt,
         soptToken,
-        card,
         $,
         placeOrderAction,
         fullScreenLoader,
@@ -48,7 +47,8 @@ define(
         mageValidation,
         mageUrl,
         authentication3ds20,
-        bpmpiRenderer
+        bpmpiRenderer,
+        cardView
     ) {
         'use strict';
 
@@ -121,46 +121,32 @@ define(
                 return true;
             },
 
-            loadCardForm: function() {
+            loadCreditCardForm: function() {
+
+                if (!cardView.isCreditCardViewEnabled()) {
+                    return false;
+                }
+
                 new Card({
                     form: document.querySelector('.braspag-card'),
-                    container: '.card-wrapper'
-                });
-
-                this.checkNumberCard();
-                this.checkNameCard();
-                this.checkExpirationDateCard();
-                this.checkCvvCard();
-            },
-
-            checkNumberCard: function() {
-                $(".number-card").keyup(function(){
-                    $(".bp-sop-cardnumber").val($(".number-card").val().replace(/ /g,''));
-                });
-            },
-
-            checkNameCard: function() {
-                $(".full-name-card").keyup(function(){
-                    $(".bp-sop-cardholdername").val($(".full-name-card").val());
-                });
-            },
-
-            checkExpirationDateCard: function() {
-                $( document ).ready(function() {
-                    $(".date-card").focusout(function(){
-                        var fields = $('.date-card').val().split('/');
-                        var month = parseInt(fields[0].replace("0", ""));
-                        var year = parseInt(fields[1]);
-
-                        $('.select-month').val(month).change();
-                        $('.select-year').val(year).change();
-                    });
-                });
-            },
-
-            checkCvvCard: function() {
-                $(".cvv-card").keyup(function(){
-                    $(".cvv").val($(".cvv-card").val());
+                    container: '.card-wrapper',
+                    formSelectors: {
+                        numberInput: 'input[name="payment[cc_number]',
+                        expiryInput: 'input[name="payment[cc_exp_date]"]',
+                        cvcInput: 'input[name="payment[cc_cid]"]',
+                        nameInput: 'input[name="payment[cc_owner]"]'
+                    },
+                    debug: true,
+                    placeholders: {
+                        number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
+                        cvc: '&bull;&bull;&bull;',
+                        expiry: '&bull;&bull;/&bull;&bull;',
+                        name: 'Nome Completo'
+                    },
+                    messages: {
+                        validDate: 'sequência\nválida',
+                        monthYear: 'mês/ano'
+                    }
                 });
             },
 
@@ -319,7 +305,18 @@ define(
             },
 
             updateCreditCardExpData: function () {
-                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
+
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
+                let cardExpDate = cardExpMonth + '/' + cardExpYear;
+                this.creditCardExpDate(cardExpDate);
+
+                /**
+                 * @TODO alterar o card expiry para text ao inves de select
+                 */
+                if (cardView.isCreditCardViewEnabled()) {
+                    $('.card-wrapper .jp-card-expiry').empty().append(cardExpDate);
+                }
             },
 
             pad: function(num, size) {

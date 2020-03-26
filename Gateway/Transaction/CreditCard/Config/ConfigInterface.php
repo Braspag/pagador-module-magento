@@ -49,6 +49,7 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED = 3;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
+    const BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW = 'payment/braspag_pagador_creditcard/card_view';
 
     public function isAuthorizeAndCapture();
 
@@ -107,4 +108,6 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getPaymentSplitDefaultMrd();
 
     public function getPaymentSplitDefaultFee();
+
+    public function getCardViewIsActive();
 }

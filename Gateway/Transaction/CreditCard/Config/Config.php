@@ -155,4 +155,9 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_FEE);
     }
+
+    public function getCardViewIsActive()
+    {
+        return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
+    }
 }

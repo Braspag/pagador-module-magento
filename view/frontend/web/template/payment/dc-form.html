@@ -7,7 +7,7 @@
  * @link        http://www.webjump.com.br
  */
 -->
-<fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}">
+<fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}, afterRender: loadDebitCardForm()">
 
     <!-- ko if: (isShowLegend())-->
     <legend class="legend">
@@ -50,7 +50,7 @@
             <span><!-- ko i18n: 'Debit Card Number'--><!-- /ko --></span>
         </label>
         <div class="control">
-            <input type="number" name="payment[cc_number]" class="input-text bp-sd-cardnumber" value=""
+            <input type="text" name="payment[cc_number]" class="input-text bp-sd-cardnumber" value=""
                    data-bind="attr: {
                                     autocomplete: off,
                                     id: getCode() + '_cc_number',
@@ -95,7 +95,8 @@
                                             optionsValue: 'value',
                                             optionsText: 'month',
                                             optionsCaption: $t('Month'),
-                                            value: creditCardExpMonth">
+                                            value: creditCardExpMonth,
+                                            event: { change: updateCreditCardExpData }">
                         </select>
                     </div>
                 </div>
@@ -109,12 +110,13 @@
                                            optionsValue: 'value',
                                            optionsText: 'year',
                                            optionsCaption: $t('Year'),
-                                           value: creditCardExpYear">
+                                           value: creditCardExpYear,
+                                           event: { change: updateCreditCardExpData }">
                         </select>
                     </div>
                 </div>
             </div>
-            <input type="hidden" class="bp-sd-cardexpirationdate superdebito" data-bind="value: creditCardExpDate">
+            <input type="hidden" name="payment[cc_exp_date]" class="bp-sop-cardexpirationdate silentorderpost" data-bind="value: creditCardExpDate">
         </div>
     </div>
     <!-- ko if: (hasVerification())-->

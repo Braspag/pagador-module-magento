@@ -43,5 +43,6 @@
 	    <include path="Webjump_BraspagPagador::system/transaction/debitcard/types.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/debitcard/authenticate3ds20.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/debitcard/paymentsplit.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/cardview.xml"/>
     </group>
 </include>

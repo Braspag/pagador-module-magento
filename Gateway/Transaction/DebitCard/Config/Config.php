@@ -101,4 +101,9 @@ class Config extends AbstractConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_FEE);
     }
+
+    public function getCardViewIsActive()
+    {
+        return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_DEBIT_CARD_VIEW);
+    }
 }

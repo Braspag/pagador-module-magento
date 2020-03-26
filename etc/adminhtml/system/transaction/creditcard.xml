@@ -63,5 +63,6 @@
 	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/avs.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/creditcard/authenticate3ds20.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/creditcard/paymentsplit.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/cardview.xml"/>
     </group>
 </include>
