@@ -8,6 +8,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 {
     private $command;
     private $apiMock;
+    private $requestHandlerMock;
     private $responseHandlerMock;
     private $validatorRequestMock;
     private $validatorResponseMock;
@@ -16,6 +17,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
     {
     	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+        $this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
     	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
         $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
         $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
@@ -31,6 +33,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
     	$this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             null,
             null
@@ -66,6 +69,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -121,6 +125,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -176,6 +181,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -245,6 +251,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             null,
             $this->validatorResponseMock
@@ -266,6 +273,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             null,
             $this->validatorResponseMock

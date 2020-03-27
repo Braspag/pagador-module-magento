@@ -11,3 +11,32 @@
 .checkout-payment-method .ccard .installments .select {
 	width: 225px;
 }
+.checkout-payment-method .bp-card-container .card-wrapper,
+.checkout-payment-method .bp-card-container .debitcard-wrapper,
+.checkout-payment-method .bp-card-container .form-container { 
+	float: left;
+	max-width: 50%;
+}
+.payment-method-billing-address, .bp-card-container {
+	display: inline-block;
+	margin: 0 0 20px 0;
+}
+.braspag-card,
+.braspag-debitcard {
+	padding: 0 25px 0 0;
+}
+
+.checkout-payment-method .bp-card-container input[type="text"], 
+.checkout-payment-method .bp-card-container input[type="password"], 
+.checkout-payment-method .bp-card-container input[type="url"], 
+.checkout-payment-method .bp-card-container input[type="tel"], 
+.checkout-payment-method .bp-card-container input[type="search"], 
+.checkout-payment-method .bp-card-container input[type="number"], 
+.checkout-payment-method .bp-card-container input[type="datetime"], 
+.checkout-payment-method .bp-card-container input[type="email"] {
+	margin: 0 0 25px 0;
+}
+
+
+
+

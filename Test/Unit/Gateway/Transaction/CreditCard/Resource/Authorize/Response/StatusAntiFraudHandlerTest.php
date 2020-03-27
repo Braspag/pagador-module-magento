@@ -4,21 +4,27 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\StatusAntiFraudHandler;
 use Webjump\BraspagPagador\Model\AntiFraud\Status\Config\ConfigInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
     /** @var StatusAntiFraudHandler  */
 	private $handler;
+    private $responseMock;
 
     public function setUp()
     {
-    	$this->handler = new StatusAntiFraudHandler();
+        $this->responseMock = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = new StatusAntiFraudHandler(
+            $this->responseMock
+        );
     }
 
     public function testHandleAccept()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
@@ -45,20 +51,18 @@ class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getStatus')
             ->will($this->returnValue(1));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentFraudAnalysis')
             ->will($this->returnValue($antiFraudAnalisysMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleReject()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
@@ -86,20 +90,18 @@ class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getStatus')
             ->will($this->returnValue(2));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentFraudAnalysis')
             ->will($this->returnValue($antiFraudAnalisysMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleReview()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
@@ -127,20 +129,18 @@ class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getStatus')
             ->will($this->returnValue(3));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentFraudAnalysis')
             ->will($this->returnValue($antiFraudAnalisysMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleWithoutAntiFraud()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
             ->getMock();
@@ -162,7 +162,7 @@ class StatusAntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($paymentMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }

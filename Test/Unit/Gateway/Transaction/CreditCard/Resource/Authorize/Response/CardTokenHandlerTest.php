@@ -9,6 +9,7 @@ use \Magento\Framework\Api\SearchCriteriaBuilder;
 use \Magento\Framework\Api\SearchCriteria;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
 use Magento\Framework\Api\SearchResultsInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
 {
@@ -64,7 +65,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->setMethods([])
             ->getMock();
 
-        $this->responseMock = $this->createMock(ResponseInterface::class);
+        $this->responseMock = $this->createMock(Response::class);
 
         $this->searchResultMock = $this->getMockBuilder(SearchResultsInterface::class)
             ->disableOriginalConstructor()
@@ -95,7 +96,6 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             'brand' => 'Visa',
             'mask'  => '364135'
         ]);
-
 
         $this->cardTokenRepositoryMock
             ->expects($this->once())
@@ -180,9 +180,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testHandleWithAlreadyCardToken()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
-
-        $responseMock->expects($this->exactly(2))
+        $this->responseMock->expects($this->exactly(2))
             ->method('getPaymentCardToken')
             ->will($this->returnValue('6e1bf77a-b28b-4660-b14f-455e2a1c95e9'));
 
@@ -208,7 +206,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($cardTokenMock));
 
         $handlingSubject = ['payment' => $paymentDataObjectMock];
-        $response = ['response' => $responseMock];
+        $response = ['response' => $this->responseMock];
 
         $this->handler->handle($handlingSubject, $response);
     }

@@ -67,6 +67,18 @@ define(
                 $('.bpmpi_auth_failure_type').val(4)
                     .trigger('change');
             },
+            onUnsupportedBrand: function (e) {
+                // Bandeira não suportada para autenticação.
+                var returnCode = e.ReturnCode;
+                var returnMessage = e.ReturnMessage;
+
+                $('.bpmpi_auth_xid').val(e.Xid);
+                $('.bpmpi_auth_eci').val(e.Eci);
+                $('.bpmpi_auth_version').val(e.Version);
+                $('.bpmpi_auth_reference_id');
+                $('.bpmpi_auth_failure_type').val(5)
+                    .trigger('change');
+            },
             Environment: window.checkoutConfig.payment.braspag.isTestEnvironment == '1' ? 'SDB' : 'PRD',
             Debug: window.checkoutConfig.payment.braspag.isTestEnvironment == '1' ? true : false
         };

@@ -11,7 +11,7 @@ use Webjump\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface;
  * Interface CommandInterface
  * @package Webjump\BraspagPagador\Api
  */
-interface CommandInterface
+interface Auth3Ds20TokenCommandInterface
 {
     /**
      * @return mixed

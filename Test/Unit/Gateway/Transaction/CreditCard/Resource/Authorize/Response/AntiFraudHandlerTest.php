@@ -3,14 +3,22 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
+	private $responseMock;
 
     public function setUp()
     {
-    	$this->handler = new AntiFraudHandler;
+        $this->responseMock = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = new AntiFraudHandler(
+    	    $this->responseMock
+        );
     }
 
     public function tearDown()
@@ -100,12 +108,12 @@ class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getReplyDataCasePriority')
             ->will($this->returnValue('case priority'));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getPaymentFraudAnalysis')
             ->will($this->returnValue($antiFraudAnalisysMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+    	$response = ['response' => $this->responseMock];
 
     	$this->handler->handle($handlingSubject, $response);
     }

@@ -59,6 +59,12 @@ class Validator implements ValidatorInterface
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
+            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND
+                && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizeOnUnsupportedBrand()
+            ) {
+                return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
+            }
+
             if (!$this->creditCardConfigInterface->getIsTestEnvironment()
                 && !preg_match("#cielo#is", $request->getPaymentProvider())
                 && $failureType != CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED

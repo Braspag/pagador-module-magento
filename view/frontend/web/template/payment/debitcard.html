@@ -23,9 +23,14 @@
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
 
-        <form class="form" data-bind="attr: {'id': getCode() + '-form'}">
-            <!-- ko template: 'Webjump_BraspagPagador/payment/dc-form' --><!-- /ko -->
-        </form>
+        <div class="bp-card-container">
+            <div class="form-container active">
+                <form class="braspag-debitcard" data-bind="attr: {'id': getCode() + '-form'}">
+                    <!-- ko template: 'Webjump_BraspagPagador/payment/dc-form' --><!-- /ko -->
+                </form>
+            </div>
+            <div class="debitcard-wrapper"></div>
+        </div>
 
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->

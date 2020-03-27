@@ -11,7 +11,7 @@
 -->
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <section id="webjump_braspag_antifraud" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-        <label>Braspag AntiFraud</label>
+        <label>Anti Fraud</label>
         <tab>webjump_braspag</tab>
         <resource>Webjump_BraspagPagador::config</resource>
 

@@ -7,6 +7,7 @@ use Magento\Payment\Gateway\CommandInterface;
 use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
 use Magento\Payment\Gateway\Response\HandlerInterface as ResponseHandler;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface as RequestHandler;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Command\CommandException;
 
@@ -27,6 +28,8 @@ abstract class AbstractApiCommand implements CommandInterface
 
     protected $responseHandler;
 
+    protected $requestHandler;
+
     protected $requestValidator;
 
     protected $responseValidator;
@@ -34,6 +37,7 @@ abstract class AbstractApiCommand implements CommandInterface
     public function __construct(
         BraspagApi $api,
         RequestBuilder $requestBuilder,
+        RequestHandler $requestHandler,
         ResponseHandler $responseHandler,
         ValidatorInterface $requestValidator = null,
         ValidatorInterface $responseValidator = null
@@ -42,6 +46,7 @@ abstract class AbstractApiCommand implements CommandInterface
         $this->setApi($api);
         $this->setRequestBuilder($requestBuilder);
         $this->setResponseHandler($responseHandler);
+        $this->setRequestHandler($requestHandler);
         $this->setRequestValidator($requestValidator);
         $this->setResponseValidator($responseValidator);
     }
@@ -63,6 +68,8 @@ abstract class AbstractApiCommand implements CommandInterface
                 );
             }
         }
+
+        $this->getRequestHandler()->handle($commandSubject, ['request' => $request]);
 
         $response = $this->sendRequest($request);
 
@@ -97,6 +104,22 @@ abstract class AbstractApiCommand implements CommandInterface
         $this->responseHandler = $responseHandler;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequestHandler()
+    {
+        return $this->requestHandler;
+    }
+
+    /**
+     * @param mixed $requestHandler
+     */
+    public function setRequestHandler($requestHandler)
+    {
+        $this->requestHandler = $requestHandler;
     }
 
     protected function getApi()
