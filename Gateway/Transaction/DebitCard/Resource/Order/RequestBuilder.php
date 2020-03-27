@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
@@ -60,7 +60,7 @@ class RequestBuilder implements BuilderInterface
         /** @var OrderAdapter $orderAdapter */
         $orderAdapter = $paymentDataObject->getOrder();
 
-        if ($this->getConfig()->hasPaymentSplit()) {
+        if ($this->getConfig()->isPaymentSplitActive()) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
             $request->setPaymentSplitRequest($this->getRequestPaymentSplit());
         }

@@ -19,6 +19,7 @@ interface  ConfigInterface
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_ERROR = 'payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_error';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_failure';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_unenrolled';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_UNSUPPORTED_BRAND = 'payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_unsupported_brand';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD1 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd1';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD2 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd2';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD3 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd3';
@@ -32,6 +33,7 @@ interface  ConfigInterface
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED = 3;
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
+    const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND = 5;
     const BRASPAG_PAGADOR_DEBIT_CARD_VIEW = 'payment/braspag_pagador_debitcard/card_view';
 
     public function getMerchantId();
@@ -56,6 +58,8 @@ interface  ConfigInterface
 
     public function isAuth3Ds20AuthorizeOnUnenrolled();
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand();
+
     public function getAuth3Ds20Mdd1();
 
     public function getAuth3Ds20Mdd2();
@@ -66,5 +70,5 @@ interface  ConfigInterface
 
     public function getAuth3Ds20Mdd5();
 
-    public function getCardViewIsActive();
+    public function isCardViewActive();
 }

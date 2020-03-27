@@ -26,6 +26,7 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_ERROR = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_error';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_failure';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unenrolled';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNSUPPORTED_BRAND = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unsupported_brand';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd1';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD2 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd2';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD3 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd3';
@@ -49,6 +50,7 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED = 3;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND = 5;
     const BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW = 'payment/braspag_pagador_creditcard/card_view';
 
     public function isAuthorizeAndCapture();
@@ -61,7 +63,7 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function hasAvs();
 
-    public function hasPaymentSplit();
+    public function isPaymentSplitActive();
 
     public function getReturnUrl();
 
@@ -89,6 +91,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function isAuth3Ds20AuthorizeOnUnenrolled();
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand();
+
     public function getAuth3Ds20Mdd1();
 
     public function getAuth3Ds20Mdd2();
@@ -109,5 +113,5 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function getPaymentSplitDefaultFee();
 
-    public function getCardViewIsActive();
+    public function isCardViewActive();
 }

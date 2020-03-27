@@ -38,7 +38,7 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Order data object should be provided');
         }
 
-        if ($this->getConfig()->hasPaymentSplit()
+        if ($this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
         ) {
             $this->getRequest()->setConfig($this->getConfig());

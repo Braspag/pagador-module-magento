@@ -27,7 +27,7 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE);
     }
 
-    public function hasPaymentSplit()
+    public function isPaymentSplitActive()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT);
     }
@@ -106,6 +106,11 @@ class Config extends BaseConfig implements ConfigInterface
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED);
     }
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNSUPPORTED_BRAND);
+    }
+
     public function getAuth3Ds20Mdd1()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1);
@@ -156,7 +161,7 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_FEE);
     }
 
-    public function getCardViewIsActive()
+    public function isCardViewActive()
     {
         return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
     }

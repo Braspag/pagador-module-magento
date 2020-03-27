@@ -32,7 +32,7 @@ class PaymentSplitTransactionPost {
      */
     public function execute()
     {
-        if (!$this->configInterface->hasPaymentSplit()) {
+        if (!$this->configInterface->isPaymentSplitActive()) {
             return $this;
         }
 

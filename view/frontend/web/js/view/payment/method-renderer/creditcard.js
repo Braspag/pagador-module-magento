@@ -415,7 +415,7 @@ define(
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
                 bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber().replace(/\D/g,''));
                 bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());

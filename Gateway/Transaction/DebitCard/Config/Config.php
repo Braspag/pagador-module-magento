@@ -62,6 +62,11 @@ class Config extends AbstractConfig implements ConfigInterface
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_UNENROLLED);
     }
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_UNSUPPORTED_BRAND);
+    }
+
     public function getAuth3Ds20Mdd1()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD1);
@@ -87,9 +92,9 @@ class Config extends AbstractConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD5);
     }
 
-    public function hasPaymentSplit()
+    public function isPaymentSplitActive()
     {
-        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT);
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT);
     }
 
     public function getPaymentSplitDefaultMrd()
@@ -102,7 +107,7 @@ class Config extends AbstractConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_FEE);
     }
 
-    public function getCardViewIsActive()
+    public function isCardViewActive()
     {
         return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_DEBIT_CARD_VIEW);
     }

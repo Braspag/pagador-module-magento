@@ -402,7 +402,7 @@ class SplitManager implements SplitManagerInterface
             ->joinInner(['sop' => 'sales_order_payment'], 'main_table.entity_id = sop.parent_id')
             ->where("bps.sales_order_id IS NULL")
             ->where("sop.method = '".ConfigProvider::CODE."'")
-//            ->where("DATE_FORMAT(DATE_ADD(main_table.created_at, INTERVAL {$days} DAY), \"%Y-%m-%d\") = DATE_FORMAT(NOW(), \"%Y-%m-%d\")")
+            ->where("DATE_FORMAT(DATE_ADD(main_table.created_at, INTERVAL {$days} DAY), \"%Y-%m-%d\") = DATE_FORMAT(NOW(), \"%Y-%m-%d\")")
             ->limit(100)
         ;
 

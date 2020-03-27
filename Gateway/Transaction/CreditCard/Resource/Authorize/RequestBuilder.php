@@ -82,7 +82,7 @@ class RequestBuilder implements BuilderInterface
             $request->setAvsRequest($this->getRequestAvs());
         }
 
-        if ($this->getConfig()->hasPaymentSplit()
+        if ($this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
         ) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());

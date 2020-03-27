@@ -53,7 +53,7 @@ class Request implements BraspaglibRequestInterface
      */
     public function getSplits()
     {
-        if (!$this->getConfig()->hasPaymentSplit()) {
+        if (!$this->getConfig()->isPaymentSplitActive()) {
             return [];
         }
 
