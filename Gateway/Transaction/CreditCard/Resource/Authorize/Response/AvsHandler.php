@@ -4,6 +4,8 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authori
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface as AvsResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
 
@@ -17,6 +19,12 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface as 
  */
 class AvsHandler extends AbstractHandler implements HandlerInterface
 {
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
+
     protected function _handle($payment, $response)
     {
         $avsResponse = $response->getAvs();

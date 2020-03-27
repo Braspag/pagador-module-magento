@@ -3,6 +3,8 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
 
@@ -16,6 +18,12 @@ use Magento\Payment\Gateway\Response\HandlerInterface;
  */
 class BaseHandler extends AbstractHandler implements HandlerInterface
 {
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
+
     protected function _handle($payment, $response)
     {
         $payment->setTransactionId($response->getPaymentPaymentId());

@@ -26,7 +26,8 @@ define(
         'mage/validation',
         'mage/url',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
+        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
+        'Webjump_BraspagPagador/js/model/card.view'
     ],
     function (
         Component,
@@ -46,7 +47,8 @@ define(
         mageValidation,
         mageUrl,
         authentication3ds20,
-        bpmpiRenderer
+        bpmpiRenderer,
+        cardView
     ) {
         'use strict';
 
@@ -108,7 +110,6 @@ define(
                         'creditCardsavecard',
                         'creditCardSoptPaymentToken'
                     ]);
-
                 return this;
             },
 
@@ -118,6 +119,35 @@ define(
 
             isActive: function() {
                 return true;
+            },
+
+            loadCreditCardForm: function() {
+
+                if (!cardView.isCreditCardViewEnabled()) {
+                    return false;
+                }
+
+                new Card({
+                    form: document.querySelector('.braspag-card'),
+                    container: '.card-wrapper',
+                    formSelectors: {
+                        numberInput: 'input[name="payment[cc_number]',
+                        expiryInput: 'input[name="payment[cc_exp_date]"]',
+                        cvcInput: 'input[name="payment[cc_cid]"]',
+                        nameInput: 'input[name="payment[cc_owner]"]'
+                    },
+                    debug: true,
+                    placeholders: {
+                        number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
+                        cvc: '&bull;&bull;&bull;',
+                        expiry: '&bull;&bull;/&bull;&bull;',
+                        name: 'Nome Completo'
+                    },
+                    messages: {
+                        validDate: 'sequência\nválida',
+                        monthYear: 'mês/ano'
+                    }
+                });
             },
 
             getData: function () {
@@ -275,7 +305,18 @@ define(
             },
 
             updateCreditCardExpData: function () {
-                this.creditCardExpDate(this.pad(this.creditCardExpMonth(), 2) + '/' + this.creditCardExpYear());
+
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
+                let cardExpDate = cardExpMonth + '/' + cardExpYear;
+                this.creditCardExpDate(cardExpDate);
+
+                /**
+                 * @TODO alterar o card expiry para text ao inves de select
+                 */
+                if (cardView.isCreditCardViewEnabled()) {
+                    $('.card-wrapper .jp-card-expiry').empty().append(cardExpDate);
+                }
             },
 
             pad: function(num, size) {
@@ -374,7 +415,7 @@ define(
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
                 bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber().replace(/\D/g,''));
                 bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());

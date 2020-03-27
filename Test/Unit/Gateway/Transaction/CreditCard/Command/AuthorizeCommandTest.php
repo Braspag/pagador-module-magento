@@ -8,6 +8,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 {
 	private $command;
 	private $apiMock;
+	private $requestHandlerMock;
 	private $responseHandlerMock;
     private $validatorRequestMock;
     private $validatorResponseMock;
@@ -16,6 +17,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
     {
     	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
     	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+    	$this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
     	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
         $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
         $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
@@ -31,6 +33,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
     	$this->command = new AuthorizeCommand(
     		$this->apiMock,
     		$this->requestBuilderMock,
+    		$this->requestHandlerMock,
     		$this->responseHandlerMock,
             null,
             null
@@ -66,6 +69,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new AuthorizeCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -121,6 +125,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new AuthorizeCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -152,6 +157,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
                     'getPaymentCardToken',
                     'getPaymentCardNumberEncrypted',
                     'getPaymentCardBrand',
+                    'getPaymentSplitPayments',
                     'getAuthenticationUrl',
                     'getPaymentCardProvider',
                     'getVelocityAnalysis',
@@ -191,6 +197,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
         $this->command = new AuthorizeCommand(
             $this->apiMock,
             $this->requestBuilderMock,
+            $this->requestHandlerMock,
             $this->responseHandlerMock,
             $this->validatorRequestMock,
             $this->validatorResponseMock
@@ -222,6 +229,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
                     'getPaymentCardToken',
                     'getPaymentCardNumberEncrypted',
                     'getPaymentCardBrand',
+                    'getPaymentSplitPayments',
                     'getAuthenticationUrl',
                     'getPaymentCardProvider',
                     'getVelocityAnalysis',

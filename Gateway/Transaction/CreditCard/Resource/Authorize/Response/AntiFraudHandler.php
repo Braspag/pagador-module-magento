@@ -4,6 +4,8 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authori
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
 
@@ -17,6 +19,12 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterfa
  */
 class AntiFraudHandler extends AbstractHandler implements HandlerInterface
 {
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
+
     protected function _handle($payment, $response)
     {
         $antiFraudResponse = $response->getPaymentFraudAnalysis();

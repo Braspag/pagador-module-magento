@@ -8,6 +8,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request as AntiFraudRequest;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as AvsRequest;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
@@ -20,6 +21,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
     private $configMock;
     private $antiFraudRequestMock;
     private $avsRequestMock;
+    private $paymentSplitRequestMock;
     private $quoteFactoryMock;
     private $quoteItemFactoryMock;
     private $orderAdapter;
@@ -55,6 +57,10 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->paymentSplitRequestMock = $this->getMockBuilder(RequestPaymentSplitLibInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->orderAdapter = $this->createMock('Magento\Payment\Gateway\Data\OrderAdapterInterface');
 
         $this->requestBuilderMock = $this->getMockBuilder(RequestBuilder::class)
@@ -71,6 +77,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             $this->requestFactoryMock,
             $this->antiFraudRequestMock,
             $this->avsRequestMock,
+            $this->paymentSplitRequestMock,
             $this->configMock,
             $this->quoteFactoryMock,
             $this->quoteItemFactoryMock

@@ -15,11 +15,18 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT = 'payment/braspag_pagador_creditcard/paymentsplit';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TYPE = 'payment/braspag_pagador_creditcard/paymentsplit_type';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY = 'payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS = 'payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically_after_x_days';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_MDR = 'payment/braspag_pagador_creditcard/paymentsplit_mdr';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_FEE = 'payment/braspag_pagador_creditcard/paymentsplit_fee';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20 = 'payment/braspag_pagador_creditcard/authentication_3ds_20';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MASTERCARD_ONLY_NOTIFY = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mastercard_notify_only';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_ERROR = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_error';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_FAILURE = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_failure';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unenrolled';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNSUPPORTED_BRAND = 'payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unsupported_brand';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd1';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD2 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd2';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD3 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd3';
@@ -43,6 +50,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED = 2;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED = 3;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
+    const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND = 5;
+    const BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW = 'payment/braspag_pagador_creditcard/card_view';
 
     public function isAuthorizeAndCapture();
 
@@ -53,6 +62,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function hasAntiFraud();
 
     public function hasAvs();
+
+    public function isPaymentSplitActive();
 
     public function getReturnUrl();
 
@@ -80,6 +91,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function isAuth3Ds20AuthorizeOnUnenrolled();
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand();
+
     public function getAuth3Ds20Mdd1();
 
     public function getAuth3Ds20Mdd2();
@@ -89,4 +102,16 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getAuth3Ds20Mdd4();
 
     public function getAuth3Ds20Mdd5();
+
+    public function getPaymentSplitType();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomatically();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays();
+
+    public function getPaymentSplitDefaultMrd();
+
+    public function getPaymentSplitDefaultFee();
+
+    public function isCardViewActive();
 }
