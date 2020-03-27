@@ -5,6 +5,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface as BraspaglibRequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 
@@ -28,6 +29,11 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected $billingAddress;
 
     protected $helperData;
+
+    /**
+     * @var
+     */
+    protected $paymentSplitRequest;
 
     public function __construct(
         ConfigInterface $config,
@@ -227,5 +233,24 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getPaymentExternalAuthenticationReferenceId()
     {
         return $this->getPaymentData()->getAdditionalInformation('authentication_reference_id');
+    }
+
+    /**
+     * @param RequestPaymentSplitLibInterface $paymentSplitRequest
+     * @return $this
+     */
+    public function setPaymentSplitRequest(RequestPaymentSplitLibInterface $paymentSplitRequest)
+    {
+        $this->paymentSplitRequest = $paymentSplitRequest;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitRequest()
+    {
+        return $this->paymentSplitRequest;
     }
 }

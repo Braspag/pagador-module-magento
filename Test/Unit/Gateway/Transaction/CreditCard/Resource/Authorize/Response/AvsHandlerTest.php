@@ -3,14 +3,22 @@
 namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler;
+use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class AvsHandlerTest extends \PHPUnit\Framework\TestCase
 {
 	private $handler;
+    private $responseMock;
 
     public function setUp()
     {
-    	$this->handler = new AvsHandler;
+        $this->responseMock = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    	$this->handler = new AvsHandler(
+            $this->responseMock
+        );
     }
 
     public function tearDown()
@@ -32,7 +40,7 @@ class AvsHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getReturnCode')
             ->will($this->returnValue(123));
 
-        $responseMock->expects($this->once())
+        $this->responseMock->expects($this->once())
             ->method('getAvs')
             ->will($this->returnValue($avsResponseMock));
 
@@ -57,7 +65,7 @@ class AvsHandlerTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($paymentMock));
 
     	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+    	$response = ['response' => $this->responseMock];
 
     	$this->handler->handle($handlingSubject, $response);
     }

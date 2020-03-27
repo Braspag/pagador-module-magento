@@ -27,6 +27,11 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE);
     }
 
+    public function isPaymentSplitActive()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT);
+    }
+
     public function getReturnUrl()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL);
@@ -101,6 +106,11 @@ class Config extends BaseConfig implements ConfigInterface
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNENROLLED);
     }
 
+    public function isAuth3Ds20AuthorizeOnUnsupportedBrand()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20AUTHORIZE_ON_UNSUPPORTED_BRAND);
+    }
+
     public function getAuth3Ds20Mdd1()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD1);
@@ -124,5 +134,35 @@ class Config extends BaseConfig implements ConfigInterface
     public function getAuth3Ds20Mdd5()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD5);
+    }
+
+    public function getPaymentSplitType()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TYPE);
+    }
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomatically()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY);
+    }
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS);
+    }
+
+    public function getPaymentSplitDefaultMrd()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_MDR);
+    }
+
+    public function getPaymentSplitDefaultFee()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_DEFAULT_FEE);
+    }
+
+    public function isCardViewActive()
+    {
+        return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
     }
 }

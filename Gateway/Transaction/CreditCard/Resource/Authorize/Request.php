@@ -16,6 +16,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInt
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Helper\Validator;
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
@@ -62,6 +63,12 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      * @var
      */
     protected $avsRequest;
+
+    /**
+     * @var
+     */
+    protected $paymentSplitRequest;
+
     /**
      * Helper validator.
      *
@@ -584,6 +591,25 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getAvsRequest()
     {
         return $this->avsRequest;
+    }
+
+    /**
+     * @param RequestPaymentSplitLibInterface $paymentSplitRequest
+     * @return $this
+     */
+    public function setPaymentSplitRequest(RequestPaymentSplitLibInterface $paymentSplitRequest)
+    {
+        $this->paymentSplitRequest = $paymentSplitRequest;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitRequest()
+    {
+        return $this->paymentSplitRequest;
     }
 
     /**

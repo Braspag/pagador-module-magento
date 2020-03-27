@@ -34,7 +34,7 @@
             <comment />
             <config_path>payment/braspag_pagador_creditcardtoken/sort_order</config_path>
         </field>
-	    <!-- <include path="Webjump_BraspagPagador::system/transaction/creditcarttoken/types.xml"/> -->
-	    <include path="Webjump_BraspagPagador::system/transaction/creditcarttoken/installments.xml"/>
+	    <!-- <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken/types.xml"/> -->
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken/installments.xml"/>
     </group>
 </include>

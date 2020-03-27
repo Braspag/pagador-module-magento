@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response;
 
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface;
-
+use Webjump\Braspag\Pagador\Transaction\Resource\Debit\Send\Response;
+use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
+
  * Braspag Transaction DebitCard Order Response Handler
  *
  * @author      Webjump Core Team <dev@webjump.com>
@@ -16,23 +16,21 @@ use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface;
  *
  * @link        http://www.webjump.com.br
  */
-class ResponseHandler implements HandlerInterface
+class BaseHandler extends AbstractHandler implements HandlerInterface
 {
-    public function handle(array $handlingSubject, array $response)
+    public function __construct(
+        Response $response
+    ) {
+        $this->setResponse($response);
+    }
+
+    /**
+     * @param $payment
+     * @param $response
+     * @return $this
+     */
+    protected function _handle($payment, $response)
     {
-        if (!isset($handlingSubject['payment']) || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface) {
-            throw new \InvalidArgumentException('Payment data object should be provided');
-        }
-
-        if (!isset($response['response']) || !$response['response'] instanceof ResponseInterface) {
-            throw new \InvalidArgumentException('Braspag DebitCard Send Response Lib object should be provided');
-        }
-
-        /** @var ResponseInterface $response */
-        $response = $response['response'];
-        $paymentDO = $handlingSubject['payment'];
-        $payment = $paymentDO->getPayment();
-
         list($paymentProvider, $paymentBrand) = array_pad(explode('-', $payment->getCcType(), 2), 2, null);
         list($responseProvider, $responseBrand) = array_pad(explode('-', $response->getPaymentCardProvider(), 2), 2, null);
         $payment->setAdditionalInformation('send_provider', $paymentProvider);
@@ -40,7 +38,7 @@ class ResponseHandler implements HandlerInterface
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setAdditionalInformation('redirect_url', $response->getPaymentAuthenticationUrl());
-        
+
         $payment->setIsTransactionClosed(false);
 
         return $this;
