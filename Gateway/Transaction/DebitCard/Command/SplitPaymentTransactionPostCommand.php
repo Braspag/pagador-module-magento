@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command;
+namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface;
 
 /**
  * Braspag Transaction Credit Authorize Command
@@ -23,7 +23,7 @@ class SplitPaymentTransactionPostCommand extends AbstractApiCommand
         }
 
         try {
-            return $this->getApi()->sendCreditCardSplitPaymentTransactionPost($request);
+            return $this->getApi()->sendDebitCardSplitPaymentTransactionPost($request);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
 
             throw new \Magento\Sales\Exception\CouldNotInvoiceException(

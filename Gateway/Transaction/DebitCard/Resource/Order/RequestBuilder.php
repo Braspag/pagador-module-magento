@@ -12,6 +12,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestF
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
+use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction DebitCard Send Request Builder
@@ -60,7 +61,9 @@ class RequestBuilder implements BuilderInterface
         /** @var OrderAdapter $orderAdapter */
         $orderAdapter = $paymentDataObject->getOrder();
 
-        if ($this->getConfig()->isPaymentSplitActive()) {
+        if ($this->getConfig()->isPaymentSplitActive()
+            && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
+        ) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
             $request->setPaymentSplitRequest($this->getRequestPaymentSplit());
         }
