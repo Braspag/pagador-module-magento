@@ -226,6 +226,13 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionDebitCardSplitPaymentTransactionPostRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionDebitCardResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
     <type name="Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint">
         <arguments>
             <argument name="scopeConfig" xsi:type="object">\Magento\Framework\App\Config</argument>
@@ -263,6 +270,8 @@
     <virtualType name="BraspagTransactionCreditCardCaptureRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder">
         <arguments>
             <argument name="request" xsi:type="object">BraspagTransactionCreditCardCaptureRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionCreditCardResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
         </arguments>
     </virtualType>
 
@@ -317,6 +326,14 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionDebitCardSplitPaymentTransactionPostCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Request\TransactionPostSplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
@@ -332,10 +349,26 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardCaptureCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\TransactionSplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardSplitPaymentTransactionPostCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
                 <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\PaymentSplit\Response\TransactionPostSplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardSplitPaymentTransactionPostCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Response\TransactionPostSplitHandler</item>
             </argument>
         </arguments>
     </virtualType>
@@ -354,9 +387,11 @@
     <type name="Webjump\BraspagPagador\Cron\PaymentSplitTransactionPost">
         <arguments>
             <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>
-            <argument name="splitPaymentTransactionPostCommand" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\SplitPaymentTransactionPostCommand</argument>
+            <argument name="splitPaymentCreditCardTransactionPostCommand" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\SplitPaymentTransactionPostCommand</argument>
+            <argument name="splitPaymentDebitCardTransactionPostCommand" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\SplitPaymentTransactionPostCommand</argument>
             <argument name="splitManager" xsi:type="object">Webjump\BraspagPagador\Model\SplitManager</argument>
-            <argument name="configInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config</argument>
+            <argument name="configCreditCardInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config</argument>
+            <argument name="configDebitCardInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config</argument>
         </arguments>
     </type>
 
@@ -371,11 +406,22 @@
         </arguments>
     </type>
 
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\SplitPaymentTransactionPostCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionDebitCardSplitPaymentTransactionPostRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionDebitCardSplitPaymentTransactionPostCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionDebitCardSplitPaymentTransactionPostCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Response\Validator</argument>
+        </arguments>
+    </type>
+
     <virtualType name="BraspagTransactionCreditCardCaptureCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
             <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
-            <argument name="responseHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardCaptureCommandResponseHandlerPool</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
             <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\Validator</argument>
             <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\Validator</argument>

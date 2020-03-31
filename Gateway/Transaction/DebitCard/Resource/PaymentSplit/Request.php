@@ -15,21 +15,26 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as
 use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
+use Webjump\BraspagPagador\Model\OAuth2TokenManager;
 
 class Request implements BraspaglibRequestInterface
 {
     protected $quote;
+    protected $order;
     protected $session;
     protected $storeId;
     protected $config;
     protected $dataProvider;
+    protected $oAuth2TokenManager;
 
     public function __construct(
         SessionManagerInterface $session,
-        SplitDataProviderInterface $dataProvider
+        SplitDataProviderInterface $dataProvider,
+        OAuth2TokenManager $oAuth2TokenManager
     ) {
         $this->setSession($session);
         $this->setDataProvider($dataProvider);
+        $this->setOAuth2TokenManager($oAuth2TokenManager);
     }
 
     /**
@@ -51,6 +56,22 @@ class Request implements BraspaglibRequestInterface
     /**
      * @return mixed
      */
+    public function getOAuth2TokenManager()
+    {
+        return $this->oAuth2TokenManager;
+    }
+
+    /**
+     * @param mixed $oAuth2TokenManager
+     */
+    public function setOAuth2TokenManager($oAuth2TokenManager)
+    {
+        $this->oAuth2TokenManager = $oAuth2TokenManager;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getSplits()
     {
         if (!$this->getConfig()->isPaymentSplitActive()) {
@@ -60,6 +81,14 @@ class Request implements BraspaglibRequestInterface
         $defaultMdr = $this->getConfig()->getPaymentSplitDefaultMrd();
         $defaultFee = $this->getConfig()->getPaymentSplitDefaultFee();
         $storeMerchantId = $this->getConfig()->getMerchantId();
+
+        if (!empty($this->getQuote())) {
+            $this->getDataProvider()->setQuote($this->getQuote());
+        }
+
+        if (!empty($this->getOrder())) {
+            $this->getDataProvider()->setOrder($this->getOrder());
+        }
 
         return $this->getDataProvider()->getData($storeMerchantId, $defaultMdr, $defaultFee);
     }
@@ -93,6 +122,30 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
+     * @param mixed $quote
+     */
+    public function setQuote($quote)
+    {
+        $this->quote = $quote;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param mixed $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    /**
      * @inheritDoc
      */
     public function setStoreId($storeId = null)
@@ -122,5 +175,33 @@ class Request implements BraspaglibRequestInterface
     public function setConfig($config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccessToken()
+    {
+        return $this->getOAuth2TokenManager()->getToken();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isTestEnvironment()
+    {
+        return $this->getConfig()->getIsTestEnvironment();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderTransactionId()
+    {
+        if (empty($this->getOrder())) {
+            return null;
+        }
+
+        return $this->getOrder()->getPayment()->getAuthorizationTransaction()->getTxnId();
     }
 }

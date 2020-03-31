@@ -97,6 +97,21 @@ class Config extends AbstractConfig implements ConfigInterface
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT);
     }
 
+    public function getPaymentSplitType()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TYPE);
+    }
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomatically()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY);
+    }
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS);
+    }
+
     public function getPaymentSplitDefaultMrd()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_MDR);

@@ -4,6 +4,9 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
+use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 
 /**
  * Braspag Transaction CreditCard Capture Request Builder
@@ -19,10 +22,36 @@ class RequestBuilder implements BuilderInterface
 	protected $request;
 
 	public function __construct(
-		RequestInterface $request
+		RequestInterface $request,
+        RequestPaymentSplitLibInterface $requestPaymentSplit,
+        ConfigInterface $config
 	) {
         $this->setRequest($request);
+        $this->setPaymentSplitRequest($requestPaymentSplit);
+        $this->setConfig($config);
 	}
+
+    protected function setPaymentSplitRequest(RequestPaymentSplitLibInterface $requestPaymentSplit)
+    {
+        $this->requestPaymentSplit = $requestPaymentSplit;
+        return $this;
+    }
+
+    protected function getRequestPaymentSplit()
+    {
+        return $this->requestPaymentSplit;
+    }
+
+    protected function setConfig(ConfigInterface $config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+    protected function getConfig()
+    {
+        return $this->config;
+    }
 
     public function build(array $buildSubject)
     {
@@ -34,8 +63,13 @@ class RequestBuilder implements BuilderInterface
         $paymentDataObject = $buildSubject['payment'];
         $orderAdapter = $paymentDataObject->getOrder();
 
+        if ($this->getConfig()->isPaymentSplitActive()) {
+            $this->getRequestPaymentSplit()->setConfig($this->getConfig());
+            $this->getRequestPaymentSplit()->setOrder($buildSubject['payment']->getPayment()->getOrder());
+            $this->getRequest()->setPaymentSplitRequest($this->getRequestPaymentSplit());
+        }
+
         $this->getRequest()->setPaymentId($paymentId);
-        $this->getRequest()->setOrderAdapter($orderAdapter);
 
         $this->getRequest()->setOrderAdapter($orderAdapter);
 

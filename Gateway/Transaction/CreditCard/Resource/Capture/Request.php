@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
 
 use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as BraspaglibRequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
@@ -26,6 +27,11 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $paymentId;
 
     protected $storeId;
+
+    /**
+     * @var
+     */
+    protected $paymentSplitRequest;
 
     /**
      * @var GrandTotalPricingHelper
@@ -62,6 +68,32 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getPaymentId()
     {
         return $this->paymentId;
+    }
+
+    public function getRequestDataBody()
+    {
+        if (empty($this->getPaymentSplitRequest())) {
+            return [];
+        }
+
+        $splits = $this->getPaymentSplitRequest()->getSplits();
+
+        $subordinates = [];
+        foreach ($splits->getSubordinates() as $subordinate) {
+
+            $subordinates[] = [
+                "SubordinateMerchantId" => $subordinate['subordinate_merchant_id'],
+                "Amount" => $subordinate['amount'],
+                "Fares" => [
+                    "Mdr" => $subordinate['fares']['mdr'],
+                    "Fee" => $subordinate['fares']['fee']
+                ]
+            ];
+        }
+
+        return [
+            'SplitPayments' => $subordinates
+        ];
     }
 
     public function getAdditionalRequest()
@@ -122,5 +154,24 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getStoreId()
     {
         return $this->storeId;
+    }
+
+    /**
+     * @param RequestPaymentSplitLibInterface $paymentSplitRequest
+     * @return \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request
+     */
+    public function setPaymentSplitRequest(RequestPaymentSplitLibInterface $paymentSplitRequest)
+    {
+        $this->paymentSplitRequest = $paymentSplitRequest;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitRequest()
+    {
+        return $this->paymentSplitRequest;
     }
 }

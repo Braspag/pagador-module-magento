@@ -23,6 +23,7 @@ class Request implements BraspaglibRequestInterface
     protected $storeId;
     protected $config;
     protected $dataProvider;
+    protected $quote;
     protected $order;
     protected $oAuth2TokenManager;
 
@@ -87,6 +88,22 @@ class Request implements BraspaglibRequestInterface
     /**
      * @return mixed
      */
+    public function getQuote()
+    {
+        return $this->quote;
+    }
+
+    /**
+     * @param mixed $quote
+     */
+    public function setQuote($quote)
+    {
+        $this->quote = $quote;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getOrder()
     {
         return $this->order;
@@ -144,6 +161,10 @@ class Request implements BraspaglibRequestInterface
         $defaultMdr = $this->getConfig()->getPaymentSplitDefaultMrd();
         $defaultFee = $this->getConfig()->getPaymentSplitDefaultFee();
         $storeMerchantId = $this->getConfig()->getMerchantId();
+
+        if (!empty($this->getQuote())) {
+            $this->getDataProvider()->setQuote($this->getQuote());
+        }
 
         if (!empty($this->getOrder())) {
             $this->getDataProvider()->setOrder($this->getOrder());
