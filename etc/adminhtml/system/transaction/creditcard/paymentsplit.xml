@@ -8,20 +8,20 @@
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="webjump_braspag_pagador_transaction_creditcard_paymentsplit" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="89">
         <label>Payment Split</label>
-        <field id="paymentsplit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+        <field id="paymentsplit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
             <label>Active</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_creditcard/paymentsplit</config_path>
         </field>
 
-        <field id="paymentsplit_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+        <field id="paymentsplit_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Split Type</label>
             <comment />
             <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitType</source_model>
             <config_path>payment/braspag_pagador_creditcard/paymentsplit_type</config_path>
         </field>
 
-        <field id="paymentsplit_transactional_post_send_request_automatically" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+        <field id="paymentsplit_transactional_post_send_request_automatically" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
             <label>Transactional Post send Request Automatically?</label>
             <comment />
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -33,20 +33,21 @@
 
         <field id="paymentsplit_transactional_post_send_request_automatically_after_x_days" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
             <label>Transactional Post send Request Automatically After (Days). </label>
-            <comment>(Limit 25)</comment>
+            <comment>(Limit 20)</comment>
             <config_path>payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically_after_x_days</config_path>
             <depends>
+                <field id="paymentsplit_type">transactional-post</field>
                 <field id="paymentsplit_transactional_post_send_request_automatically">1</field>
             </depends>
         </field>
 
-        <field id="paymentsplit_mdr" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
+        <field id="paymentsplit_mdr" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
             <label>Default Store MDR</label>
             <comment />
             <config_path>payment/braspag_pagador_creditcard/paymentsplit_mdr</config_path>
         </field>
 
-        <field id="paymentsplit_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="text">
+        <field id="paymentsplit_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
             <label>Default Store Fee</label>
             <comment />
             <config_path>payment/braspag_pagador_creditcard/paymentsplit_fee</config_path>

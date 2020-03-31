@@ -27,11 +27,6 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE);
     }
 
-    public function isPaymentSplitActive()
-    {
-        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT);
-    }
-
     public function getReturnUrl()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL);
@@ -136,6 +131,11 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD5);
     }
 
+    public function isPaymentSplitActive()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT);
+    }
+
     public function getPaymentSplitType()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TYPE);
@@ -143,7 +143,7 @@ class Config extends BaseConfig implements ConfigInterface
 
     public function getPaymentSplitTransactionalPostSendRequestAutomatically()
     {
-        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY);
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY);
     }
 
     public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays()

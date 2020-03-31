@@ -86,6 +86,7 @@ class RequestBuilder implements BuilderInterface
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
         ) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
+            $this->getRequestPaymentSplit()->setQuote($quote);
             $request->setPaymentSplitRequest($this->getRequestPaymentSplit());
         }
 

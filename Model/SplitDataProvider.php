@@ -46,6 +46,11 @@ class SplitDataProvider implements SplitDataProviderInterface
     /**
      * @var
      */
+    protected $quote;
+
+    /**
+     * @var
+     */
     protected $order;
 
     /**
@@ -150,6 +155,22 @@ class SplitDataProvider implements SplitDataProviderInterface
     /**
      * @return mixed
      */
+    public function getQuote()
+    {
+        return $this->quote;
+    }
+
+    /**
+     * @param mixed $quote
+     */
+    public function setQuote($quote)
+    {
+        $this->quote = $quote;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getOrder()
     {
         return $this->order;
@@ -174,7 +195,11 @@ class SplitDataProvider implements SplitDataProviderInterface
 
         $items = [];
 
-        if (!empty($this->getOrder())) {
+        if (!empty($this->getQuote())) {
+            $items = $this->getQuote()->getAllVisibleItems();
+        }
+
+        if (empty($items) && !empty($this->getOrder())) {
             $items = $this->getOrder()->getAllVisibleItems();
         }
 
@@ -192,7 +217,7 @@ class SplitDataProvider implements SplitDataProviderInterface
                 );
 
             if (empty($braspagSubordinateMerchantId)) {
-                return $dataCard;
+                $braspagSubordinateMerchantId = $storeMerchantId;
             }
 
             if (!isset($subordinates[$braspagSubordinateMerchantId])) {
@@ -218,8 +243,6 @@ class SplitDataProvider implements SplitDataProviderInterface
             $subordinates[$braspagSubordinateMerchantId]['items'][] =  $itemsObject;
         }
 
-        $dataSplitPayment = $this->getSplitAdapter()->adapt($subordinates, $storeMerchantId);
-
-        return $dataSplitPayment;
+        return $this->getSplitAdapter()->adapt($subordinates, $storeMerchantId);
     }
 }
