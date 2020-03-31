@@ -22,7 +22,8 @@ use Webjump\BraspagPagador\Api\SplitItemRepositoryInterface;
 use Webjump\BraspagPagador\Api\Data\SplitInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Webjump\BraspagPagador\Model\Source\Status\NewPending as OrderStatusesNew;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider;
+use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
+use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
 
 class SplitManager implements SplitManagerInterface
 {
@@ -381,30 +382,22 @@ class SplitManager implements SplitManagerInterface
 
     /**
      * @param int $days
+     * @param string $paymentMethod
      * @return mixed
      */
-    public function getTransactionPostOrdersToExecuteByDays($days = 25)
+    public function getTransactionPostOrdersToExecuteByDays($days = 20, $paymentMethod = ConfigProviderCreditCard::CODE)
     {
         $collection = $this->getOrderFactory()->create()->getCollection();
 
-        $orderStatusesNew = array_map(function($item){
-            return $item['value'];
-        }, $this->getOrderStatusesNew()->toOptionArray());
-
-        array_shift($orderStatusesNew);
-
-        $orderStatusesNew[] = 'complete';
-
-        $collection->addAttributeToFilter("status", array('in' => $orderStatusesNew));
-
         $collection->getSelect()
-            ->joinLeft(['bps' => 'braspag_paymentsplit_split'], 'main_table.entity_id = bps.sales_order_id')
-            ->joinInner(['sop' => 'sales_order_payment'], 'main_table.entity_id = sop.parent_id')
+            ->joinLeft(['bps' => 'braspag_paymentsplit_split'], 'main_table.entity_id = bps.sales_order_id', [])
+            ->joinInner(['sin' => 'sales_invoice'], 'main_table.entity_id = sin.order_id', [])
+            ->joinInner(['sop' => 'sales_order_payment'], 'main_table.entity_id = sop.parent_id', [])
             ->where("bps.sales_order_id IS NULL")
-            ->where("sop.method = '".ConfigProvider::CODE."'")
+            ->where("sop.method = '".$paymentMethod."'")
             ->where("DATE_FORMAT(DATE_ADD(main_table.created_at, INTERVAL {$days} DAY), \"%Y-%m-%d\") = DATE_FORMAT(NOW(), \"%Y-%m-%d\")")
-            ->limit(100)
-        ;
+            ->group("main_table.entity_id")
+            ->limit(100);
 
         return $collection;
     }

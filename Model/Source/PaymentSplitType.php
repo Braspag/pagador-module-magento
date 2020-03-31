@@ -2,6 +2,8 @@
 
 namespace Webjump\BraspagPagador\Model\Source;
 
+use Magento\Framework\Option\ArrayInterface;
+
 /**
  * CC Types
  *
@@ -12,7 +14,7 @@ namespace Webjump\BraspagPagador\Model\Source;
  * @link        http://www.webjump.com.br
  */
 
-class PaymentSplitType extends \Magento\Payment\Model\Source\Cctype
+class PaymentSplitType implements ArrayInterface
 {
     const PAYMENT_SPLIT_TYPE_TRANSACTIONAL = 'transactional';
     const PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST = 'transactional-post';
