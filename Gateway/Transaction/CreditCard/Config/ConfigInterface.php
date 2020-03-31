@@ -63,8 +63,6 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
 
     public function hasAvs();
 
-    public function isPaymentSplitActive();
-
     public function getReturnUrl();
 
     public function isSaveCardActive();
@@ -102,6 +100,8 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getAuth3Ds20Mdd4();
 
     public function getAuth3Ds20Mdd5();
+
+    public function isPaymentSplitActive();
 
     public function getPaymentSplitType();
 

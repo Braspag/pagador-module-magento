@@ -26,6 +26,9 @@ interface  ConfigInterface
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD4 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd4';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_MDD5 = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mdd5';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT = 'payment/braspag_pagador_debitcard/paymentsplit';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TYPE = 'payment/braspag_pagador_debitcard/paymentsplit_type';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY = 'payment/braspag_pagador_debitcard/paymentsplit_transactional_post_send_request_automatically';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS = 'payment/braspag_pagador_debitcard/paymentsplit_transactional_post_send_request_automatically_after_x_days';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_MDR = 'payment/braspag_pagador_debitcard/paymentsplit_mdr';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_PAYMENTSPLIT_DEFAULT_FEE = 'payment/braspag_pagador_debitcard/paymentsplit_fee';
     const BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_RETURN_TYPE_SUCCESS = 0;
@@ -69,6 +72,18 @@ interface  ConfigInterface
     public function getAuth3Ds20Mdd4();
 
     public function getAuth3Ds20Mdd5();
+
+    public function isPaymentSplitActive();
+
+    public function getPaymentSplitType();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomatically();
+
+    public function getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays();
+
+    public function getPaymentSplitDefaultMrd();
+
+    public function getPaymentSplitDefaultFee();
 
     public function isCardViewActive();
 }

@@ -218,7 +218,7 @@ define(
                         number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
                         cvc: '&bull;&bull;&bull;',
                         expiry: '&bull;&bull;/&bull;&bull;',
-                        name: 'Nome Completo'
+                        name: 'Nome no cartão'
                     },
                     messages: {
                         validDate: 'sequência\nválida',
