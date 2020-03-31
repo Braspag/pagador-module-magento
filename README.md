@@ -11,13 +11,20 @@ The plugin integrates with Braspag Pagador API.
 - Installments
 - Silent Order Post
 - Authenticate 3DS/VBV
+- Authenticate 3DS 2.0
+- Split Payment
 - AVS
+- Checkout Card View
     
 ### Credit Card JustClick
 - Authorize Only
 - Authorize and Capture
     
 ### Debit Card
+
+- Authenticate 3DS 2.0
+- Split Payment
+- Checkout Card View
 
 ### Boleto
 
@@ -29,7 +36,7 @@ The plugin integrates with Braspag Pagador API.
 ## Requirements
 This plugin supports:
 - PHP 5.6 version and higher.
-- Magento2 version 2.1 and higher.
+- Magento2 version 2.3.3 and higher.
 
 ## Installation
 You can install our plugin through Composer:
