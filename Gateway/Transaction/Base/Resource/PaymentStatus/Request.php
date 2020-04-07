@@ -81,4 +81,11 @@ class Request extends Config implements RequestInterface
         return $this->additionalRequest;
     }
 
+    /**
+     * @return array
+     */
+    public function getRequestDataBody()
+    {
+        return [];
+    }
 }
