@@ -422,6 +422,14 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     /**
      * @return bool
      */
+    public function getPaymentDoSplit()
+    {
+        return (bool) $this->getConfig()->isPaymentSplitActive();
+    }
+
+    /**
+     * @return bool
+     */
     public function getPaymentCapture()
     {
         return (bool) $this->getConfig()->isAuthorizeAndCapture();

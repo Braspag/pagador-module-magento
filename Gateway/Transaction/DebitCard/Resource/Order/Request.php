@@ -95,6 +95,14 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         return $provider;
     }
 
+    /**
+     * @return bool
+     */
+    public function getPaymentDoSplit()
+    {
+        return (bool) $this->getConfig()->isPaymentSplitActive();
+    }
+
     public function getPaymentReturnUrl()
     {
     	return $this->getConfig()->getPaymentReturnUrl();
