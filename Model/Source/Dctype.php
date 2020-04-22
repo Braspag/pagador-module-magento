@@ -21,17 +21,18 @@ class Dctype extends \Magento\Payment\Model\Source\Cctype
     {
         return [
             'Simulado',
-            'SimuladoCielo',
             'Cielo-Visa',
             'Cielo-Master',
-            'Cielo-Elo',
             'Cielo30-Visa',
             'Cielo30-Master',
-            'Cielo30-Elo',
-            'Rede-Visa',
-            'Rede-Master',
+            'Getnet-Visa',
+            'Getnet-Master',
             'Rede2-Visa',
-            'Rede2-Master'
+            'Rede2-Master',
+            'FirstData-Visa',
+            'FirstData-Master',
+            'GlobalPayments-Visa',
+            'GlobalPayments-Master'
         ];
     }
 }
