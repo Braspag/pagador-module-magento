@@ -14,6 +14,7 @@
         <span><!-- ko i18n: 'Debit Card Information'--><!-- /ko --></span>
     </legend><br />
     <!-- /ko -->
+    <!-- ko if: (showType())-->
     <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
         <label data-bind="attr: {for: getCode() + '_cc_type'}" class="label">
             <span><!-- ko i18n: 'Type'--><!-- /ko --></span>
@@ -45,6 +46,12 @@
             </div>
         </div>
     </div>
+    <!--/ko-->
+
+    <!-- ko if: (!showType())-->
+    <input name="payment[cc_type]" type="hidden" class="debitcard-type"/>
+    <!-- /ko -->
+
     <div class="field number required">
         <label data-bind="attr: {for: getCode() + '_cc_number'}" class="label">
             <span><!-- ko i18n: 'Debit Card Number'--><!-- /ko --></span>
