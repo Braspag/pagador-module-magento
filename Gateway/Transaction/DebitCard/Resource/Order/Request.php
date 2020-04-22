@@ -91,7 +91,24 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getPaymentProvider()
     {
         List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
-        
+
+        if ($provider === "Braspag") {
+            $availableTypes = explode(',', $this->getConfig()->getDcTypes());
+
+            foreach($availableTypes as $key => $availableType) {
+                $typeDetail = explode("-", $availableType);
+                if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
+                    return $typeDetail[0];
+                }
+            }
+            
+            if ($this->getConfig()->getIsTestEnvironment()) {
+                return "Simulado";
+            }
+
+            return "";
+        }
+
         return $provider;
     }
 
