@@ -156,6 +156,14 @@ define(
                 });
             },
 
+            debitCardTypeCustom: function() {
+                if (!this.showType()) {
+                    return $('.debitcard-type').val();
+                }
+
+                return this.creditCardType();
+            },
+
             getData: function () {
 
                 if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
@@ -164,7 +172,7 @@ define(
                         'method': this.item.method,
                         'additional_data': {
                             'cc_cid': this.creditCardVerificationNumber(),
-                            'cc_type': this.creditCardType(),
+                            'cc_type': this.debitCardTypeCustom(),
                             'cc_owner': this.creditCardOwner(),
                             'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
                         }
@@ -175,7 +183,7 @@ define(
                     'method': this.item.method,
                     'additional_data': {
                         'cc_cid': this.creditCardVerificationNumber(),
-                        'cc_type': this.creditCardType(),
+                        'cc_type': this.debitCardTypeCustom(),
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
@@ -493,7 +501,10 @@ define(
                 ).always(function () {
                     fullScreenLoader.stopLoader();
                 });
-            }
+            },
+            showType: function () {
+                return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isDebitCardViewEnabled();
+            },
 
         });
     }

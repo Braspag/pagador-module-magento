@@ -11,6 +11,11 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return (AbstractMethod::ACTION_AUTHORIZE_CAPTURE === $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION));
     }
+    
+    public function getCcTypes()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CCTYPES);
+    }
 
     public function getSoftDescriptor()
     {

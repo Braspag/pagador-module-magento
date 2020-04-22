@@ -27,7 +27,8 @@ define(
         'mage/url',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
-        'Webjump_BraspagPagador/js/model/card.view'
+        'Webjump_BraspagPagador/js/model/card.view',
+        'Webjump_BraspagPagador/js/model/card',
     ],
     function (
         Component,
@@ -48,7 +49,8 @@ define(
         mageUrl,
         authentication3ds20,
         bpmpiRenderer,
-        cardView
+        cardView,
+        card
     ) {
         'use strict';
 
@@ -73,6 +75,7 @@ define(
                 this._super();
                 this.getCcInstallments();
                 this.bpmpiPlaceOrderInit();
+                card.init();
             },
 
             maskCvv: function (data, event) {
@@ -150,13 +153,21 @@ define(
                 });
             },
 
+            creditCardTypeCustom: function() {
+                if (!this.showType()) {
+                    return $('.creditcard-type').val();
+                }
+
+                return this.creditCardType();
+            },
+
             getData: function () {
 
                 var data = {
                     'method': this.item.method,
                     'additional_data': {
                         'cc_cid': this.creditCardVerificationNumber (),
-                        'cc_type': this.creditCardType(),
+                        'cc_type': this.creditCardTypeCustom(),
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
@@ -178,7 +189,7 @@ define(
                         'method': this.item.method,
                         'additional_data': {
                             'cc_cid': this.creditCardVerificationNumber (),
-                            'cc_type': this.creditCardType(),
+                            'cc_type': this.creditCardTypeCustom(),
                             'cc_owner': this.creditCardOwner(),
                             'cc_installments': this.creditCardInstallments(),
                             'cc_savecard': this.creditCardsavecard() ? 1 : 0,
@@ -565,11 +576,16 @@ define(
                 return window.checkoutConfig.payment.ccform.ssStartYears[this.getCode()];
             },
 
+            showType: function () {
+                return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isCreditCardViewEnabled();
+            },
+
             /**
              * Get list of available credit card types values
              * @returns {Object}
              */
             getCcAvailableTypesValues: function () {
+
                 return _.map(this.getCcAvailableTypes(), function (value, key) {
                     return {
                         'value': key,

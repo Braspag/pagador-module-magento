@@ -14,6 +14,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CCTYPES = 'payment/braspag_pagador_creditcard/cctypes';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT = 'payment/braspag_pagador_creditcard/paymentsplit';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENTSPLIT_TYPE = 'payment/braspag_pagador_creditcard/paymentsplit_type';

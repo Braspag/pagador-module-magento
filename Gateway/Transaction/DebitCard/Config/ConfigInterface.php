@@ -14,6 +14,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 interface  ConfigInterface
 {
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_REDIRECT_AFTER_PLACE_ORDER = 'payment/braspag_pagador_debitcard/redirect_after_place_order';
+    const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_DCTYPES = 'payment/braspag_pagador_debitcard/cctypes';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20 = 'payment/braspag_pagador_debitcard/authentication_3ds_20';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20MASTERCARD_ONLY_NOTIFY = 'payment/braspag_pagador_debitcard/authentication_3ds_20_mastercard_notify_only';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_AUTHENTICATION_3DS_20_AUTHORIZE_ON_ERROR = 'payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_error';
