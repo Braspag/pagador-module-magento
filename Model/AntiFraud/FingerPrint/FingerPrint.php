@@ -64,7 +64,8 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
     public function getSessionId()
     {
         if (! $this->sessionId) {
-            $sessionId = $this->getSession()->getId();                                                                                                                                         ;
+            $sessionId = $this->getSession()->getSessionId();
+
             if ($this->getScopeConfig()->getValue(self::XML_ORDER_ID_TO_FINGERPRINT)) {
                 $sessionId =  $this->getReservedOrderId();
             }
