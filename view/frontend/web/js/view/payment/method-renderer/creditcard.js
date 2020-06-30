@@ -79,7 +79,7 @@ define(
             },
 
             maskCvv: function (data, event) {
-                var maxlength = 3;
+                var maxlength = 4;
 
                 if (
                     this.creditCardType() === 'Cielo-Amex' ||
