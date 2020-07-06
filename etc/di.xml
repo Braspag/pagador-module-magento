@@ -35,6 +35,8 @@
     <preference for="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" type="Webjump\BraspagPagador\Model\Auth3Ds20TokenManager" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder" />
 
+    <preference for="Webjump\BraspagPagador\Api\AntiFraudManagerInterface" type="Webjump\BraspagPagador\Model\AntiFraudManager" />
+
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\Request" />
     <preference for="Webjump\BraspagPagador\Api\OAuth2TokenManagerInterface" type="Webjump\BraspagPagador\Model\OAuth2TokenManager" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\Builder" />

@@ -17,6 +17,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
+use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface
 {
@@ -27,7 +28,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     protected $billingAddress;
     protected $shippingAddress;
     protected $quote;
-    protected $fingerPrintId;
+    protected $fingerPrint;
     protected $mdd;
     protected $storeId;
     protected $helperData;
@@ -36,13 +37,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         ConfigInterface $config,
         RequestFactory $requestItemFactory,
         AdapterGeneralInterface $adapterGeneral,
-        \Webjump\BraspagPagador\Helper\Data $helperData
-    )
-    {
+        \Webjump\BraspagPagador\Helper\Data $helperData,
+        FingerPrint $fingerPrint
+    ){
         $this->setConfig($config);
         $this->setRequestItemFactory($requestItemFactory);
         $this->setMdd($adapterGeneral);
         $this->helperData = $helperData;
+        $this->setFingerPrint($fingerPrint);
     }
 
     public function getSequence()
@@ -55,13 +57,22 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->getConfig()->getSequenceCriteria();
     }
 
+    public function getFingerPrint()
+    {
+        return $this->fingerPrint;
+    }
+
     public function getFingerPrintId()
     {
-        if ($this->getConfig()->userOrderIdToFingerPrint()) {
-            return (string) $this->getReservedOrderId();
-        }
+        return $this->fingerPrint->getSessionId(true);
+    }
 
-        return $this->getConfig()->getSession()->getSessionId();
+    /**
+     * @param mixed $fingerPrint
+     */
+    public function setFingerPrint($fingerPrint)
+    {
+        $this->fingerPrint = $fingerPrint;
     }
 
     public function getCaptureOnLowRisk()
@@ -291,4 +302,6 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     {
         return $this->storeId;
     }
+
+
 }
