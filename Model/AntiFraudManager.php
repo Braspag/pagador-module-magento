@@ -22,6 +22,7 @@ class AntiFraudManager implements AntiFraudManagerInterface
     protected $cookieMetadataFactory;
     protected $customerSession;
     protected $dataObject;
+    protected $quoteFactory;
 
     /**
      * AntiFraudManager constructor.
@@ -36,6 +37,7 @@ class AntiFraudManager implements AntiFraudManagerInterface
         \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory,
         \Magento\Customer\Model\SessionFactory $customerSession,
+        \Magento\Quote\Model\QuoteFactory $quoteFactory,
         DataObject $dataObject
     ){
         $this->setFingerPrint($fingerPrint);
@@ -43,6 +45,7 @@ class AntiFraudManager implements AntiFraudManagerInterface
         $this->setCookieMetadataFactory($cookieMetadataFactory);
         $this->setCustomerSession($customerSession);
         $this->setDataObject($dataObject);
+        $this->setQuoteFactory($quoteFactory);
     }
 
     /**
@@ -125,12 +128,34 @@ class AntiFraudManager implements AntiFraudManagerInterface
         $this->dataObject = $dataObject;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getQuoteFactory()
+    {
+        return $this->quoteFactory;
+    }
+
+    /**
+     * @param mixed $quoteFactory
+     */
+    public function setQuoteFactory($quoteFactory)
+    {
+        $this->quoteFactory = $quoteFactory;
+    }
+
     public function getFingerPrintData($customerId)
     {
+        $customerSession = $this->getCustomerSession()->create();
+        $customerSession->setCustomerId($customerId);
+        $customer = $customerSession->getCustomer();
+
+        $quote = $this->getQuoteFactory()->create()->loadByCustomer($customer);
+
         return [
             [
                 'org_id' => $this->fingerPrint->getOrgId(),
-                'session_id' => $this->fingerPrint->getSessionId()
+                'session_id' => $this->fingerPrint->getSessionId(false, $quote)
             ]
         ];
     }
