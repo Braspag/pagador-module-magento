@@ -43,4 +43,11 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/antifraud/customer/:customerId/fingerprint" method="GET">
+        <service class="Webjump\BraspagPagador\Api\AntiFraudManagerInterface" method="getFingerPrintData"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+
 </routes>
