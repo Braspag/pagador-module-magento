@@ -61,21 +61,34 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
         return $this->orgId;
     }
 
-    public function getSessionId()
+    /**
+     * @return string
+     */
+    public function makeCustomCustomerSessionId()
+    {
+        return md5($this->getQuote()->getCustomerId().$this->getQuote()->getId());
+    }
+
+    public function getSessionId($removeMerchantId = false)
     {
         if (! $this->sessionId) {
-            $sessionId = $this->getSession()->getSessionId();
+            $sessionId = $this->makeCustomCustomerSessionId();
 
             if ($this->getScopeConfig()->getValue(self::XML_ORDER_ID_TO_FINGERPRINT)) {
                 $sessionId =  $this->getReservedOrderId();
             }
+
+            if ($removeMerchantId) {
+                return $sessionId;
+            }
+
             $merchantId = $this->getScopeConfig()->getValue(self::XML_MERCHANT_ID);
             $this->sessionId = $merchantId . $sessionId ;
         }
 
         return $this->sessionId;
     }
-    
+
     protected function getReservedOrderId()
     {
         $quote = $this->getQuote();
@@ -84,7 +97,7 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
             $quote->reserveOrderId();
             $quote->save();
         }
-        
+
         return $quote->getReservedOrderId();
     }
 }
