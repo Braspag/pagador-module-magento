@@ -81,20 +81,23 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
             $quote = $this->getQuote();
         }
 
-        if (! $this->sessionId) {
-            $sessionId = $this->makeCustomCustomerSessionId($quote);
-
-            if ($this->getScopeConfig()->getValue(self::XML_ORDER_ID_TO_FINGERPRINT)) {
-                $sessionId =  $this->getReservedOrderId($quote);
-            }
-
-            if ($removeMerchantId) {
-                return $sessionId;
-            }
-
-            $merchantId = $this->getScopeConfig()->getValue(self::XML_MERCHANT_ID);
-            $this->sessionId = $merchantId . $sessionId ;
+        if (!$quote->getId()) {
+            $customer = $this->getCustomerRepository()->getById($quote->getCustomerId());
+            $quote = $this->getQuoteFactory()->create()->loadByCustomer($customer);
         }
+
+        $sessionId = $this->makeCustomCustomerSessionId($quote);
+
+        if ($this->getScopeConfig()->getValue(self::XML_ORDER_ID_TO_FINGERPRINT)) {
+            $sessionId =  $this->getReservedOrderId($quote);
+        }
+
+        if ($removeMerchantId) {
+            return $sessionId;
+        }
+
+        $merchantId = $this->getScopeConfig()->getValue(self::XML_MERCHANT_ID);
+        $this->sessionId = $merchantId . $sessionId ;
 
         return $this->sessionId;
     }
