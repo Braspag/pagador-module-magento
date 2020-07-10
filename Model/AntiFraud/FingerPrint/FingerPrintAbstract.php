@@ -32,11 +32,19 @@ abstract class FingerPrintAbstract
     protected $orgId;
     protected $sessionId;
     protected $quote;
+    protected $customerRepository;
+    protected $quoteFactory;
 
-    public function __construct(ScopeConfigInterface $scopeConfig, SessionManagerInterface $session)
-    {
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        SessionManagerInterface $session,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Quote\Model\QuoteFactory $quoteFactory
+    ) {
         $this->setScopeConfig($scopeConfig);
         $this->setSession($session);
+        $this->setCustomerRepository($customerRepository);
+        $this->setQuoteFactory($quoteFactory);
     }
 
     /**
@@ -78,5 +86,37 @@ abstract class FingerPrintAbstract
     protected function getQuote()
     {
         return $this->getSession()->getQuote();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomerRepository()
+    {
+        return $this->customerRepository;
+    }
+
+    /**
+     * @param mixed $customerRepository
+     */
+    public function setCustomerRepository($customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuoteFactory()
+    {
+        return $this->quoteFactory;
+    }
+
+    /**
+     * @param mixed $quoteFactory
+     */
+    public function setQuoteFactory($quoteFactory)
+    {
+        $this->quoteFactory = $quoteFactory;
     }
 }
