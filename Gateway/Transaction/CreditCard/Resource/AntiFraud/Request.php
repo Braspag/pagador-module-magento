@@ -64,7 +64,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getFingerPrintId()
     {
-        return $this->fingerPrint->getSessionId(true);
+        return $this->fingerPrint->getSessionId(true, null, $this->getOrderAdapter()->getCustomerId());
     }
 
     /**
