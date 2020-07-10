@@ -75,15 +75,18 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
      * @param null $quote
      * @return mixed|string
      */
-    public function getSessionId($removeMerchantId = false, $quote = null)
+    public function getSessionId($removeMerchantId = false, $quote = null, $customerId = null)
     {
         if (!$quote) {
             $quote = $this->getQuote();
         }
 
-        if (!$quote->getId()) {
-            $customer = $this->getCustomerRepository()->getById($quote->getCustomerId());
-            $quote = $this->getQuoteFactory()->create()->loadByCustomer($customer);
+        if (!$quote->getId() && $quote->getCustomerId()) {
+            $quote = $this->getQuoteByCustomerId($quote->getCustomerId());
+        }
+
+        if (!$quote->getId() && $customerId) {
+            $quote = $this->getQuoteByCustomerId($customerId);
         }
 
         $sessionId = $this->makeCustomCustomerSessionId($quote);
@@ -118,5 +121,19 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
         }
 
         return $quote->getReservedOrderId();
+    }
+
+    /**
+     * @param $customerId
+     */
+    protected function getQuoteByCustomerId($customerId)
+    {
+        $customer = $this->getCustomerRepository()->getById($customerId);
+
+        if (!$customer->getId()) {
+            return false;
+        }
+
+        return $this->getQuoteFactory()->create()->loadByCustomer($customer);
     }
 }
