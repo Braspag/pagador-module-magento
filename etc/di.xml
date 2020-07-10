@@ -239,6 +239,8 @@
         <arguments>
             <argument name="scopeConfig" xsi:type="object">\Magento\Framework\App\Config</argument>
             <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+            <argument name="customerRepository" xsi:type="object">\Magento\Customer\Api\CustomerRepositoryInterface</argument>
+            <argument name="quoteFactory" xsi:type="object">\Magento\Quote\Model\QuoteFactory</argument>
         </arguments>
     </type>
 
