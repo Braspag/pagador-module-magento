@@ -85,7 +85,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd5' => 'mdd 5'
                         ],
                         'card_view' => [
-                            'active' => ['braspag_pagador_debitcard' => true]
+                            'active' => true
                         ],
                     ],
                     'redirect_after_place_order' => null
@@ -159,7 +159,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd3' => 'mdd 3',
                             'mdd4' => 'mdd 4',
                             'mdd5' => 'mdd 5'
-                        ]
+                        ],
+                        'card_view' => [
+                            'active' => true
+                        ],
                     ],
                     'redirect_after_place_order' => null
                 ]

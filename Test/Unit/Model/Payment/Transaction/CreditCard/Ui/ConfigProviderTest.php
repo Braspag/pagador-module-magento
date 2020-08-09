@@ -86,7 +86,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd5' => 'mdd 5'
                         ],
                         'card_view' => [
-                            'active' => ['braspag_pagador_creditcard' => true]
+                            'active' => true
                         ],
                     ]
                 ]
