@@ -13,6 +13,7 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 use \Magento\Sales\Model\Order\Item;
+use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class RequestTest extends TestCase
 {
@@ -68,6 +69,8 @@ class RequestTest extends TestCase
 
     private $helperDataMock;
 
+    private $fingerPrintMock;
+
     protected function setUp()
     {
         $this->configMock = $this->getMockBuilder(AntiFraudConfigInterface::class)
@@ -76,6 +79,11 @@ class RequestTest extends TestCase
                 'getSequence', 'getSequenceCriteria', 'userOrderIdToFingerPrint', 'getSession'
             ])
             ->getMockForAbstractClass();
+
+        $this->fingerPrint = $this->getMockBuilder(FingerPrint::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getSessionId'])
+            ->getMock();
 
         $this->orderAdapterMock = $this->createMock(OrderAdapterInterface::class);
         $this->billingAddressMock = $this->createMock(AddressAdapterInterface::class);
@@ -328,6 +336,10 @@ class RequestTest extends TestCase
 
         $model->setOrderAdapter($this->orderAdapterMock);
 
+        $this->fingerPrint->expects($this->exactly(1))
+            ->method('getSessionId')
+            ->willReturn($reservedOrderId);
+
         $valueActual = $model->getFingerPrintId();
 
         $this->assertSame($reservedOrderId, $valueActual);
@@ -355,6 +367,10 @@ class RequestTest extends TestCase
 
         $model = $this->getModel();
         $model->setOrderAdapter($this->orderAdapterMock);
+
+        $this->fingerPrint->expects($this->exactly(1))
+            ->method('getSessionId')
+            ->willReturn($sessionId);
 
         $valueActual = $model->getFingerPrintId();
 
