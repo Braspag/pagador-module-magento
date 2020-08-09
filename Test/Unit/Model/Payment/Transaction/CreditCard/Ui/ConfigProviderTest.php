@@ -73,7 +73,6 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                         'savecard' => [
                             'active' => ['braspag_pagador_creditcard' => true]
                         ],
-
                         'bpmpi_authentication' => [
                             'active' => true,
                             'mastercard_notify_only' => true,
@@ -85,7 +84,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd3' => 'mdd 3',
                             'mdd4' => 'mdd 4',
                             'mdd5' => 'mdd 5'
-                        ]
+                        ],
+                        'card_view' => [
+                            'active' => ['braspag_pagador_creditcard' => true]
+                        ],
                     ]
                 ]
             ],

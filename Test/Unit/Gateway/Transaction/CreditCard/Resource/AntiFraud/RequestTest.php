@@ -349,7 +349,7 @@ class RequestTest extends TestCase
             ->willReturn($sessionId);
 
         $model = $this->getModel();
-        $requestModel->setOrderAdapter($this->orderAdapterMock);
+        $model->setOrderAdapter($this->orderAdapterMock);
 
         $valueActual = $model->getFingerPrintId();
 

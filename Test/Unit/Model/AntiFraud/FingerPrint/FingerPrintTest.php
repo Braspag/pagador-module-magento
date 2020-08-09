@@ -33,10 +33,17 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $sessionMock;
 
+    private $customerRepository;
+
+    private $quoteFactory;
+
     protected function setUp()
     {
         $this->scopeFingerPrintMock = $this->getMockBuilder(ScopeConfigInterface::class)
             ->getMockForAbstractClass();
+
+        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface');
+        $this->quoteFactory = $this->getMockBuilder('Magento\Quote\Model\QuoteFactory');
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->setMethods(['getQuote', 'getSessionId', 'getId'])
@@ -51,7 +58,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_PNG_IMAGE_URL)
             ->will($this->returnValue(self::SRC_PNG_IMG_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_PNG_IMG_URL, $this->fingerPrint->getSrcPngImageUrl());
     }
@@ -63,7 +75,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_JS_URL)
             ->will($this->returnValue(self::SRC_JS_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_JS_URL, $this->fingerPrint->getSrcJsUrl());
     }
@@ -75,7 +92,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_FLASH_URL)
             ->will($this->returnValue(self::SRC_FLASH_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_FLASH_URL, $this->fingerPrint->getSrcFlashUrl());
     }
@@ -87,7 +109,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_ORG_ID)
             ->will($this->returnValue(self::ORG_ID));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::ORG_ID, $this->fingerPrint->getOrgId());
     }
@@ -104,7 +131,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $sessionIdExpected = self::MERCHANT_ID;
 
@@ -142,7 +174,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $sessionIdExpected = self::MERCHANT_ID;
 
