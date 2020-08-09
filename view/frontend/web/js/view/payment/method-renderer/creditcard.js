@@ -154,8 +154,23 @@ define(
             },
 
             creditCardTypeCustom: function() {
-                if (!this.showType()) {
-                    return $('.creditcard-type').val();
+
+                let showType = this.showType();
+                let creditCardNumber = this.creditCardNumber();
+                let creditCardType = $('.creditcard-type');
+
+                if (!showType && typeof creditCardNumber === undefined) {
+                    return '';
+                }
+
+                if (!showType && creditCardType.length === 0) {
+                    this.forceRegisterCreditCardType(creditCardNumber, creditCardType);
+
+                    return creditCardType.val();
+                }
+
+                if (!showType) {
+                    return creditCardType.val();
                 }
 
                 return this.creditCardType();
@@ -336,6 +351,7 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
+
                 var self = this;
                 if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
                     this.updateCreditCardExpData();

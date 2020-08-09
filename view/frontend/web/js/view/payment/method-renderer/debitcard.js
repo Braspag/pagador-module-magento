@@ -157,8 +157,23 @@ define(
             },
 
             debitCardTypeCustom: function() {
-                if (!this.showType()) {
-                    return $('.debitcard-type').val();
+
+                let showType = this.showType();
+                let creditCardNumber = this.creditCardNumber();
+                let creditCardType = $('.debitcard-type');
+
+                if (!showType && typeof creditCardNumber === undefined) {
+                    return '';
+                }
+
+                if (!showType && creditCardType.length === 0) {
+                    this.forceRegisterDebitCardType(creditCardNumber, creditCardType);
+
+                    return creditCardType.val();
+                }
+
+                if (!showType) {
+                    return creditCardType.val();
                 }
 
                 return this.creditCardType();
