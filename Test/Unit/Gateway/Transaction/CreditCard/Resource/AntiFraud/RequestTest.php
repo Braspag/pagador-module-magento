@@ -321,7 +321,7 @@ class RequestTest extends TestCase
 
         $model = $this->getModel();
 
-        $this->orderAdapterMock->expects($this->exactly(2))
+        $this->orderAdapterMock->expects($this->exactly(1))
             ->method('getCustomerId')
             ->willReturn(1);
 
@@ -348,10 +348,6 @@ class RequestTest extends TestCase
 
         $model = $this->getModel();
         $model->setOrderAdapter($this->orderAdapterMock);
-
-        $this->fingerPrintMock->expects($this->exactly(1))
-            ->method('getSessionId')
-            ->willReturn($sessionId);
 
         $valueActual = $model->getFingerPrintId();
 
