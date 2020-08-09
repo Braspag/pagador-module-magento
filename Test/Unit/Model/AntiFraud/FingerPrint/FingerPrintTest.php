@@ -33,10 +33,27 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $sessionMock;
 
+    private $customerRepository;
+    private $quoteFactory;
+    private $quote;
+
     protected function setUp()
     {
         $this->scopeFingerPrintMock = $this->getMockBuilder(ScopeConfigInterface::class)
             ->getMockForAbstractClass();
+
+        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->quoteFactory = $this->getMockBuilder('Magento\Quote\Model\QuoteFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->quote = $this->getMockBuilder('Magento\Quote\Model\Quote')
+            ->disableOriginalConstructor()
+            ->setMethods(['getId', 'getCustomerId'])
+            ->getMock();
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->setMethods(['getQuote', 'getSessionId', 'getId'])
@@ -51,7 +68,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_PNG_IMAGE_URL)
             ->will($this->returnValue(self::SRC_PNG_IMG_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_PNG_IMG_URL, $this->fingerPrint->getSrcPngImageUrl());
     }
@@ -63,7 +85,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_JS_URL)
             ->will($this->returnValue(self::SRC_JS_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_JS_URL, $this->fingerPrint->getSrcJsUrl());
     }
@@ -75,7 +102,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_SRC_FLASH_URL)
             ->will($this->returnValue(self::SRC_FLASH_URL));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::SRC_FLASH_URL, $this->fingerPrint->getSrcFlashUrl());
     }
@@ -87,7 +119,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with(FingerPrint::XML_ORG_ID)
             ->will($this->returnValue(self::ORG_ID));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $this->assertEquals(self::ORG_ID, $this->fingerPrint->getOrgId());
     }
@@ -104,11 +141,22 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->quote->expects($this->at(2))
+            ->method('getCustomerId')
+            ->will($this->returnValue(1));
 
-        $sessionIdExpected = self::MERCHANT_ID;
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
-        $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
+        $sessionIdExpected = self::MERCHANT_ID.'d41d8cd98f00b204e9800998ecf8427e';
+
+        $this->assertEquals($sessionIdExpected,
+            $this->fingerPrint->getSessionId(false, $this->quote,null)
+        );
     }
 
     public function testGetSessionIdFromQuoteId()
@@ -142,7 +190,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $this->fingerPrint = new FingerPrint($this->scopeFingerPrintMock, $this->sessionMock);
+        $this->fingerPrint = new FingerPrint(
+            $this->scopeFingerPrintMock,
+            $this->sessionMock,
+            $this->customerRepository,
+            $this->quoteFactory
+        );
 
         $sessionIdExpected = self::MERCHANT_ID;
 

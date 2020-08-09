@@ -37,18 +37,16 @@ class BilletTypesTest extends \PHPUnit\Framework\TestCase
         // prepare the test
 
         $expected = [
-            'Simulado',
-            'Bradesco',
-            'Bradesco2',
-            'BancoDoBrasil',
-            'BancoDoBrasil2',
-            'CitiBank',
-            'ItauShopline',
-            'Itau2',
-            'Brb',
-            'Caixa',
-            'Santander',
-            'HSBC'
+            "Simulado",
+            "BancoDoBrasil2",
+            "BankofAmerica",
+            "Bradesco2",
+            "Braspag",
+            "Caixa2",
+            "Citibank2",
+            "Itau2",
+            "ItauShopline",
+            "Santander2"
         ];
 
         // perform the changes

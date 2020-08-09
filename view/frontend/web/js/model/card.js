@@ -228,5 +228,27 @@ define(
 				}
 			});
 		},
+
+		forceRegisterCreditCardType: function(creditCardNumber, creditCardType) {
+
+			let card = this.cardFromNumber(creditCardNumber);
+
+			if (card === undefined) {
+				$('input[name="payment[cc_number]').val('');
+			}
+
+			creditCardType.val("Braspag-"+card.typeName);
+		},
+
+		forceRegisterDebitCardType: function(debitCardNumber, debitCardType) {
+
+			let card = this.cardFromNumber(debitCardNumber);
+
+			if (card === undefined) {
+				$('input[name="payment[cc_number]').val('');
+			}
+
+			debitCardType.val("Braspag-"+card.typeName);
+		}
 	};
 } );

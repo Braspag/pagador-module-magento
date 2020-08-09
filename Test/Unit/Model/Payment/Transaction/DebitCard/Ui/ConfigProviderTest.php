@@ -65,6 +65,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     		->method('getAuth3Ds20Mdd5')
     		->will($this->returnValue('mdd 5'));
 
+        $this->debitcardConfig->expects($this->once())
+            ->method('isCardViewActive')
+            ->will($this->returnValue(true));
+
         static::assertEquals(
             [
                 'payment' => [
@@ -83,7 +87,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd3' => 'mdd 3',
                             'mdd4' => 'mdd 4',
                             'mdd5' => 'mdd 5'
-                        ]
+                        ],
+                        'card_view' => [
+                            'active' => true
+                        ],
                     ],
                     'redirect_after_place_order' => null
                 ]
@@ -138,6 +145,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getAuth3Ds20Mdd5')
             ->will($this->returnValue('mdd 5'));
 
+        $this->debitcardConfig->expects($this->once())
+            ->method('isCardViewActive')
+            ->will($this->returnValue(true));
+
         static::assertEquals(
             [
                 'payment' => [
@@ -156,7 +167,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                             'mdd3' => 'mdd 3',
                             'mdd4' => 'mdd 4',
                             'mdd5' => 'mdd 5'
-                        ]
+                        ],
+                        'card_view' => [
+                            'active' => true
+                        ],
                     ],
                     'redirect_after_place_order' => null
                 ]
