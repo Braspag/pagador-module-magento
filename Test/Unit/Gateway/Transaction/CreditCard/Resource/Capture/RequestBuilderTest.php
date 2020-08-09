@@ -13,9 +13,13 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
     private $requestMock;
 
-    private $OrderRepositoryMock;
+    private $orderRepositoryMock;
 
     private $paymentMock;
+
+    private $requestPaymentSplitLibInterface;
+
+    private $configInterface;
 
     public function setUp()
     {
@@ -23,13 +27,18 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             RequestInterface::class
         );
 
+        $this->requestPaymentSplitLibInterface = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface');
+        $this->configInterface = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+
         $this->paymentMock = $this->getMockBuilder(InfoInterface::class)
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
         $this->requestBuilder = new RequestBuilder(
-            $this->requestMock
+            $this->requestMock,
+            $this->requestPaymentSplitLibInterface,
+            $this->configInterface
         );
     }
 

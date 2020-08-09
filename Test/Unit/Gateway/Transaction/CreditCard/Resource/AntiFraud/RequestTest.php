@@ -13,6 +13,7 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 use \Magento\Sales\Model\Order\Item;
+use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class RequestTest extends TestCase
 {
@@ -68,6 +69,8 @@ class RequestTest extends TestCase
 
     private $helperDataMock;
 
+    private $fingerPrintMock;
+
     protected function setUp()
     {
         $this->configMock = $this->getMockBuilder(AntiFraudConfigInterface::class)
@@ -76,6 +79,11 @@ class RequestTest extends TestCase
                 'getSequence', 'getSequenceCriteria', 'userOrderIdToFingerPrint', 'getSession'
             ])
             ->getMockForAbstractClass();
+
+        $this->fingerPrintMock = $this->getMockBuilder(FingerPrint::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getSessionId'])
+            ->getMock();
 
         $this->orderAdapterMock = $this->createMock(OrderAdapterInterface::class);
         $this->billingAddressMock = $this->createMock(AddressAdapterInterface::class);
@@ -114,7 +122,8 @@ class RequestTest extends TestCase
             'config' => $this->configMock,
             'requestItemFactory' => $this->requestItemFactoryMock,
             'adapterGeneral' => $this->adapterGeneralMock,
-            'helperData' => $this->helperDataMock
+            'helperData' => $this->helperDataMock,
+            'fingerPrint' => $this->fingerPrintMock
         ]);
 
         return $model;
@@ -290,37 +299,18 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = true;
         $reservedOrderId = (string) rand();
 
-        $this->configMock
-            ->expects($this->once())
-            ->method('userOrderIdToFingerPrint')
-            ->willReturn($userOrderIdToFingerPrint);
-
-        $this->configMock
-            ->expects($this->once())
-            ->method('getSession')
-            ->willReturn($this->sessionMock);
-
-        $this->sessionMock
-            ->expects($this->once())
-            ->method('getQuote')
-            ->willReturn($this->quoteMock);
-
-        $this->quoteMock
-            ->expects($this->exactly(2))
-            ->method('getReservedOrderId')
-            ->willReturnOnConsecutiveCalls(null, $reservedOrderId);
-
-        $this->quoteMock
-            ->expects($this->once())
-            ->method('reserveOrderId')
-            ->willReturnSelf();
-
-        $this->quoteMock
-            ->expects($this->once())
-            ->method('save')
-            ->willReturnSelf();
-
         $model = $this->getModel();
+
+        $this->orderAdapterMock->expects($this->exactly(1))
+            ->method('getCustomerId')
+            ->willReturn(1);
+
+        $model->setOrderAdapter($this->orderAdapterMock);
+
+        $this->fingerPrintMock->expects($this->exactly(1))
+            ->method('getSessionId')
+            ->willReturn($reservedOrderId);
+
         $valueActual = $model->getFingerPrintId();
 
         $this->assertSame($reservedOrderId, $valueActual);
@@ -331,23 +321,13 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = false;
         $sessionId = (string) rand();
 
-        $this->configMock
-            ->expects($this->once())
-            ->method('userOrderIdToFingerPrint')
-            ->willReturn($userOrderIdToFingerPrint);
+        $model = $this->getModel();
+        $model->setOrderAdapter($this->orderAdapterMock);
 
-        $this->configMock
-            ->expects($this->once())
-            ->method('getSession')
-            ->willReturn($this->sessionMock);
-
-        $this->sessionMock
-            ->expects($this->once())
+        $this->fingerPrintMock->expects($this->exactly(1))
             ->method('getSessionId')
             ->willReturn($sessionId);
 
-
-        $model = $this->getModel();
         $valueActual = $model->getFingerPrintId();
 
         $this->assertSame($sessionId, $valueActual);
