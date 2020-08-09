@@ -51,6 +51,8 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->quote = $this->getMockBuilder('Magento\Quote\Model\Quote')
+            ->disableOriginalConstructor()
+            ->setMethods(['getId', 'getCustomerId'])
             ->getMock();
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
