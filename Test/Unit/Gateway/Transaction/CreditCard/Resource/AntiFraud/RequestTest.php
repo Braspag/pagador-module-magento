@@ -299,11 +299,6 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = true;
         $reservedOrderId = (string) rand();
 
-        $this->configMock
-            ->expects($this->once())
-            ->method('getSession')
-            ->willReturn($this->sessionMock);
-
         $this->sessionMock
             ->expects($this->once())
             ->method('getQuote')
@@ -345,11 +340,6 @@ class RequestTest extends TestCase
     {
         $userOrderIdToFingerPrint = false;
         $sessionId = (string) rand();
-
-        $this->configMock
-            ->expects($this->once())
-            ->method('getSession')
-            ->willReturn($this->sessionMock);
 
         $this->sessionMock
             ->expects($this->once())
