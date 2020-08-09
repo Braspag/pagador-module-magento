@@ -136,6 +136,10 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
+        $this->quoteFactory->expects($this->once())
+            ->method('getCustomerId')
+            ->will($this->returnValue(1));
+
         $this->fingerPrint = new FingerPrint(
             $this->scopeFingerPrintMock,
             $this->sessionMock,
@@ -145,7 +149,9 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
 
         $sessionIdExpected = self::MERCHANT_ID;
 
-        $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId(false, null,null));
+        $this->assertEquals($sessionIdExpected,
+            $this->fingerPrint->getSessionId(false, $this->quoteFactory,null)
+        );
     }
 
     public function testGetSessionIdFromQuoteId()
