@@ -299,11 +299,6 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = true;
         $reservedOrderId = (string) rand();
 
-        $this->sessionMock
-            ->expects($this->once())
-            ->method('getQuote')
-            ->willReturn($this->quoteMock);
-
         $this->quoteMock
             ->expects($this->exactly(2))
             ->method('getReservedOrderId')
@@ -341,13 +336,12 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = false;
         $sessionId = (string) rand();
 
-        $this->sessionMock
-            ->expects($this->once())
-            ->method('getSessionId')
-            ->willReturn($sessionId);
-
         $model = $this->getModel();
         $model->setOrderAdapter($this->orderAdapterMock);
+
+        $this->fingerPrintMock->expects($this->exactly(1))
+            ->method('getSessionId')
+            ->willReturn($sessionId);
 
         $valueActual = $model->getFingerPrintId();
 
