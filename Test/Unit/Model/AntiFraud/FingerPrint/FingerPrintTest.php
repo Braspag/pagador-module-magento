@@ -145,7 +145,7 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
 
         $sessionIdExpected = self::MERCHANT_ID;
 
-        $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
+        $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId(false, null,null));
     }
 
     public function testGetSessionIdFromQuoteId()

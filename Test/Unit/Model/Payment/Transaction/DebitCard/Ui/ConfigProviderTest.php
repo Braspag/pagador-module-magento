@@ -65,6 +65,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
     		->method('getAuth3Ds20Mdd5')
     		->will($this->returnValue('mdd 5'));
 
+        $this->debitcardConfig->expects($this->once())
+            ->method('isCardViewActive')
+            ->will($this->returnValue(true));
+
         static::assertEquals(
             [
                 'payment' => [
@@ -140,6 +144,10 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
         $this->debitcardConfig->expects($this->once())
             ->method('getAuth3Ds20Mdd5')
             ->will($this->returnValue('mdd 5'));
+
+        $this->debitcardConfig->expects($this->once())
+            ->method('isCardViewActive')
+            ->will($this->returnValue(true));
 
         static::assertEquals(
             [
