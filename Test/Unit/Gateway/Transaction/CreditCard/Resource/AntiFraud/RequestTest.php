@@ -339,7 +339,7 @@ class RequestTest extends TestCase
 
         $this->fingerPrintMock->expects($this->exactly(1))
             ->method('getSessionId')
-            ->willReturn($this->returnValue($reservedOrderId));
+            ->willReturn($reservedOrderId);
 
         $valueActual = $model->getFingerPrintId();
 
@@ -371,7 +371,7 @@ class RequestTest extends TestCase
 
         $this->fingerPrintMock->expects($this->exactly(1))
             ->method('getSessionId')
-            ->willReturn($this->returnValue($sessionId));
+            ->willReturn($sessionId);
 
         $valueActual = $model->getFingerPrintId();
 

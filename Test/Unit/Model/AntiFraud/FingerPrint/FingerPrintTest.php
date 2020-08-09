@@ -152,7 +152,7 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             $this->quoteFactory
         );
 
-        $sessionIdExpected = self::MERCHANT_ID;
+        $sessionIdExpected = self::MERCHANT_ID.'d41d8cd98f00b204e9800998ecf8427e';
 
         $this->assertEquals($sessionIdExpected,
             $this->fingerPrint->getSessionId(false, $this->quote,null)
