@@ -80,7 +80,7 @@ class RequestTest extends TestCase
             ])
             ->getMockForAbstractClass();
 
-        $this->fingerPrint = $this->getMockBuilder(FingerPrint::class)
+        $this->fingerPrintMock = $this->getMockBuilder(FingerPrint::class)
             ->disableOriginalConstructor()
             ->setMethods(['getSessionId'])
             ->getMock();
@@ -122,7 +122,8 @@ class RequestTest extends TestCase
             'config' => $this->configMock,
             'requestItemFactory' => $this->requestItemFactoryMock,
             'adapterGeneral' => $this->adapterGeneralMock,
-            'helperData' => $this->helperDataMock
+            'helperData' => $this->helperDataMock,
+            'fingerPrint' => $this->fingerPrintMock
         ]);
 
         return $model;
@@ -336,9 +337,9 @@ class RequestTest extends TestCase
 
         $model->setOrderAdapter($this->orderAdapterMock);
 
-        $this->fingerPrint->expects($this->exactly(1))
+        $this->fingerPrintMock->expects($this->exactly(1))
             ->method('getSessionId')
-            ->willReturn($reservedOrderId);
+            ->willReturn($this->returnValue($reservedOrderId));
 
         $valueActual = $model->getFingerPrintId();
 
@@ -368,9 +369,9 @@ class RequestTest extends TestCase
         $model = $this->getModel();
         $model->setOrderAdapter($this->orderAdapterMock);
 
-        $this->fingerPrint->expects($this->exactly(1))
+        $this->fingerPrintMock->expects($this->exactly(1))
             ->method('getSessionId')
-            ->willReturn($sessionId);
+            ->willReturn($this->returnValue($sessionId));
 
         $valueActual = $model->getFingerPrintId();
 

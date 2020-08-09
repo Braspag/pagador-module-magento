@@ -141,7 +141,7 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
-        $this->quote->expects($this->once())
+        $this->quote->expects($this->at(2))
             ->method('getCustomerId')
             ->will($this->returnValue(1));
 
