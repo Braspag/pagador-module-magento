@@ -321,6 +321,8 @@ class RequestTest extends TestCase
             ->willReturnSelf();
 
         $model = $this->getModel();
+        $model->setOrderAdapter($this->orderAdapterMock);
+
         $valueActual = $model->getFingerPrintId();
 
         $this->assertSame($reservedOrderId, $valueActual);
@@ -346,8 +348,9 @@ class RequestTest extends TestCase
             ->method('getSessionId')
             ->willReturn($sessionId);
 
-
         $model = $this->getModel();
+        $requestModel->setOrderAdapter($this->orderAdapterMock);
+
         $valueActual = $model->getFingerPrintId();
 
         $this->assertSame($sessionId, $valueActual);
