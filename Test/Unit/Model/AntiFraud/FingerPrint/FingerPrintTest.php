@@ -42,8 +42,13 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
         $this->scopeFingerPrintMock = $this->getMockBuilder(ScopeConfigInterface::class)
             ->getMockForAbstractClass();
 
-        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface');
-        $this->quoteFactory = $this->getMockBuilder('Magento\Quote\Model\QuoteFactory');
+        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->quoteFactory = $this->getMockBuilder('Magento\Quote\Model\QuoteFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->setMethods(['getQuote', 'getSessionId', 'getId'])
