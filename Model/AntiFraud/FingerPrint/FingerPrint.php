@@ -85,7 +85,7 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
             $quote = $this->getQuoteByCustomerId($quote->getCustomerId());
         }
 
-        if ($quote && !$quote->getId() && $customerId) {
+        if ((!$quote || !$quote->getId()) && $customerId) {
             $quote = $this->getQuoteByCustomerId($customerId);
         }
 
