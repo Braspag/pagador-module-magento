@@ -301,11 +301,6 @@ class RequestTest extends TestCase
 
         $this->configMock
             ->expects($this->once())
-            ->method('userOrderIdToFingerPrint')
-            ->willReturn($userOrderIdToFingerPrint);
-
-        $this->configMock
-            ->expects($this->once())
             ->method('getSession')
             ->willReturn($this->sessionMock);
 
@@ -350,11 +345,6 @@ class RequestTest extends TestCase
     {
         $userOrderIdToFingerPrint = false;
         $sessionId = (string) rand();
-
-        $this->configMock
-            ->expects($this->once())
-            ->method('userOrderIdToFingerPrint')
-            ->willReturn($userOrderIdToFingerPrint);
 
         $this->configMock
             ->expects($this->once())
