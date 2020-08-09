@@ -299,21 +299,6 @@ class RequestTest extends TestCase
         $userOrderIdToFingerPrint = true;
         $reservedOrderId = (string) rand();
 
-        $this->quoteMock
-            ->expects($this->exactly(2))
-            ->method('getReservedOrderId')
-            ->willReturnOnConsecutiveCalls(null, $reservedOrderId);
-
-        $this->quoteMock
-            ->expects($this->once())
-            ->method('reserveOrderId')
-            ->willReturnSelf();
-
-        $this->quoteMock
-            ->expects($this->once())
-            ->method('save')
-            ->willReturnSelf();
-
         $model = $this->getModel();
 
         $this->orderAdapterMock->expects($this->exactly(1))
