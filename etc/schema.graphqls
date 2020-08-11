@@ -1,0 +1,15 @@
+type Query {
+    braspagAccessToken: AccessTokenResult
+    @resolver(
+        class: "Webjump\\BraspagPagador\\Model\\Resolver\\AccessToken"
+    )
+    @doc(
+        description: "Request braspag pagador to get access token"
+    )
+}
+
+type AccessTokenResult {
+    accessToken: String @doc(description: "Access Token code.")
+}
+
+
