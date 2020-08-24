@@ -28,7 +28,7 @@ define(
         'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Webjump_BraspagPagador/js/model/card.view',
-        'Webjump_BraspagPagador/js/model/card',
+        'Webjump_BraspagPagador/js/model/card'
     ],
     function (
         Component,
@@ -164,7 +164,7 @@ define(
                 }
 
                 if (!showType && creditCardType.length === 0) {
-                    this.forceRegisterCreditCardType(creditCardNumber, creditCardType);
+                    card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
                     return creditCardType.val();
                 }
@@ -351,6 +351,11 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
+
+                let creditCardNumber = this.creditCardNumber();
+                let creditCardType = $('.creditcard-type');
+
+                card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
                 var self = this;
                 if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
