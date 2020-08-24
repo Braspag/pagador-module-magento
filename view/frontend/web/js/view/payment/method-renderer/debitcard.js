@@ -25,7 +25,8 @@ define(
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
-        'Webjump_BraspagPagador/js/model/card.view'
+        'Webjump_BraspagPagador/js/model/card.view',
+        'Webjump_BraspagPagador/js/model/card'
     ],
     function (
         Component,
@@ -44,7 +45,8 @@ define(
         soptToken,
         authentication3ds20,
         bpmpiRenderer,
-        cardView
+        cardView,
+        card
     ) {
         'use strict';
 
@@ -167,7 +169,7 @@ define(
                 }
 
                 if (!showType && creditCardType.length === 0) {
-                    this.forceRegisterDebitCardType(creditCardNumber, creditCardType);
+                    card.forceRegisterDebitCardType(creditCardNumber, creditCardType);
 
                     return creditCardType.val();
                 }
@@ -291,6 +293,11 @@ define(
             },
 
             getPlaceOrderDeferredObject: function () {
+
+                let debitCardNumber = this.creditCardNumber();
+                let debitCardType = $('.debitcard-type');
+
+                card.forceRegisterDebitCardType(debitCardNumber, debitCardType);
 
                 this.updateCreditCardExpData();
                 var self = this;
