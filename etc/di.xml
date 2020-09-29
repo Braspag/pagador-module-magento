@@ -45,6 +45,15 @@
     <preference for="Webjump\BraspagPagador\Api\CardTokenManagerInterface" type="Webjump\BraspagPagador\Model\CardTokenManager" />
     <preference for="Webjump\BraspagPagador\Api\SplitManagerInterface" type="Webjump\BraspagPagador\Model\SplitManager" />
 
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20Information" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20ResultInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20ResultInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20AddressInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20GetAddressInterface" type="Webjump\BraspagPagador\Model\Auth3DS20GetAddress" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20CartInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20GetCartInterface" type="Webjump\BraspagPagador\Model\Auth3DS20GetCart" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20UserAccountInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20UserAccountInterface" type="Webjump\BraspagPagador\Model\Auth3DS20UserAccount" />
+
     <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
         <arguments>
             <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
