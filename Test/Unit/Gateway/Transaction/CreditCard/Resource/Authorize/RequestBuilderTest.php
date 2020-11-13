@@ -6,9 +6,8 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request as AntiFraudRequest;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as AvsRequest;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;

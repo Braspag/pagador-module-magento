@@ -2,10 +2,11 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface as BraspaglibRequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 
@@ -29,6 +30,11 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected $billingAddress;
 
     protected $helperData;
+
+    /**
+     * @var
+     */
+    protected $antiFraudRequest;
 
     /**
      * @var
@@ -101,7 +107,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
                     return $typeDetail[0];
                 }
             }
-            
+
             if ($this->getConfig()->getIsTestEnvironment()) {
                 return "Simulado";
             }
@@ -148,7 +154,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getPaymentDebitCardBrand()
     {
         List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
-        
+
         return $brand;
     }
 
@@ -277,5 +283,21 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getPaymentSplitRequest()
     {
         return $this->paymentSplitRequest;
+    }
+
+    /**
+     * @return RequestAntiFraudLibInterface
+     */
+    public function getAntiFraudRequest()
+    {
+        return $this->antiFraudRequest;
+    }
+
+    /**
+     * @param RequestAntiFraudLibInterface $antiFraudRequest
+     */
+    public function setAntiFraudRequest(RequestAntiFraudLibInterface $antiFraudRequest)
+    {
+        $this->antiFraudRequest = $antiFraudRequest;
     }
 }

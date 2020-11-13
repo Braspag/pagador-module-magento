@@ -27,7 +27,7 @@ class FingerPrint extends Template
     public function __construct(Context $context, array $data, AntiFraudFingerPrintInterface $antiFraudFingerPrint)
     {
         parent::__construct($context, $data);
-        $this->fingerPrint = $antiFraudFingerPrint;
+        $this->setFingerPrint($antiFraudFingerPrint);
     }
 
     public function getSrcParams()

@@ -33,6 +33,6 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
             $payment->setAdditionalInformation('redirect_url', $authenticationUrl);
         }
 
-        return $this;
+        return $response;
     }
 }

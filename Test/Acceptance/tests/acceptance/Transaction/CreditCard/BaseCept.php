@@ -1,6 +1,6 @@
-<?php 
+<?php
 $I = new AcceptanceTester($scenario);
-$I->wantTo('Purchase a produtct with billet');
+$I->wantTo('Purchase a produtct with boleto');
 
 Page\CustomerLogin::of($I)->doLogin();
 Page\ProductView::of($I)->addProductToCart();

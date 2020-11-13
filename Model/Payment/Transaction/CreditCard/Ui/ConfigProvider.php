@@ -22,7 +22,7 @@ final class ConfigProvider implements ConfigProviderInterface
 
     public function __construct(
         CreditCardConfig $creditCardConfig
-    ){
+    ) {
         $this->setCreditCardConfig($creditCardConfig);
     }
 

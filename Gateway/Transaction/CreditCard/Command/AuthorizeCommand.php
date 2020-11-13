@@ -19,7 +19,7 @@ class AuthorizeCommand extends AbstractApiCommand
 	protected function sendRequest($request)
 	{
         if (!isset($request) || !$request instanceof RequestInterface) {
-            throw new \InvalidArgumentException('Braspag Billet Send Request Lib object should be provided');
+            throw new \InvalidArgumentException('Braspag Boleto Send Request Lib object should be provided');
         }
 
 		return $this->getApi()->sendCreditCard($request);

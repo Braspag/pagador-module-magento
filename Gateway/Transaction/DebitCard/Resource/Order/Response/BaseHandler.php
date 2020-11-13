@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Debit\Send\Response;
+use Webjump\Braspag\Pagador\Transaction\Resource\DebitCard\Send\Response;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
@@ -41,6 +41,6 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
 
         $payment->setIsTransactionClosed(false);
 
-        return $this;
+        return $response;
     }
 }

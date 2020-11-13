@@ -114,7 +114,7 @@ define(
                 $.each(window.checkoutConfig.customerData.addresses, function(k, i){
 
                     if (i.default_billing) {
-                        
+
                         bpmpiRenderer.renderBpmpiData('bpmpi_billto_phonenumber', false, i.telephone);
                         bpmpiRenderer.renderBpmpiData('bpmpi_billto_customerid', false, window.checkoutConfig.customerData.taxvat);
                         bpmpiRenderer.renderBpmpiData('bpmpi_billto_email', false, window.checkoutConfig.customerData.email);

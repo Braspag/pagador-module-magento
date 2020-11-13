@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Sales::sales">
+                    <resource id="Webjump_BraspagPagador::braspag" title="Braspag" sortOrder="40">
+                        <resource id="Webjump_BraspagPagador::paymentsplit" title="Payment Split" sortOrder="10"/>
+                    </resource>
+                    <resource id="Magento_Sales::sales_operation" title="Operations" sortOrder="10">
+                        <resource id="Magento_Sales::sales_order"  title="Orders" sortOrder="10">
+                            <resource id="Magento_Sales::actions" title="Actions" sortOrder="10">
+                                <resource id="Webjump_BraspagPagador::action_paymentsplit_posttransactionsend" title="Purchase Order"/>
+<!--                            <resource id="Unirgy_DropshipPo::action_view_order_cost" title="View Order Costs"/>-->
+<!--                            <resource id="Unirgy_DropshipPo::action_view_cost" title="View PO Costs"/>-->
+<!--                            <resource id="Unirgy_DropshipPo::action_edit_cost" title="Edit PO Costs"/>-->
+                            </resource>
+                        </resource>
+                    </resource>
+<!--                <resource id="Unirgy_Dropship::udropship">-->
+<!--                    <resource id="Unirgy_DropshipPo::udpo" title="Purchase Orders" sortOrder="55"/>-->
+<!--                </resource>-->
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

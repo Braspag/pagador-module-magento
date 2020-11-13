@@ -11,12 +11,12 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface as ConfigInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as BraspaglibRequestInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
 use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface

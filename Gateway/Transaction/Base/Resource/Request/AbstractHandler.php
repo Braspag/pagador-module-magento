@@ -50,9 +50,9 @@ abstract class AbstractHandler implements HandlerInterface
         $paymentDO = $handlingSubject['payment'];
         $payment = $paymentDO->getPayment();
 
-        $this->_handle($payment, $request);
+        $request = $this->_handle($payment, $request);
 
-        return $this;
+        return $request;
     }
 
     abstract protected function _handle($payment, $request);

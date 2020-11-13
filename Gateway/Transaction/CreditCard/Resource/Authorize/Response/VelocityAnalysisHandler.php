@@ -33,7 +33,7 @@ class VelocityAnalysisHandler extends AbstractHandler implements HandlerInterfac
         if (!$velocityResponse instanceof VelocityResponseInterface) {
             return $this;
         }
-        
+
         $payment->setAdditionalInformation('braspag_pagador_velocity_id', $velocityResponse->getId());
         $payment->setAdditionalInformation('braspag_pagador_velocity_result_message', $velocityResponse->getResultMessage());
         $payment->setAdditionalInformation('braspag_pagador_velocity_score', $velocityResponse->getScore());
@@ -44,7 +44,7 @@ class VelocityAnalysisHandler extends AbstractHandler implements HandlerInterfac
             $payment->setAdditionalInformation('braspag_pagador_velocity_reject_reasons', $this->getRejectReasons($rejectReasons));
         }
 
-        return $this;
+        return $response;
     }
 
     protected function getRejectReasons($rejectReasons)

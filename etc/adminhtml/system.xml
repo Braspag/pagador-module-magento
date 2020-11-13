@@ -14,6 +14,7 @@
                 <include path="Webjump_BraspagPagador::system/global.xml"/>
                 <include path="Webjump_BraspagPagador::system/oauth2.xml"/>
                 <include path="Webjump_BraspagPagador::system/authentication3ds20.xml"/>
+                <include path="Webjump_BraspagPagador::system/paymentsplit.xml"/>
                 <include path="Webjump_BraspagPagador::system/customer.xml"/>
                 <include path="Webjump_BraspagPagador::system/transaction.xml"/>
             </group>

@@ -6,7 +6,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 
 /**
  * Braspag Transaction CreditCard Capture Request Builder

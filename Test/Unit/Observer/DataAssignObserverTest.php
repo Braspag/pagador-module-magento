@@ -49,7 +49,7 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 
     public function testExecuteShouldReturnBillingConfig()
     {
-        $codeMock = 'braspag_pagador_billet';
+        $codeMock = 'braspag_pagador_boleto';
 
         $this->_observerMock->expects($this->once())
             ->method('getEvent')
