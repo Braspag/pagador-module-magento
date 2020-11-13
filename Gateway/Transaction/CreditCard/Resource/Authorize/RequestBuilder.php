@@ -7,9 +7,9 @@ use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
@@ -17,7 +17,7 @@ use Magento\Quote\Model\QuoteFactory;
 use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
- * Braspag Transaction Billet Send Request Builder
+ * Braspag Transaction Boleto Send Request Builder
  *
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)

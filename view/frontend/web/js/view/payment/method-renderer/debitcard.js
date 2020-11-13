@@ -137,7 +137,7 @@ define(
                                 RedirectAfterPlaceOrder(orderId)
                             ).done(
                                 function (url) {
-                                    if (url.length) {
+                                    if (self.redirectAfterPlaceOrder && url.length) {
                                         window.location.replace(url);
                                         return true;
                                     }
@@ -319,7 +319,7 @@ define(
                                 RedirectAfterPlaceOrder(orderId)
                             ).done(
                                 function (url) {
-                                    if (url.length) {
+                                    if (self.redirectAfterPlaceOrder && url.length) {
                                         window.location.replace(url);
                                         return true;
                                     }
@@ -409,7 +409,9 @@ define(
 
             isCieloProviderAvailable: function() {
 
-                if (this.creditCardType().indexOf("Cielo") >= 0 
+                let creditCardType = $('.creditcard-type');
+
+                if (creditCardType.val().indexOf("Cielo") >= 0
                   || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
                 ) {
                     return true;
@@ -507,7 +509,7 @@ define(
                     RedirectAfterPlaceOrder(orderId)
                 ).done(
                     function (url) {
-                        if (url.length) {
+                        if (self.redirectAfterPlaceOrder && url.length) {
                             window.location.replace(url);
                             return true;
                         }

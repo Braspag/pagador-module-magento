@@ -12,7 +12,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Payment
 
 use Magento\Framework\Session\SessionManagerInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
 use Webjump\BraspagPagador\Model\OAuth2TokenManager;
@@ -26,6 +26,7 @@ class Request implements BraspaglibRequestInterface
     protected $quote;
     protected $order;
     protected $oAuth2TokenManager;
+    protected $splits;
 
     public function __construct(
         SessionManagerInterface $session,
@@ -154,6 +155,22 @@ class Request implements BraspaglibRequestInterface
      */
     public function getSplits()
     {
+        return $this->splits;
+    }
+
+    /**
+     * @param mixed $splits
+     */
+    public function setSplits($splits)
+    {
+        $this->splits = $splits;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function prepareSplits()
+    {
         if (!$this->getConfig()->isPaymentSplitActive()) {
             return [];
         }
@@ -170,7 +187,9 @@ class Request implements BraspaglibRequestInterface
             $this->getDataProvider()->setOrder($this->getOrder());
         }
 
-        return $this->getDataProvider()->getData($storeMerchantId, $defaultMdr, $defaultFee);
+        $this->setSplits($this->getDataProvider()->getData($storeMerchantId, $defaultMdr, $defaultFee));
+
+        return $this;
     }
 
     /**

@@ -84,7 +84,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             $this->saveCardToken($payment, $response);
         }
 
-        return $this;
+        return $response;
     }
 
     /**

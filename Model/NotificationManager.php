@@ -90,7 +90,7 @@ class NotificationManager implements NotificationManagerInterface
     protected $types = [
         'braspag_pagador_creditcard' => 'creditCard',
         'braspag_pagador_creditcardtoken' => 'creditCard',
-        'braspag_pagador_billet' => 'billet'
+        'braspag_pagador_boleto' => 'boleto'
     ];
 
     public function __construct(
@@ -158,7 +158,7 @@ class NotificationManager implements NotificationManagerInterface
         $request->setPaymentId($paymentId);
         $request->setStoreId($orderPayment->getOrder()->getStoreId());
 
-        $type = 'billet';
+        $type = 'boleto';
         $method = $orderPayment->getMethod();
 
         if (!empty($this->types[$method])) {
@@ -175,7 +175,7 @@ class NotificationManager implements NotificationManagerInterface
         $paymentStatus = $paymentInfo->getPaymentStatus();
 
         // 2 = caoture
-        if ($type == 'billet' && $paymentStatus == 2) {
+        if ($type == 'boleto' && $paymentStatus == 2) {
             return $this->createInvoice($orderPayment->getOrder());
         }
 

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_paymentsplit_marketplacegeneral" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Marketplace General Config</label>
+
+        <field id="marketplacegeneral_markeplace_sales_participation" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>Does the Marketplace participate in sales?</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation</config_path>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>Marketplace sales participation type</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitMarketplaceSalesParticipationTypes</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_type</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_percent" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+            <label>Percent value in sales participation</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_percent</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+                <field id="marketplacegeneral_markeplace_sales_participation_type">1</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_fixed_value" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+            <label>Fixed value in sales participation</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_fixed_value</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+                <field id="marketplacegeneral_markeplace_sales_participation_type">2</field>
+            </depends>
+        </field>
+    </group>
+</include>

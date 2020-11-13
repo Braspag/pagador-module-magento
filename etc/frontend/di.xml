@@ -7,23 +7,23 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     
-    <!-- Billet -->
+    <!-- Boleto -->
 
-    <virtualType name="BraspagTransactionBilletSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Billet\Config\Config">
+    <virtualType name="BraspagTransactionBoletoSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\Config">
         <arguments>
             <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="BraspagTransactionBilletUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider">
+    <virtualType name="BraspagTransactionBoletoUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider">
         <arguments>
-            <argument name="billetConfig" xsi:type="object">BraspagTransactionBilletSendRequestConfig</argument>
+            <argument name="boletoConfig" xsi:type="object">BraspagTransactionBoletoSendRequestConfig</argument>
         </arguments>
     </virtualType>
 
-    <!-- Billet Ui Config -->
+    <!-- Boleto Ui Config -->
 
-    <virtualType name="BraspagTransactionBilletLink" type="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Billet\Link">
+    <virtualType name="BraspagTransactionBoletoLink" type="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link">
         <arguments>
             <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
             <argument name="checkoutSession" xsi:type="object">\Magento\Checkout\Model\Session</argument>
@@ -104,7 +104,7 @@
         <arguments>
             <argument name="configProviders" xsi:type="array">
                 <item name="braspag_pagador_base_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui\ConfigProvider</item>
-                <item name="braspag_pagador_billet_config_provider" xsi:type="object">BraspagTransactionBilletUiConfigProvider</item>
+                <item name="braspag_pagador_boleto_config_provider" xsi:type="object">BraspagTransactionBoletoUiConfigProvider</item>
                 <item name="braspag_pagador_creditcard_config_provider" xsi:type="object">BraspagTransactionCreditCardUiConfigProvider</item>
                 <item name="braspag_pagador_creditcard_default_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider</item>
                 <item name="braspag_pagador_creditcard_installments_config_provider" xsi:type="object">BraspagTransactionCreditCardInstallmentsUiConfigProvider</item>

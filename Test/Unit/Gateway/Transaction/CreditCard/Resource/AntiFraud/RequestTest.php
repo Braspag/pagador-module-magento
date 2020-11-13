@@ -5,9 +5,9 @@ namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resour
 use Magento\Quote\Model\Quote;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request;
 use PHPUnit\Framework\TestCase;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\AntiFraudConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\MDD\AdapterGeneralInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;

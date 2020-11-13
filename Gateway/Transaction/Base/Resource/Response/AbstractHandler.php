@@ -42,7 +42,7 @@ abstract class AbstractHandler implements HandlerInterface
         }
 
         if (!isset($response['response']) || !$response['response'] instanceof $this->response) {
-            throw new \InvalidArgumentException('Braspag CreditCard Send Response Lib object should be provided');
+            throw new \InvalidArgumentException('Braspag Payment Method Send Response Lib object should be provided');
         }
 
         /** @var ResponseInterface $response */
@@ -50,9 +50,9 @@ abstract class AbstractHandler implements HandlerInterface
         $paymentDO = $handlingSubject['payment'];
         $payment = $paymentDO->getPayment();
 
-        $this->_handle($payment, $response);
+        $response = $this->_handle($payment, $response);
 
-        return $this;
+        return $response;
     }
 
     abstract protected function _handle($payment, $response);

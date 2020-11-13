@@ -81,9 +81,11 @@ define(
             maskCvv: function (data, event) {
                 var maxlength = 4;
 
+                let creditCardType = $('.creditcard-type');
+
                 if (
-                    this.creditCardType() === 'Cielo-Amex' ||
-                    this.creditCardType() === 'CieloSitef-Amex'
+                    creditCardType.val() === 'Cielo-Amex' ||
+                    creditCardType.val() === 'CieloSitef-Amex'
                 ){
                     maxlength = 4;
                 }
@@ -470,7 +472,9 @@ define(
 
             isCieloProviderAvailable: function() {
 
-                if (this.creditCardType().indexOf("Cielo") >= 0
+                let creditCardType = $('.creditcard-type');
+
+                if (creditCardType.val().indexOf("Cielo") >= 0
                   || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
                 ) {
                     return true;

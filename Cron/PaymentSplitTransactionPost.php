@@ -4,37 +4,46 @@ namespace Webjump\BraspagPagador\Cron;
 
 use \Psr\Log\LoggerInterface;
 use Webjump\BraspagPagador\Model\SplitManager;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\SplitPaymentTransactionPostCommand as SplitPaymentCreditCardTransactionPostCommand;
+use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\SplitPaymentTransactionPostCommand as SplitPaymentDebitCardTransactionPostCommand;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
 use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
 use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
+use Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as ConfigProviderBoleto;
 
 class PaymentSplitTransactionPost {
 
     protected $logger;
     protected $splitManager;
-    protected $splitPaymentCreditCardTransactionPostCommand;
-    protected $splitPaymentDebitCardTransactionPostCommand;
+    protected $splitPaymentTransactionPostCommand;
     protected $configCreditCardInterface;
     protected $configDebitCardInterface;
 
+    /**
+     * PaymentSplitTransactionPost constructor.
+     * @param LoggerInterface $logger
+     * @param SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand
+     * @param SplitManager $splitManager
+     * @param SplitPaymentCreditCardConfig $configCreditCardInterface
+     * @param SplitPaymentDebitCardConfig $configDebitCardInterface
+     * @param SplitPaymentBoletoConfig $configBoletoInterface
+     */
     public function __construct(
         LoggerInterface $logger,
-        SplitPaymentCreditCardTransactionPostCommand $splitPaymentCreditCardTransactionPostCommand,
-        SplitPaymentDebitCardTransactionPostCommand $splitPaymentDebitCardTransactionPostCommand,
+        SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand,
         SplitManager $splitManager,
         SplitPaymentCreditCardConfig $configCreditCardInterface,
-        SplitPaymentDebitCardConfig $configDebitCardInterface
+        SplitPaymentDebitCardConfig $configDebitCardInterface,
+        SplitPaymentBoletoConfig $configBoletoInterface
     ){
         $this->logger = $logger;
-        $this->splitPaymentCreditCardTransactionPostCommand = $splitPaymentCreditCardTransactionPostCommand;
-        $this->splitPaymentDebitCardTransactionPostCommand = $splitPaymentDebitCardTransactionPostCommand;
+        $this->splitPaymentTransactionPostCommand = $splitPaymentTransactionPostCommand;
         $this->splitManager = $splitManager;
         $this->configCreditCardInterface = $configCreditCardInterface;
         $this->configDebitCardInterface = $configDebitCardInterface;
+        $this->configBoletoInterface = $configBoletoInterface;
     }
 
     /**
@@ -42,6 +51,8 @@ class PaymentSplitTransactionPost {
      */
     public function execute()
     {
+        $orders = [];
+
         if ($this->configCreditCardInterface->isPaymentSplitActive()
             && $this->configCreditCardInterface->getPaymentSplitTransactionalPostSendRequestAutomatically()
             && $this->configCreditCardInterface->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
@@ -49,10 +60,8 @@ class PaymentSplitTransactionPost {
             $creditCardDays = intval($this->configCreditCardInterface
                 ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
 
-            $creditCardOrders = $this->splitManager
+            $orders = $this->splitManager
                 ->getTransactionPostOrdersToExecuteByDays($creditCardDays, ConfigProviderCreditCard::CODE);
-
-            $this->processOrders($creditCardOrders, $this->splitPaymentCreditCardTransactionPostCommand);
         }
 
         if ($this->configDebitCardInterface->isPaymentSplitActive()
@@ -62,25 +71,35 @@ class PaymentSplitTransactionPost {
             $debitCardDays = intval($this->configDebitCardInterface
                 ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
 
-            $debitCardOrders = $this->splitManager
+            $orders = $this->splitManager
                 ->getTransactionPostOrdersToExecuteByDays($debitCardDays, ConfigProviderDebitCard::CODE);
-
-            $this->processOrders($debitCardOrders, $this->splitPaymentDebitCardTransactionPostCommand);
         }
+
+        if ($this->configBoletoInterface->isPaymentSplitActive()
+            && $this->configBoletoInterface->getPaymentSplitTransactionalPostSendRequestAutomatically()
+            && $this->configBoletoInterface->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
+        ) {
+            $boletoDays = intval($this->configBoletoInterface
+                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+
+            $orders = $this->splitManager
+                ->getTransactionPostOrdersToExecuteByDays($boletoDays, ConfigProviderBoleto::CODE);
+        }
+
+        $this->processOrders($orders);
 
         $this->logger->info('Cron PaymentSplitTransactionPost Executed');
     }
 
     /**
      * @param $orders
-     * @param $splitPaymentTransactionPostCommand
      * @return $this
      */
-    protected function processOrders($orders, $splitPaymentTransactionPostCommand)
+    protected function processOrders($orders)
     {
         foreach ($orders as $order) {
             try {
-                $splitPaymentTransactionPostCommand->execute(['order' => $order, 'payment' => $order->getPayment()]);
+                $this->splitPaymentTransactionPostCommand->execute(['order' => $order, 'payment' => $order->getPayment()]);
             } catch (\Exception $e) {
                 $order->addCommentToStatusHistory('Exception message: Split Payment Error - Transaction Post: '.$e->getMessage(), false);
                 $order->save();

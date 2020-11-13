@@ -19,8 +19,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'braspag_pagador_billet',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/billet'
+                type: 'braspag_pagador_boleto',
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/boleto'
             },
             {
                 type: 'braspag_pagador_creditcard',

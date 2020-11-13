@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+  <menu>
+    <add id="Webjump_BraspagPagador::braspag" parent="Magento_Sales::sales" resource="Webjump_BraspagPagador::braspag" module="Webjump_BraspagPagador" title="Braspag" sortOrder="500"/>
+    <add id="Webjump_BraspagPagador::paymentsplit" resource="Webjump_BraspagPagador::paymentsplit" module="Webjump_BraspagPagador" title="Payment Splits" sortOrder="10" action="braspag/paymentsplit" parent="Webjump_BraspagPagador::braspag" />
+  </menu>
+</config>

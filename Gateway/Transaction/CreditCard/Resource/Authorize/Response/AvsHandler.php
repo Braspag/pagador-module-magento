@@ -34,6 +34,6 @@ class AvsHandler extends AbstractHandler implements HandlerInterface
             $payment->setAdditionalInformation('braspag_pagador_avs_return_code', $avsResponse->getReturnCode());
         }
 
-        return $this;
+        return $response;
     }
 }

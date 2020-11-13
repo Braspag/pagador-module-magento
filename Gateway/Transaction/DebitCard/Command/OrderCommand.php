@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface;
 
 /**
  * Braspag Transaction DebitCard Order Command

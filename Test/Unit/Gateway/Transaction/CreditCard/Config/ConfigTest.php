@@ -98,7 +98,117 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
             ->with('payment/braspag_pagador_customer_address/district_attribute')
             ->will($this->returnValue('street_4'));
 
-        $this->contextMock->expects($this->exactly(13))
+        $this->scopeConfigMock->expects($this->at(13))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(14))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit_type')
+            ->will($this->returnValue('paymentsplit_type'));
+
+        $this->scopeConfigMock->expects($this->at(15))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(16))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit_transactional_post_send_request_automatically_after_x_days')
+            ->will($this->returnValue('paymentsplit_transactional_post_send_request_automatically_after_x_days'));
+
+        $this->scopeConfigMock->expects($this->at(17))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit_mdr')
+            ->will($this->returnValue('paymentsplit_mdr'));
+
+        $this->scopeConfigMock->expects($this->at(18))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/paymentsplit_fee')
+            ->will($this->returnValue('paymentsplit_fee'));
+
+        $this->scopeConfigMock->expects($this->at(19))
+            ->method('getValue')
+            ->with('webjump_braspag_antifraud/general/active')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(20))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcardtoken/active')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(21))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/create_invoice_on_notification_captured')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(22))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/decimal_grand_total')
+            ->will($this->returnValue(2));
+
+        $this->scopeConfigMock->expects($this->at(23))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mastercard_notify_only')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(24))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_error')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(25))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_failure')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(26))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unenrolled')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(27))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_authorize_on_unsupported_brand')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(28))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mdd1')
+            ->will($this->returnValue('mdd1'));
+
+        $this->scopeConfigMock->expects($this->at(29))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mdd2')
+            ->will($this->returnValue('mdd2'));
+
+        $this->scopeConfigMock->expects($this->at(30))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mdd3')
+            ->will($this->returnValue('mdd3'));
+
+        $this->scopeConfigMock->expects($this->at(31))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mdd4')
+            ->will($this->returnValue('mdd4'));
+
+        $this->scopeConfigMock->expects($this->at(32))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/authentication_3ds_20_mdd5')
+            ->will($this->returnValue('mdd5'));
+
+        $this->scopeConfigMock->expects($this->at(33))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/card_view')
+            ->will($this->returnValue(true));
+
+        $this->scopeConfigMock->expects($this->at(34))
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/cctypes')
+            ->will($this->returnValue([]));
+
+        $this->contextMock->expects($this->exactly(35))
             ->method('getConfig')
             ->will($this->returnValue($this->scopeConfigMock));
 
@@ -115,5 +225,41 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('street_2', $this->config->getCustomerNumberAttribute());
         static::assertEquals('street_3', $this->config->getCustomerComplementAttribute());
         static::assertEquals('street_4', $this->config->getCustomerDistrictAttribute());
+        static::assertTrue($this->config->isPaymentSplitActive());
+        static::assertEquals('paymentsplit_type', $this->config->getPaymentSplitType());
+        static::assertTrue($this->config->getPaymentSplitTransactionalPostSendRequestAutomatically());
+        static::assertEquals('paymentsplit_transactional_post_send_request_automatically_after_x_days', $this->config->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+        static::assertEquals('paymentsplit_mdr', $this->config->getPaymentSplitDefaultMrd());
+        static::assertEquals('paymentsplit_fee', $this->config->getPaymentSplitDefaultFee());
+        static::assertTrue($this->config->hasAntiFraud());
+        static::assertTrue($this->config->isSaveCardActive());
+        static::assertTrue($this->config->isCreateInvoiceOnNotificationCaptured());
+        static::assertEquals(2, $this->config->getDecimalGrandTotal());
+        static::assertTrue($this->config->isAuth3Ds20MCOnlyNotifyActive());
+        static::assertTrue($this->config->isAuth3Ds20AuthorizedOnError());
+        static::assertTrue($this->config->isAuth3Ds20AuthorizedOnFailure());
+        static::assertTrue($this->config->isAuth3Ds20AuthorizeOnUnenrolled());
+        static::assertTrue($this->config->isAuth3Ds20AuthorizeOnUnsupportedBrand());
+        static::assertEquals('mdd1', $this->config->getAuth3Ds20Mdd1());
+        static::assertEquals('mdd2', $this->config->getAuth3Ds20Mdd2());
+        static::assertEquals('mdd3', $this->config->getAuth3Ds20Mdd3());
+        static::assertEquals('mdd4', $this->config->getAuth3Ds20Mdd4());
+        static::assertEquals('mdd5', $this->config->getAuth3Ds20Mdd5());
+        static::assertTrue($this->config->isCardViewActive());
+        static::assertEquals([], $this->config->getCcTypes());
+    }
+
+    public function testGetDecimalGrandTotalShouldReturnDefaultDecimalWhenConfigIsEmpty()
+    {
+        $this->scopeConfigMock->expects($this->once())
+            ->method('getValue')
+            ->with('payment/braspag_pagador_creditcard/decimal_grand_total')
+            ->will($this->returnValue(null));
+
+        $this->contextMock->expects($this->once())
+            ->method('getConfig')
+            ->will($this->returnValue($this->scopeConfigMock));
+
+        static::assertEquals(2, $this->config->getDecimalGrandTotal());
     }
 }
