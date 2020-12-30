@@ -30,7 +30,13 @@ The plugin integrates with Braspag Pagador API.
 
 - Instructions
 - Assignor    
+- Split Payment
 - Expirations Day
+
+### Split Payment
+
+- Trava de pagamentos
+- Pós-transacional
 
 
 ## Requirements
