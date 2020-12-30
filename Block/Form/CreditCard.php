@@ -39,14 +39,11 @@ class CreditCard extends \Magento\Payment\Block\Form\Cc
      */
     public function isInstallmentsActive()
     {
-        if ($this->getMethod()) {
-            $configData = $this->getMethod()->getConfigData('installments_active');
-            if ($configData === null) {
-                return true;
-            }
-            return (bool)$configData;
+        $configData = $this->getMethod()->getConfigData('installments_active');
+        if ($configData === null) {
+            return true;
         }
-        return true;
+        return (bool)$configData;
     }
 
     /**

@@ -33,6 +33,6 @@ class NsuHandler extends AbstractHandler implements HandlerInterface
         $payment->setAdditionalInformation('send_provider', $paymentProvider);
         $payment->setAdditionalInformation('receive_provider', $responseProvider);
 
-        return $this;
+        return $response;
     }
 }

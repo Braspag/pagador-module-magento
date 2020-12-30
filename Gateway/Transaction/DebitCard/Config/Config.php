@@ -4,6 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfigInterface;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
 
 class Config extends AbstractConfig implements ConfigInterface
 {
@@ -130,5 +131,10 @@ class Config extends AbstractConfig implements ConfigInterface
     public function isCardViewActive()
     {
         return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_DEBIT_CARD_VIEW);
+    }
+
+    public function hasAntiFraud()
+    {
+        return $this->_getConfig(AntiFraudConfigInterface::XML_PATH_ACTIVE);
     }
 }

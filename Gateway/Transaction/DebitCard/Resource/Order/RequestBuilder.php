@@ -4,10 +4,11 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestFactory;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
@@ -26,6 +27,7 @@ use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 class RequestBuilder implements BuilderInterface
 {
     protected $requestFactory;
+    protected $requestAntiFraud;
     protected $requestPaymentSplit;
     protected $orderRepository;
     protected $config;
@@ -34,6 +36,7 @@ class RequestBuilder implements BuilderInterface
 
     public function __construct(
         RequestFactory $requestFactory,
+        RequestAntiFraudLibInterface $requestAntiFraud,
         RequestPaymentSplitLibInterface $requestPaymentSplit,
         ConfigInterface $config,
         QuoteFactory $quoteFactory,
@@ -41,6 +44,7 @@ class RequestBuilder implements BuilderInterface
     )
     {
         $this->setRequestFactory($requestFactory);
+        $this->setAntiFraudRequest($requestAntiFraud);
         $this->setPaymentSplitRequest($requestPaymentSplit);
         $this->setConfig($config);
         $this->setQuoteFactory($quoteFactory);
@@ -60,6 +64,12 @@ class RequestBuilder implements BuilderInterface
 
         /** @var OrderAdapter $orderAdapter */
         $orderAdapter = $paymentDataObject->getOrder();
+
+        if ($this->getConfig()->hasAntiFraud()) {
+            $this->getRequestAntiFraud()->setOrderAdapter($orderAdapter);
+            $this->getRequestAntiFraud()->setPaymentData($paymentData);
+            $request->setAntiFraudRequest($this->getRequestAntiFraud());
+        }
 
         if ($this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
@@ -168,6 +178,17 @@ class RequestBuilder implements BuilderInterface
         $firstItem = array_pop($items);
         $quoteItemId = $firstItem->getQuoteItemId();
         return $quoteItemId;
+    }
+
+    protected function setAntiFraudRequest(RequestAntiFraudLibInterface $requestAntiFraud)
+    {
+        $this->requestAntiFraud = $requestAntiFraud;
+        return $this;
+    }
+
+    protected function getRequestAntiFraud()
+    {
+        return $this->requestAntiFraud;
     }
 
 }

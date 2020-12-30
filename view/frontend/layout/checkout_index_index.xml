@@ -39,10 +39,10 @@
                                                         <item name="renders" xsi:type="array">
                                                             <!-- merge payment method renders here -->
                                                             <item name="children" xsi:type="array">
-                                                                <item name="braspag_pagador_billet" xsi:type="array">
+                                                                <item name="braspag_pagador_boleto" xsi:type="array">
                                                                     <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/payments</item>
                                                                     <item name="methods" xsi:type="array">
-                                                                        <item name="braspag_pagador_billet" xsi:type="array">
+                                                                        <item name="braspag_pagador_boleto" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="braspag_pagador_creditcard" xsi:type="array">

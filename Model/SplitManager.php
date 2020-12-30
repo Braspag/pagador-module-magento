@@ -214,35 +214,34 @@ class SplitManager implements SplitManagerInterface
      */
     public function createPaymentSplitByQuote(Quote $quote, DataObject $splitPaymentData)
     {
-        $paymentSplit = $this->getPaymentSplitByQuote($quote,  $splitPaymentData->getStoreMerchantId());
-
-        $paymentSplit
-            ->setSubordinateMerchantId($splitPaymentData->getStoreMerchantId())
-            ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
-            ->setStoreId($this->getStoreManager()->getStore()->getId())
-            ->setSalesQuoteId($quote->getId())
-            ->save();
 
         foreach ($splitPaymentData->getSubordinates() as $splitSubordinate) {
 
             $paymentSplitSubordinate = $this
                 ->getPaymentSplitByQuote($quote, $splitSubordinate->getSubordinateMerchantId());
 
+            if ($splitSubordinate->getFares()) {
+                $paymentSplitSubordinate
+                    ->setMdrApplied(floatval($splitSubordinate->getFares()->getMdr()))
+                    ->setTaxApplied(floatval($splitSubordinate->getFares()->getFee()));
+            }
+
             $paymentSplitSubordinate
                 ->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId())
                 ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
                 ->setTotalAmount($splitSubordinate->getAmount())
                 ->setSalesQuoteId($quote->getId())
+                ->setLocked(false)
                 ->setStoreId($this->getStoreManager()->getStore()->getId())
-                ->setMdrApplied(floatval($splitSubordinate->getFares()->getMdr()))
-                ->setTaxApplied(floatval($splitSubordinate->getFares()->getFee()))
                 ->save();
 
+            if (!$splitSubordinate->getItems()) {
+                continue;
+            }
+
             foreach ($splitSubordinate->getItems() as $item) {
-
-                $paymentSplitItem = $this->getPaymentSplitByQuoteItem($item->getId(), $paymentSplit);
-
-                $paymentSplitItem->setSplitId($paymentSplit->getId())
+                $paymentSplitItem = $this->getPaymentSplitByQuoteItem($item->getItemId(), $paymentSplitSubordinate);
+                $paymentSplitItem->setSplitId($paymentSplitSubordinate->getId())
                     ->setSalesQuoteItemId($item->getItemId())
                     ->save();
             }
@@ -263,25 +262,12 @@ class SplitManager implements SplitManagerInterface
             $paymentSplit = $this->getPaymentSplitByOrder($order, $splitSubordinate->getSubordinateMerchantId());
 
             $paymentSplit
-                ->setTotalAmount($splitSubordinate->getAmount())
-                ->setStoreId($this->getStoreManager()->getStore()->getId())
                 ->setSalesOrderId($order->getId())
-                ->setMdrApplied(floatval($splitSubordinate->getFares()->getMdr()))
-                ->setTaxApplied(floatval($splitSubordinate->getFares()->getFee()))
                 ->save();
-
-            foreach ($splitSubordinate->getSplits() as $split) {
-
-                $paymentSplits = $this->getPaymentSplitByOrder($order, $split->getMerchantId());
-
-                $paymentSplits->setAmount($paymentSplits->getAmount() + $split->getAmount())
-                    ->setSalesOrderId($order->getId())
-                    ->save();
-            }
 
             foreach ($order->getAllVisibleItems() as $item) {
 
-                $paymentSplitItem = $this->getPaymentSplitByOrderItem($item->getQuoteItemId(), $paymentSplit);
+                $paymentSplitItem = $this->getPaymentSplitByQuoteItem($item->getQuoteItemId(), $paymentSplit);
 
                 if (!empty($paymentSplitItem->getSalesQuoteItemId())) {
                     $paymentSplitItem
@@ -306,7 +292,8 @@ class SplitManager implements SplitManagerInterface
 
         $paymentSplitCollection->addFieldToFilter('sales_quote_id', $quote->getId());
         $paymentSplitCollection->addFieldToFilter('store_id', $quote->getStoreId());
-        $paymentSplitCollection->addFieldToFilter('store_merchant_id', $splitSubordinateMerchantId);
+        $paymentSplitCollection->addFieldToFilter('subordinate_merchant_id', $splitSubordinateMerchantId);
+
         $paymentSplitFromCollection = $paymentSplitCollection->getFirstItem();
 
         if (!empty($paymentSplitFromCollection->getId())) {

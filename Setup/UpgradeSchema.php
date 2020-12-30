@@ -11,9 +11,15 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  * @license     http://www.webjump.com.br  Copyright
  *
  * @link        http://www.webjump.com.br
+ * @codeCoverageIgnore
  */
 class UpgradeSchema implements UpgradeSchemaInterface
 {
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
@@ -42,9 +48,18 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeTenZero($setup, $context);
         }
 
-        $setup->endSetup();        
+        if (version_compare($context->getVersion(), '3.13.0') < 0) {
+            $this->upgradeThreeThirteenZero($setup, $context);
+        }
+
+        $setup->endSetup();
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
     protected function upgradeTwoZeroOne(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
 
@@ -105,6 +120,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $setup->getConnection()->createTable($table);
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     */
     protected function upgradeTwoZeroTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->getConnection()->addColumn(
@@ -130,6 +149,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     */
     protected function upgradeThreeFiveTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->getConnection()->addColumn(
@@ -150,6 +173,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     */
     protected function upgradeThreeFiveThree(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->getConnection()->changeColumn(
@@ -165,6 +192,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     */
     protected function upgradeThreeFiveFour(SchemaSetupInterface $setup) {
         $connection = $setup->getConnection();
 
@@ -174,6 +204,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $connection->query("UPDATE  $tableName  SET value = replace(value,'Redecard','Rede') WHERE path like '%payment/braspag_pagador%' and value like '%Redecard%';");
     }
 
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     */
     protected function upgradeThreeFiveFive(SchemaSetupInterface $setup, ModuleContextInterface $context) {
 
         if ($setup->getConnection()->isTableExists($setup->getTable('webjump_braspagpagador_cardtoken'))) {
@@ -231,9 +265,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment' => 'Payment method Mask'
                 ]
             );
-
         }
-
     }
 
     /**
@@ -382,5 +414,27 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ->setComment('Braspag Payment Split Item');
 
         $setup->getConnection()->createTable($splitItemTable);
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
+    protected function upgradeThreeThirteenZero(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
+
+            $setup->getConnection()->addColumn(
+                $setup->getTable('braspag_paymentsplit_split'),
+                'locked',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                    'length' => 255,
+                    'comment' => 'Locked'
+                ]
+            );
+
+        }
     }
 }

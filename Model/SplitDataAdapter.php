@@ -45,18 +45,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
         foreach ($splitPaymentData as $subordinateId => $subordinate) {
 
             $subordinateDataObject = $this->objectFactory->create();
-            $subordinateFaresDataObject = $this->objectFactory->create();
-
-            $subordinateFaresData = [
-                "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
-                    $subordinate['Fares']['Mdr'] : $subordinate['fares']['mdr']
-                ),
-                "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
-                    $subordinate['Fares']['Fee'] : $subordinate['fares']['fee']
-                )
-            ];
-
-            $subordinateFaresDataObject->addData($subordinateFaresData);
 
             $subordinateMerchantId = isset($subordinate['SubordinateMerchantId']) ?
                 $subordinate['SubordinateMerchantId'] : $subordinateId;
@@ -64,10 +52,26 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             $subordinateData = [
                 "subordinate_merchant_id" => $subordinateMerchantId,
                 "store_merchant_id" => strtolower($merchantId),
-                "amount" => isset($subordinate['Amount']) ?
-                    $subordinate['Amount'] : $subordinate['amount'],
-                "fares" => $subordinateFaresDataObject
+                "amount" => isset($subordinate['Amount']) ? $subordinate['Amount'] : $subordinate['amount']
             ];
+
+            if (isset($subordinate['fares'])) {
+
+                $subordinateFaresDataObject = $this->objectFactory->create();
+
+                $subordinateFaresData = [
+                    "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
+                        $subordinate['Fares']['Mdr'] : $subordinate['fares']['mdr']
+                    ),
+                    "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
+                        $subordinate['Fares']['Fee'] : $subordinate['fares']['fee']
+                    )
+                ];
+
+                $subordinateFaresDataObject->addData($subordinateFaresData);
+
+                $subordinateData['fares'] = $subordinateFaresDataObject;
+            }
 
             if (isset($subordinate['items'])) {
                 $subordinateData['items'] = $subordinate['items'];

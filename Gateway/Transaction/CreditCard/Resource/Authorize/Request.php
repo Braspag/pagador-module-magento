@@ -14,9 +14,9 @@ use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as 
 use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Webjump\BraspagPagador\Helper\Validator;
 use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
@@ -572,7 +572,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentExternalAuthenticationReferenceId()
     {
-        return $this->getPaymentData()->getAdditionalInformation('authentication_reference-id');
+        return $this->getPaymentData()->getAdditionalInformation('authentication_reference_id');
     }
 
     /**

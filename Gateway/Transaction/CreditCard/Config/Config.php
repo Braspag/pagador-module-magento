@@ -3,6 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
 use Magento\Payment\Model\Method\AbstractMethod;
 
 class Config extends BaseConfig implements ConfigInterface
@@ -11,7 +12,7 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return (AbstractMethod::ACTION_AUTHORIZE_CAPTURE === $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION));
     }
-    
+
     public function getCcTypes()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CCTYPES);

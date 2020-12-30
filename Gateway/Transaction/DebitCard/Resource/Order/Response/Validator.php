@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Re
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as DebitCardConfigInterface;
 
 /**

@@ -27,7 +27,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             RequestInterface::class
         );
 
-        $this->requestPaymentSplitLibInterface = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\PaymentSplit\RequestInterface');
+        $this->requestPaymentSplitLibInterface = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface');
         $this->configInterface = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
 
         $this->paymentMock = $this->getMockBuilder(InfoInterface::class)
