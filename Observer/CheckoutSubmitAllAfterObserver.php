@@ -64,6 +64,8 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
 
         $payment = $order->getPayment();
 
+        $doInvoice = false;
+
         try {
 
             if ($this->config->isAuthorizeAndCapture()
@@ -77,6 +79,20 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                     return $this;
                 }
 
+                $doInvoice = true;
+            }
+
+            if ($order->getId()
+                && preg_match("#braspag_pagador_debitcard#is", $payment->getMethodInstance()->getCode())
+            ) {
+                $braspagPaymentStatus = $payment->getAdditionalInformation('braspag_payment_status');
+
+                if ($braspagPaymentStatus == '2') {
+                    $doInvoice = true;
+                }
+            }
+
+            if ($doInvoice) {
                 if (!$payment->getIsFraudDetected()
                     && !$payment->getIsTransactionPending()
                     && $order->canInvoice()

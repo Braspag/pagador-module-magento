@@ -25,6 +25,7 @@ class Dctype extends \Magento\Payment\Model\Source\Cctype
             'Cielo-Master',
             'Cielo30-Visa',
             'Cielo30-Master',
+            'Cielo30-Elo',
             'Getnet-Visa',
             'Getnet-Master',
             'Rede2-Visa',
