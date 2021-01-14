@@ -38,6 +38,7 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
 
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setAdditionalInformation('redirect_url', $response->getPaymentAuthenticationUrl());
+        $payment->setAdditionalInformation('braspag_payment_status', $response->getPaymentStatus());
 
         $payment->setIsTransactionClosed(false);
 
