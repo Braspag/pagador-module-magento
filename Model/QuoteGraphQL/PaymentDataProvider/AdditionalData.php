@@ -14,7 +14,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\QuoteGraphQl\Model\Cart\Payment\AdditionalDataProviderInterface;
 
 /**
- * Adyen Dataprovider
+ * Braspag Dataprovider
  */
 class AdditionalData implements AdditionalDataProviderInterface
 {
