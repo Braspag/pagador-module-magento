@@ -42,6 +42,7 @@ class DctypeTest extends \PHPUnit\Framework\TestCase
             'Cielo-Master',
             'Cielo30-Visa',
             'Cielo30-Master',
+            'Cielo30-Elo',
             'Getnet-Visa',
             'Getnet-Master',
             'Rede2-Visa',
