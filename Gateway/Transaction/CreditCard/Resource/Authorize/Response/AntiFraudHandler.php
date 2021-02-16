@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
 use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
@@ -48,6 +48,6 @@ class AntiFraudHandler extends AbstractHandler implements HandlerInterface
             $payment->setAdditionalInformation('braspag_antifraud_reply_data_case_priority', $antiFraudResponse->getReplyDataCasePriority());
         }
 
-        return $this;
+        return $response;
     }
 }

@@ -7,9 +7,9 @@ class Checkout extends DefaultPage
 
     public static $URL = 'checkout';
     public static $nextStepButton = '//*[@id="shipping-method-buttons-container"]/div/button';
-    public static $checkoutBilletPayment = '//*[@value="braspag_pagador_billet"]';
+    public static $checkoutBoletoPayment = '//*[@value="braspag_pagador_boleto"]';
     public static $checkoutcreditCardPayment = '//*[@value="braspag_pagador_creditcard"]';
-    public static $placeOrderBilletButton = '//*[@id="checkout-payment-method-load"]/div/div[2]/div[2]/div[5]/div/button';
+    public static $placeOrderBoletoButton = '//*[@id="checkout-payment-method-load"]/div/div[2]/div[2]/div[5]/div/button';
     public static $placeOrderCreditCardButton = '//*[@id="checkout-payment-method-load"]/div/div[3]/div[2]/div[3]/div/button';
 
 
@@ -30,11 +30,11 @@ class Checkout extends DefaultPage
         return $this;
     }
 
-    public function payWithBillet()
+    public function payWithBoleto()
     {
-        $this->user->waitForElementVisible(self::$checkoutBilletPayment, 60);
-        $this->user->click(self::$checkoutBilletPayment);
-        $this->user->click(self::$placeOrderBilletButton);
+        $this->user->waitForElementVisible(self::$checkoutBoletoPayment, 60);
+        $this->user->click(self::$checkoutBoletoPayment);
+        $this->user->click(self::$placeOrderBoletoButton);
 
         return $this;
     }
@@ -63,10 +63,10 @@ class Checkout extends DefaultPage
         return $this;
     }
 
-    public function seeSuccessPageWithPrintBilletLink()
+    public function seeSuccessPageWithPrintBoletoLink()
     {
         $this->user->waitFortext('Your order number is:', 30);
-        $this->user->waitFortext('Print Billet', 30);
+        $this->user->waitFortext('Print Boleto', 30);
 
         return $this;
     }

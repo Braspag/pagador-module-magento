@@ -2,9 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <braspag_pagador_billet>
+            <braspag_pagador_boleto>
                 <active>1</active>
-                <model>BraspagTransactionBilletRemoteMethodAdapter</model>
+                <model>BraspagTransactionBoletoRemoteMethodAdapter</model>
                 <order_status>pending</order_status>
                 <payment_action>order</payment_action>
                 <title>Braspag transaction Boleto</title>
@@ -14,7 +14,7 @@
                 <sort_order>1</sort_order>
                 <can_initialize>1</can_initialize>
                 <can_use_internal>1</can_use_internal>
-            </braspag_pagador_billet>
+            </braspag_pagador_boleto>
             <braspag_pagador_creditcard>
                 <active>1</active>
                 <model>BraspagTransactionCreditCardsRemoteMethodAdapter</model>

@@ -189,8 +189,8 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException Magento\Framework\Exception\LocalizedException
-     * @expectedExceptionMessage Error Message
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Braspag Boleto Send Request Lib object should be provided
      */
     public function testExecuteWithValidatorErrorOnResponse()
     {
@@ -205,8 +205,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
-            ->getMock();
+        $requestMock = null;
 
         $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->setMethods(
@@ -239,17 +238,9 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
 
-        $resultMock->expects($this->exactly(2))
+        $resultMock->expects($this->exactly(1))
             ->method('isValid')
             ->will($this->onConsecutiveCalls(true, false));
-
-        $resultMock->expects($this->once())
-            ->method('getFailsDescription')
-            ->will($this->returnValue(['Error Message']));
-
-        $resultMock->expects($this->once())
-            ->method('getFailsDescription')
-            ->will($this->returnValue(['Error Message']));
 
         $this->validatorRequestMock->expects($this->once())
             ->method('validate')
@@ -260,16 +251,6 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             ->method('build')
             ->with($buildObject)
             ->will($this->returnValue($requestMock));
-
-        $this->apiMock->expects($this->once())
-            ->method('sendCreditCard')
-            ->with($requestMock)
-            ->will($this->returnValue($responseMock));
-
-        $this->validatorResponseMock->expects($this->once())
-            ->method('validate')
-            ->with(array_merge($buildObject, ['response' => $responseMock]))
-            ->will($this->returnValue($resultMock));
 
         $this->command->execute($buildObject);
     }

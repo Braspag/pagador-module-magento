@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Debit\Send\Response;
+use Webjump\Braspag\Pagador\Transaction\Resource\DebitCard\Send\Response;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 use Webjump\BraspagPagador\Model\SplitManager;
 use Webjump\BraspagPagador\Model\SplitDataAdapter;
@@ -86,6 +86,6 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
 
         $payment->setAdditionalInformation('split_payments', $dataSplitPayment->getData());
 
-        return $this;
+        return $response;
     }
 }

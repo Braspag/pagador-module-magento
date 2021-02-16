@@ -40,10 +40,10 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
 
     	$buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface')
             ->getMock();
 
         $this->requestBuilderMock->expects($this->once())
@@ -76,10 +76,10 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface')
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -132,10 +132,10 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface')
             ->setMethods(
                 [
                     'getPaymentAuthenticationUrl',
@@ -193,10 +193,10 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Debit\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface')
             ->setMethods(
                 [
                     'getPaymentAuthenticationUrl',
@@ -247,6 +247,63 @@ class OrderCommandTest extends \PHPUnit\Framework\TestCase
             ->method('validate')
             ->with(array_merge($buildObject, ['response' => $responseMock]))
             ->will($this->returnValue($resultMock));
+
+        $this->command->execute($buildObject);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Braspag Debitcard Order Request Lib object should be provided
+     */
+    public function testExecuteShouldThrowAnExceptionWhenInvalidRequest()
+    {
+        $this->command = new OrderCommand(
+            $this->apiMock,
+            $this->requestBuilderMock,
+            $this->requestHandlerMock,
+            $this->responseHandlerMock,
+            $this->validatorRequestMock,
+            $this->validatorResponseMock
+        );
+
+        $buildObject = [];
+
+        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
+            ->getMock();
+
+        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface')
+            ->setMethods(
+                [
+                    'getPaymentAuthenticationUrl',
+                    'getPaymentAcquirerTransactionId',
+                    'getPaymentPaymentId',
+                    'getPaymentReceivedDate',
+                    'getPaymentReasonCode',
+                    'getPaymentReasonMessage',
+                    'getPaymentStatus',
+                    'getPaymentAuthenticate',
+                    'getPaymentProviderReturnCode',
+                    'getPaymentProviderReturnMessage',
+                    'getPaymentLinks',
+                    'getPaymentCardProvider'
+                ])
+            ->getMock();
+
+        $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
+
+        $resultMock->expects($this->exactly(1))
+            ->method('isValid')
+            ->will($this->onConsecutiveCalls(true, false));
+
+        $this->validatorRequestMock->expects($this->once())
+            ->method('validate')
+            ->with(array_merge($buildObject, ['request' => false]))
+            ->will($this->returnValue($resultMock));
+
+        $this->requestBuilderMock->expects($this->once())
+            ->method('build')
+            ->with($buildObject)
+            ->will($this->returnValue(false));
 
         $this->command->execute($buildObject);
     }

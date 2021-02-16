@@ -2,7 +2,7 @@
 
 /**
  *
- * Billet Types Test.php
+ * Boleto Types Test.php
  *
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)

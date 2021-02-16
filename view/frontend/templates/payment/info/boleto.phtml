@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Webjump\BraspagPagador\Block\Payment\Info\Boleto $block
+ * @see \Webjump\BraspagPagador\Block\Payment\Info\Boleto
+ */
+$specificInfo = $block->getSpecificInformation();
+$title = $block->escapeHtml($block->getMethod()->getTitle());
+?>
+<dl class="payment-method">
+    <dt class="title"><?php /* @noEscape */ echo $title; ?></dt>
+    <?php if ($specificInfo):?>
+        <dd class="content">
+            <table class="data table">
+                <caption class="table-caption"><?php /* @noEscape */ echo $title; ?></caption>
+                <?php foreach ($specificInfo as $label => $value):?>
+                    <tr>
+                        <?php if($label === (string) __('Print Boleto')): ?>
+                            <td colspan="2">
+                                <a class="action tocart primary" target="_blank" href="<?php echo $value?>"><?php echo __('Print Boleto') ?></a>
+                            </td>
+                            <?php continue;?>
+                        <?php endif;?>
+                        <th scope="row"><?php echo $block->escapeHtml($label)?></th>
+                        <td>
+                            <?php /* @noEscape */ echo nl2br($block->escapeHtml(implode("\n", $block->getValueAsArray($value, true))));?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </dd>
+    <?php endif;?>
+</dl>
+<?php echo $block->getChildHtml()?>

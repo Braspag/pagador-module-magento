@@ -50,4 +50,14 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/auth3ds20/data" method="GET">
+        <service class="Webjump\BraspagPagador\Api\Auth3DS20ResultInformationInterface" method="getInformation"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cart_id%</parameter>
+        </data>
+    </route>
+
 </routes>

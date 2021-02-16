@@ -9,7 +9,7 @@
     <group id="webjump_braspag_pagador_transaction" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Pagador Transaction</label>
         <frontend_model>Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
-        <include path="Webjump_BraspagPagador::system/transaction/billet.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/boleto.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/creditcard.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/debitcard.xml"/>

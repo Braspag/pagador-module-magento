@@ -7,7 +7,7 @@ use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Transaction\Billet\Ui\ConfigProvider as BilletConfigProvider;
+use Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
 
 /**
  * Credit Card Data Assign
@@ -54,7 +54,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->unsAdditionalInformation($key);
         }
 
-        if ($info->getMethodInstance()->getCode() === BilletConfigProvider::CODE) {
+        if ($info->getMethodInstance()->getCode() === BoletoConfigProvider::CODE) {
             return $this;
         }
 

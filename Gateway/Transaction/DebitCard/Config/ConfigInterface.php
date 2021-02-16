@@ -3,7 +3,7 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 
 /**
- * 
+ *
  *
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -87,4 +87,6 @@ interface  ConfigInterface
     public function getPaymentSplitDefaultFee();
 
     public function isCardViewActive();
+
+    public function hasAntiFraud();
 }
