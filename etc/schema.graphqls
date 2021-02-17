@@ -15,7 +15,7 @@ type AccessTokenResult {
 input PaymentMethodInput {
     additional_data : BraspagAdditionalDataInput @doc(description: "Defines the required attributes for Braspag payments")
 }
-​
+
 input BraspagAdditionalDataInput {
     cc_cid: String! @doc(description: "Braspag's credit card cid")
     cc_exp_month: String! @doc(description: "Braspag's credit card expiration month")
