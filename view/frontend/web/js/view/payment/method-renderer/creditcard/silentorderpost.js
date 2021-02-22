@@ -47,7 +47,7 @@ define(
                     "method": "POST",
                     "data": {
                         "HolderName": options.holderName,
-                        "RawNumber": options.rawNumber,
+                        "RawNumber": options.rawNumber.replace(/\s*/g, ''),
                         "Expiration": expiration,
                         "SecurityCode": securityCode,
                         "AccessToken": token
