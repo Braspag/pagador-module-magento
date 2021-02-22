@@ -56,7 +56,7 @@ class InitializeCommand implements CommandInterface
 
             $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
 
-            if ($payment->getMethodInstance()->getConfigData('order_status') == 'processing') {
+            if (in_array($payment->getMethodInstance()->getConfigData('order_status'), ['fraud', 'processing'])) {
                 $stateObject->setData(OrderInterface::STATE, Order::STATE_PROCESSING);
             }
 
