@@ -42,13 +42,19 @@ class InitializeCommand implements CommandInterface
         $payment->setAmountAuthorized($totalDue);
         $payment->setBaseAmountAuthorized($payment->getOrder()->getBaseTotalDue());
 
-        $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
+        if (empty($payment->getMethodInstance()->getConfigData('order_status'))) {
+            $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
+        }
 
-        if ($payment->getMethod() === CreditCardProvider::CODE) {
+        if ($payment->getMethod() === CreditCardProvider::CODE
+            && empty($payment->getMethodInstance()->getConfigData('order_status'))
+        ) {
             $stateObject->setData(OrderInterface::STATE, Order::STATE_PROCESSING);
         }
 
-        $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('order_status'));
+        if (!empty($payment->getMethodInstance()->getConfigData('order_status'))) {
+            $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('order_status'));
+        }
 
         if ($isFraudDetected = $payment->getIsFraudDetected()) {
             if ($payment->getMethodInstance()->getConfigData('reject_order_status') != 'canceled') {
