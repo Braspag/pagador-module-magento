@@ -409,9 +409,9 @@ define(
 
             isCieloProviderAvailable: function() {
 
-                let creditCardType = $('.creditcard-type');
+                let creditCardType = $('.debitcard-type');
 
-                if (creditCardType.val().indexOf("Cielo") >= 0
+                if (creditCardType.length !== 0 && creditCardType.val().indexOf("Cielo") >= 0
                   || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
                 ) {
                     return true;
