@@ -191,7 +191,13 @@ define(
                             'cc_cid': this.creditCardVerificationNumber(),
                             'cc_type': this.debitCardTypeCustom(),
                             'cc_owner': this.creditCardOwner(),
-                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken(),
+                            'authentication_failure_type': this.bpmpiAuthFailureType(),
+                            'authentication_cavv': this.bpmpiAuthCavv(),
+                            'authentication_xid': this.bpmpiAuthXid(),
+                            'authentication_eci': this.bpmpiAuthEci(),
+                            'authentication_version': this.bpmpiAuthVersion(),
+                            'authentication_reference_id': this.bpmpiAuthReferenceId()
                         }
                     };
                 }
