@@ -53,6 +53,13 @@ class InitializeCommand implements CommandInterface
         }
 
         if (!empty($payment->getMethodInstance()->getConfigData('order_status'))) {
+
+            $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
+
+            if (in_array($payment->getMethodInstance()->getConfigData('order_status'), ['fraud', 'processing'])) {
+                $stateObject->setData(OrderInterface::STATE, Order::STATE_PROCESSING);
+            }
+
             $stateObject->setData(OrderInterface::STATUS, $payment->getMethodInstance()->getConfigData('order_status'));
         }
 
