@@ -107,6 +107,10 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                         ->addObject($invoice->getOrder());
 
                     $transaction->save();
+
+                    $order->setState('processing')->setStatus('processing');
+                    $order->save();
+                    $this->eventManager->dispatch('webjump_braspagPagador_setstate_after', ['order' => $order]);
                 }
             }
 
