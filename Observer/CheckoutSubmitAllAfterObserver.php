@@ -108,9 +108,15 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
 
                     $transaction->save();
 
+                    $order
+                        ->addStatusHistoryComment(
+                            __('Customer notified about invoice #%1.', $invoice->getIncrementId())
+                        )
+                        ->setIsCustomerNotified(true)
+                        ->save();
+
                     $order->setState('processing')->setStatus('processing');
                     $order->save();
-                    $this->eventManager->dispatch('webjump_braspagPagador_setstate_after', ['order' => $order]);
                 }
             }
 
