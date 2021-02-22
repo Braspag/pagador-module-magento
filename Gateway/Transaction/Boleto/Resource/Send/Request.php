@@ -54,6 +54,16 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     protected $paymentSplitRequest;
 
     /**
+     * @var
+     */
+    protected $antiFraudRequest;
+
+    /**
+     * @var
+     */
+    protected $paymentData;
+
+    /**
      * Request constructor.
      *
      * @param ConfigInterface $config
