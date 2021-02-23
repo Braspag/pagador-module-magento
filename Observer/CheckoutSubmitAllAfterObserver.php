@@ -107,6 +107,16 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                         ->addObject($invoice->getOrder());
 
                     $transaction->save();
+
+                    $order
+                        ->addStatusHistoryComment(
+                            __('Customer notified about invoice #%1.', $invoice->getIncrementId())
+                        )
+                        ->setIsCustomerNotified(true)
+                        ->save();
+
+                    $order->setState('processing')->setStatus('processing');
+                    $order->save();
                 }
             }
 

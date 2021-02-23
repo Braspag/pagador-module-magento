@@ -191,7 +191,13 @@ define(
                             'cc_cid': this.creditCardVerificationNumber(),
                             'cc_type': this.debitCardTypeCustom(),
                             'cc_owner': this.creditCardOwner(),
-                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken(),
+                            'authentication_failure_type': this.bpmpiAuthFailureType(),
+                            'authentication_cavv': this.bpmpiAuthCavv(),
+                            'authentication_xid': this.bpmpiAuthXid(),
+                            'authentication_eci': this.bpmpiAuthEci(),
+                            'authentication_version': this.bpmpiAuthVersion(),
+                            'authentication_reference_id': this.bpmpiAuthReferenceId()
                         }
                     };
                 }
@@ -386,7 +392,7 @@ define(
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', false, 'Debit');
                 bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
-                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber());
+                bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber().replace(/\D/g,''));
                 bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationyear', false, this.creditCardExpYear());
@@ -409,9 +415,9 @@ define(
 
             isCieloProviderAvailable: function() {
 
-                let creditCardType = $('.creditcard-type');
+                let creditCardType = $('.debitcard-type');
 
-                if (creditCardType.val().indexOf("Cielo") >= 0
+                if (creditCardType.length !== 0 && creditCardType.val().indexOf("Cielo") >= 0
                   || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
                 ) {
                     return true;

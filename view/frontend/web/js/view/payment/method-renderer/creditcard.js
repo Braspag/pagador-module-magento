@@ -210,7 +210,13 @@ define(
                             'cc_owner': this.creditCardOwner(),
                             'cc_installments': this.creditCardInstallments(),
                             'cc_savecard': this.creditCardsavecard() ? 1 : 0,
-                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken()
+                            'cc_soptpaymenttoken': this.creditCardSoptPaymentToken(),
+                            'authentication_failure_type': this.bpmpiAuthFailureType(),
+                            'authentication_cavv': this.bpmpiAuthCavv(),
+                            'authentication_xid': this.bpmpiAuthXid(),
+                            'authentication_eci': this.bpmpiAuthEci(),
+                            'authentication_version': this.bpmpiAuthVersion(),
+                            'authentication_reference_id': this.bpmpiAuthReferenceId()
                         }
                     };
                 }
