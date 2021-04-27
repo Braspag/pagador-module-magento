@@ -454,7 +454,7 @@ define(
             bpmpiPopulateCreditcardData: function() {
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_paymentmethod', '', 'Credit');
-                bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, this.isCieloProviderAvailable());
+                bpmpiRenderer.renderBpmpiData('bpmpi_auth', false, true);
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardnumber', false, this.creditCardNumber().replace(/\D/g,''));
                 bpmpiRenderer.renderBpmpiData('bpmpi_billto_contactname', false, this.creditCardOwner());
                 bpmpiRenderer.renderBpmpiData('bpmpi_cardexpirationmonth', false, this.creditCardExpMonth());
@@ -474,19 +474,6 @@ define(
                 bpmpiRenderer.renderBpmpiData('bpmpi_mdd5', false, window.checkoutConfig.payment.ccform.bpmpi_authentication.mdd5);
 
                 return true;
-            },
-
-            isCieloProviderAvailable: function() {
-
-                let creditCardType = $('.creditcard-type');
-
-                if (creditCardType.val().indexOf("Cielo") >= 0
-                  || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
-                ) {
-                    return true;
-                }
-
-                return false;
             },
 
             placeOrder: function (data, event) {
