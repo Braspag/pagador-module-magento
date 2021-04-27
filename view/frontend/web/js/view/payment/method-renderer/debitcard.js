@@ -413,19 +413,6 @@ define(
                 return true;
             },
 
-            isCieloProviderAvailable: function() {
-
-                let creditCardType = $('.debitcard-type');
-
-                if (creditCardType.length !== 0 && creditCardType.val().indexOf("Cielo") >= 0
-                  || window.checkoutConfig.payment.braspag.isTestEnvironment == '1'
-                ) {
-                    return true;
-                }
-
-                return false;
-            },
-
             placeOrder: function (data, event) {
 
                 var self = this;
