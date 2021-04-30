@@ -300,6 +300,59 @@
             <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
         </arguments>
     </type>
+
+    <virtualType name="BraspagTransactionVoidRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request" />
+
+    <virtualType name="BraspagTransactionCancelRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCancelCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCancelCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Command\CancelCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCancelRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCancelCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Command\VoidCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionVoidRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionVoidCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
     <!-- Base END -->
 
     <!-- Credit Card - START -->
@@ -413,12 +466,40 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardRefundRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardRefundCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardRefundCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\RefundCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardRefundRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardRefundCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
                 <item name="capture" xsi:type="string">BraspagTransactionCreditCardCaptureCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+                <item name="refund" xsi:type="string">BraspagTransactionCreditCardRefundCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -546,6 +627,8 @@
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -680,6 +763,8 @@
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
                 <item name="authorize" xsi:type="string">BraspagTransactionBoletoSendCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
