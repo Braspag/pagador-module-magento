@@ -4,7 +4,6 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\Void\ResponseInterface;
 
 /**
  * Validator
@@ -23,7 +22,9 @@ class Validator implements ValidatorInterface
 
     public function validate(array $validationSubject)
     {
-        if (!isset($validationSubject['response']) || !$validationSubject['response'] instanceof ResponseInterface) {
+        if (!isset($validationSubject['response'])
+            || !$validationSubject['response'] instanceof \Webjump\Braspag\Pagador\Transaction\Resource\Actions\Response
+        ) {
             throw new \InvalidArgumentException('Braspag Transaction Void Response object should be provided');
         }
 
