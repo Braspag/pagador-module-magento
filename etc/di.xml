@@ -646,6 +646,7 @@
             <argument name="handlers" xsi:type="array">
                 <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\BaseHandler</item>
                 <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\SplitHandler</item>
+                <item name="nsu" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\NsuHandler</item>
             </argument>
         </arguments>
     </virtualType>
