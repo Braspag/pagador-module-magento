@@ -261,9 +261,9 @@ class SplitDataProvider implements SplitDataProviderInterface
                 $this->subordinates[$braspagSubordinateMerchantId]['skus'] = [];
             }
 
-            $itemPrice = floatval($item->getPriceInclTax()-$item->getDiscountAmount());
+            $itemPrice = floatval(($item->getPriceInclTax()*$item->getQty()) - $item->getDiscountAmount());
 
-            $this->subordinates[$braspagSubordinateMerchantId]['amount'] +=  $itemPrice * 100;
+            $this->subordinates[$braspagSubordinateMerchantId]['amount'] += ($itemPrice * 100);
 
             $itemsObject = $this->objectFactory->create();
             $items = [
