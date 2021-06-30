@@ -21,6 +21,13 @@ interface NotificationManagerInterface
     const NOTIFICATION_RECURRENCE_PAYMENT_STATUS_CHANGED = 4;
     const NOTIFICATION_REFUND_DENIED                     = 5;
 
+    const ANTIFRAUD_STATUS_REVIEW                     = 'Review';
+    const ANTIFRAUD_STATUS_ACCEPT                     = 'Accept';
+    const ANTIFRAUD_STATUS_REJECT                     = 'Reject';
+    const ANTIFRAUD_STATUS_PENDENT                    = 'Pendent';
+    const ANTIFRAUD_STATUS_UNFINISHED                 = 'Unfinished';
+    const ANTIFRAUD_STATUS_PROVIDERERROR              = 'ProviderError';
+
     /**
      * @param string $PaymentId
      * @param int $ChangeType
