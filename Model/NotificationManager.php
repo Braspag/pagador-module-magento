@@ -244,7 +244,7 @@ class NotificationManager implements NotificationManagerInterface
         }
 
         if (in_array($paymentFraudAnalysis->getStatus(),
-            self::ANTIFRAUD_STATUS_REVIEW, self::ANTIFRAUD_STATUS_PENDENT)
+            [self::ANTIFRAUD_STATUS_REVIEW, self::ANTIFRAUD_STATUS_PENDENT])
         ) {
             return false;
         }
@@ -260,7 +260,6 @@ class NotificationManager implements NotificationManagerInterface
             }
 
             if ($paymentFraudAnalysis == self::ANTIFRAUD_STATUS_ACCEPT) {
-
                 return $this->createInvoice($orderPayment->getOrder(), true);
             }
         }
