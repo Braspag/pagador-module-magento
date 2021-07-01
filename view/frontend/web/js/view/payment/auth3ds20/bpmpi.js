@@ -154,7 +154,7 @@ define(
                 bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_guest', false, !window.checkoutConfig.isCustomerLoggedIn);
                 bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_createddate', false, window.checkoutConfig.customerData.created_at);
                 bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_changeddate', false, window.checkoutConfig.customerData.updated_at);
-                bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_authenticationmethod', false, 2);
+                bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_authenticationmethod', false, '02');
                 bpmpiRenderer.renderBpmpiData('bpmpi_useraccount_authenticationprotocol', false, 'HTTP');
 
                 bpmpiRenderer.renderBpmpiData('bpmpi_device_ipaddress', false, window.checkoutConfig.quoteData.remote_ip);

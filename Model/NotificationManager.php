@@ -137,6 +137,10 @@ class NotificationManager implements NotificationManagerInterface
             return $this->paymentStatusChanged($PaymentId);
         }
 
+        if ($ChangeType == self::NOTIFICATION_ANTI_FRAUD_STATUS_CHANGED) {
+            return $this->antifraudStatusChanged($PaymentId);
+        }
+
         return true;
     }
 
@@ -198,17 +202,91 @@ class NotificationManager implements NotificationManagerInterface
     }
 
     /**
-     * @param Order $order
-     * @return boolean
+     * @param string $paymentId
+     * @return bool
      */
-    public function createInvoice(Order $order)
+    public function antifraudStatusChanged(string $paymentId)
+    {
+        $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
+        $orderPayment = $orderPaymentCollection
+            ->addAttributeToFilter('last_trans_id', ['eq' => $paymentId])
+            ->getFirstItem();
+
+        if (!$orderPayment->getId()) {
+            return false;
+        }
+
+        $request = $this->getPaymentStatusRequest();
+        $request->setPaymentId($paymentId);
+        $request->setStoreId($orderPayment->getOrder()->getStoreId());
+
+        $type = 'creditCard';
+        $method = $orderPayment->getMethod();
+
+        if (!empty($this->types[$method])) {
+            $type = $this->types[$method];
+        }
+
+        if ($type != 'creditCard') {
+            return false;
+        }
+
+        $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
+        if (!$paymentInfo) {
+            return false;
+        }
+
+        $paymentStatus = $paymentInfo->getPaymentStatus();
+
+        $paymentFraudAnalysis = $paymentInfo->getPaymentFraudAnalysis();
+        if (!$paymentFraudAnalysis) {
+            return false;
+        }
+
+        if (in_array($paymentFraudAnalysis->getStatus(),
+            [self::ANTIFRAUD_STATUS_REVIEW, self::ANTIFRAUD_STATUS_PENDENT])
+        ) {
+            return false;
+        }
+
+        if ($paymentFraudAnalysis->getStatus() == self::ANTIFRAUD_STATUS_ACCEPT) {
+
+            if (!$this->config->isCreateInvoiceOnNotificationCaptured()) {
+                return false;
+            }
+
+            if ($paymentStatus == 2) {
+                $this->createInvoice($orderPayment->getOrder(), false);
+            }
+
+            if ($paymentFraudAnalysis == self::ANTIFRAUD_STATUS_ACCEPT) {
+                return $this->createInvoice($orderPayment->getOrder(), true);
+            }
+        }
+
+        if (in_array($paymentFraudAnalysis->getStatus(),
+            [self::ANTIFRAUD_STATUS_UNFINISHED, self::ANTIFRAUD_STATUS_PROVIDERERROR, self::ANTIFRAUD_STATUS_REJECT])
+        ) {
+            return $this->cancelOrder($orderPayment->getOrder());
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Order $order
+     * @param bool $online
+     * @return bool
+     * @throws \Exception
+     */
+    public function createInvoice(Order $order, $online = false)
     {
         if ($order->hasInvoices()) {
             return true;
         }
 
         $invoice = $this->getInvoiceService()->prepareInvoice($order);
-        $invoice->setRequestedCaptureCase(Invoice::CAPTURE_OFFLINE);
+        $invoice->setRequestedCaptureCase($online ? Invoice::CAPTURE_ONLINE : Invoice::CAPTURE_OFFLINE);
         $invoice->register();
         $invoice->save();
 
