@@ -146,11 +146,11 @@ define(
                         number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
                         cvc: '&bull;&bull;&bull;',
                         expiry: '&bull;&bull;/&bull;&bull;',
-                        name: 'Nome no cartÃ£o'
+                        name: 'Nome no cartão'
                     },
                     messages: {
-                        validDate: 'sequÃªncia\nvÃ¡lida',
-                        monthYear: 'mÃªs/ano'
+                        validDate: 'sequência\nválida',
+                        monthYear: 'mês/ano'
                     }
                 });
             },
@@ -345,8 +345,8 @@ define(
 
             updateCreditCardExpData: function () {
 
-                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : 'â€¢â€¢');
-                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : 'â€¢â€¢');
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
                 let cardExpDate = cardExpMonth + '/' + cardExpYear;
                 this.creditCardExpDate(cardExpDate);
 
