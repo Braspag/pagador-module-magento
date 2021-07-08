@@ -133,7 +133,9 @@ define(
 
                             self.afterPlaceOrder();
 
-                            if (orderId.length != 0) {
+                            if (orderId.length == 0) {
+                                errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
+                            } else {
 
                                 fullScreenLoader.startLoader();
                                 $.when(
