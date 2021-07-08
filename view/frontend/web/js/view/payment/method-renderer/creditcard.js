@@ -146,11 +146,11 @@ define(
                         number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
                         cvc: '&bull;&bull;&bull;',
                         expiry: '&bull;&bull;/&bull;&bull;',
-                        name: 'Nome no cartão'
+                        name: 'Nome no cartÃ£o'
                     },
                     messages: {
-                        validDate: 'sequência\nválida',
-                        monthYear: 'mês/ano'
+                        validDate: 'sequÃªncia\nvÃ¡lida',
+                        monthYear: 'mÃªs/ano'
                     }
                 });
             },
@@ -312,7 +312,9 @@ define(
 
                             self.afterPlaceOrder();
 
-                            if (orderId.length != 0) {
+                            if (orderId.length == 0) {
+                                errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
+                            } else {
 
                                 fullScreenLoader.startLoader();
                                 $.when(
@@ -330,7 +332,7 @@ define(
                                     }
                                 ).fail(
                                     function (response) {
-                                        errorProcessor.process(response, messageContainer);
+                                        errorProcessor.process(response, self.messageContainer);
                                     }
                                 ).always(function () {
                                     fullScreenLoader.stopLoader();
@@ -343,8 +345,8 @@ define(
 
             updateCreditCardExpData: function () {
 
-                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
-                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : 'â€¢â€¢');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : 'â€¢â€¢');
                 let cardExpDate = cardExpMonth + '/' + cardExpYear;
                 this.creditCardExpDate(cardExpDate);
 
@@ -384,27 +386,32 @@ define(
                         function (orderId) {
                             self.afterPlaceOrder();
 
-                            fullScreenLoader.startLoader();
-                            $.when(
-                                RedirectAfterPlaceOrder(orderId)
-                            ).done(
-                                function (url) {
-                                    if (url.length) {
-                                        window.location.replace(url);
-                                        return true;
-                                    }
+                            if (orderId.length == 0) {
+                                errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
+                            } else {
 
-                                    if (self.redirectAfterPlaceOrder) {
-                                        redirectOnSuccessAction.execute();
+                                fullScreenLoader.startLoader();
+                                $.when(
+                                    RedirectAfterPlaceOrder(orderId)
+                                ).done(
+                                    function (url) {
+                                        if (url.length) {
+                                            window.location.replace(url);
+                                            return true;
+                                        }
+
+                                        if (self.redirectAfterPlaceOrder) {
+                                            redirectOnSuccessAction.execute();
+                                        }
                                     }
-                                }
-                            ).fail(
-                                function (response) {
-                                    errorProcessor.process(response, messageContainer);
-                                }
-                            ).always(function () {
-                                fullScreenLoader.stopLoader();
-                            });
+                                ).fail(
+                                    function (response) {
+                                        errorProcessor.process(response, self.messageContainer);
+                                    }
+                                ).always(function () {
+                                    fullScreenLoader.stopLoader();
+                                });
+                            }
                         }
                     );
                 }
@@ -512,9 +519,9 @@ define(
                     .then(function (data){
                         return false;
                     }).catch(function(){
-                        fullScreenLoader.stopLoader();
-                        return false;
-                    });
+                    fullScreenLoader.stopLoader();
+                    return false;
+                });
 
                 return true;
             },
