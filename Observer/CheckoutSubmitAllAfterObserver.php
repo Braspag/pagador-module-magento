@@ -19,23 +19,37 @@ use Webjump\BraspagPagador\Model\SplitManager;
  */
 class CheckoutSubmitAllAfterObserver implements ObserverInterface
 {
+    /**
+     * @var \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
+     */
     protected $config;
 
+    /**
+     * @var InvoiceService
+     */
     protected $invoiceService;
 
+    /**
+     * @var \Magento\Sales\Api\OrderManagementInterface
+     */
     protected $orderManagement;
 
     protected $_transactionFactory;
 
     /**
-     * @var
+     * @var \Magento\Framework\DataObjectFactory
      */
     protected $objectFactory;
 
     /**
-     * @var
+     * @var SplitManager
      */
     protected $splitManager;
+
+    /**
+     * @var \Magento\Sales\Model\Order\Status
+     */
+    protected $orderStatusModel;
 
     public function __construct(
         \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
@@ -43,7 +57,8 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
         \Magento\Sales\Api\OrderManagementInterface $orderManagement,
         \Magento\Framework\DB\TransactionFactory $transactionFactory,
         \Magento\Framework\DataObjectFactory $objectFactory,
-        SplitManager $splitManager
+        SplitManager $splitManager,
+        \Magento\Sales\Model\Order\Status $orderStatusModel
     ) {
         $this->config = $config;
         $this->invoiceService = $invoiceService;
@@ -51,6 +66,7 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
         $this->_transactionFactory = $transactionFactory;
         $this->objectFactory = $objectFactory;
         $this->splitManager = $splitManager;
+        $this->orderStatusModel = $orderStatusModel;
     }
 
     /**
@@ -115,7 +131,11 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                         ->setIsCustomerNotified(true)
                         ->save();
 
-                    $order->setState('processing')->setStatus('processing');
+                    $processingState = \Magento\Sales\Model\Order::STATE_PROCESSING;
+
+                    $processingDefaultStatus = $this->orderStatusModel->loadDefaultByState($processingState);
+
+                    $order->setState($processingState)->setStatus($processingDefaultStatus->getStatus());
                     $order->save();
                 }
             }

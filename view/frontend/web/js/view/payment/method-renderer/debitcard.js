@@ -130,29 +130,33 @@ define(
                             }
                         ).done(
                         function (orderId) {
+
                             self.afterPlaceOrder();
 
-                            fullScreenLoader.startLoader();
-                            $.when(
-                                RedirectAfterPlaceOrder(orderId)
-                            ).done(
-                                function (url) {
-                                    if (self.redirectAfterPlaceOrder && url.length) {
-                                        window.location.replace(url);
-                                        return true;
-                                    }
+                            if (orderId.length != 0) {
 
-                                    if (self.redirectAfterPlaceOrder) {
-                                        redirectOnSuccessAction.execute();
+                                fullScreenLoader.startLoader();
+                                $.when(
+                                    RedirectAfterPlaceOrder(orderId)
+                                ).done(
+                                    function (url) {
+                                        if (self.redirectAfterPlaceOrder && url.length) {
+                                            window.location.replace(url);
+                                            return true;
+                                        }
+
+                                        if (self.redirectAfterPlaceOrder) {
+                                            redirectOnSuccessAction.execute();
+                                        }
                                     }
-                                }
-                            ).fail(
-                                function (response) {
-                                    errorProcessor.process(response, messageContainer);
-                                }
-                            ).always(function () {
-                                fullScreenLoader.stopLoader();
-                            });
+                                ).fail(
+                                    function (response) {
+                                        errorProcessor.process(response, messageContainer);
+                                    }
+                                ).always(function () {
+                                    fullScreenLoader.stopLoader();
+                                });
+                            }
                         }
                     );
                 });
