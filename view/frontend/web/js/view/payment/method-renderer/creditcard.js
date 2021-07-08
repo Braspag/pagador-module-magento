@@ -519,9 +519,9 @@ define(
                     .then(function (data){
                         return false;
                     }).catch(function(){
-                    fullScreenLoader.stopLoader();
-                    return false;
-                });
+                        fullScreenLoader.stopLoader();
+                        return false;
+                    });
 
                 return true;
             },
