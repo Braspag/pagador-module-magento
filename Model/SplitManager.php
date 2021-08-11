@@ -231,7 +231,6 @@ class SplitManager implements SplitManagerInterface
                 ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
                 ->setTotalAmount($splitSubordinate->getAmount())
                 ->setSalesQuoteId($quote->getId())
-                ->setLocked(false)
                 ->setStoreId($this->getStoreManager()->getStore()->getId())
                 ->save();
 
@@ -261,19 +260,46 @@ class SplitManager implements SplitManagerInterface
 
             $paymentSplit = $this->getPaymentSplitByOrder($order, $splitSubordinate->getSubordinateMerchantId());
 
-            $paymentSplit
-                ->setSalesOrderId($order->getId())
-                ->save();
+            $paymentSplit->setSalesOrderId($order->getId());
 
-            foreach ($order->getAllVisibleItems() as $item) {
+            if (!empty($splitSubordinate->getSubordinateMerchantId())) {
+                $paymentSplit->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId());
+            }
 
-                $paymentSplitItem = $this->getPaymentSplitByQuoteItem($item->getQuoteItemId(), $paymentSplit);
+            if (!empty($splitPaymentData->getStoreMerchantId())) {
+                $paymentSplit->setStoreMerchantId($splitPaymentData->getStoreMerchantId());
+            }
 
-                if (!empty($paymentSplitItem->getSalesQuoteItemId())) {
-                    $paymentSplitItem
-                        ->setSalesOrderItemId($item->getItemId())
-                        ->save();
+            if (!empty($splitSubordinate->getAmount())) {
+                $paymentSplit->setTotalAmount($splitSubordinate->getAmount());
+            }
+
+            if (!empty($order->getQuoteId())) {
+                $paymentSplit->setSalesQuoteId($order->getQuoteId());
+            }
+
+            if (!empty($splitSubordinate->getFares())) {
+
+                if (!empty($splitSubordinate->getFares()->getMdr())) {
+                    $paymentSplit->setMdrApplied($splitSubordinate->getFares()->getMdr());
                 }
+
+                if (!empty($splitSubordinate->getFares()->getFee())) {
+                    $paymentSplit->setTaxApplied($splitSubordinate->getFares()->getFee());
+                }
+            }
+
+            if (!empty($order->getStoreId())) {
+                $paymentSplit->setStoreId($order->getStoreId());
+            }
+
+            $paymentSplit->save();
+
+            foreach ($splitSubordinate->getItems() as $item) {
+                $paymentSplitItem = $this->getPaymentSplitByOrderItem($item->getItemId(), $paymentSplit);
+                $paymentSplitItem->setSplitId($paymentSplit->getId())
+                    ->setSalesOrderItemId($item->getItemId())
+                    ->save();
             }
         }
 
@@ -372,7 +398,7 @@ class SplitManager implements SplitManagerInterface
      * @param string $paymentMethod
      * @return mixed
      */
-    public function getTransactionPostOrdersToExecuteByDays($days = 20, $paymentMethod = ConfigProviderCreditCard::CODE)
+    public function getTransactionPostOrdersToExecuteByHours($hours = "", $paymentMethod = ConfigProviderCreditCard::CODE)
     {
         $collection = $this->getOrderFactory()->create()->getCollection();
 
@@ -381,8 +407,14 @@ class SplitManager implements SplitManagerInterface
             ->joinInner(['sin' => 'sales_invoice'], 'main_table.entity_id = sin.order_id', [])
             ->joinInner(['sop' => 'sales_order_payment'], 'main_table.entity_id = sop.parent_id', [])
             ->where("bps.sales_order_id IS NULL")
-            ->where("sop.method = '".$paymentMethod."'")
-            ->where("DATE_FORMAT(DATE_ADD(main_table.created_at, INTERVAL {$days} DAY), \"%Y-%m-%d\") = DATE_FORMAT(NOW(), \"%Y-%m-%d\")")
+            ->where("sop.method = '{$paymentMethod}'")
+            ->where("(
+                IF ({$hours} IS NULL AND DATE_FORMAT(NOW(), \"%Y%m%d\")-DATE_FORMAT(sin.created_at, \"%Y%m%d\") = 1 AND DATE_FORMAT(NOW(), \"%H%i\") >= '0130', 1,0)
+                  OR
+                IF ({$hours} IS NOT NULL AND DATE_FORMAT(NOW(), \"%Y-%m-%d %H:%i:%s\") >= DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL {$hours} HOUR), \"%Y-%m-%d %H:%i:%s\"), 1,0)
+                  OR
+                IF ({$hours} IS NOT NULL AND DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL 1 DAY), \"%d\") = DATE_FORMAT(NOW(), \"%d\") AND DATE_FORMAT(NOW(), \"%H%i\") >= '0130', 1,0)
+              )")
             ->group("main_table.entity_id")
             ->limit(100);
 

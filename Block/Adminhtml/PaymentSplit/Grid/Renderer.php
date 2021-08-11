@@ -48,18 +48,6 @@ class Renderer extends AbstractRenderer
     {
         $index = $this->getColumn()->getIndex();
         $value = $row->getData($index);
-        switch ($index) {
-            case 'locked':
-                return $this->renderLocked($value);
-        }
     }
 
-    protected function renderLocked($locked)
-    {
-        if (!$locked || $locked == '0') {
-            return 'No';
-        }
-
-        return 'Yes';
-    }
 }

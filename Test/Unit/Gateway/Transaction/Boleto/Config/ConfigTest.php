@@ -138,8 +138,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(18))
             ->method('getValue')
-            ->with('payment/braspag_pagador_boleto/paymentsplit_transactional_post_send_request_automatically_after_x_days')
-            ->will($this->returnValue('paymentsplit_transactional_post_send_request_automatically_after_x_days'));
+            ->with('payment/braspag_pagador_boleto/paymentsplit_transactional_post_send_request_automatically_after_x_hours')
+            ->will($this->returnValue('paymentsplit_transactional_post_send_request_automatically_after_x_hours'));
 
         $this->scopeConfigMock->expects($this->at(19))
             ->method('getValue')
@@ -178,7 +178,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         static::assertTrue($this->config->isPaymentSplitActive());
         static::assertEquals('paymentsplit_type', $this->config->getPaymentSplitType());
         static::assertTrue($this->config->getPaymentSplitTransactionalPostSendRequestAutomatically());
-        static::assertEquals('paymentsplit_transactional_post_send_request_automatically_after_x_days', $this->config->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+        static::assertEquals('paymentsplit_transactional_post_send_request_automatically_after_x_hours', $this->config->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours());
         static::assertEquals('paymentsplit_mdr', $this->config->getPaymentSplitDefaultMrd());
         static::assertEquals('paymentsplit_fee', $this->config->getPaymentSplitDefaultFee());
         static::assertTrue($this->config->hasAntiFraud());

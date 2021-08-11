@@ -52,6 +52,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeThirteenZero($setup, $context);
         }
 
+        if (version_compare($context->getVersion(), '3.16.2') < 0) {
+            $this->upgradeThreeThirteenOne($setup, $context);
+        }
+
         $setup->endSetup();
     }
 
@@ -435,6 +439,22 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ]
             );
 
+        }
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
+    protected function upgradeThreeThirteenOne(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
+
+            $setup->getConnection()->dropColumn(
+                $setup->getTable('braspag_paymentsplit_split'),
+                'locked'
+            );
         }
     }
 }

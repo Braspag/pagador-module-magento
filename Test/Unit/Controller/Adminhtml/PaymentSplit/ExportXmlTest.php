@@ -20,7 +20,6 @@ class ExportXmlTest extends \PHPUnit\Framework\TestCase
     private $resultRedirectFactory;
     private $fileFactory;
     private $splitFactory;
-    private $splitPaymentLockCommand;
     private $orderRepository;
     private $context;
     private $splitPaymentTransactionPostCommand;
@@ -69,8 +68,6 @@ class ExportXmlTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['create'])
             ->getMock();
 
-        $this->splitPaymentLockCommand = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\LockCommand::class);
-
         $this->orderRepository = $this->createMock(\Magento\Sales\Model\OrderRepository::class);
 
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
@@ -115,7 +112,6 @@ class ExportXmlTest extends \PHPUnit\Framework\TestCase
                 'resultRedirectFactory' => $this->resultRedirectFactory,
                 'fileFactory' => $this->fileFactory,
                 'splitFactory' => $this->splitFactory,
-                'splitPaymentLockCommand' => $this->splitPaymentLockCommand,
                 'orderRepository' => $this->orderRepository,
                 'context' => $this->context,
                 'splitPaymentTransactionPostCommand' => $this->splitPaymentTransactionPostCommand,

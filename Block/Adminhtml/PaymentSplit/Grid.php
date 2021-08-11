@@ -133,14 +133,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             'index'     => 'updated_at',
         ]);
 
-        $this->addColumn('locked', [
-            'header'    => __('Locked'),
-            'index'     => 'locked',
-            'type'          => 'options',
-            'options'       => $this->sourceYesno->toArray(),
-            'filter_condition_callback' => [$this, 'filterLocked'],
-        ]);
-
         $this->addColumn(
             'action',
             [
@@ -160,9 +152,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
                 'is_system' => true
             ]
         );
-
-        $column = $this->getColumn('locked');
-        $column->setRenderer($this->getLayout()->createBlock('Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid\Renderer')->setColumn($column));
 
         $this->addExportType('*/*/exportCsv', __('CSV'));
         $this->addExportType('*/*/exportXml', __('XML'));
@@ -184,14 +173,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->getCollection()->addFilter('store_id', $value);
     }
 
-    protected function filterLocked($collection, $column)
-    {
-        if (!$value = $column->getFilter()->getValue()) {
-            return;
-        }
-
-        $this->getCollection()->addFilter('locked', $value);
-    }
 
     public function getRowUrl($row)
     {
@@ -202,18 +183,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
         $this->setMassactionIdField('entity_id');
         $this->getMassactionBlock()->setFormFieldName('paymentsplit');
-
-        $this->getMassactionBlock()->addItem('lock', [
-             'label'=> __('Lock'),
-             'url'  => $this->getUrl('*/*/massLock'),
-             'confirm' => __('Are you sure?')
-        ]);
-
-        $this->getMassactionBlock()->addItem('unlock', [
-             'label'=> __('Unlock'),
-             'url'  => $this->getUrl('*/*/massUnLock'),
-             'confirm' => __('Are you sure?')
-        ]);
 
         return $this;
     }

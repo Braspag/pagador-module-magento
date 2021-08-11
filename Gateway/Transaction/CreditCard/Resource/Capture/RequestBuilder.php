@@ -59,13 +59,18 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
-        $paymentId = $buildSubject['payment']->getPayment()->getAdditionalInformation('payment_token');
         $paymentDataObject = $buildSubject['payment'];
         $orderAdapter = $paymentDataObject->getOrder();
 
+        $paymentId = $paymentDataObject->getPayment()->getAdditionalInformation('payment_token');
+
+        if (empty($paymentId)) {
+            $paymentId = str_replace(['-capture', '-void', '-refund'], '', $paymentDataObject->getPayment()->getLastTransId());
+        }
+
         if ($this->getConfig()->isPaymentSplitActive()) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
-            $this->getRequestPaymentSplit()->setOrder($buildSubject['payment']->getPayment()->getOrder());
+            $this->getRequestPaymentSplit()->setOrder($paymentDataObject->getPayment()->getOrder());
             $this->getRequest()->setPaymentSplitRequest($this->getRequestPaymentSplit());
         }
 
