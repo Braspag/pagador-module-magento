@@ -48,7 +48,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
                 'getCustomerComplementAttribute',
                 'getCustomerDistrictAttribute',
                 'getPaymentSplitTransactionalPostSendRequestAutomatically',
-                'getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays',
+                'getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours',
                 'getPaymentSplitDefaultMrd',
                 'getPaymentSplitDefaultFee',
                 'getPaymentBank',

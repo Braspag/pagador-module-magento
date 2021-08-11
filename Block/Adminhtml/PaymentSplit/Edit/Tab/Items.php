@@ -98,7 +98,7 @@ class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
                 'label'     => __('Sales Order Item ID'),
                 'required'  => false,
                 'readonly'  => true,
-                'value'  => !empty($paymentSplitItemModel->getSalesOrderItemId()) ? $paymentSplitItemModel->getSalesQuoteItemId() : '',
+                'value'  => !empty($paymentSplitItemModel->getSalesOrderItemId()) ? $paymentSplitItemModel->getSalesOrderItemId() : '',
             ]);
         }
 

@@ -57,33 +57,33 @@ class PaymentSplitTransactionPost {
             && $this->configCreditCardInterface->getPaymentSplitTransactionalPostSendRequestAutomatically()
             && $this->configCreditCardInterface->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
         ) {
-            $creditCardDays = intval($this->configCreditCardInterface
-                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+            $creditCardHours = intval($this->configCreditCardInterface
+                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours());
 
             $orders = $this->splitManager
-                ->getTransactionPostOrdersToExecuteByDays($creditCardDays, ConfigProviderCreditCard::CODE);
+                ->getTransactionPostOrdersToExecuteByHours($creditCardHours, ConfigProviderCreditCard::CODE);
         }
 
         if ($this->configDebitCardInterface->isPaymentSplitActive()
             && $this->configDebitCardInterface->getPaymentSplitTransactionalPostSendRequestAutomatically()
             && $this->configDebitCardInterface->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
         ) {
-            $debitCardDays = intval($this->configDebitCardInterface
-                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+            $debitCardHours = intval($this->configDebitCardInterface
+                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours());
 
             $orders = $this->splitManager
-                ->getTransactionPostOrdersToExecuteByDays($debitCardDays, ConfigProviderDebitCard::CODE);
+                ->getTransactionPostOrdersToExecuteByHours($debitCardHours, ConfigProviderDebitCard::CODE);
         }
 
         if ($this->configBoletoInterface->isPaymentSplitActive()
             && $this->configBoletoInterface->getPaymentSplitTransactionalPostSendRequestAutomatically()
             && $this->configBoletoInterface->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
         ) {
-            $boletoDays = intval($this->configBoletoInterface
-                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays());
+            $boletoHours = intval($this->configBoletoInterface
+                ->getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours());
 
             $orders = $this->splitManager
-                ->getTransactionPostOrdersToExecuteByDays($boletoDays, ConfigProviderBoleto::CODE);
+                ->getTransactionPostOrdersToExecuteByHours($boletoHours, ConfigProviderBoleto::CODE);
         }
 
         $this->processOrders($orders);

@@ -50,8 +50,6 @@ abstract class AbstractPaymentSplit extends Action
 
     protected $splitFactory;
 
-    protected $splitPaymentLockCommand;
-
     protected $orderRepository;
 
     protected $splitManager;
@@ -72,7 +70,6 @@ abstract class AbstractPaymentSplit extends Action
      * @param \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
      * @param \Webjump\BraspagPagador\Model\SplitFactory $splitFactory
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\LockCommand $splitPaymentLockCommand
      * @param \Magento\Sales\Model\OrderRepository $orderRepository
      * @param Action\Context $context
      * @param SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand
@@ -88,7 +85,6 @@ abstract class AbstractPaymentSplit extends Action
         \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
         \Webjump\BraspagPagador\Model\SplitFactory $splitFactory,
-        \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\LockCommand $splitPaymentLockCommand,
         \Magento\Sales\Model\OrderRepository $orderRepository,
         \Magento\Backend\App\Action\Context $context,
         SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand,
@@ -104,7 +100,6 @@ abstract class AbstractPaymentSplit extends Action
         $this->resultPageFactory = $resultPageFactory;
         $this->_resultRedirectFactory = $resultRedirectFactory;
         $this->splitFactory = $splitFactory;
-        $this->splitPaymentLockCommand = $splitPaymentLockCommand;
         $this->orderRepository = $orderRepository;
         $this->splitPaymentTransactionPostCommand = $splitPaymentTransactionPostCommand;
         $this->splitManager = $splitManager;

@@ -62,7 +62,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->configCreditCardInterface->expects($this->once())
-            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays')
+            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours')
             ->willReturn(10);
 
         $this->configCreditCardInterface->expects($this->once())
@@ -70,7 +70,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
-            ->method('getTransactionPostOrdersToExecuteByDays')
+            ->method('getTransactionPostOrdersToExecuteByHours')
             ->with(10, ConfigProviderCreditCard::CODE)
             ->willReturn([$this->orderMock]);
 
@@ -88,7 +88,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->configDebitCardInterface->expects($this->once())
-            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays')
+            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours')
             ->willReturn(10);
 
         $this->configDebitCardInterface->expects($this->once())
@@ -96,7 +96,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
-            ->method('getTransactionPostOrdersToExecuteByDays')
+            ->method('getTransactionPostOrdersToExecuteByHours')
             ->with(10, ConfigProviderDebitCard::CODE)
             ->willReturn([$this->orderMock]);
 
@@ -114,7 +114,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->configBoletoInterface->expects($this->once())
-            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays')
+            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours')
             ->willReturn(10);
 
         $this->configBoletoInterface->expects($this->once())
@@ -122,7 +122,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
-            ->method('getTransactionPostOrdersToExecuteByDays')
+            ->method('getTransactionPostOrdersToExecuteByHours')
             ->with(10, ConfigProviderBoleto::CODE)
             ->willReturn([$this->orderMock]);
 
@@ -140,7 +140,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->configBoletoInterface->expects($this->once())
-            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays')
+            ->method('getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours')
             ->willReturn(10);
 
         $this->configBoletoInterface->expects($this->once())
@@ -152,7 +152,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->orderPayment);
 
         $this->splitManager->expects($this->once())
-            ->method('getTransactionPostOrdersToExecuteByDays')
+            ->method('getTransactionPostOrdersToExecuteByHours')
             ->with(10, ConfigProviderBoleto::CODE)
             ->willReturn([$this->orderMock]);
 

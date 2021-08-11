@@ -31,10 +31,10 @@
             </depends>
         </field>
 
-        <field id="paymentsplit_transactional_post_send_request_automatically_after_x_days" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
-            <label>Transactional Post send Request Automatically After (Days). </label>
-            <comment>(Limit 20)</comment>
-            <config_path>payment/braspag_pagador_boleto/paymentsplit_transactional_post_send_request_automatically_after_x_days</config_path>
+        <field id="paymentsplit_transactional_post_send_request_automatically_after_x_hours" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+            <label>Transactional Post send Request Automatically After (Hours). </label>
+            <comment>(Limit Next Day 1:30AM - Empty Input = Limit)</comment>
+            <config_path>payment/braspag_pagador_boleto/paymentsplit_transactional_post_send_request_automatically_after_x_hours</config_path>
             <depends>
                 <field id="paymentsplit_type">transactional-post</field>
                 <field id="paymentsplit_transactional_post_send_request_automatically">1</field>
