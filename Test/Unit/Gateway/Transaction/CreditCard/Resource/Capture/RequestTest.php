@@ -50,7 +50,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
                 'isPaymentSplitActive',
                 'getPaymentSplitType',
                 'getPaymentSplitTransactionalPostSendRequestAutomatically',
-                'getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXDays',
+                'getPaymentSplitTransactionalPostSendRequestAutomaticallyAfterXHours',
                 'getPaymentSplitDefaultMrd',
                 'getPaymentSplitDefaultFee',
                 'isCardViewActive',

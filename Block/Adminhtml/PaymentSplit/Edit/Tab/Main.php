@@ -135,14 +135,6 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             'values'    => $options,
         ]);
 
-        $fieldset->addField('locked', 'select', [
-            'name'      => 'locked',
-            'label'     => __('Locked ?'),
-            'class'     => 'required-entry',
-            'required'  => true,
-            'options'       => $this->sourceYesno->toArray(),
-        ]);
-
         $this->_eventManager->dispatch('braspag_adminhtml_paymentsplit_edit_prepare_form', ['block'=>$this, 'form'=>$form, 'id'=>$id]);
 
         if ($this->_coreRegistry->registry('paymentsplit_data')) {

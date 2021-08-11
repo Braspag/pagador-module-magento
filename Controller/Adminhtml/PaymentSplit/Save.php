@@ -19,8 +19,6 @@ class Save extends AbstractPaymentSplit
             $modelFactory = $this->splitFactory->create();
             $paymentSplit = $modelFactory->load($id);
 
-            $oldLockedValue = $paymentSplit->getLocked();
-
             $paymentSplit->setSubordinateMerchantId($r->getParam('subordinate_merchant_id'))
                 ->setStoreMerchantId($r->getParam('store_merchant_id'))
                 ->setSalesQuoteId($r->getParam('sales_quote_id'))
@@ -34,32 +32,6 @@ class Save extends AbstractPaymentSplit
             $paymentSplit->save();
 
             $this->messageManager->addSuccess(__('Payment Split was successfully saved'));
-
-            try {
-                if ($oldLockedValue !== $r->getParam('locked')) {
-
-                    if (empty($paymentSplit->getSalesOrderId())) {
-                        throw new \Exception(__('Could not lock/unlock payment split. It does not exist at Braspag.'));
-                    }
-
-                    $order = $this->orderRepository->get($paymentSplit->getSalesOrderId());
-
-                    $this->splitPaymentLockCommand->execute([
-                        'order' => $order,
-                        'payment' => $order->getPayment(),
-                        'subordinates' => [$paymentSplit->getSubordinateMerchantId()],
-                        'locked' => $r->getParam('locked')
-                    ]);
-
-                    $paymentSplit->setLocked($r->getParam('locked'));
-                    $paymentSplit->save();
-                }
-
-            } catch (\Exception $e) {
-                $this->messageManager->addError(__($e->getMessage()));
-                $this->messageManager->addError(__('Could not lock/unlock payment split.'));
-                return $resultRedirect->setPath('*/*/');
-            }
 
             return $resultRedirect->setPath('*/*/');
         } catch (\Exception $e) {

@@ -85,8 +85,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
                 "SubordinateMerchantId" => $subordinate['subordinate_merchant_id'],
                 "Amount" => $subordinate['amount'],
                 "Fares" => [
-                    "Mdr" => $subordinate['fares']['mdr'],
-                    "Fee" => $subordinate['fares']['fee']
+                    "Mdr" => $subordinate['fares']['mdr'] ?? 0,
+                    "Fee" => $subordinate['fares']['fee'] ?? 0
                 ]
             ];
         }

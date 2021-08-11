@@ -88,50 +88,6 @@
     </type>
     <!-- Split Transaction Post - END -->
 
-    <!-- Split Lock - START -->
-
-    <virtualType name="BraspagPagadorTransactionResourcePaymentSplitLockRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Request">
-        <arguments>
-            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
-            <argument name="oAuth2TokenManager" xsi:type="object">Webjump\BraspagPagador\Model\OAuth2TokenManager</argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="BraspagTransactionSplitPaymentLockRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\RequestBuilder">
-        <arguments>
-            <argument name="request" xsi:type="object">BraspagPagadorTransactionResourcePaymentSplitLockRequest</argument>
-            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="BraspagTransactionSplitPaymentLockCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
-        <arguments>
-            <argument name="handlers" xsi:type="array">
-                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Request\LockSplitHandler</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="BraspagTransactionSplitPaymentLockCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
-        <arguments>
-            <argument name="handlers" xsi:type="array">
-                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Response\LockSplitHandler</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\LockCommand">
-        <arguments>
-            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentLockRequestBuilder</argument>
-            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentLockCommandRequestHandlerPool</argument>
-            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentLockCommandResponseHandlerPool</argument>
-            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
-            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Request\Validator</argument>
-            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Response\Validator</argument>
-        </arguments>
-    </type>
-    <!-- Split Lock - END -->
-
     <!-- Split - END -->
 
     <!-- Auth 3DS 2.0 - START -->
@@ -436,6 +392,14 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="BraspagTransactionCreditCardCaptureCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="BraspagTransactionCreditCardCaptureCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
@@ -458,7 +422,7 @@
     <virtualType name="BraspagTransactionCreditCardCaptureCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
-            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionCreditCardCaptureCommandRequestHandlerPool</argument>
             <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardCaptureCommandResponseHandlerPool</argument>
             <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
             <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\Validator</argument>
