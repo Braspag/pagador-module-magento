@@ -70,6 +70,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         return $this->paymentId;
     }
 
+    /**
+     * @return array
+     */
     public function getRequestDataBody()
     {
         if (empty($this->getPaymentSplitRequest())) {
@@ -81,14 +84,28 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         $subordinates = [];
         foreach ($splits->getSubordinates() as $subordinate) {
 
-            $subordinates[] = [
+            $subordinateData =  [
                 "SubordinateMerchantId" => $subordinate['subordinate_merchant_id'],
                 "Amount" => $subordinate['amount'],
-                "Fares" => [
-                    "Mdr" => $subordinate['fares']['mdr'] ?? 0,
-                    "Fee" => $subordinate['fares']['fee'] ?? 0
-                ]
+                "Fares" => []
             ];
+
+            if (isset($subordinate['fares'])) {
+
+                if (!empty($subordinate['fares']['mdr'])) {
+                    $subordinateData["Fares"]['Mdr'] = $subordinate['fares']['mdr'];
+                }
+
+                if (!empty($subordinate['fares']['fee'])) {
+                    $subordinateData["Fares"]['Fee'] = $subordinate['fares']['fee'];
+                }
+            }
+
+            if (empty($subordinateData["Fares"])) {
+                unset($subordinateData["Fares"]);
+            }
+
+            $subordinates[] = $subordinateData;
         }
 
         return [
@@ -96,6 +113,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getAdditionalRequest()
     {
         $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
