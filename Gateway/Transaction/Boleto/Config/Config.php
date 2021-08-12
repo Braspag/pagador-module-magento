@@ -3,7 +3,6 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config;
 
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
 
 /**
  * Braspag Transaction Boleto Config
@@ -110,10 +109,5 @@ class Config extends BaseConfig implements ConfigInterface
     public function getPaymentSplitDefaultFee()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PAYMENTSPLIT_DEFAULT_FEE);
-    }
-
-    public function hasAntiFraud()
-    {
-        return $this->_getConfig(AntiFraudConfigInterface::XML_PATH_ACTIVE);
     }
 }

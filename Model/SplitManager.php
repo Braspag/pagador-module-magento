@@ -295,6 +295,10 @@ class SplitManager implements SplitManagerInterface
 
             $paymentSplit->save();
 
+            if (!$splitSubordinate->getItems()) {
+                continue;
+            }
+
             foreach ($splitSubordinate->getItems() as $item) {
                 $paymentSplitItem = $this->getPaymentSplitByOrderItem($item->getItemId(), $paymentSplit);
                 $paymentSplitItem->setSplitId($paymentSplit->getId())

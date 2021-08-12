@@ -303,17 +303,20 @@ define(
                     $.when(
                         placeOrderAction(self.getData(), self.messageContainer)
                     )
-                        .fail(
-                            function () {
-                                self.isPlaceOrderActionAllowed(true);
-                            }
-                        ).done(
+                    .fail(
+                        function () {
+                            self.isPlaceOrderActionAllowed(true);
+                        }
+                    ).done(
                         function (orderId) {
 
                             self.afterPlaceOrder();
 
+                            fullScreenLoader.startLoader();
+
                             if (orderId.length == 0) {
                                 errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
+                                fullScreenLoader.stopLoader();
                             } else {
 
                                 fullScreenLoader.startLoader();

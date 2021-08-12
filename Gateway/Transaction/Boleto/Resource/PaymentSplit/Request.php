@@ -79,7 +79,7 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
-     * @param mixed $splits
+     * @param $splits
      */
     public function setSplits($splits)
     {
@@ -87,7 +87,7 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
-     * @return mixed
+     * @return $this|array
      */
     public function prepareSplits()
     {
@@ -113,7 +113,7 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
-     * @return SessionManagerInterface
+     * @return mixed
      */
     protected function getSession()
     {

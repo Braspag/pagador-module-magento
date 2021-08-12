@@ -71,6 +71,4 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     public function getPaymentSplitDefaultMrd();
 
     public function getPaymentSplitDefaultFee();
-
-    public function hasAntiFraud();
 }
