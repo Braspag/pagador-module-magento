@@ -2,7 +2,6 @@
 
 namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
 
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface as BraspaglibRequestInterface;
@@ -423,22 +422,6 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function setPaymentData(InfoInterface $payment)
     {
         $this->paymentData = $payment;
-    }
-
-    /**
-     * @return RequestAntiFraudLibInterface
-     */
-    public function getAntiFraudRequest()
-    {
-        return $this->antiFraudRequest;
-    }
-
-    /**
-     * @param RequestAntiFraudLibInterface $antiFraudRequest
-     */
-    public function setAntiFraudRequest(RequestAntiFraudLibInterface $antiFraudRequest)
-    {
-        $this->antiFraudRequest = $antiFraudRequest;
     }
 
     /**

@@ -4,7 +4,6 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface;
 use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
@@ -23,21 +22,28 @@ use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
 class RequestBuilder implements BuilderInterface
 {
     protected $requestFactory;
-    protected $requestAntiFraud;
     protected $orderRepository;
 
+    /**
+     * RequestBuilder constructor.
+     * @param \Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
+     * @param RequestPaymentSplitLibInterface $requestPaymentSplit
+     * @param ConfigInterface $config
+     */
     public function __construct(
         RequestFactory $requestFactory,
-        RequestAntiFraudLibInterface $requestAntiFraud,
         RequestPaymentSplitLibInterface $requestPaymentSplit,
         ConfigInterface $config
     ) {
         $this->setRequestFactory($requestFactory);
-        $this->setAntiFraudRequest($requestAntiFraud);
         $this->setPaymentSplitRequest($requestPaymentSplit);
         $this->setConfig($config);
     }
 
+    /**
+     * @param array $buildSubject
+     * @return array|mixed
+     */
     public function build(array $buildSubject)
     {
         if (!isset($buildSubject['payment']) || !$buildSubject['payment'] instanceof PaymentDataObjectInterface) {
@@ -52,12 +58,6 @@ class RequestBuilder implements BuilderInterface
         /** @var OrderAdapter $orderAdapter */
         $orderAdapter = $paymentDataObject->getOrder();
 
-        if ($this->getConfig()->hasAntiFraud()) {
-            $this->getRequestAntiFraud()->setOrderAdapter($orderAdapter);
-            $this->getRequestAntiFraud()->setPaymentData($paymentData);
-            $request->setAntiFraudRequest($this->getRequestAntiFraud());
-        }
-
         if ($this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
         ) {
@@ -71,45 +71,55 @@ class RequestBuilder implements BuilderInterface
         return $request;
     }
 
+    /**
+     * @param \Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
+     * @return $this
+     */
     protected function setRequestFactory(RequestFactory $requestFactory)
     {
         $this->requestFactory = $requestFactory;
         return $this;
     }
 
-    protected function setAntiFraudRequest(RequestAntiFraudLibInterface $requestAntiFraud)
-    {
-        $this->requestAntiFraud = $requestAntiFraud;
-        return $this;
-    }
-
-    protected function getRequestAntiFraud()
-    {
-        return $this->requestAntiFraud;
-    }
-
+    /**
+     * @return mixed
+     */
     protected function getRequestFactory()
     {
         return $this->requestFactory;
     }
 
+    /**
+     * @param RequestPaymentSplitLibInterface $requestPaymentSplit
+     * @return $this
+     */
     protected function setPaymentSplitRequest(RequestPaymentSplitLibInterface $requestPaymentSplit)
     {
         $this->requestPaymentSplit = $requestPaymentSplit;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getRequestPaymentSplit()
     {
         return $this->requestPaymentSplit;
     }
 
+    /**
+     * @param ConfigInterface $config
+     * @return $this
+     */
     protected function setConfig(ConfigInterface $config)
     {
         $this->config = $config;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getConfig()
     {
         return $this->config;
