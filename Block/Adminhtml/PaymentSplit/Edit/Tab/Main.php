@@ -97,9 +97,9 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             'required'  => false,
         ]);
 
-        $fieldset->addField('sales_order_id', 'text', [
-            'name'      => 'sales_order_id',
-            'label'     => __('Sales Order ID'),
+        $fieldset->addField('sales_order_increment_id', 'text', [
+            'name'      => 'sales_order_increment_id',
+            'label'     => __('Sales Order Increment ID'),
             'class'     => 'required-entry',
             'required'  => false,
         ]);

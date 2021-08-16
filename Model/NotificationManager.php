@@ -105,7 +105,8 @@ class NotificationManager implements NotificationManagerInterface
         CreditmemoService $creditmemoService,
         Manager $eventManager,
         \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Magento\Sales\Model\Order\Status $orderStatusModel
     )
     {
         $this
@@ -121,8 +122,8 @@ class NotificationManager implements NotificationManagerInterface
 
         $this->config = $config;
         $this->logger = $logger;
-
         $this->eventManager = $eventManager;
+        $this->orderStatusModel = $orderStatusModel;
     }
 
     /**
@@ -151,7 +152,7 @@ class NotificationManager implements NotificationManagerInterface
     {
         $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
         $orderPayment = $orderPaymentCollection
-            ->addAttributeToFilter('last_trans_id', ['eq' => $paymentId])
+            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId.'%'])
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {
@@ -209,7 +210,7 @@ class NotificationManager implements NotificationManagerInterface
     {
         $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
         $orderPayment = $orderPaymentCollection
-            ->addAttributeToFilter('last_trans_id', ['eq' => $paymentId])
+            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId.'%'])
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {
@@ -251,16 +252,39 @@ class NotificationManager implements NotificationManagerInterface
 
         if ($paymentFraudAnalysis->getStatus() == self::ANTIFRAUD_STATUS_ACCEPT) {
 
-            if (!$this->config->isCreateInvoiceOnNotificationCaptured()) {
-                return false;
+            if ($paymentStatus == 1) {
+
+                $newState = \Magento\Sales\Model\Order::STATE_NEW;
+
+                if (!empty($orderPayment->getMethodInstance()->getConfigData('order_status'))) {
+                    $orderPayment->getOrder()->setState($newState)
+                        ->setStatus($orderPayment->getMethodInstance()->getConfigData('order_status'));
+                    $orderPayment->getOrder()->save();
+                    return true;
+                }
+
+                $newDefaultStatus = $this->orderStatusModel->loadDefaultByState($newState);
+                $orderPayment->getOrder()->setState($newState)->setStatus($newDefaultStatus->getStatus());
+                $orderPayment->getOrder()->save();
+
+                return true;
             }
 
-            if ($paymentStatus == 2) {
+            if ($paymentStatus == 2  && !$this->config->isCreateInvoiceOnNotificationCaptured()) {
+
+                $processingState = \Magento\Sales\Model\Order::STATE_PROCESSING;
+
+                $processingDefaultStatus = $this->orderStatusModel->loadDefaultByState($processingState);
+
+                $orderPayment->getOrder()->setState($processingState)->setStatus($processingDefaultStatus->getStatus());
+                $orderPayment->getOrder()->save();
+
+                return true;
+            }
+
+            if ($paymentStatus == 2 && $this->config->isCreateInvoiceOnNotificationCaptured()) {
                 $this->createInvoice($orderPayment->getOrder(), false);
-            }
-
-            if ($paymentFraudAnalysis == self::ANTIFRAUD_STATUS_ACCEPT) {
-                return $this->createInvoice($orderPayment->getOrder(), true);
+                return true;
             }
         }
 
@@ -270,7 +294,7 @@ class NotificationManager implements NotificationManagerInterface
             return $this->cancelOrder($orderPayment->getOrder());
         }
 
-        return true;
+        return false;
     }
 
     /**
