@@ -82,7 +82,7 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
             return $this;
         }
 
-        $dataSplitPayment = $this->getSplitAdapter()->adapt($paymentSplitResponse->getSplits());
+        $dataSplitPayment = $this->getSplitAdapter()->adaptResponseData($paymentSplitResponse->getSplits(), null, 'authorize');
 
         $payment->setAdditionalInformation('split_payments', $dataSplitPayment->getData());
 

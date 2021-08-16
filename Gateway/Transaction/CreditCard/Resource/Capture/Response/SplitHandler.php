@@ -99,7 +99,7 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
             return $this;
         }
 
-        $dataSplitPaymentObject = $this->getSplitAdapter()->adapt($paymentSplitResponse->getSplits());
+        $dataSplitPaymentObject = $this->getSplitAdapter()->adaptResponseData($paymentSplitResponse->getSplits(), null, 'capture');
 
         $this->getSplitManager()->createPaymentSplitByOrder($payment->getOrder(), $dataSplitPaymentObject);
 

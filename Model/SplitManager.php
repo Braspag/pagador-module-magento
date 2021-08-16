@@ -24,6 +24,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Webjump\BraspagPagador\Model\Source\Status\NewPending as OrderStatusesNew;
 use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
 use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
+use Magento\Framework\Stdlib\DateTime\DateTimeFactory;
 
 class SplitManager implements SplitManagerInterface
 {
@@ -63,6 +64,11 @@ class SplitManager implements SplitManagerInterface
     protected $orderFactory;
 
     /**
+     * @var DateTimeFactory
+     */
+    protected $dateFactory;
+
+    /**
      * PaymentSplitManager constructor.
      * @param SplitRepositoryInterface $splitRepository
      * @param SplitItemRepositoryInterface $splitItemRepository
@@ -76,7 +82,8 @@ class SplitManager implements SplitManagerInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         StoreManagerInterface $storeManager,
         OrderStatusesNew $orderStatusesNew,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        DateTimeFactory $dateFactory
     ) {
         $this->setSplitRepository($splitRepository);
         $this->setSplitItemRepository($splitItemRepository);
@@ -85,6 +92,7 @@ class SplitManager implements SplitManagerInterface
         $this->setStoreManager($storeManager);
         $this->setOrderStatusesNew($orderStatusesNew);
         $this->setOrderFactory($orderFactory);
+        $this->setDateFactory($dateFactory);
     }
 
     /**
@@ -208,13 +216,28 @@ class SplitManager implements SplitManagerInterface
     }
 
     /**
+     * @return DateTimeFactory
+     */
+    public function getDateFactory()
+    {
+        return $this->dateFactory;
+    }
+
+    /**
+     * @param DateTimeFactory $dateFactory
+     */
+    public function setDateFactory($dateFactory)
+    {
+        $this->dateFactory = $dateFactory;
+    }
+
+    /**
      * @param Quote $quote
      * @param DataObject $splitPaymentData
      * @return $this
      */
     public function createPaymentSplitByQuote(Quote $quote, DataObject $splitPaymentData)
     {
-
         foreach ($splitPaymentData->getSubordinates() as $splitSubordinate) {
 
             $paymentSplitSubordinate = $this
@@ -229,9 +252,10 @@ class SplitManager implements SplitManagerInterface
             $paymentSplitSubordinate
                 ->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId())
                 ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
-                ->setTotalAmount($splitSubordinate->getAmount())
+                ->setTotalAmount($splitSubordinate->getAmount()/100)
                 ->setSalesQuoteId($quote->getId())
                 ->setStoreId($this->getStoreManager()->getStore()->getId())
+                ->setUpdatedAt($this->getDateFactory()->create()->gmtDate())
                 ->save();
 
             if (!$splitSubordinate->getItems()) {
@@ -262,6 +286,8 @@ class SplitManager implements SplitManagerInterface
 
             $paymentSplit->setSalesOrderId($order->getId());
 
+            $paymentSplit->setSalesOrderIncrementId($order->getIncrementId());
+
             if (!empty($splitSubordinate->getSubordinateMerchantId())) {
                 $paymentSplit->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId());
             }
@@ -271,7 +297,7 @@ class SplitManager implements SplitManagerInterface
             }
 
             if (!empty($splitSubordinate->getAmount())) {
-                $paymentSplit->setTotalAmount($splitSubordinate->getAmount());
+                $paymentSplit->setTotalAmount($splitSubordinate->getAmount()/100);
             }
 
             if (!empty($order->getQuoteId())) {
@@ -292,6 +318,8 @@ class SplitManager implements SplitManagerInterface
             if (!empty($order->getStoreId())) {
                 $paymentSplit->setStoreId($order->getStoreId());
             }
+
+            $paymentSplit->setUpdatedAt($this->getDateFactory()->create()->gmtDate());
 
             $paymentSplit->save();
 
@@ -367,6 +395,7 @@ class SplitManager implements SplitManagerInterface
         $paymentSplitCollection->addFieldToFilter('sales_quote_id', $order->getQuoteId());
         $paymentSplitCollection->addFieldToFilter('store_id', $order->getStoreId());
         $paymentSplitCollection->addFieldToFilter('subordinate_merchant_id', $splitSubordinateMerchantId);
+
         $paymentSplitFromCollection = $paymentSplitCollection->getFirstItem();
 
         if (!empty($paymentSplitFromCollection->getId())) {
