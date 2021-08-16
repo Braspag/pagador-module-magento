@@ -91,9 +91,9 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             'index'     => 'sales_quote_id',
         ]);
 
-        $this->addColumn('sales_order_id', [
-            'header'    => __('Sales Order ID'),
-            'index'     => 'sales_order_id',
+        $this->addColumn('sales_order_increment_id', [
+            'header'    => __('Sales Order Increment ID'),
+            'index'     => 'sales_order_increment_id',
         ]);
 
         $this->addColumn('mdr_applied', [
@@ -111,6 +111,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->addColumn('total_amount', [
             'header'    => __('Total Amount'),
             'index'     => 'total_amount',
+            'type' => 'currency',
             'filter'    => false,
         ]);
 

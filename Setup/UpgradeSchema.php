@@ -53,7 +53,11 @@ class UpgradeSchema implements UpgradeSchemaInterface
         }
 
         if (version_compare($context->getVersion(), '3.16.2') < 0) {
-            $this->upgradeThreeThirteenOne($setup, $context);
+            $this->upgradeThreeSixteenTwo($setup, $context);
+        }
+
+        if (version_compare($context->getVersion(), '3.16.4') < 0) {
+            $this->upgradeThreeSixteenFour($setup, $context);
         }
 
         $setup->endSetup();
@@ -447,13 +451,33 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * @param ModuleContextInterface $context
      * @throws \Zend_Db_Exception
      */
-    protected function upgradeThreeThirteenOne(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    protected function upgradeThreeSixteenTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
 
             $setup->getConnection()->dropColumn(
                 $setup->getTable('braspag_paymentsplit_split'),
                 'locked'
+            );
+        }
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     */
+    protected function upgradeThreeSixteenFour(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
+
+            $setup->getConnection()->addColumn(
+                $setup->getTable('braspag_paymentsplit_split'),
+                'sales_order_increment_id',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'length' => 32,
+                    'comment' => 'Sales Order Increment Id'
+                ]
             );
         }
     }

@@ -282,7 +282,7 @@ class SplitDataProvider implements SplitDataProviderInterface
             $this->addMarketplaceParticipationValues();
         }
 
-        return $this->getSplitAdapter()->adapt($this->subordinates, $this->marketplaceMerchantId);
+        return $this->getSplitAdapter()->adaptRequestData($this->subordinates, $this->marketplaceMerchantId);
     }
 
     /**
