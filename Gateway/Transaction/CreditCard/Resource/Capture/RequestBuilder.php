@@ -75,8 +75,11 @@ class RequestBuilder implements BuilderInterface
         }
 
         $this->getRequest()->setPaymentId($paymentId);
-
         $this->getRequest()->setOrderAdapter($orderAdapter);
+
+        if (isset($buildSubject['amount']) && !empty($buildSubject['amount'])) {
+            $this->getRequest()->setCaptureAmount($buildSubject['amount']);
+        }
 
         return $this->getRequest();
     }
