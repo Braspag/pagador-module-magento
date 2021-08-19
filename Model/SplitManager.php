@@ -433,6 +433,9 @@ class SplitManager implements SplitManagerInterface
      */
     public function getTransactionPostOrdersToExecuteByHours($hours = "", $paymentMethod = ConfigProviderCreditCard::CODE)
     {
+        $defaultTimeFromToSendTransactionalPost = self::DEFAULT_TIME_FROM_TO_SEND_TRANSACTIONAL_POST;
+        $defaultTimeToToSendTransactionalPost = self::DEFAULT_TIME_TO_TO_SEND_TRANSACTIONAL_POST;
+
         $collection = $this->getOrderFactory()->create()->getCollection();
 
         $collection->getSelect()
@@ -442,11 +445,9 @@ class SplitManager implements SplitManagerInterface
             ->where("bps.sales_order_id IS NULL")
             ->where("sop.method = '{$paymentMethod}'")
             ->where("(
-                IF ({$hours} IS NULL AND DATE_FORMAT(NOW(), \"%Y%m%d\")-DATE_FORMAT(sin.created_at, \"%Y%m%d\") = 1 AND DATE_FORMAT(NOW(), \"%H%i\") >= '0130', 1,0)
+                IF ({$hours} IS NOT NULL AND DATE_FORMAT(NOW(), \"%Y-%m-%d %H:%i:%s\") BETWEEN DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL {$hours} HOUR), \"%Y-%m-%d %H:%i:%s\") AND DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL 1 DAY), \"%Y-%m-%d {$defaultTimeToToSendTransactionalPost}\"), 1,0)
                   OR
-                IF ({$hours} IS NOT NULL AND DATE_FORMAT(NOW(), \"%Y-%m-%d %H:%i:%s\") >= DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL {$hours} HOUR), \"%Y-%m-%d %H:%i:%s\"), 1,0)
-                  OR
-                IF ({$hours} IS NOT NULL AND DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL 1 DAY), \"%d\") = DATE_FORMAT(NOW(), \"%d\") AND DATE_FORMAT(NOW(), \"%H%i\") >= '0130', 1,0)
+                IF ({$hours} IS NULL AND DATE_FORMAT(NOW(), \"%Y-%m-%d %H:%i:%s\") BETWEEN DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL 1 DAY), \"%Y-%m-%d {$defaultTimeFromToSendTransactionalPost}\") AND DATE_FORMAT(DATE_ADD(sin.created_at, INTERVAL 1 DAY), \"%Y-%m-%d {$defaultTimeToToSendTransactionalPost}\"), 1,0)
               )")
             ->group("main_table.entity_id")
             ->limit(100);

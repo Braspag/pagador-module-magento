@@ -108,8 +108,6 @@ class TransactionPostSplitHandler extends AbstractHandler implements HandlerInte
         $request->prepareSplits();
         $splitData = $request->getSplits();
 
-        $this->getSplitManager()->createPaymentSplitByOrder($payment->getOrder(), $splitData);
-
         return $request;
     }
 }

@@ -28,6 +28,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected $storeId;
 
+    protected $captureAmount;
+
     /**
      * @var
      */
@@ -68,6 +70,22 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getPaymentId()
     {
         return $this->paymentId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCaptureAmount()
+    {
+        return $this->captureAmount;
+    }
+
+    /**
+     * @param $captureAmount
+     */
+    public function setCaptureAmount($captureAmount)
+    {
+        $this->captureAmount = $captureAmount;
     }
 
     /**
@@ -118,8 +136,17 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
      */
     public function getAdditionalRequest()
     {
-        $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
-        $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
+        $captureAmount = 0;
+
+        if (!empty($this->getCaptureAmount())) {
+            $captureAmount = $this->getCaptureAmount();
+        }
+
+        if (empty($captureAmount)) {
+            $captureAmount = $this->getOrderAdapter()->getGrandTotalAmount();
+        }
+
+        $integerValue = $this->grandTotalPricingHelper->currency($captureAmount);
 
     	return [
             'amount' => $integerValue
