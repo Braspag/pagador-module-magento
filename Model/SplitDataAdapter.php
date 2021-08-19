@@ -249,7 +249,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             $splitPayments['store_merchant_id'] = strtolower($merchantId);
         }
 
-
         $dataSplitPayments->addData($splitPayments);
 
         return $dataSplitPayments;

@@ -166,7 +166,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressStreet()
     {
-        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
+        $street = $this->getBillingAddressAttribute($this->getConfig()->getCustomerStreetAttribute());
+
+        return $this->helperData->removeSpecialCharacters($street);
     }
 
     /**
@@ -175,7 +177,6 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getCustomerAddressNumber()
     {
         return $this->getBillingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
-
     }
 
     /**
@@ -183,7 +184,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressComplement()
     {
-        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+        $addressComplement = $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+
+        return $this->helperData->removeSpecialCharacters($addressComplement);
     }
 
     /**
@@ -199,7 +202,9 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressDistrict()
     {
-        return $this->validator->sanitizeDistrict($this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute()));
+        $district = $this->getBillingAddressAttribute($this->getConfig()->getCustomerDistrictAttribute());
+
+        return $this->helperData->removeSpecialCharacters($district);
     }
 
     /**
@@ -207,7 +212,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressCity()
     {
-        return $this->getBillingAddress()->getCity();
+        return $this->helperData->removeSpecialCharacters($this->getBillingAddress()->getCity());
     }
 
     /**
