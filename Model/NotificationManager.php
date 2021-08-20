@@ -191,7 +191,7 @@ class NotificationManager implements NotificationManagerInterface
 
         // 3 = Denied/10 = Voided/13 = Aborted
         if (in_array($paymentStatus, [3, 10, 13])) {
-            return $this->cancelOrder($orderPayment->getOrder());
+            return $this->cancelOrder($orderPayment->getOrder(), true);
         }
 
         // 11 = Refunded
@@ -257,6 +257,7 @@ class NotificationManager implements NotificationManagerInterface
                 $newState = \Magento\Sales\Model\Order::STATE_NEW;
 
                 if (!empty($orderPayment->getMethodInstance()->getConfigData('order_status'))) {
+
                     $orderPayment->getOrder()->setState($newState)
                         ->setStatus($orderPayment->getMethodInstance()->getConfigData('order_status'));
                     $orderPayment->getOrder()->save();
@@ -337,10 +338,18 @@ class NotificationManager implements NotificationManagerInterface
 
     /**
      * @param $order
-     * @return boolean
+     * @param bool $useService
+     * @return bool
      */
-    protected function cancelOrder($order)
+    protected function cancelOrder($order, $useService = false)
     {
+        if (!$useService) {
+            $order->cancel();
+            $order->save();
+
+            return true;
+        }
+
         return $this->getOrderService()->cancel($order->getId());
     }
 
