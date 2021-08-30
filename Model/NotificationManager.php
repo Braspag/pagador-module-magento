@@ -191,7 +191,7 @@ class NotificationManager implements NotificationManagerInterface
 
         // 3 = Denied/10 = Voided/13 = Aborted
         if (in_array($paymentStatus, [3, 10, 13])) {
-            return $this->cancelOrder($orderPayment->getOrder(), true);
+            return $this->cancelOrder($orderPayment->getOrder());
         }
 
         // 11 = Refunded
@@ -292,6 +292,7 @@ class NotificationManager implements NotificationManagerInterface
         if (in_array($paymentFraudAnalysis->getStatus(),
             [self::ANTIFRAUD_STATUS_UNFINISHED, self::ANTIFRAUD_STATUS_PROVIDERERROR, self::ANTIFRAUD_STATUS_REJECT])
         ) {
+
             return $this->cancelOrder($orderPayment->getOrder());
         }
 
@@ -338,19 +339,22 @@ class NotificationManager implements NotificationManagerInterface
 
     /**
      * @param $order
-     * @param bool $useService
      * @return bool
      */
-    protected function cancelOrder($order, $useService = false)
+    protected function cancelOrder($order)
     {
-        if (!$useService) {
-            $order->cancel();
-            $order->save();
+        $order->getPayment()->setIsTransactionPending(false);
+        $order->getPayment()->save();
 
-            return true;
+        $order->getPayment()->registerVoidNotification();
+
+        $order->cancel();
+
+        if (!$order->save()) {
+            return false;
         }
 
-        return $this->getOrderService()->cancel($order->getId());
+        return true;
     }
 
     /**
