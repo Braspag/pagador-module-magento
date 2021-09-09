@@ -35,10 +35,4 @@ interface NotificationManagerInterface
      * @return boolean
      */
     public function save($PaymentId, $ChangeType, $RecurrentPaymentId = '');
-
-    /**
-     * @param string $paymentId
-     * @return boolean
-     */
-    public function paymentStatusChanged(string $paymentId);
 }

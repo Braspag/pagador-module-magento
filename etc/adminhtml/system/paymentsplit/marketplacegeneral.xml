@@ -11,7 +11,7 @@
             <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation</config_path>
         </field>
 
-        <field id="marketplacegeneral_markeplace_sales_participation_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+        <field id="marketplacegeneral_markeplace_sales_participation_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
             <label>Marketplace sales participation type</label>
             <comment />
             <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitMarketplaceSalesParticipationTypes</source_model>
@@ -21,7 +21,7 @@
             </depends>
         </field>
 
-        <field id="marketplacegeneral_markeplace_sales_participation_percent" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+        <field id="marketplacegeneral_markeplace_sales_participation_percent" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
             <label>Percent value in sales participation</label>
             <comment />
             <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_percent</config_path>
@@ -31,7 +31,7 @@
             </depends>
         </field>
 
-        <field id="marketplacegeneral_markeplace_sales_participation_fixed_value" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+        <field id="marketplacegeneral_markeplace_sales_participation_fixed_value" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
             <label>Fixed value in sales participation</label>
             <comment />
             <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_fixed_value</config_path>
@@ -39,6 +39,20 @@
                 <field id="marketplacegeneral_markeplace_sales_participation">1</field>
                 <field id="marketplacegeneral_markeplace_sales_participation_type">2</field>
             </depends>
+        </field>
+
+        <field id="marketplacegeneral_marketplace_braspag_financial_page_enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Enable Marketplace Braspag Financial Page</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/marketplace_braspag_financial_page_enabled</config_path>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_discount_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Payment Split Discount Type</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitDiscountType</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_discount_type</config_path>
         </field>
     </group>
 </include>
