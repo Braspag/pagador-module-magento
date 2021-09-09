@@ -16,7 +16,9 @@
     <iframe src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>"></iframe>
 </noscript>
 
-<script src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>" type="text/javascript">
-</script>
+
+<?= $secureRenderer->renderTag('script', ['type' => 'text/javascript', 'src' => $this->getFingerPrint()->getSrcJsUrl()."?".$this->getSrcParams()], "", false); ?>
+
+
 
 

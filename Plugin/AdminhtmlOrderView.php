@@ -55,7 +55,6 @@ class AdminhtmlOrderView
     ) {
 
         $paymentMethod = $this->_coreRegistry->registry('sales_order')->getPayment()->getMethod();
-
         if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE
             && (!$this->configCreditCardInterface->isPaymentSplitActive()
                 || $this->configCreditCardInterface->getPaymentSplitType() !== PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
