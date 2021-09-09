@@ -4,20 +4,29 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config;
 
 /**
  * Interface ConfigInterface
- * @package Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config
+ * @package Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config
  */
 interface ConfigInterface
 {
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEVENDOR = 'webjump_braspag/paymentsplit_marketplacevendor/marketplacevendor';
+
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEVENDOR_PAYMENT_TYPES_TO_APPLY_BRASPAG_COMMISSION = 'webjump_braspag/paymentsplit_marketplacewebkul/marketplacewebkul_payment_types_to_apply_braspag_commission';
+
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACECREDENTIALS_MERCHANT_ID = 'webjump_braspag/paymentsplit_marketplacecredentials/merchantid';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACECREDENTIALS_CLIENT_ID = 'webjump_braspag/paymentsplit_marketplacecredentials/clientid';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACECREDENTIALS_CLIENT_SECRET = 'webjump_braspag/paymentsplit_marketplacecredentials/clientsecret';
+
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_SALES_PARTICIPATION = 'webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_SALES_PARTICIPATION_TYPE = 'webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_type';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_SALES_PARTICIPATION_PERCENT = 'webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_percent';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_SALES_PARTICIPATION_FIXED_VALUE = 'webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_fixed_value';
 
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_BRASPAG_FINANCIAL_PAGE_ENABLED = 'webjump_braspag/paymentsplit_marketplacegeneral/marketplace_braspag_financial_page_enabled';
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_DISCOUNT_TYPE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_discount_type';
+
     public function getPaymentSplitMarketPlaceVendor();
+
+    public function getPaymentSplitMarketPlaceVendorPaymentTypesToApplyBraspagCommission();
 
     public function getPaymentSplitMarketPlaceCredendialsMerchantId();
 
@@ -32,4 +41,8 @@ interface ConfigInterface
     public function getPaymentSplitMarketPlaceGeneralSalesParticipationPercent();
 
     public function getPaymentSplitMarketPlaceGeneralSalesParticipationFixedValue();
+
+    public function getPaymentSplitMarketPlaceGeneralBraspagFinancialPageEnabled();
+
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitDiscountType();
 }

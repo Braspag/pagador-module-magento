@@ -6,6 +6,7 @@
     <preference for="Webjump\BraspagPagador\Api\SplitItemRepositoryInterface" type="Webjump\BraspagPagador\Model\SplitItemRepository" />
     <preference for="Webjump\BraspagPagador\Api\SplitDataProviderInterface" type="Webjump\BraspagPagador\Model\SplitDataProvider" />
     <preference for="Webjump\BraspagPagador\Api\SplitManagerInterface" type="Webjump\BraspagPagador\Model\SplitManager" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config"/>
 
     <type name="Webjump\BraspagPagador\Model\SplitDataProvider">
         <arguments>

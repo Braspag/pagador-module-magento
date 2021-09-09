@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="braspag-antifraud-static" type="host">https://h.online-metrix.net</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="braspag-antifraud-main" type="host">https://h.online-metrix.net</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="braspag-antifraud-connect" type="host">https://h.online-metrix.net</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="braspag-antifraud-images" type="host">https://h.online-metrix.net</value>
+            </values>
+        </policy>
+        <policy id="frame-ancestors">
+            <values>
+                <value id="braspag-antifraud-frames" type="host">https://h.online-metrix.net</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

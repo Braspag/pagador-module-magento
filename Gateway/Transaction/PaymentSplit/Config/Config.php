@@ -19,6 +19,14 @@ class Config extends BaseConfig implements ConfigInterface
     }
 
     /**
+     * @return bool
+     */
+    public function getPaymentSplitMarketPlaceVendorPaymentTypesToApplyBraspagCommission()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEVENDOR_PAYMENT_TYPES_TO_APPLY_BRASPAG_COMMISSION);
+    }
+
+    /**
      * @return mixed
      */
     public function getPaymentSplitMarketPlaceCredendialsMerchantId()
@@ -72,5 +80,21 @@ class Config extends BaseConfig implements ConfigInterface
     public function getPaymentSplitMarketPlaceGeneralSalesParticipationFixedValue()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_SALES_PARTICIPATION_FIXED_VALUE);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPaymentSplitMarketPlaceGeneralBraspagFinancialPageEnabled()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_BRASPAG_FINANCIAL_PAGE_ENABLED);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitDiscountType()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_DISCOUNT_TYPE);
     }
 }

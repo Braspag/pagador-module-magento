@@ -249,6 +249,10 @@ class SplitManager implements SplitManagerInterface
                     ->setTaxApplied(floatval($splitSubordinate->getFares()->getFee()));
             }
 
+            if (!empty($quote->getReservedOrderId())) {
+                $paymentSplitSubordinate->setSalesOrderIncrementId($quote->getReservedOrderId());
+            }
+
             $paymentSplitSubordinate
                 ->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId())
                 ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
