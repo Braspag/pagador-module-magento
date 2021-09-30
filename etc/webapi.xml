@@ -43,6 +43,13 @@
         </resources>
     </route>
 
+    <route url="/V1/braspag/subordinate_approval_notification/save" method="POST">
+        <service class="Webjump\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
     <route url="/V1/braspag/antifraud/customer/:customerId/fingerprint" method="GET">
         <service class="Webjump\BraspagPagador\Api\AntiFraudManagerInterface" method="getFingerPrintData"/>
         <resources>

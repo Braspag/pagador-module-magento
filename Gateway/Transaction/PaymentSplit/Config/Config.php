@@ -97,4 +97,36 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_DISCOUNT_TYPE);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrType()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_TYPE);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrUnique()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_UNIQUE);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrMultiple()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_MULTIPLE);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitFee()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_FEE);
+    }
 }
