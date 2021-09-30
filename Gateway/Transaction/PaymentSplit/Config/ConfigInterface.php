@@ -24,6 +24,11 @@ interface ConfigInterface
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_BRASPAG_FINANCIAL_PAGE_ENABLED = 'webjump_braspag/paymentsplit_marketplacegeneral/marketplace_braspag_financial_page_enabled';
     const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_DISCOUNT_TYPE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_discount_type';
 
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_TYPE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_type';
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_UNIQUE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_unique';
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_MDR_MULTIPLE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_multiple';
+    const CONFIG_XML_BRASPAG_PAYMENTSPLIT_MARKETPLACEGENERAL_PAYMENTSPLIT_FEE = 'webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_fee';
+
     public function getPaymentSplitMarketPlaceVendor();
 
     public function getPaymentSplitMarketPlaceVendorPaymentTypesToApplyBraspagCommission();
@@ -45,4 +50,12 @@ interface ConfigInterface
     public function getPaymentSplitMarketPlaceGeneralBraspagFinancialPageEnabled();
 
     public function getPaymentSplitMarketPlaceGeneralPaymentSplitDiscountType();
+
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrType();
+
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrUnique();
+
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitMdrMultiple();
+
+    public function getPaymentSplitMarketPlaceGeneralPaymentSplitFee();
 }

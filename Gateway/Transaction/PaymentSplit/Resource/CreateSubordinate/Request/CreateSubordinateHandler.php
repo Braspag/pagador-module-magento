@@ -1,15 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request;
 use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
 use Webjump\BraspagPagador\Model\SplitManager;
 
 /**
 
- * Braspag Transaction CreditCard Authorize Response Handler
+ * Braspag Transaction Response Handler
  *
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -17,7 +17,7 @@ use Webjump\BraspagPagador\Model\SplitManager;
  *
  * @link        http://www.webjump.com.br
  */
-class SplitHandler extends AbstractHandler implements HandlerInterface
+class CreateSubordinateHandler extends AbstractHandler implements HandlerInterface
 {
     /**
      * @var
@@ -72,24 +72,37 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
     }
 
     /**
-     * @param $payment
+     * @param array $handlingSubject
+     * @param array $request
+     * @return array|mixed|void|\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\ResponseInterface|CreateSubordinateHandler
+     */
+    public function handle(array $handlingSubject, array $request)
+    {
+        if (!isset($request['request']) || !$request['request'] instanceof $this->request) {
+            throw new \InvalidArgumentException('Braspag Card Send Request Lib object should be provided');
+        }
+
+        $request = $request['request'];
+
+        if (!isset($handlingSubject['subordinate'])) {
+            throw new \InvalidArgumentException('Subordinate data object should be provided');
+        }
+
+        $request = $this->_handle($handlingSubject, $request);
+
+        return $request;
+    }
+
+    /**
+     * @param $handlingSubject
      * @param $request
      * @return $this
      */
-    protected function _handle($payment, $request)
+    protected function _handle($handlingSubject, $request)
     {
-        if (!$request->getPaymentSplitRequest()) {
+        if (!$request) {
             return $this;
         }
-
-        $request->getPaymentSplitRequest()->prepareSplits();
-
-        $request->getPaymentSplitRequest()->prepareSplitTransactionData();
-
-        $splitData = $request->getPaymentSplitRequest()->getSplits();
-        $quote = $this->getSession()->getQuote();
-
-        $this->getSplitManager()->createPaymentSplitByQuote($quote, $splitData);
 
         return $request;
     }

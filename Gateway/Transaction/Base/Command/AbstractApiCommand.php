@@ -79,6 +79,7 @@ abstract class AbstractApiCommand implements CommandInterface
             );
 
             if (!$result->isValid()) {
+
                 $errorMessage = $result->getFailsDescription();
 
                 throw new LocalizedException(

@@ -80,6 +80,8 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
 
         $request->getPaymentSplitRequest()->prepareSplits();
 
+        $request->getPaymentSplitRequest()->prepareSplitTransactionData();
+
         $splitData = $request->getPaymentSplitRequest()->getSplits();
 
         $quote = $this->getSession()->getQuote();

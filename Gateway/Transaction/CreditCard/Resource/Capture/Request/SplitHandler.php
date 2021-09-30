@@ -88,24 +88,6 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
 
         $this->getSplitManager()->createPaymentSplitByOrder($payment->getOrder(), $splitData);
 
-        $captureAmount = $this->getCaptureAmount($splitData)/100;
-
-        $request->setCaptureAmount($captureAmount);
-
         return $request;
-    }
-
-    /**
-     * @param $splitData
-     * @return int
-     */
-    protected function getCaptureAmount($splitData)
-    {
-        $captureAmount = 0;
-        foreach ($splitData->getSubordinates() as $splitSubordinate) {
-            $captureAmount += $splitSubordinate->getAmount();
-        }
-
-        return $captureAmount;
     }
 }
