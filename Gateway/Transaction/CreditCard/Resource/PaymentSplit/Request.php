@@ -11,31 +11,66 @@
 namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\PaymentSplit;
 
 use Magento\Framework\Session\SessionManagerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
-use Magento\Payment\Model\InfoInterface;
 use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
 use Webjump\BraspagPagador\Model\OAuth2TokenManager;
+use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface as PaymentSplitConfigInterface;
 
+/**
+ * Class Request
+ * @package Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\PaymentSplit
+ */
 class Request implements BraspaglibRequestInterface
 {
+    /**
+     * @var SessionManagerInterface
+     */
     protected $session;
+
     protected $storeId;
+
     protected $config;
+
+    /**
+     * @var SplitDataProviderInterface
+     */
     protected $dataProvider;
+
     protected $quote;
+
     protected $order;
+
+    /**
+     * @var OAuth2TokenManager
+     */
     protected $oAuth2TokenManager;
+
     protected $splits;
 
+    protected $splitTransaction;
+
+    /**
+     * @var PaymentSplitConfigInterface
+     */
+    protected $paymentSplitConfig;
+
+    /**
+     * Request constructor.
+     * @param SessionManagerInterface $session
+     * @param SplitDataProviderInterface $dataProvider
+     * @param OAuth2TokenManager $oAuth2TokenManager
+     * @param PaymentSplitConfigInterface $paymentSplitConfig
+     */
     public function __construct(
         SessionManagerInterface $session,
         SplitDataProviderInterface $dataProvider,
-        OAuth2TokenManager $oAuth2TokenManager
+        OAuth2TokenManager $oAuth2TokenManager,
+        PaymentSplitConfigInterface $paymentSplitConfig
     ) {
         $this->setSession($session);
         $this->setDataProvider($dataProvider);
         $this->setOAuth2TokenManager($oAuth2TokenManager);
+        $this->setPaymentSplitConfig($paymentSplitConfig);
     }
 
     /**
@@ -169,6 +204,38 @@ class Request implements BraspaglibRequestInterface
     /**
      * @return mixed
      */
+    public function getSplitTransaction()
+    {
+        return $this->splitTransaction;
+    }
+
+    /**
+     * @param mixed $splitTransaction
+     */
+    public function setSplitTransaction($splitTransaction): void
+    {
+        $this->splitTransaction = $splitTransaction;
+    }
+
+    /**
+     * @return PaymentSplitConfigInterface
+     */
+    public function getPaymentSplitConfig(): PaymentSplitConfigInterface
+    {
+        return $this->paymentSplitConfig;
+    }
+
+    /**
+     * @param PaymentSplitConfigInterface $paymentSplitConfig
+     */
+    public function setPaymentSplitConfig(PaymentSplitConfigInterface $paymentSplitConfig): void
+    {
+        $this->paymentSplitConfig = $paymentSplitConfig;
+    }
+
+    /**
+     * @return mixed
+     */
     public function prepareSplits()
     {
         if (!$this->getConfig()->isPaymentSplitActive()) {
@@ -188,6 +255,27 @@ class Request implements BraspaglibRequestInterface
         }
 
         $this->setSplits($this->getDataProvider()->getData($storeMerchantId, $defaultMdr, $defaultFee));
+
+        return $this;
+    }
+
+    /**
+     * @return $this|array
+     */
+    public function prepareSplitTransactionData()
+    {
+        if (!$this->getConfig()->isPaymentSplitActive()) {
+            return [];
+        }
+
+        $storePaymentSplitDiscountType = $this->getPaymentSplitConfig()
+            ->getPaymentSplitMarketPlaceGeneralPaymentSplitDiscountType();
+
+        $splitTransaction = [
+            "MasterRateDiscountType" => $storePaymentSplitDiscountType
+        ];
+
+        $this->setSplitTransaction($splitTransaction);
 
         return $this;
     }

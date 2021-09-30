@@ -1,5 +1,5 @@
 "Credit Card Number","Credit Card Number"
-Identification,Identificação
+"Identification","Identificação"
 "%1 Splitted in %2 time","%1 Parcelado em %2 vez"""
 "%1 Splitted in %2 times","%1 Parcelado em %2 vezes"""
 "Debit Card Number","Número do Cartão de Débito"
@@ -21,3 +21,7 @@ Identification,Identificação
 "Permitted purchases up to 3x (respecting minimum parcel value).","Permitido compras em até 3x (respeitando valor da parcela mínima)."
 "This is a required field.","Campo obrigatório."
 "Please enter a valid number in this field.","Campo obrigatório."
+"The '%1' field can not be empty.", "O campo '%1' não pode estar vazio."
+"The length of the '%1' field is longer than allowed. The limit is '%2' characters.", "O tamanho do campo '%1' é maior do que o permitido. O limite é de '%2' caracteres."
+"'CorporateName' can not be empty", "O campo 'Razão social' não pode ser vazio"
+"'FancyName' can not be empty", "O campo 'Nome fantasia' não pode ser vazio"

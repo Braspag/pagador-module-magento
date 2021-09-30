@@ -12,10 +12,10 @@ namespace Webjump\BraspagPagador\Model\Source;
  */
 
 /**
- * Class BraspagPaymentMethods
+ * Class BraspagSubordinateStatus
  * @package Webjump\BraspagPagador\Model\Source
  */
-class BraspagPaymentMethods implements \Magento\Framework\Option\ArrayInterface
+class BraspagSubordinateStatus implements \Magento\Framework\Option\ArrayInterface
 {
     /**
      * @return array
@@ -24,7 +24,7 @@ class BraspagPaymentMethods implements \Magento\Framework\Option\ArrayInterface
     {
         $options = [];
 
-        foreach ($this->getPaymentMethods() as $code => $name) {
+        foreach ($this->getSubordinateStatuses() as $code => $name) {
             $options[] = ['value' => $code, 'label' => $name];
         }
 
@@ -34,15 +34,13 @@ class BraspagPaymentMethods implements \Magento\Framework\Option\ArrayInterface
     /**
      * @return array
      */
-    public function getPaymentMethods()
+    public function getSubordinateStatuses()
     {
         return [
-            'braspag_pagador_creditcard' => __('Braspag Pagador Credit Card'),
-            'braspag_pagador_creditcardtoken' => __('Braspag Pagador Credit Card JustClick (Token)'),
-            'braspag_pagador_boleto' => __('Braspag Pagador Boleto'),
-            'braspag_pagador_debitcard' => __('Braspag Pagador Debit Card')
+            'UnderAnalysis' => __('UnderAnalysis'),
+            'Approved' => __('Approved'),
+            'ApprovedWithRestriction' => __('Approved With Restriction'),
+            'Rejected' => __('Rejected')
         ];
     }
-
-
 }

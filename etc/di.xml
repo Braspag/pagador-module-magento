@@ -89,6 +89,95 @@
     </type>
     <!-- Split Transaction Post - END -->
 
+    <!-- Split Create Subordinate - START -->
+
+    <virtualType name="BraspagPagadorTransactionResourcePaymentSplitCreateSubordinateRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="oAuth2TokenManager" xsi:type="object">Webjump\BraspagPagador\Model\OAuth2TokenManager</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionResourcePaymentSplitCreateSubordinateRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request\CreateSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Response\CreateSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\CreateSubordinateCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Response\Validator</argument>
+        </arguments>
+    </type>
+    <!-- Split Create Subordinate - END -->
+
+    <!-- Split Get Subordinate - START -->
+
+    <virtualType name="BraspagPagadorTransactionResourcePaymentSplitGetSubordinateRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="oAuth2TokenManager" xsi:type="object">Webjump\BraspagPagador\Model\OAuth2TokenManager</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionResourcePaymentSplitGetSubordinateRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request\GetSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response\GetSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response\Validator</argument>
+        </arguments>
+    </type>
+    <!-- Split Get Subordinate - END -->
+
+
     <!-- Split - END -->
 
     <!-- Auth 3DS 2.0 - START -->
@@ -828,6 +917,7 @@
 
     <!--Notification - START -->
     <preference for="Webjump\BraspagPagador\Api\NotificationManagerInterface" type="Webjump\BraspagPagador\Model\NotificationManager" />
+    <preference for="Webjump\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface" type="Webjump\BraspagPagador\Model\SubordinateApprovalNotificationManager" />
     <!--Notification - END -->
 
     <!--Installments - START -->
