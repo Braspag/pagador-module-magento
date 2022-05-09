@@ -1,0 +1,101 @@
+<!--
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ */
+-->
+<fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}">
+    <!-- ko if: (isShowLegend())-->
+    <legend class="legend">
+        <span><!-- ko i18n: 'Credit Card Information'--><!-- /ko --></span>
+    </legend><br />
+    <!-- /ko -->
+    <div class="field token required" data-bind="attr: {id: getCode() + '_cc_token'}">
+        <label data-bind="attr: {for: getCode() + '_cc_token'}" class="label">
+            <span><!-- ko i18n: 'Card'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <div class="fields">
+                <div class="field token">
+                    <div class="control">
+                        <select  name="payment[cc_token]"
+                                 class="select select-cc-token"
+                                 data-bind="attr: {id: getCode() + '_cc_token', 'data-container': getCode() + '-cc-token', 'data-validate': JSON.stringify({required:true})},
+                                            enable: isActive($parents),
+                                            options: getCcAvailableTokensValues(),
+                                            optionsValue: 'token',
+                                            optionsText: 'alias',
+                                            optionsCaption: $t('Card'),
+                                            value: creditCardToken">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-agreements-block">
+        <!-- ko foreach: $parent.getRegion('before-place-order') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </div>
+    <!-- ko if: (hasVerification())-->
+    <div class="field cvv required" data-bind="attr: {id: getCode() + '_cc_type_cvv_div'}">
+        <label data-bind="attr: {for: getCode() + '_cc_cid'}" class="label">
+            <span><!-- ko i18n: 'Card Verification Number'--><!-- /ko --></span>
+        </label>
+        <div class="control _with-tooltip">
+            <input type="number"
+                   autocomplete="off"
+                   class="input-text cvv"
+                   name="payment[cc_cid]"
+                   value=""
+                   data-bind="attr: {id: getCode() + '_cc_cid',
+                        title: $t('Card Verification Number'),
+                        'data-container': getCode() + '-cc-cvv',
+                        'data-validate': JSON.stringify({'required-number':true, 'validate-card-cvv':'#' + getCode() + '_cc_type'})},
+                        enable: isActive($parents),
+                        value: creditCardVerificationNumber" />
+            <div class="field-tooltip toggle">
+                <span class="field-tooltip-action action-cvv"
+                      tabindex="0"
+                      data-toggle="dropdown"
+                      data-bind="attr: {title: $t('What is this?')}, mageInit: {'dropdown':{'activeClass': '_active'}}">
+                    <span><!-- ko i18n: 'What is this?'--><!-- /ko --></span>
+                </span>
+                <div class="field-tooltip-content"
+                     data-target="dropdown"
+                     data-bind="html: getCvvImageHtml()"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: (isInstallmentsActive())-->
+    <div class="field installments required" data-bind="attr: {id: getCode() + '_cc_installments'}">
+        <label data-bind="attr: {for: getCode() + '_installments'}" class="label">
+            <span><!-- ko i18n: 'Installments'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <div class="fields">
+                <div class="field no-label installments">
+                    <div class="control">
+                        <select  name="payment[cc_installments]"
+                                 class="select select-installments"
+                                 data-bind="attr: {id: getCode() + '_installments', 'data-container': getCode() + '-cc-installments', 'data-validate': JSON.stringify({required:true})},
+                                            enable: isActive($parents),
+                                            options: getCcInstallmentsValues(),
+                                            optionsValue: 'value',
+                                            optionsText: 'installments',
+                                            optionsCaption: $t('Installments'),
+                                            value: creditCardInstallments">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</fieldset>

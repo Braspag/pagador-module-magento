@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_creditcard_installments" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+    	<label>Installments</label>
+	    <field id="installments_active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Active</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_creditcardtoken/installments_active</config_path>
+	    </field>
+	    <field id="installments_number" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Number</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_creditcardtoken/installments_number</config_path>
+            <depends>
+                <field id="installments_active">1</field>
+            </depends>
+	    </field>
+	    <field id="installment_min_amount" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Min Amount</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_creditcardtoken/installment_min_amount</config_path>
+            <depends>
+                <field id="installments_active">1</field>
+            </depends>
+	    </field>
+	    <field id="installments_interest_by_issuer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Interest by issuer</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_creditcardtoken/installments_interest_by_issuer</config_path>
+            <depends>
+                <field id="installments_active">1</field>
+            </depends>
+	    </field>
+	    <field id="installments_interest_rate" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Interest Rate (%)</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_creditcardtoken/installments_interest_rate</config_path>
+            <depends>
+            	<field id="installments_active">1</field>
+                <field id="installments_interest_by_issuer">1</field>
+            </depends>
+	    </field>
+	    <field id="installments_max_without_interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Max Without Interest</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_creditcardtoken/installments_max_without_interest</config_path>
+            <depends>
+            	<field id="installments_active">1</field>
+                <field id="installments_interest_by_issuer">1</field>
+            </depends>
+	    </field>
+	</group>
+</include>

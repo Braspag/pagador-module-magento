@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_boleto" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Boleto</label>
+	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Enabled</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_boleto/active</config_path>
+	    </field>
+	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Title</label>
+	        <config_path>payment/braspag_pagador_boleto/title</config_path>
+	    </field>
+	    <field id="types" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Type</label>
+	        <comment />
+	        <source_model>Webjump\BraspagPagador\Model\Source\BoletoTypes</source_model>
+	        <config_path>payment/braspag_pagador_boleto/types</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+        <field id="bank" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Bank</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\BoletoBanks</source_model>
+            <config_path>payment/braspag_pagador_boleto/bank</config_path>
+            <depends>
+                <field id="types">Braspag</field>
+                <field id="active">1</field>
+            </depends>
+        </field>
+	    <field id="demonstrative" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+	        <label>Demonstrative</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_boleto/demonstrative</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+	        <label>Instructions</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_boleto/instructions</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="assignor" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Assignor</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_boleto/assignor</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+		<field id="assignor_address" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Assignor Address</label>
+			<comment />
+			<config_path>payment/braspag_pagador_boleto/assignor_address</config_path>
+			<depends>
+				<field id="active">1</field>
+			</depends>
+		</field>
+		<field id="identification" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Identification</label>
+			<comment />
+			<config_path>payment/braspag_pagador_boleto/identification</config_path>
+			<depends>
+				<field id="active">1</field>
+			</depends>
+		</field>
+	    <field id="expiration_days" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Expirations Day</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_boleto/expiration_days</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+			<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+            <config_path>payment/braspag_pagador_boleto/order_status</config_path>
+        </field>
+	    <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Sort Order</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_boleto/sort_order</config_path>
+	    </field>
+
+		<include path="Webjump_BraspagPagador::system/transaction/boleto/paymentsplit.xml"/>
+    </group>
+</include>

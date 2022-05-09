@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="braspag_payment_split_transaction_post" instance="Webjump\BraspagPagador\Cron\PaymentSplitTransactionPost" method="execute">
+            <schedule>*/10 * * * *</schedule>
+        </job>
+    </group>
+</config>

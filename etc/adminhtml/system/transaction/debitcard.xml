@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_debitcard" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Debit Card</label>
+	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Enabled</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_debitcard/active</config_path>
+	    </field>
+	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Title</label>
+	        <config_path>payment/braspag_pagador_debitcard/title</config_path>
+	    </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+			<source_model>Webjump\BraspagPagador\Model\Source\Status\NewPending</source_model>
+            <config_path>payment/braspag_pagador_debitcard/order_status</config_path>
+        </field>
+	    <field id="superdebito" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Super Debito</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_debitcard/superdebit_active</config_path>
+	    </field>
+        <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Sort Order</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/sort_order</config_path>
+        </field>
+		<field id="redirect_after_place_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+			<label>Redirect After Place Order?</label>
+			<comment />
+			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+			<config_path>payment/braspag_pagador_debitcard/redirect_after_place_order</config_path>
+		</field>
+	    <include path="Webjump_BraspagPagador::system/transaction/debitcard/types.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/authenticate3ds20.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/paymentsplit.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/debitcard/cardview.xml"/>
+    </group>
+</include>

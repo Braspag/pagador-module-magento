@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="webjump_braspag" translate="label" sortOrder="1000">
+            <label>Braspag</label>
+        </tab>
+        <include path="Webjump_BraspagPagador::system/antifraud.xml"/>
+        <section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
+            <group id="webjump_braspag" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>
+                    <![CDATA[Braspag&nbsp;&nbsp;<i>Payment Solutions.</i>]]>
+                </label>
+                <frontend_model>Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Group</frontend_model>
+                <include path="Webjump_BraspagPagador::system/global.xml"/>
+                <include path="Webjump_BraspagPagador::system/oauth2.xml"/>
+                <include path="Webjump_BraspagPagador::system/authentication3ds20.xml"/>
+                <include path="Webjump_BraspagPagador::system/paymentsplit.xml"/>
+                <include path="Webjump_BraspagPagador::system/customer.xml"/>
+                <include path="Webjump_BraspagPagador::system/transaction.xml"/>
+            </group>
+        </section>
+    </system>
+</config>

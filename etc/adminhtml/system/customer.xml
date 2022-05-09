@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_customer" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Customer Config</label>
+        <field id="customer_identity_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+            <label>Customer Identity (CPF/CNPJ) Attribute</label>
+            <config_path>payment/braspag_pagador_creditcard/customer_identity_attribute_code</config_path>
+            <comment>Attribute sequence lookup Quote->BillingAddress and Quote</comment>
+        </field>
+        <frontend_model>Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+        <include path="Webjump_BraspagPagador::system/customer/address.xml"/>
+    </group>
+</include>

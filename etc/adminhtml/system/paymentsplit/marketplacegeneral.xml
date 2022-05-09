@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_paymentsplit_marketplacegeneral" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Marketplace General Config</label>
+
+        <field id="marketplacegeneral_markeplace_sales_participation" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>Does the Marketplace participate in sales?</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation</config_path>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+            <label>Marketplace sales participation type</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitMarketplaceSalesParticipationTypes</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_type</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_percent" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+            <label>Percent value in sales participation</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_percent</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+                <field id="marketplacegeneral_markeplace_sales_participation_type">1</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_markeplace_sales_participation_fixed_value" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
+            <label>Fixed value in sales participation</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/markeplace_sales_participation_fixed_value</config_path>
+            <depends>
+                <field id="marketplacegeneral_markeplace_sales_participation">1</field>
+                <field id="marketplacegeneral_markeplace_sales_participation_type">2</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_marketplace_braspag_financial_page_enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Enable Marketplace Braspag Financial Page</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/marketplace_braspag_financial_page_enabled</config_path>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_discount_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Payment Split Discount Type</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitDiscountType</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_discount_type</config_path>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_mdr_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>MDR Type</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitMdrTypes</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_type</config_path>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_mdr_unique" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+            <label>MDR Unique</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_unique</config_path>
+            <depends>
+                <field id="marketplacegeneral_paymentsplit_mdr_type">1</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_mdr_multiple" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="textarea">
+            <label>MDR Multiple</label>
+            <comment>
+                <![CDATA[
+                    <b>Example:</b> Product-DebitCard|Brand-Master|InitialInstallmentNumber-1|FinalInstallmentNumber-2|Percent-1.5 </br></br>
+                    <b>Available Products:</b> DebitCard and CreditCard </br>
+                    <b>Available Brands:</b> Visa, Master, Amex, Elo, Diners, Discover and Hipercard
+                ]]>
+            </comment>
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_mdr_multiple</config_path>
+            <depends>
+                <field id="marketplacegeneral_paymentsplit_mdr_type">2</field>
+            </depends>
+        </field>
+
+        <field id="marketplacegeneral_paymentsplit_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
+            <label>Default Store Fee</label>
+            <comment />
+            <config_path>webjump_braspag/paymentsplit_marketplacegeneral/paymentsplit_fee</config_path>
+        </field>
+    </group>
+</include>

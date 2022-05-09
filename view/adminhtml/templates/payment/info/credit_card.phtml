@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var \Webjump\BraspagPagador\Block\Payment\Info\CreditCard $block
+ * @see \Webjump\BraspagPagador\Block\Payment\Info\CreditCard
+ */
+$specificInfo = $block->getSpecificInformation();
+?>
+
+<?php if ($specificInfo): ?>
+    <div class="admin__page-section-item-content">
+        <p><?php echo $block->escapeHtml($block->getMethod()->getTitle()); ?></p>
+        <p><?php echo $block->escapeHtml($specificInfo['brand']) . ' - ##########' . $block->escapeHtml($specificInfo['last_4_digits']);?></p>
+        <p><?php echo $block->getInstallmentsInfo(); ?></p>
+    </div>
+<?php endif;?>
+
+<?php echo $block->getChildHtml()?>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_global" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+    	<label>Global Settings</label>
+	    <field id="merchant_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Merchant ID</label>
+	        <comment>store identifier in Braspag. Contact Braspag to get your own merchant id.</comment>
+	        <config_path>webjump_braspag/pagador/merchant_id</config_path>
+	    </field>
+	    <field id="merchant_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Merchant Key</label>
+	        <comment>Public key for Double Authentication Braspag. Contact Braspag to get your own merchant id.</comment>
+	        <config_path>webjump_braspag/pagador/merchant_key</config_path>
+	    </field>
+	    <field id="merchant_name" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Merchant Name</label>
+	        <comment>Name of establishment registered in Braspag. Contact Braspag to get your own Merchant Name.</comment>
+	        <config_path>webjump_braspag/pagador/merchant_name</config_path>
+	    </field>
+	    <field id="establishment_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Establishment Code</label>
+	        <comment>Code of Establishment of the Cielo E-Commerce 3.0. Contact Braspag to get your own Establishment Code.</comment>
+	        <config_path>webjump_braspag/pagador/establishment_code</config_path>
+	    </field>
+	    <field id="mcc" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>MCC</label>
+	        <comment>Establishment Category Code. Contact Braspag to get your own Establishment Category Code.</comment>
+	        <config_path>webjump_braspag/pagador/mcc</config_path>
+	    </field>
+
+        <field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Test Mode Active</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>webjump_braspag/pagador/test_mode</config_path>
+        </field>
+		<field id="return_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Return URL</label>
+			<comment />
+			<config_path>webjump_braspag/pagador/return_url</config_path>
+		</field>
+	</group>	    
+</include>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_creditcard" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Credit Card</label>
+        <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+            <label>Enabled</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/active</config_path>
+        </field>
+        <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Title</label>
+            <config_path>payment/braspag_pagador_creditcard/title</config_path>
+        </field>
+        <field id="decimal_grand_total" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Decimal Grand Total</label>
+            <comment>If null default 2</comment>
+            <config_path>payment/braspag_pagador_creditcard/decimal_grand_total</config_path>
+        </field>
+        <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+            <label>Payment Action</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentAction</source_model>
+            <config_path>payment/braspag_pagador_creditcard/payment_action</config_path>
+        </field>
+        <field id="order_status" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+            <source_model>Webjump\BraspagPagador\Model\Source\Status\NewPendingProcessing</source_model>
+            <config_path>payment/braspag_pagador_creditcard/order_status</config_path>
+        </field>
+        <field id="review_order_status" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>Review Order Status</label>
+            <comment>Cancel status is unavailable for "Review" Status</comment>
+            <source_model>Webjump\BraspagPagador\Model\Source\Status\Review</source_model>
+            <config_path>payment/braspag_pagador_creditcard/review_order_status</config_path>
+        </field>
+        <field id="reject_order_status" translate="label" type="select" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>Reject Order Status</label>
+            <comment>Cancel status is only available for "Authorize and Capture" Payment Action</comment>
+            <source_model>Webjump\BraspagPagador\Model\Source\Status\Review</source_model>
+            <config_path>payment/braspag_pagador_creditcard/reject_order_status</config_path>
+        </field>
+        <field id="not_create_invoice_on_notification_capture" translate="label" type="select" sortOrder="66" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>Create Invoice on Notification Return Captured Status</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/create_invoice_on_notification_captured</config_path>
+        </field>
+
+        <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
+            <label>Sort Order</label>
+            <comment />
+            <config_path>payment/braspag_pagador_creditcard/sort_order</config_path>
+        </field>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/types.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/installments.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/silentorderpost.xml"/>
+	    <include path="Webjump_BraspagPagador::system/transaction/creditcard/avs.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/authenticate3ds20.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/paymentsplit.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/creditcard/cardview.xml"/>
+    </group>
+</include>

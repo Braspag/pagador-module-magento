@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_customer_address" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Address</label>
+
+        <field id="address_sanitize" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="select">
+            <label>Should we sanitize address data?</label>
+            <comment><![CDATA[Short address fields to they character limits (Please see Braspag documentation.]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>address/braspag_pagador_customer_address/address_sanitize</config_path>
+        </field>
+        
+        <field id="address_sanitize_district_dictionary" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="05" translate="label" type="text">
+            <label>District dictionary</label>
+            <comment><![CDATA[Include separate words in this format: Neighborhood-Nb.;Housing-Hs.]]></comment>
+            <config_path>address/braspag_pagador_customer_address/address_sanitize_district_dictionary</config_path>
+            <depends>
+                <field id="address_sanitize">1</field>
+            </depends>
+        </field>
+
+        <field id="street_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+            <label>Street Attribute</label>
+            <comment><![CDATA[<b> for example: </b> street_1]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_customer_address/street_attribute</config_path>
+        </field>
+
+        <field id="number_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Number Attribute</label>
+            <comment><![CDATA[<b> for example: </b> street_2]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_customer_address/number_attribute</config_path>
+        </field>
+
+        <field id="complement_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+            <label>Complement Attribute</label>
+            <comment><![CDATA[<b> for example: </b> street_3]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_customer_address/complement_attribute</config_path>
+        </field>
+
+        <field id="district_attribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+            <label>District Attribute</label>
+            <comment><![CDATA[<b> for example: </b> street_4]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_customer_address/district_attribute</config_path>
+        </field>
+    </group>
+</include>

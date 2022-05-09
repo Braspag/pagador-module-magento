@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="mdd" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>MDD's</label>
+        <field id="fetch_self_shipping_method" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+            <label>Customer fetch self Shipping Method</label>
+            <comment />
+            <source_model>\Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+        </field>
+
+        <field id="store_code_to_fetch_self" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="text">
+            <label>Store Code From Customer Fetch Self</label>
+            <comment />
+        </field>
+
+        <field id="vertical_segment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Vertical Segment</label>
+            <comment />
+            <source_model>\Webjump\BraspagPagador\Model\Source\VerticalSegment</source_model>
+        </field>
+
+        <field id="store_identity" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+            <label>Store Identity (CNPJ)</label>
+            <comment />
+        </field>
+
+        <field id="category_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+            <label>Category Attribute Code</label>
+            <comment />
+        </field>
+
+    </group>
+</include>

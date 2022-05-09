@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Webjump_BraspagPagador::css/style.css"/>
+        <css src="Webjump_BraspagPagador::css/card.css"/>
+    </head>
+    <body>
+        <referenceBlock name="after.body.start">
+            <block  class="Webjump\BraspagPagador\Block\AntiFraud\FingerPrint"
+                    before="-"
+                    name="checkout.braspag.antifraud.fingerprint"
+                    template="checkout/braspag/antifraud/fingerprint.phtml"
+                    cacheable="false" />
+        </referenceBlock>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="authBpmpi" xsi:type="array">
+                                    <item name="sortOrder" xsi:type="string">5</item>
+                                    <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi</item>
+                                    <item name="displayArea" xsi:type="string">authentication</item>
+                                </item>
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="renders" xsi:type="array">
+                                                            <!-- merge payment method renders here -->
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="braspag_pagador_boleto" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Webjump_BraspagPagador/js/view/payment/payments</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="braspag_pagador_boleto" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="braspag_pagador_creditcard" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="braspag_pagador_creditcardtoken" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="braspag_pagador_debitcard" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

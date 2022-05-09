@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_paymentsplit_marketplacevendor" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Marketplace Vendor</label>
+
+        <field id="marketplacevendor_list" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Vendor</label>
+            <comment />
+            <source_model>Webjump\BraspagPagador\Model\Source\PaymentSplitMarketplaceVendor</source_model>
+            <config_path>webjump_braspag/paymentsplit_marketplacevendor/marketplacevendor</config_path>
+        </field>
+    </group>
+</include>

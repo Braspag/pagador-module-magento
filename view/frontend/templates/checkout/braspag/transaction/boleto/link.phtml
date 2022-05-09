@@ -1,0 +1,15 @@
+<?php
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ * @var \Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link $this
+ */
+?>
+<?php if ($this->getBoletoUrl()): ?>
+    <hr />
+    <a class="action tocart primary" href="<?php echo $this->getBoletoUrl() ?>" target="_blank"><?php echo __('Print Boleto') ?></a>
+<?php endif ?>

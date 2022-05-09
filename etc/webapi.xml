@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/braspag/redirect-after-placeorder/:orderId/link" method="POST">
+        <service class="Webjump\BraspagPagador\Api\RedirectPaymentInterface" method="getLink"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/auth3ds20/token" method="GET">
+        <service class="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" method="getToken"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/creditcard/installments" method="POST">
+        <service class="Webjump\BraspagPagador\Api\InstallmentsInterface" method="getInstallments"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/creditcard/silentauthtoken" method="POST">
+        <service class="Webjump\BraspagPagador\Api\SilentAuthTokenInterface" method="getToken"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/notification/save" method="POST">
+        <service class="Webjump\BraspagPagador\Api\NotificationManagerInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/subordinate_approval_notification/save" method="POST">
+        <service class="Webjump\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/antifraud/customer/:customerId/fingerprint" method="GET">
+        <service class="Webjump\BraspagPagador\Api\AntiFraudManagerInterface" method="getFingerPrintData"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+
+    <route url="/V1/braspag/auth3ds20/data" method="GET">
+        <service class="Webjump\BraspagPagador\Api\Auth3DS20ResultInformationInterface" method="getInformation"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cart_id%</parameter>
+        </data>
+    </route>
+
+</routes>

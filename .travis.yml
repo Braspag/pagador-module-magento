@@ -1,0 +1,23 @@
+language: php
+
+php:
+    - 7.1
+    - 7.2
+
+env:
+    global:
+        - secure: "B5UNoXlXUHgDmPemSjx3plVayT8tN1TTGB4OHp0furhNucFnVRzS4Yvo45ulD8SjaD/IrDjYe1besl92+5MSEpkkocFs9u2AxlVd6P4UM1bO3VdiIiSneTT37PA4xOkoreVwV0teJ87igIIbTK7AxaXkIk0PBM4ujTs9H+YTCoFgbbaNgku0Aq6TJlzkcLtnxRVInCakKwjW9F6sCqYRYmrTXPL1IqWn5xpG+bQIZ9c5Q0kihMu1gJKng6KVs3NbABLsH/gaGtaUjkOvYrEUUSwahEmXKlFk+Fb2AlW1YzlZwrvIDMHTaYiIwjrcBhFisA20ZXRiaRe4/+neBw9pIHS7kXEs9LzeiAYowkQ9t2tV07P0Etu5Jo60OIl0KyrDxU03wvdF0Jy4hiyDYtdnPfhRITML61hHKbOd9u3cCklSeuXZ/eY+iTu2x9nD2q/OeAs7SbjkYVCT+N/Zc8iZBwRLfQBHy8yYAKs5uK7d4QJ4000na+aQal9TrMJaX4Rx0RhNlEV1pumwJi2PBAknmZPu8q0wukTrfcmdIHZlLbcE44g/k4uEyiRwmb6LsZpe4SFSDN701bkRIWJgwGQkJqsLLY1TLJ2NANLF4RRlW6LclQn5QhrPj4coWnn2DjRDwpdGC6nSY6IrYbizCzqr0mpSFF52tObW5omQ5HSZOJI="
+        - secure: "EgaXAnYUkhl2jEQytN9rXdqivoUsdpTathv4Nff6EnWCWNUEKd/uKPTYZoq8QFE4KHfPdEwU1BaDk/TG4calyRJ8Xj46VoOb07M1QqfzJhvx2Jo1aZYno6RI3aGMMlj+JiuhZXRTKZVWiYP3dR/al9WM+3WgqTfjA1SvF3lbu6hCNGjnmkaUdfWjECkrgICDYJHORMTokSE8hI5D8u4Vr/ifXPu2/MP94NF1EjaajDkkcQeihcCzDNmM9gmaxvB77CpmbzDaFyWGU1lCulQKqcgEsb8TbiDcv794wS34Szr31RawshsGBLe3jfIaFyeNDsLtmPklrNalQbmeYMpey6InAhOssWgFdBUwpBE3REBGl+urdcBLaF9gqJGd5DirKgvI/W2to4FtFdMXogUixUNCLLcaUyDVGjGD+q+KLGg8wHY9ZIZN5qwYlZiR37S8DyYpL/PMxjJ6zzzEeYXyA6ufq/i9rKYUbQ3zXbhGRmbstpjo2HIgpJ9/FhFixJLw8AQtuCWO0MTNCxAnAumxriu1OyE6dJFI0i8uD71IQNg1HnzHqpMWV10PF1cBTF+Lyf+PO8z7oOY2mkvHfGohAFU1WszAWQXe0TYp400SsDUGJ/z7mLqz6o8YGJlNmT6TVQcKOkcXmWWx1SgyJDRDQmz/IvpOjjCp3yQf2SZ6tcY="
+        - TEST_SUITE=unit
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+install:
+    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then echo '{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}' > auth.json; fi"
+    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then composer install --prefer-dist -vvv; fi"
+
+script:
+    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text; fi"
+    - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/coverage-check build/logs/clover.xml 60; fi"

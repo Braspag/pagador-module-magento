@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_debitcard_authentication_3ds_20" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="89">
+    	<label>Authentication 3DS 2.0</label>
+	    <field id="authentication_3ds_20" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+	        <label>Active</label>
+            <comment>Currently the Authentication 3DS 2.0 is available only for acquirer Cielo.</comment>
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20</config_path>
+	    </field>
+
+        <field id="authentication_3ds_20_mastercard_notify_only" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Master Card - Notify Only</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mastercard_notify_only</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_authorize_on_error" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+            <label>Authorize On Error</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_error</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_authorize_on_failure" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+            <label>Authorize On Failure</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_failure</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_authorize_on_unenrolled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
+            <label>Authorize On Unenrolled</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_unenrolled</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_authorize_on_unsupported_brand" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
+            <label>Authorize On Unsupported Brand</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_authorize_on_unsupported_brand</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_mdd1" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
+            <label>Extra data 1</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mdd1</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_mdd2" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="text">
+            <label>Extra data 2</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mdd2</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_mdd3" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+            <label>Extra data 3</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mdd3</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_mdd4" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="text">
+            <label>Extra data 4</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mdd4</config_path>
+        </field>
+
+        <field id="authentication_3ds_20_mdd5" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="110" translate="label" type="text">
+            <label>Extra data 5</label>
+            <comment />
+            <config_path>payment/braspag_pagador_debitcard/authentication_3ds_20_mdd5</config_path>
+        </field>
+	</group>
+</include>

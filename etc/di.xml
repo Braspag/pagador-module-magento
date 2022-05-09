@@ -1,0 +1,940 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Split - START -->
+    <preference for="Webjump\BraspagPagador\Api\SplitRepositoryInterface" type="Webjump\BraspagPagador\Model\SplitRepository" />
+    <preference for="Webjump\BraspagPagador\Api\SplitItemRepositoryInterface" type="Webjump\BraspagPagador\Model\SplitItemRepository" />
+    <preference for="Webjump\BraspagPagador\Api\SplitDataProviderInterface" type="Webjump\BraspagPagador\Model\SplitDataProvider" />
+    <preference for="Webjump\BraspagPagador\Api\SplitManagerInterface" type="Webjump\BraspagPagador\Model\SplitManager" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config"/>
+
+    <type name="Webjump\BraspagPagador\Model\SplitDataProvider">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="objectFactory" xsi:type="object">\Magento\Framework\DataObjectFactory</argument>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="splitAdapter" xsi:type="object">\Webjump\BraspagPagador\Model\SplitDataAdapter</argument>
+            <argument name="paymentSplitConfig" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\SplitRepository">
+        <arguments>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+            <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\Split</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\SplitItemRepository">
+        <arguments>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+            <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\Split\Item</argument>
+        </arguments>
+    </type>
+
+    <!-- Split Transaction Post - START -->
+
+    <type name="Webjump\BraspagPagador\Cron\PaymentSplitTransactionPost">
+        <arguments>
+            <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>
+            <argument name="splitPaymentTransactionPostCommand" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand</argument>
+            <argument name="splitManager" xsi:type="object">Webjump\BraspagPagador\Model\SplitManager</argument>
+            <argument name="configCreditCardInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config</argument>
+            <argument name="configDebitCardInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config</argument>
+            <argument name="configBoletoInterface" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagPagadorTransactionPostResourcePaymentSplitRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Webjump\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentTransactionPostRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionPostResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentTransactionPostCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request\TransactionPostSplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentTransactionPostCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Response\TransactionPostSplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentTransactionPostRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentTransactionPostCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentTransactionPostCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Response\Validator</argument>
+        </arguments>
+    </type>
+    <!-- Split Transaction Post - END -->
+
+    <!-- Split Create Subordinate - START -->
+
+    <virtualType name="BraspagPagadorTransactionResourcePaymentSplitCreateSubordinateRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="oAuth2TokenManager" xsi:type="object">Webjump\BraspagPagador\Model\OAuth2TokenManager</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionResourcePaymentSplitCreateSubordinateRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request\CreateSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentCreateSubordinateCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Response\CreateSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\CreateSubordinateCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentCreateSubordinateCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Response\Validator</argument>
+        </arguments>
+    </type>
+    <!-- Split Create Subordinate - END -->
+
+    <!-- Split Get Subordinate - START -->
+
+    <virtualType name="BraspagPagadorTransactionResourcePaymentSplitGetSubordinateRequest" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="oAuth2TokenManager" xsi:type="object">Webjump\BraspagPagador\Model\OAuth2TokenManager</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagPagadorTransactionResourcePaymentSplitGetSubordinateRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request\GetSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionSplitPaymentGetSubordinateCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response\GetSubordinateHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionSplitPaymentGetSubordinateCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response\Validator</argument>
+        </arguments>
+    </type>
+    <!-- Split Get Subordinate - END -->
+
+
+    <!-- Split - END -->
+
+    <!-- Auth 3DS 2.0 - START -->
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\Information" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\AddressInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\CartInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\UserAccountInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20ResultInformationInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\ResultInformation" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20GetAddressInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\GetAddress" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20GetCartInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\GetCart" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3DS20UserAccountInterface" type="Webjump\BraspagPagador\Model\Auth3DS20\UserAccount" />
+    <preference for="Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" type="Webjump\BraspagPagador\Model\Auth3Ds20TokenManager" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <!-- Auth 3DS 2.0 - Token - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Request" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder" />
+
+    <type name="Webjump\BraspagPagador\Model\Auth3Ds20TokenManager">
+        <arguments>
+            <argument name="request" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface</argument>
+            <argument name="tokenCommand" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand</argument>
+            <argument name="cookieManager" xsi:type="object">\Magento\Framework\Stdlib\CookieManagerInterface</argument>
+            <argument name="cookieMetadataFactory" xsi:type="object">\Magento\Framework\Stdlib\Cookie\CookieMetadataFactory</argument>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface</argument>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand">
+        <arguments>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\FacadeInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder">
+        <arguments>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
+        </arguments>
+    </type>
+    <!-- Auth 3DS 2.0 - Token - END -->
+    <!-- Auth 3DS 2.0 - END -->
+
+    <!-- Anti Fraud - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\Config" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface" type="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\GeneralRequest" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfig" />
+    <preference for="Webjump\BraspagPagador\Api\AntiFraudManagerInterface" type="Webjump\BraspagPagador\Model\AntiFraudManager" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagPagadorTransactionResourceAntiFraudItemsRequestFactory" type="Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">Magento\Framework\ObjectManager\ObjectManager</argument>
+            <argument name="class" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\Request</argument>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="\Webjump\BraspagPagador\Block\AntiFraud\FingerPrint">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="antiFraudFingerPrint" xsi:type="object">\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint">
+        <arguments>
+            <argument name="scopeConfig" xsi:type="object">\Magento\Framework\App\Config</argument>
+            <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+            <argument name="customerRepository" xsi:type="object">\Magento\Customer\Api\CustomerRepositoryInterface</argument>
+            <argument name="quoteFactory" xsi:type="object">\Magento\Quote\Model\QuoteFactory</argument>
+        </arguments>
+    </type>
+    <!-- Anti Fraud - END -->
+
+    <!-- Card Token - START -->
+    <preference for="Webjump\BraspagPagador\Api\CardTokenRepositoryInterface" type="Webjump\BraspagPagador\Model\CardTokenRepository" />
+    <preference for="Webjump\BraspagPagador\Api\CardTokenManagerInterface" type="Webjump\BraspagPagador\Model\CardTokenManager" />
+
+    <type name="Webjump\BraspagPagador\Model\CardTokenRepository">
+        <arguments>
+            <argument name="storeManager" xsi:type="object">\Magento\Store\Model\StoreManager</argument>
+            <argument name="session" xsi:type="object">\Magento\Customer\Model\Session</argument>
+            <argument name="resource" xsi:type="object">\Webjump\BraspagPagador\Model\ResourceModel\CardToken</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\CardToken" shared="false" />
+    <!-- Card Token - END -->
+
+    <!-- Silent Order Post - START -->
+    <preference for="Webjump\BraspagPagador\Api\SilentAuthTokenInterface" type="Webjump\BraspagPagador\Model\SilentAuthToken" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionCreditCardSilentOrderConverterZendClient" type="Magento\Payment\Gateway\Http\Client\Zend">
+        <arguments>
+            <argument name="converter" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\ConvertResponse</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder">
+        <arguments>
+            <argument name="client" xsi:type="object">BraspagTransactionCreditCardSilentOrderConverterZendClient</argument>
+        </arguments>
+    </type>
+
+    <!-- Silent Order Post - END -->
+
+    <!-- Base - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactory" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig" />
+    <preference for="Webjump\BraspagPagador\Api\RedirectPaymentInterface" type="Webjump\BraspagPagador\Model\RedirectPayment" />
+    <preference for="Webjump\Braspag\Pagador\Transaction\FacadeInterface" type="Webjump\Braspag\Pagador\Transaction\BraspagFacade" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context">
+        <arguments>
+            <argument name="session" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+            <argument name="dateTime" xsi:type="object">\Magento\Framework\Stdlib\DateTime</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Backend\Model\Session\Quote</argument>
+            <argument name="dateTime" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionVoidRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request" />
+
+    <virtualType name="BraspagTransactionCancelRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCancelCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCancelCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Command\CancelCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCancelRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCancelCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoidCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Command\VoidCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionVoidRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionVoidCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Base END -->
+
+    <!-- Credit Card - START -->
+
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config" />
+
+    <preference for="Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactory" />
+
+    <virtualType name="BraspagTransactionCreditCardCaptureRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionCreditCardsRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Form\CreditCard</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\CreditCard</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionCreditCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionCreditCardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionCreditCardCaptureRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionCreditCardResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler</item>
+                <item name="antifraude" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler</item>
+                <item name="avs" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler</item>
+                <item name="card_token" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler</item>
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\SplitHandler</item>
+                <item name="nsu" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\NsuHandler</item>
+                <item name="velocity_analysis" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler</item>
+                <item name="status_antifraude" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\StatusAntiFraudHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardAuthorizeRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionCreditCardAuthorizeCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardAuthorizeCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCaptureCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardCaptureRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionCreditCardCaptureCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardCaptureCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardRefundRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoidRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardRefundCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardRefundCommand" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\RefundCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionCreditCardRefundRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionCreditCardRefundCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionCreditCardAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">BraspagTransactionCreditCardCaptureCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+                <item name="refund" xsi:type="string">BraspagTransactionCreditCardRefundCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardAuthorizeRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestBuilder">
+        <arguments>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAntiFraudRequest</argument>
+            <argument name="requestAvs" xsi:type="object">BraspagPagadorTransactionCreditCardResourceAvsRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionCreditCardResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Credit Card - Anti Fraud - START -->
+
+        <virtualType name="BraspagPagadorTransactionCreditCardResourceAntiFraudRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\AntiFraud\Request">
+            <arguments>
+                <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionResourceAntiFraudItemsRequestFactory</argument>
+            </arguments>
+        </virtualType>
+
+    <!-- Credit Card - Anti Fraud - END -->
+
+    <!-- Credit Card - MDD - START -->
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\MDDConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <!-- Credit Card - MDD - END -->
+
+    <!-- Credit Card - AVS - START -->
+    <virtualType name="BraspagPagadorTransactionCreditCardResourceAvsRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+    <!-- Credit Card - AVS - END -->
+
+    <!-- Credit Card - Split - START -->
+
+    <virtualType name="BraspagPagadorTransactionCreditCardResourcePaymentSplitRequest" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\PaymentSplit\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Webjump\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Credit Card - Split - END -->
+
+    <!-- Credit Card - Card Token - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\Builder" />
+
+    <virtualType name="BraspagTransactionCreditCardTokensRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionCreditCardTokenValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionCreditCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form\Cc</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionCreditCardTokenConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionCreditCardTokenValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionCreditCardTokenConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Credit Card - Card Token - END -->
+
+    <!-- Credit Card - END -->
+
+    <!-- Debit Card - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config" />
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request" />
+
+    <virtualType name="BraspagTransactionDebitCardsRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionDebitCardValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionDebitCardCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Form\CreditCard</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionDebitCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionDebitCardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionDebitCardOrderCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\BaseHandler</item>
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\SplitHandler</item>
+                <item name="nsu" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\NsuHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderCommand" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command\OrderCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionDebitCardOrderRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionDebitCardOrderCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionDebitCardOrderCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequestConfig" type="Magento\Framework\App\Config">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Debit Card - Anti Fraud - START -->
+
+    <virtualType name="BraspagPagadorTransactionDebitCardResourceAntiFraudRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\AntiFraud\Request">
+        <arguments>
+            <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionResourceAntiFraudItemsRequestFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Debit Card - Anti Fraud - END -->
+
+    <virtualType name="BraspagTransactionDebitCardOrderRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionDebitCardOrderRequest</argument>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionDebitCardResourceAntiFraudRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionDebitCardResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <!-- Debit Card - Split - START -->
+
+    <virtualType name="BraspagPagadorTransactionDebitCardResourcePaymentSplitRequest" type="Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Webjump\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+    <!-- Debit Card - Split - END -->
+    <!-- Debit Card - END -->
+
+    <!--Boleto - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\Config" />
+    <preference for="Webjump\BraspagPagador\Model\Payment\Info\BoletoFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\BoletoFactory" />
+
+    <virtualType name="BraspagTransactionBoletoSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request" />
+
+    <type name="Webjump\BraspagPagador\Model\Payment\Info\BoletoFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Block\Payment\Info\Boleto">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionBoletoRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionBoletoValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionBoletoCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\Boleto</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionBoletoConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionBoletoConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionBoletoSendCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoSendCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoSendCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler</item>
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionBoletoSendCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Command\SendCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionBoletoSendRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionBoletoSendCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionBoletoSendCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Debit Card - Anti Fraud - START -->
+
+    <virtualType name="BraspagPagadorTransactionBoletoResourceAntiFraudRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\AntiFraud\Request">
+        <arguments>
+            <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionResourceAntiFraudItemsRequestFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Debit Card - Anti Fraud - END -->
+
+    <virtualType name="BraspagTransactionBoletoSendRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionBoletoSendRequest</argument>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionBoletoResourceAntiFraudRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionBoletoResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Boleto - Split - START -->
+
+    <virtualType name="BraspagPagadorTransactionBoletoResourcePaymentSplitRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\PaymentSplit\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Webjump\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+    <!-- Boleto - Split - END -->
+    <!--Boleto - END -->
+
+    <!--OAuth2 - START -->
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\RequestInterface" type="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\Request" />
+    <preference for="Webjump\BraspagPagador\Api\OAuth2TokenManagerInterface" type="Webjump\BraspagPagador\Model\OAuth2TokenManager" />
+    <preference for="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\BuilderInterface" type="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\Builder" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Model\OAuth2TokenManager">
+        <arguments>
+            <argument name="request" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\RequestInterface</argument>
+            <argument name="tokenCommand" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Command\TokenCommand</argument>
+            <argument name="cookieManager" xsi:type="object">\Magento\Framework\Stdlib\CookieManagerInterface</argument>
+            <argument name="cookieMetadataFactory" xsi:type="object">\Magento\Framework\Stdlib\Cookie\CookieMetadataFactory</argument>
+            <argument name="builder" xsi:type="object">\Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\BuilderInterface</argument>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Command\TokenCommand">
+        <arguments>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\FacadeInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\Builder">
+        <arguments>
+            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
+        </arguments>
+    </type>
+    <!--OAuth2 - END -->
+
+    <!--Notification - START -->
+    <preference for="Webjump\BraspagPagador\Api\NotificationManagerInterface" type="Webjump\BraspagPagador\Model\NotificationManager" />
+    <preference for="Webjump\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface" type="Webjump\BraspagPagador\Model\SubordinateApprovalNotificationManager" />
+    <!--Notification - END -->
+
+    <!--Installments - START -->
+    <preference for="Webjump\BraspagPagador\Api\InstallmentsInterface" type="Webjump\BraspagPagador\Model\Installments" />
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfig">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+    <!--Installments - END -->
+</config>

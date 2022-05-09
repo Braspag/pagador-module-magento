@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+
+    <methods>
+        <method name="braspag_pagador_boleto">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="braspag_pagador_creditcard">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+    </methods>
+
+    <credit_cards>
+
+        <type id="Simulado" order="10">
+            <label>Simulado*</label>
+        </type>
+
+        <!-- Boletos -->
+        <type id="BancoDoBrasil2" order="20">
+            <label>Banco Do Brasil</label>
+        </type>
+        <type id="BankofAmerica" order="30">
+            <label>Bank of America</label>
+        </type>
+        <type id="Bradesco2" order="40">
+            <label>Bradesco</label>
+        </type>
+        <type id="Braspag" order="50">
+            <label>Braspag</label>
+        </type>
+        <type id="Caixa2" order="60">
+            <label>Caixa</label>
+        </type>
+        <type id="Citibank2" order="70">
+            <label>Citibank</label>
+        </type>
+        <type id="Itau2" order="80">
+            <label>Itau</label>
+        </type>
+        <type id="ItauShopline" order="90">
+            <label>ItauShopline</label>
+        </type>
+        <type id="Santander2" order="100">
+            <label>Santander</label>
+        </type>
+
+        <!-- Creditcard and DebitCard -->
+        <type id="GlobalPayments-Visa" order="110">
+            <label>GlobalPayments Visa</label>
+        </type>
+        <type id="GlobalPayments-Master" order="120">
+            <label>GlobalPayments Master</label>
+        </type>
+        <type id="Cielo-Visa" order="130">
+            <label>Cielo Visa</label>
+        </type>
+        <type id="Cielo-Master" order="140">
+            <label>Cielo Master</label>
+        </type>
+        <type id="Cielo-Amex" order="150">
+            <label>Cielo Amex</label>
+        </type>
+        <type id="Cielo-Elo" order="160">
+            <label>Cielo Elo</label>
+        </type>
+        <type id="Cielo-Aura" order="170">
+            <label>Cielo Aura</label>
+        </type>
+        <type id="Cielo-Jcb" order="180">
+            <label>Cielo Jcb</label>
+        </type>
+        <type id="Cielo-Diners" order="190">
+            <label>Cielo Diners</label>
+        </type>
+        <type id="Cielo-Discover" order="200">
+            <label>Cielo Discover</label>
+        </type>
+        <type id="Cielo30-Visa" order="210">
+            <label>Cielo30 Visa</label>
+        </type>
+        <type id="Cielo30-Master" order="220">
+            <label>Cielo30 Master</label>
+        </type>
+        <type id="Cielo30-Amex" order="230">
+            <label>Cielo30 Amex</label>
+        </type>
+        <type id="Cielo30-Elo" order="240">
+            <label>Cielo30 Elo</label>
+        </type>
+        <type id="Cielo30-Aura" order="250">
+            <label>Cielo30 Aura</label>
+        </type>
+        <type id="Cielo30-Jcb" order="260">
+            <label>Cielo30 Jcb</label>
+        </type>
+        <type id="Cielo30-Diners" order="270">
+            <label>Cielo30 Diners</label>
+        </type>
+        <type id="Cielo30-Discover" order="280">
+            <label>Cielo30 Discover</label>
+        </type>
+        <type id="Cielo30-Hipercard" order="290">
+            <label>Cielo30 Hipercard</label>
+        </type>
+        <type id="Cielo30-Hiper" order="300">
+            <label>Cielo30 Hiper</label>
+        </type>
+        <type id="Getnet-Visa" order="310">
+            <label>Getnet Visa</label>
+        </type>
+        <type id="Getnet-Master" order="320">
+            <label>Getnet Master</label>
+        </type>
+        <type id="Getnet-Elo" order="330">
+            <label>Getnet Elo</label>
+        </type>
+        <type id="Getnet-Amex" order="340">
+            <label>Getnet Amex</label>
+        </type>
+        <type id="Getnet-Hipercard" order="350">
+            <label>Getnet Hipercard</label>
+        </type>
+        <type id="Rede-Visa" order="360">
+            <label>Rede Visa</label>
+        </type>
+        <type id="Rede-Master" order="370">
+            <label>Rede Master</label>
+        </type>
+        <type id="Rede-Hipercard" order="380">
+            <label>Rede Hipercard</label>
+        </type>
+        <type id="Rede-Hiper" order="390">
+            <label>Rede Hiper</label>
+        </type>
+        <type id="Rede-Diners" order="400">
+            <label>Rede Diners</label>
+        </type>
+        <type id="Rede-Elo" order="410">
+            <label>Rede Elo</label>
+        </type>
+        <type id="Rede-Amex" order="420">
+            <label>Rede Amex</label>
+        </type>
+        <type id="Rede2-Visa" order="430">
+            <label>Rede2 Visa</label>
+        </type>
+        <type id="Rede2-Master" order="440">
+            <label>Rede2 Master</label>
+        </type>
+        <type id="Rede2-Hipercard" order="450">
+            <label>Rede2 Hipercard</label>
+        </type>
+        <type id="Rede2-Hiper" order="460">
+            <label>Rede2 Hiper</label>
+        </type>
+        <type id="Rede2-Diners" order="470">
+            <label>Rede2 Diners</label>
+        </type>
+        <type id="Rede2-Elo" order="480">
+            <label>Rede2 Elo</label>
+        </type>
+        <type id="Rede2-Amex" order="490">
+            <label>Rede2 Amex</label>
+        </type>
+        <type id="Stone-Visa" order="500">
+            <label>Stone Visa</label>
+        </type>
+        <type id="Stone-Master" order="510">
+            <label>Stone Master</label>
+        </type>
+        <type id="Stone-Hipercard" order="520">
+            <label>Stone Hipercard</label>
+        </type>
+        <type id="Stone-Elo" order="530">
+            <label>Stone Elo</label>
+        </type>
+        <type id="Safra-Visa" order="540">
+            <label>Safra Visa</label>
+        </type>
+        <type id="Safra-Master" order="550">
+            <label>Safra Master</label>
+        </type>
+        <type id="Safra-Hipercard" order="560">
+            <label>Safra Hipercard</label>
+        </type>
+        <type id="Safra-Elo" order="570">
+            <label>Safra Elo</label>
+        </type>
+        <type id="Safra-Amex" order="580">
+            <label>Safra Amex</label>
+        </type>
+        <type id="FirstData-Visa" order="590">
+            <label>FirstData Visa</label>
+        </type>
+        <type id="FirstData-Master" order="600">
+            <label>FirstData Master</label>
+        </type>
+        <type id="FirstData-Cabal" order="610">
+            <label>FirstData Cabal</label>
+        </type>
+        <type id="FirstData-Elo" order="620">
+            <label>FirstData Elo</label>
+        </type>
+        <type id="FirstData-Hipercard" order="630">
+            <label>FirstData Hipercard</label>
+        </type>
+        <type id="FirstData-Amex" order="640">
+            <label>FirstData Amex</label>
+        </type>
+
+    </credit_cards>
+</payment>

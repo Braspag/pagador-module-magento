@@ -1,0 +1,24 @@
+<?php
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ */
+/**
+ * @var \Webjump\BraspagPagador\Block\AntiFraud\FingerPrint $this;
+ */
+?>
+
+<noscript>
+    <iframe src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>"></iframe>
+</noscript>
+
+
+<?= $secureRenderer->renderTag('script', ['type' => 'text/javascript', 'src' => $this->getFingerPrint()->getSrcJsUrl()."?".$this->getSrcParams()], "", false); ?>
+
+
+
+

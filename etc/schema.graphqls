@@ -1,0 +1,29 @@
+type Query {
+    braspagAccessToken: AccessTokenResult
+    @resolver(
+        class: "Webjump\\BraspagPagador\\Model\\Resolver\\AccessToken"
+    )
+    @doc(
+        description: "Request braspag pagador to get access token"
+    )
+}
+
+type AccessTokenResult {
+    accessToken: String @doc(description: "Access Token code.")
+}
+
+input PaymentMethodInput {
+    additional_data : BraspagAdditionalDataInput @doc(description: "Defines the required attributes for Braspag payments")
+}
+
+input BraspagAdditionalDataInput {
+    cc_cid: String! @doc(description: "Braspag's credit card cid")
+    cc_exp_month: String! @doc(description: "Braspag's credit card expiration month")
+    cc_exp_year: String! @doc(description: "Braspag's credit card expiration year")
+    cc_number: String! @doc(description: "Braspag's credit card number")
+    cc_owner: String! @doc(description: "Braspag's credit card owner")
+    cc_soptpaymenttoken: String! @doc(description: "Braspag's credit card token")
+    cc_installments: String! @doc(description: "Braspag's number of installments selected to transaction")
+    cc_savecard: String! @doc(description: "Braspag's save card option")
+    cc_type: String! @doc(description: "Braspag's description of the transaction request")
+}
