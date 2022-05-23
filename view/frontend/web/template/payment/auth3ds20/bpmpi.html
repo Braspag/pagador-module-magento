@@ -11,6 +11,7 @@
 
     <div id="bpmpi_data_auth">
         <input type="hidden" name="bpmpi_accesstoken" class="bpmpi_accesstoken" data-bind='textInput:bpmpiAuthToken'/>
+        <!-- <input type="hidden" afterRender="getBpmpiAuthToken()" name="bpmpi_auth" class="bpmpi_auth" value="true" data-bind="attr: {afterRender: getBpmpiAuthToken()}"/> -->
         <input type="hidden" name="bpmpi_auth" class="bpmpi_auth" value="true" data-bind="template: {afterRender: getBpmpiAuthToken()}"/>
         <input type="hidden" name="bpmpi_auth_notifyonly" class="bpmpi_auth_notifyonly" value=""/>
         <input type="hidden" name="bpmpi_auth_failure_type" class="bpmpi_auth_failure_type" value=""/>

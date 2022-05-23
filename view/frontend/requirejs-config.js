@@ -15,6 +15,10 @@ var config = {
 				}
 			}
 		}
-	}
+	},
+    config: {
+        map: {
+            'Magento_Checkout/js/action/place-order': 'Webjump_BraspagPagador/js/action/place-order'
+            }
+    }
 }
-

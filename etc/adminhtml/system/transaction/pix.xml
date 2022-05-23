@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (C) 2021 Signativa/FGP Desenvolvimento de Software
+    SPDX-License-Identifier: Apache-2.0
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_pix" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
+        <label>Pix</label>
+        <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+            <label>Enabled</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_pix/active</config_path>
+        </field>
+        <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+            <label>Title</label>
+            <config_path>payment/braspag_pagador_pix/title</config_path>
+        </field>
+        <field id="types" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Type</label>
+	        <comment />
+	        <source_model>Webjump\BraspagPagador\Model\Source\PixTypes</source_model>
+	        <config_path>payment/braspag_pagador_pix/types</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+	    <field id="demonstrative" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+	        <label>Demonstrative</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_pix/demonstrative</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+		<field id="identification" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+			<label>Identification</label>
+			<comment />
+			<config_path>payment/braspag_pagador_pix/identification</config_path>
+			<depends>
+				<field id="active">1</field>
+			</depends>
+		</field>
+	    <field id="expiration_time" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Expirations Time</label>
+	        <comment>Report time in minutes</comment>
+	        <config_path>payment/braspag_pagador_pix/expiration_time</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+			<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+            <config_path>payment/braspag_pagador_pix/order_status</config_path>
+        </field>
+        <field id="order_status_processing" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>Captured Order Status</label>
+			<source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+            <config_path>payment/braspag_pagador_pix/order_status_processing</config_path>
+        </field>
+        <field id="cron_cancel_pending" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="select">
+            <label>Automatic canceling of expired orders</label>
+            <comment />
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_pix/cron_cancel_pending</config_path>
+        </field>
+	    <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Sort Order</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_pix/sort_order</config_path>
+	    </field>
+        <field id="logo" translate="label" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Logo</label>
+            <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+            <upload_dir config="system/filesystem/media" scope_info="1">payments/logo</upload_dir>
+            <base_url type="media" scope_info="1">payments/logo</base_url>
+            <config_path>payment/braspag_pagador_pix/logo</config_path>
+        </field>
+        <field id="display_logo_title" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Display Title next to Logo</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_pix/display_logo_title</config_path>
+        </field>
+    </group>
+</include>

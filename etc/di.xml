@@ -8,6 +8,9 @@
     <preference for="Webjump\BraspagPagador\Api\SplitManagerInterface" type="Webjump\BraspagPagador\Model\SplitManager" />
     <preference for="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config"/>
 
+<!-- Start interface -->
+    <preference for="Webjump\BraspagPagador\Model\Config\ConfigInterface" type="Webjump\BraspagPagador\Model\Config\Config" />
+<!-- End iterface-->
     <type name="Webjump\BraspagPagador\Model\SplitDataProvider">
         <arguments>
             <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
@@ -937,4 +940,117 @@
         </arguments>
     </type>
     <!--Installments - END -->
+
+    <!-- Payment Pix-->
+    
+ <preference for="Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\Config" />
+    <preference for="Webjump\BraspagPagador\Model\Payment\Info\PixFactoryInterface" type="Webjump\BraspagPagador\Model\Payment\Info\PixFactory" />
+
+    <virtualType name="BraspagTransactionPixSendRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Request" />
+
+    <type name="Webjump\BraspagPagador\Model\Payment\Info\PixFactory">
+        <arguments>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <type name="Webjump\BraspagPagador\Block\Payment\Info\Pix">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="objectManager" xsi:type="object">\Magento\Framework\ObjectManager\ObjectManager</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="BraspagTransactionPixRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionPixValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionPixCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Webjump\BraspagPagador\Block\Payment\Info\Pix</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionPixConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionPixConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionPixSendCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixSendCommandRequestHandlerPool" type="Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixSendCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\BaseHandler</item>
+                <item name="split" xsi:type="string">Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixSendCommand" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Command\SendCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionPixSendRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionPixSendCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionPixSendCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Webjump\Braspag\Pagador\Transaction\BraspagFacade</argument>
+        </arguments>
+    </virtualType>
+
+
+
+    <virtualType name="BraspagTransactionPixSendRequestBuilder" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionPixSendRequest</argument>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionPixResourceAntiFraudRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionPixResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagPagadorTransactionPixResourcePaymentSplitRequest" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\PaymentSplit\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Webjump\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- End Payment Pix -->
 </config>

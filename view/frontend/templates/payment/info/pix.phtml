@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @var \Webjump\BraspagPagador\Block\Payment\Info\Pix $block
+ */
+
+$specificInfo = $block->getSpecificInformation();
+$title = $block->escapeHtml($block->getMethod()->getTitle());
+?>
+<dl class="payment-method">
+    <dt class="title"><?php echo $title; ?></dt>
+    <?php if ($specificInfo) :?>
+    <dd class="content">
+        <table class="data table">
+            <?php foreach ($specificInfo as $label => $value) :?>
+            <tr>
+                <?php if ($label == 'QRcode Image') : ?>
+                <th scope="row"><?php echo $block->escapeHtml(__($label))?></th>
+                <td>
+                    <img src="<?= $value ?>" alt="PIX QRcode" />
+                </td>
+                <?php else : ?>
+                <th scope="row"><?php echo $block->escapeHtml($label)?></th>
+                <td>
+                    <?php echo nl2br($block->escapeHtml(implode("\n", $block->getValueAsArray($value, true))));?>
+                </td>
+                <?php endif; ?>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </dd>
+    <?php endif;?>
+</dl>
+<?php echo $block->getChildHtml()?>

@@ -33,6 +33,10 @@ define(
             {
                 type: 'braspag_pagador_debitcard',
                 component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/debitcard'
+            },
+            {
+                type: 'braspag_pagador_pix',
+                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/pix'
             }
         );
         return Component.extend({});

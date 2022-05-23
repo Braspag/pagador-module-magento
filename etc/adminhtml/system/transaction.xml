@@ -13,5 +13,6 @@
         <include path="Webjump_BraspagPagador::system/transaction/creditcard.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken.xml"/>
         <include path="Webjump_BraspagPagador::system/transaction/debitcard.xml"/>
+        <include path="Webjump_BraspagPagador::system/transaction/pix.xml"/>
     </group>
 </include>

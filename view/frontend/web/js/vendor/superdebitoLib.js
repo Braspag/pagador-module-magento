@@ -19,7 +19,7 @@ define([], function() {
 
     var braspagSuperDebito = {
         superdebito: function(_1) {
-            bpsd_options = bpsd_merge(bpsd_defaultOptions, _1);
+            bpsd_options = this.bpsd_merge(bpsd_defaultOptions, _1);
             bpsd_raiseEvent("onInitialize", bpsd_options.onInitialize);
             if (!bpsd_validate()) {
                 bpsd_raiseEvent("onFinalize", bpsd_options.onFinalize);

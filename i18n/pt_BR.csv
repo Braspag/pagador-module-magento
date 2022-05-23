@@ -25,3 +25,8 @@
 "The length of the '%1' field is longer than allowed. The limit is '%2' characters.", "O tamanho do campo '%1' é maior do que o permitido. O limite é de '%2' caracteres."
 "'CorporateName' can not be empty", "O campo 'Razão social' não pode ser vazio"
 "'FancyName' can not be empty", "O campo 'Nome fantasia' não pode ser vazio"
+"Invalid card data, please check card data and try again!", "Dados do cartão inválido, verifique os dados do cartão e tente novamente!"
+"An unexpected error occurred while closing the order.","Ocorreu um erro inesperado no fechamento do pedido."
+"Customer cannot be authenticated", "Erro de autenticação, verifique se seus dados estão corretos e tente novamente."
+"Authentication failed, contact us","Falha na autenticação, entre em contato conosco e informe o problema"
+"Invalid card data, please contact us!","Dados do cartão inválidos, entre em contato conosco!"

@@ -20,13 +20,14 @@ define(
         'jquery',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Magento_Checkout/js/action/place-order',
+        'Webjump_BraspagPagador/js/action/place-order',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
         'Webjump_BraspagPagador/js/model/authentication3ds20',
         'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Webjump_BraspagPagador/js/model/card.view',
-        'Webjump_BraspagPagador/js/model/card'
+        'Webjump_BraspagPagador/js/model/card',
+        'Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
     ],
     function (
         Component,
@@ -46,7 +47,8 @@ define(
         authentication3ds20,
         bpmpiRenderer,
         cardView,
-        card
+        card,
+        bpMpi3ds20Conf
     ) {
         'use strict';
 
@@ -100,7 +102,7 @@ define(
                         rawNumber: self.creditCardNumber(),
                         expiration: self.creditCardExpDate(),
                         securityCode: self.creditCardVerificationNumber(),
-                        code: 'braspag_pagador_creditcard',
+                        code: 'braspag_pagador_debitcard',
                         authToken: transport,
                         successCallBack: function () {
                             fullScreenLoader.stopLoader();
@@ -189,7 +191,7 @@ define(
 
             getData: function () {
 
-                if (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive()) {
+                if (sopt.isActive('braspag_pagador_debitcard') && this.isSoptActive()) {
 
                     return {
                         'method': this.item.method,
@@ -313,9 +315,11 @@ define(
 
                 this.updateCreditCardExpData();
                 var self = this;
-                if (! (sopt.isActive('braspag_pagador_creditcard') && this.isSoptActive())) {
+                if (! (sopt.isActive(this.getCode()) && this.isSoptActive())) {
+                    
+                    let data = this.getData();
                     return $.when(
-                        placeOrderAction(this.getData(), this.messageContainer)
+                        placeOrderAction(data, this.messageContainer)
                     ).fail(
                         function () {
                             self.isPlaceOrderActionAllowed(true);
@@ -329,18 +333,20 @@ define(
                             if (orderId.length == 0) {
                                 errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
                             } else {
+                                
                                 fullScreenLoader.startLoader();
                                 $.when(
                                     RedirectAfterPlaceOrder(orderId)
                                 ).done(
                                     function (url) {
                                         if (self.redirectAfterPlaceOrder && url.length) {
-                                            window.location.replace(url);
-                                            return true;
+                                            // window.location.replace(url);
+                                            // return true;
                                         }
 
                                         if (self.redirectAfterPlaceOrder) {
                                             redirectOnSuccessAction.execute();
+                                            return true;
                                         }
                                     }
                                 ).fail(
@@ -359,7 +365,7 @@ define(
             },
 
             isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.dcform.bpmpi_authentication.active;
+                return window.checkoutConfig.payment.dcform.superdebito.active['braspag_pagador_debitcard'];
             },
 
             isBpmpiMasterCardNotifyOnlyEnabled: function() {
@@ -447,7 +453,7 @@ define(
                     if (!self.isBpmpiEnabled()) {
                         self.getPlaceOrderDeferredObject();
                         fullScreenLoader.stopLoader();
-                        return false;
+                        return true;
                     }
 
                     self.bpmpiPopulateDebitcard();
@@ -462,7 +468,7 @@ define(
                         });
                 }
 
-                return false;
+                return true;
             },
 
             placeOrderWithSuperDebito: function (orderId) {
@@ -532,7 +538,6 @@ define(
             showType: function () {
                 return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isDebitCardViewEnabled();
             },
-
         });
     }
 );

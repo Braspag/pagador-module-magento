@@ -11,12 +11,14 @@ define(
     [
         "jquery",
     	"Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf",
-    	"Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.lib"
+    	// "Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.lib"
+        "Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.min"
     ],
     function(
         $,
         authentication3ds20conf,
-        authentication3ds20lib
+        // authentication3ds20lib
+        authentication3ds20min
     ) {
         'use strict';
 
@@ -31,14 +33,14 @@ define(
             },
 
             bpmpiLoad: function () {
-                authentication3ds20lib.bpmpi_load();
+                authentication3ds20min.bpmpi_load();
             },
 
             bpmpiAuthenticate: function () {
                 self = this;
 
                 return new Promise(function(resolve, reject){
-                    authentication3ds20lib.bpmpi_authentication()
+                    authentication3ds20min.bpmpi_authentication()
                         .then(function(){
 
                             var returnData = {

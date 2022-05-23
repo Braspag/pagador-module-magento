@@ -8,6 +8,7 @@ use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
 use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
+use Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as PixConfigProvider;
 
 /**
  * Credit Card Data Assign
@@ -58,6 +59,10 @@ class DataAssignObserver extends AbstractDataAssignObserver
             return $this;
         }
 
+        if ($info->getMethodInstance()->getCode() === PixConfigProvider::CODE) {
+            return $this;
+        }
+
         $data = $this->readDataArgument($observer);
 
         $additionalData = $data->getData(PaymentInterface::KEY_ADDITIONAL_DATA);
@@ -89,7 +94,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
         }
 
         if ($additionalData->getCcSavecard()) {
-            $info->setAdditionalInformation('cc_savecard', (boolean) $additionalData->getCcSavecard());
+            $info->setAdditionalInformation('cc_savecard', (bool) $additionalData->getCcSavecard());
         }
 
         if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {

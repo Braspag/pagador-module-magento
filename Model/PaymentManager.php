@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -55,7 +56,8 @@ class PaymentManager
     protected $types = [
         'braspag_pagador_creditcard' => 'creditCard',
         'braspag_pagador_creditcardtoken' => 'creditCard',
-        'braspag_pagador_boleto' => 'boleto'
+        'braspag_pagador_boleto' => 'boleto',
+        'braspag_pagador_pix' => 'pix'
     ];
 
     /**
@@ -74,7 +76,7 @@ class PaymentManager
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
         OrderPaymentCollectionFactory $orderPaymentCollectionFactory
-    ){
+    ) {
         $this->setOrderStatusModel($orderStatusModel);
         $this->setInvoiceManager($invoiceManager);
         $this->setCreditMemoManager($creditMemoManager);
@@ -203,7 +205,6 @@ class PaymentManager
         $defaultMethodOrderStatus = $magentoPaymentData->getMethodInstance()->getConfigData('order_status');
 
         if (!empty($defaultMethodOrderStatus)) {
-
             $magentoPaymentData->getOrder()
                 ->setState($newState)
                 ->setStatus($defaultMethodOrderStatus);
@@ -243,7 +244,8 @@ class PaymentManager
 
         $magentoPaymentData->setIsTransactionPending(false);
 
-        if ($createInvoice
+        if (
+            $createInvoice
             && $this->getInvoiceManager()->createInvoice($magentoPaymentData->getOrder(), $amount)
         ) {
             $magentoPaymentData->registerCaptureNotification($amount, true);
@@ -257,9 +259,10 @@ class PaymentManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about captured amount of %1.',
+                __(
+                    'Registered notification about captured amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-capture"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -319,7 +322,7 @@ class PaymentManager
         $amount = $braspagPaymentData->getPayment()['VoidedAmount'] / 100;
 
         try {
-            if($createCreditMemo) {
+            if ($createCreditMemo) {
                 $magentoPaymentData->registerRefundNotification($amount, true);
             }
         } catch (\Exception $e) {
@@ -328,9 +331,10 @@ class PaymentManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about refunded amount of %1.',
+                __(
+                    'Registered notification about refunded amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-refund"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -359,7 +363,7 @@ class PaymentManager
     {
         $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
         $orderPayment = $orderPaymentCollection
-            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId.'%'])
+            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId . '%'])
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {

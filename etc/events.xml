@@ -12,6 +12,9 @@
     <event name="payment_method_assign_data_braspag_pagador_boleto">
         <observer name="webjump_payment_method_assign_data_braspag_pagador_boleto" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
     </event>
+    <event name="payment_method_assign_data_braspag_pagador_pix">
+        <observer name="webjump_payment_method_assign_data_braspag_pagador_pix" instance="Webjump\BraspagPagador\Observer\DataAssignObserver" />
+    </event>
     <event name="checkout_submit_all_after">
         <observer name="webjump_payment_checkout_submit_all_after" instance="Webjump\BraspagPagador\Observer\CheckoutSubmitAllAfterObserver" />
     </event>

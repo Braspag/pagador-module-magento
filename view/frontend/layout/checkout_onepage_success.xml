@@ -13,6 +13,11 @@
                     template="checkout/braspag/transaction/boleto/link.phtml"
                     before="order.success.additional.info"
                     cacheable="false" />
+            <block  class="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode"
+                    name="checkout.braspag.transaction.pix.qrcode"
+                    template="checkout/braspag/transaction/pix/qrcode.phtml"
+                    before="order.success.additional.info"
+                    cacheable="false" />
         </referenceContainer>
     </body>
 </page>

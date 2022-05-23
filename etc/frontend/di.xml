@@ -30,6 +30,30 @@
         </arguments>
     </virtualType>
 
+
+<!-- Pix -->
+
+    <virtualType name="BraspagTransactionPixSendRequestConfig" type="Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\Config">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixUiConfigProvider" type="Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider">
+        <arguments>
+            <argument name="pixConfig" xsi:type="object">BraspagTransactionPixSendRequestConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionPixQrcode" type="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode">
+        <arguments>
+            <argument name="context" xsi:type="object">\Magento\Framework\View\Element\Template\Context</argument>
+            <argument name="checkoutSession" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </virtualType>
+
+<!-- pix -->
+
     <!-- Credit Card -->
 
     <virtualType name="BraspagTransactionCreditCardUiConfigProvider" type="Magento\Payment\Model\CcGenericConfigProvider">
@@ -112,6 +136,10 @@
                 <item name="braspag_pagador_creditcard_token_config_provider" xsi:type="object">BraspagPagadorModelPaymentTransactionCreditCardTokenUiConfigProvider</item>
                 <item name="braspag_pagador_debitcard_config_provider" xsi:type="object">BraspagTransactionDebitCardOrderUiConfigProvider</item>
                 <item name="braspag_pagador_debitcard_default_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider</item>
+                <item name="braspag_pagador_pix_config_provider" xsi:type="object">\Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider</item>
+
+                <item name="braspag_pagador_pix_logo_config_provider" xsi:type="object">Webjump\BraspagPagador\Model\LogoConfigProvider</item>
+
             </argument>
         </arguments>
     </type>

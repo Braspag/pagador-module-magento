@@ -83,14 +83,15 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
         $doInvoice = false;
 
         try {
-
-            if ($this->config->isAuthorizeAndCapture()
+            if (
+                $this->config->isAuthorizeAndCapture()
                 && $order->getId()
                 && preg_match("#braspag_pagador_creditcard#is", $payment->getMethodInstance()->getCode())
             ) {
-                if ($payment->getIsFraudDetected()
+                if (
+                    $payment->getIsFraudDetected()
                     && $payment->getMethodInstance()->getConfigData('reject_order_status') === 'canceled'
-                ){
+                ) {
                     $this->orderManagement->cancel($order->getId());
                     return $this;
                 }
@@ -98,7 +99,8 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
                 $doInvoice = true;
             }
 
-            if ($order->getId()
+            if (
+                $order->getId()
                 && preg_match("#braspag_pagador_debitcard#is", $payment->getMethodInstance()->getCode())
             ) {
                 $braspagPaymentStatus = $payment->getAdditionalInformation('braspag_payment_status');
@@ -109,7 +111,8 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
             }
 
             if ($doInvoice) {
-                if (!$payment->getIsFraudDetected()
+                if (
+                    !$payment->getIsFraudDetected()
                     && !$payment->getIsTransactionPending()
                     && $order->canInvoice()
                     && !$order->hasInvoices()
@@ -143,15 +146,13 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
             $dataSplitPayment = $payment->getAdditionalInformation('split_payments');
 
             if (!empty($dataSplitPayment)) {
-
                 $dataSplitPaymentObject = $this->objectFactory->create();
                 $dataSplitPaymentObject->addData($dataSplitPayment);
 
                 $this->splitManager->createPaymentSplitByOrder($payment->getOrder(), $dataSplitPaymentObject);
             }
-
         } catch (\Exception $e) {
-            $order->addStatusHistoryComment('Exception message: '.$e->getMessage(), false);
+            $order->addStatusHistoryComment('Exception message: ' . $e->getMessage(), false);
             $order->save();
             return null;
         }
