@@ -1,5 +1,5 @@
 {
-    "name": "webjump/magento2-module-braspagpagador",
+    "name": "braspag/magento2-module-braspagpagador",
     "license": "MIT",
     "type": "magento2-module",
     "description": "Braspag Pagador integration for Magento 2",
