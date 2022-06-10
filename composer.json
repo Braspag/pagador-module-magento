@@ -53,7 +53,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Braspag\\BraspagPagador\\": ""
+            "Webjump\\BraspagPagador\\": ""
         }
     }
 }
