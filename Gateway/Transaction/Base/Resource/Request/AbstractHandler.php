@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface;
 
 /**
 

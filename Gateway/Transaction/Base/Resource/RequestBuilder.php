@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
@@ -16,13 +16,13 @@ use Magento\Payment\Gateway\Request\BuilderInterface;
  */
 class RequestBuilder implements BuilderInterface
 {
-	protected $request;
+    protected $request;
 
-	public function __construct(
-		RequestInterface $request
-	) {
+    public function __construct(
+        RequestInterface $request
+    ) {
         $this->setRequest($request);
-	}
+    }
 
     public function build(array $buildSubject)
     {

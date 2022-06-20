@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Payment\Model\InfoInterface;
 
@@ -27,8 +27,8 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             RequestInterface::class
         );
 
-        $this->requestPaymentSplitLibInterface = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface');
-        $this->configInterface = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
+        $this->requestPaymentSplitLibInterface = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface');
+        $this->configInterface = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface');
 
         $this->paymentMock = $this->getMockBuilder(InfoInterface::class)
             ->disableOriginalConstructor()

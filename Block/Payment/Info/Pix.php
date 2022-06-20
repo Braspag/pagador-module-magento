@@ -9,17 +9,17 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\Payment\Info;
+namespace Braspag\BraspagPagador\Block\Payment\Info;
 
 use Magento\Payment\Block\Info;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Model\Payment\Info\PixFactoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Info\PixFactory;
+use Braspag\BraspagPagador\Model\Payment\Info\PixFactoryInterface;
+use Braspag\BraspagPagador\Model\Payment\Info\PixFactory;
 
 class Pix extends Info
 {
-    const TEMPLATE = 'Webjump_BraspagPagador::payment/info/pix.phtml';
+    const TEMPLATE = 'Braspag_BraspagPagador::payment/info/pix.phtml';
 
     protected $pixHelper;
 
@@ -29,7 +29,7 @@ class Pix extends Info
     protected $ccontext;
 
     public function __construct(
-        \Webjump\BraspagPagador\Helper\Pix $pixHelper,
+        \Braspag\BraspagPagador\Helper\Pix $pixHelper,
         PixFactoryInterface $pixFactory,
         Context $context,
         array $data = []

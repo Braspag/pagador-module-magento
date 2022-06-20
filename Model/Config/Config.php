@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Config;
+namespace Braspag\BraspagPagador\Model\Config;
 
 use Magento\Payment\Model\MethodInterface;
 

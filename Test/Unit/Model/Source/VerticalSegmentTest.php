@@ -11,9 +11,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Source;
+namespace Braspag\BraspagPagador\Test\Unit\Model\Source;
 
-use Webjump\BraspagPagador\Model\Source\VerticalSegment;
+use Braspag\BraspagPagador\Model\Source\VerticalSegment;
 
 class VerticalSegmentTest extends \PHPUnit\Framework\TestCase
 {

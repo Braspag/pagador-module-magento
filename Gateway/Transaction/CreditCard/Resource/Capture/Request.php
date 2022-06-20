@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
 
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as BraspaglibRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as BraspaglibRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
-use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 
 /**
  * Capture Request
@@ -101,7 +101,6 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
         $subordinates = [];
         foreach ($splits->getSubordinates() as $subordinate) {
-
             $subordinateData =  [
                 "SubordinateMerchantId" => $subordinate['subordinate_merchant_id'],
                 "Amount" => $subordinate['amount'],
@@ -109,7 +108,6 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
             ];
 
             if (isset($subordinate['fares'])) {
-
                 if (!empty($subordinate['fares']['mdr'])) {
                     $subordinateData["Fares"]['Mdr'] = $subordinate['fares']['mdr'];
                 }
@@ -148,7 +146,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
         $integerValue = $this->grandTotalPricingHelper->currency($captureAmount);
 
-    	return [
+        return [
             'amount' => $integerValue
         ];
     }
@@ -205,7 +203,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     /**
      * @param RequestPaymentSplitLibInterface $paymentSplitRequest
-     * @return \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request
+     * @return \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request
      */
     public function setPaymentSplitRequest(RequestPaymentSplitLibInterface $paymentSplitRequest)
     {

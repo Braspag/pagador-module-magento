@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,14 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Api;
+namespace Braspag\BraspagPagador\Api;
 
-use Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
 
 /**
  * Interface Auth3DS20GetAddressInterface
  *
- * @package Webjump\BraspagPagador\Api
+ * @package Braspag\BraspagPagador\Api
  */
 interface Auth3DS20GetAddressInterface
 {

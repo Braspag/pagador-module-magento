@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
-use Webjump\BraspagPagador\Model\Pix;
+use Braspag\BraspagPagador\Model\Pix;
 use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Payment\Model\Method\AbstractMethod;
-use Webjump\BraspagPagador\Model\Config\Config;
+use Braspag\BraspagPagador\Model\Config\Config;
 use Magento\Store\Model\StoreManagerInterface;
 
 class LogoConfigProvider implements ConfigProviderInterface

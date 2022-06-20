@@ -1,11 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock\Request;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
-//use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
+
+//use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
 
 /**
  * Validator

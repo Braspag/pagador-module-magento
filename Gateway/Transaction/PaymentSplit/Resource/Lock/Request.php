@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Capture Request
  *
@@ -8,14 +9,15 @@
  *
  * @link        http://www.webjump.com.br
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock;
+
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock;
 
 use Magento\Framework\Session\SessionManagerInterface;
-use Webjump\BraspagPagador\Api\OAuth2TokenManagerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Api\OAuth2TokenManagerInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface as BraspaglibRequestInterface;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
+use Braspag\BraspagPagador\Api\SplitDataProviderInterface;
 
 class Request implements BraspaglibRequestInterface
 {

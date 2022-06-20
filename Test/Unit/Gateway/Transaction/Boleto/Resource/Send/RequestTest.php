@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send;
 
 use Magento\Checkout\Model\Session;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -24,7 +24,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getQuote'])
             ->getMock();
 
-    	$this->boletoConfigInterfaceMock = $this->getMockBuilder('Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface')
+        $this->boletoConfigInterfaceMock = $this->getMockBuilder('Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getSession',
@@ -57,12 +57,12 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ])
             ->getMock();
 
-    	$this->validatorMock = $this->createMock('Webjump\BraspagPagador\Helper\Validator');
+        $this->validatorMock = $this->createMock('Braspag\BraspagPagador\Helper\Validator');
 
         $this->quoteMock = $this->createMock(\Magento\Quote\Model\Quote::class);
         $this->customerMock = $this->createMock(\Magento\Customer\Model\Customer::class);
 
-    	$this->helperData = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+        $this->helperData = $this->getMockBuilder('\Braspag\BraspagPagador\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods(['removeSpecialCharacters'])
             ->getMock();
@@ -71,7 +71,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->request = $this->objectManagerHelper->getObject(
+        $this->request = $this->objectManagerHelper->getObject(
             Request::class,
             [
                 'config' => $this->boletoConfigInterfaceMock,
@@ -83,12 +83,11 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()
     {
-    	$paymentMock = $this->createMock('Magento\Sales\Api\Data\OrderPaymentInterface');
+        $paymentMock = $this->createMock('Magento\Sales\Api\Data\OrderPaymentInterface');
 
         $billingAddressMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\AddressAdapterInterface')
             ->setMethods([
@@ -203,7 +202,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $billingAddressMock->expects($this->atLeastOnce())
             ->method('getStreetLine')
-            ->withConsecutive(['1'],['2'],['3'],['4'])
+            ->withConsecutive(['1'], ['2'], ['3'], ['4'])
             ->willReturnOnConsecutiveCalls('rua x', '123', 'casa 123', 'Centro');
 
         $billingAddressMock->expects($this->once())
@@ -218,13 +217,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getRegionCode')
             ->will($this->returnValue('SP'));
 
-    	$orderAdapterMock->expects($this->once())
-    	    ->method('getGrandTotalAmount')
-    	    ->will($this->returnValue('157.00'));
+        $orderAdapterMock->expects($this->once())
+            ->method('getGrandTotalAmount')
+            ->will($this->returnValue('157.00'));
 
-    	$orderAdapterMock->expects($this->exactly(2))
-    	    ->method('getOrderIncrementId')
-    	    ->will($this->returnValue('2016000001'));
+        $orderAdapterMock->expects($this->exactly(2))
+            ->method('getOrderIncrementId')
+            ->will($this->returnValue('2016000001'));
 
         $this->boletoConfigInterfaceMock->expects($this->once())
             ->method('getPaymentAssignorAddress')
@@ -260,37 +259,37 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $this->request->setOrderAdapter($orderAdapterMock);
 
-		static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
-		static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
-		static::assertEquals('2016000001', $this->request->getMerchantOrderId());
-		static::assertEquals(true, $this->request->isTestEnvironment());
-		static::assertEquals($expectedCustomerName, $this->request->getCustomerName());
+        static::assertEquals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', $this->request->getMerchantId());
+        static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
+        static::assertEquals('2016000001', $this->request->getMerchantOrderId());
+        static::assertEquals(true, $this->request->isTestEnvironment());
+        static::assertEquals($expectedCustomerName, $this->request->getCustomerName());
 
-		static::assertEquals('12345678912', $this->request->getCustomerIdentity());
-		static::assertEquals('CPF', $this->request->getCustomerIdentityType());
-		static::assertEquals('braspag@webjump.com.br', $this->request->getCustomerEmail());
-		static::assertNull($this->request->getCustomerBirthDate());
+        static::assertEquals('12345678912', $this->request->getCustomerIdentity());
+        static::assertEquals('CPF', $this->request->getCustomerIdentityType());
+        static::assertEquals('braspag@webjump.com.br', $this->request->getCustomerEmail());
+        static::assertNull($this->request->getCustomerBirthDate());
 
-		static::assertEquals('rua x', $this->request->getCustomerAddressStreet());
-		static::assertEquals('123', $this->request->getCustomerAddressNumber());
-		static::assertEquals('casa 123', $this->request->getCustomerAddressComplement());
-		static::assertEquals('12345678', $this->request->getCustomerAddressZipCode());
-		static::assertEquals('Centro', $this->request->getCustomerAddressDistrict());
-		static::assertEquals('São Paulo', $this->request->getCustomerAddressCity());
-		static::assertEquals('SP', $this->request->getCustomerAddressState());
-		static::assertEquals('BRA', $this->request->getCustomerAddressCountry());
+        static::assertEquals('rua x', $this->request->getCustomerAddressStreet());
+        static::assertEquals('123', $this->request->getCustomerAddressNumber());
+        static::assertEquals('casa 123', $this->request->getCustomerAddressComplement());
+        static::assertEquals('12345678', $this->request->getCustomerAddressZipCode());
+        static::assertEquals('Centro', $this->request->getCustomerAddressDistrict());
+        static::assertEquals('São Paulo', $this->request->getCustomerAddressCity());
+        static::assertEquals('SP', $this->request->getCustomerAddressState());
+        static::assertEquals('BRA', $this->request->getCustomerAddressCountry());
 
-		static::assertEquals('bank', $this->request->getPaymentBank());
-		static::assertEquals($this->customerMock, $this->request->getCustomerBoleto());
+        static::assertEquals('bank', $this->request->getPaymentBank());
+        static::assertEquals($this->customerMock, $this->request->getCustomerBoleto());
 
-		static::assertEquals('15700', $this->request->getPaymentAmount());
-		static::assertEquals($expectedAddress, $this->request->getPaymentAddress());
-		static::assertEquals('Simulado', $this->request->getPaymentProvider());
-		static::assertEquals('2016000001', $this->request->getPaymentBoletoNumber());
-		static::assertEquals('Empresa Teste', $this->request->getPaymentAssignor());
-		static::assertEquals('Desmonstrative Teste', $this->request->getPaymentDemonstrative());
-		static::assertEquals('2015-01-05', $this->request->getPaymentExpirationDate());
-		static::assertEquals($expectedPaymentNotification, $this->request->getPaymentIdentification());
-		static::assertEquals('Aceitar somente até a data de vencimento, após essa data juros de 1% dia.', $this->request->getPaymentInstructions());
+        static::assertEquals('15700', $this->request->getPaymentAmount());
+        static::assertEquals($expectedAddress, $this->request->getPaymentAddress());
+        static::assertEquals('Simulado', $this->request->getPaymentProvider());
+        static::assertEquals('2016000001', $this->request->getPaymentBoletoNumber());
+        static::assertEquals('Empresa Teste', $this->request->getPaymentAssignor());
+        static::assertEquals('Desmonstrative Teste', $this->request->getPaymentDemonstrative());
+        static::assertEquals('2015-01-05', $this->request->getPaymentExpirationDate());
+        static::assertEquals($expectedPaymentNotification, $this->request->getPaymentIdentification());
+        static::assertEquals('Aceitar somente até a data de vencimento, após essa data juros de 1% dia.', $this->request->getPaymentInstructions());
     }
 }

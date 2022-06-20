@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 
 /**
  * Braspag Transaction Pix Config

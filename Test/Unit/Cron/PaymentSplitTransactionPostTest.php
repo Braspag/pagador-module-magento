@@ -1,17 +1,18 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Cron;
+
+namespace Braspag\BraspagPagador\Test\Unit\Cron;
 
 use Magento\Sales\Model\Order;
-use \Psr\Log\LoggerInterface;
-use Webjump\BraspagPagador\Cron\PaymentSplitTransactionPost;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
-use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
-use Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as ConfigProviderBoleto;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Psr\Log\LoggerInterface;
+use Braspag\BraspagPagador\Cron\PaymentSplitTransactionPost;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
+use Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
+use Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as ConfigProviderBoleto;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
 {
@@ -67,7 +68,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configCreditCardInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
             ->method('getTransactionPostOrdersToExecuteByHours')
@@ -93,7 +94,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configDebitCardInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
             ->method('getTransactionPostOrdersToExecuteByHours')
@@ -119,7 +120,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configBoletoInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitManager->expects($this->once())
             ->method('getTransactionPostOrdersToExecuteByHours')
@@ -145,7 +146,7 @@ class PaymentSplitTransactionPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configBoletoInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->orderMock->expects($this->exactly(1))
             ->method('getPayment')

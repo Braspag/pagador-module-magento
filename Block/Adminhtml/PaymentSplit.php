@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -15,9 +16,9 @@
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml;
+namespace Braspag\BraspagPagador\Block\Adminhtml;
 
-use \Magento\Backend\Block\Widget\Grid\Container;
+use Magento\Backend\Block\Widget\Grid\Container;
 
 class PaymentSplit extends Container
 {

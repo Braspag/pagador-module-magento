@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
 /**
  * Interface Auth3DS20UserAccountInformationInterface
  *
- * @package Webjump\BraspagPagador\Api\Data
+ * @package Braspag\BraspagPagador\Api\Data
  */
 interface Auth3DS20UserAccountInformationInterface
 {

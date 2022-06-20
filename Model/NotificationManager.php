@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,12 +8,12 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Psr\Log\LoggerInterface;
-use \Webjump\BraspagPagador\Api\NotificationManagerInterface;
-use \Webjump\BraspagPagador\Model\Notification\AntifraudStatusChangedCommand;
-use \Webjump\BraspagPagador\Model\Notification\PaymentStatusChangedCommand;
+use Braspag\BraspagPagador\Api\NotificationManagerInterface;
+use Braspag\BraspagPagador\Model\Notification\AntifraudStatusChangedCommand;
+use Braspag\BraspagPagador\Model\Notification\PaymentStatusChangedCommand;
 
 class NotificationManager implements NotificationManagerInterface
 {
@@ -41,7 +42,7 @@ class NotificationManager implements NotificationManagerInterface
         LoggerInterface $logger,
         AntifraudStatusChangedCommand $antifraudStatusChangedCommand,
         PaymentStatusChangedCommand $paymentStatusChangedCommand
-    ){
+    ) {
         $this->setLogger($logger);
         $this->setAntifraudStatusChangedCommand($antifraudStatusChangedCommand);
         $this->setPaymentStatusChangedCommand($paymentStatusChangedCommand);
@@ -103,11 +104,10 @@ class NotificationManager implements NotificationManagerInterface
      */
     public function save($PaymentId, $ChangeType, $RecurrentPaymentId = '')
     {
-        $this->getLogger()->info("Payment Notification: 
-            - PaymentId {$PaymentId} 
-            - ChangeType {$ChangeType} 
-            - RecurrentPaymentId {$RecurrentPaymentId}"
-        );
+        $this->getLogger()->info("Payment Notification:
+            - PaymentId {$PaymentId}
+            - ChangeType {$ChangeType}
+            - RecurrentPaymentId {$RecurrentPaymentId}");
 
         if ($ChangeType == self::NOTIFICATION_PAYMENT_STATUS_CHANGED) {
             return $this->getPaymentStatusChangedCommand()->execute($PaymentId);

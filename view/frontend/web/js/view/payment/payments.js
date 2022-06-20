@@ -20,23 +20,23 @@ define(
         rendererList.push(
             {
                 type: 'braspag_pagador_boleto',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/boleto'
+                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/boleto'
             },
             {
                 type: 'braspag_pagador_creditcard',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard'
+                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard'
             },
             {
                 type: 'braspag_pagador_creditcardtoken',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/token'
+                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/token'
             },
             {
                 type: 'braspag_pagador_debitcard',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/debitcard'
+                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/debitcard'
             },
             {
                 type: 'braspag_pagador_pix',
-                component: 'Webjump_BraspagPagador/js/view/payment/method-renderer/pix'
+                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/pix'
             }
         );
         return Component.extend({});

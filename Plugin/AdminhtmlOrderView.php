@@ -1,13 +1,14 @@
 <?php
-namespace Webjump\BraspagPagador\Plugin;
+
+namespace Braspag\BraspagPagador\Plugin;
 
 use Magento\Framework\Registry;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 class AdminhtmlOrderView
 {
@@ -55,7 +56,8 @@ class AdminhtmlOrderView
     ) {
 
         $paymentMethod = $this->_coreRegistry->registry('sales_order')->getPayment()->getMethod();
-        if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE
+        if (
+            $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE
             && (!$this->configCreditCardInterface->isPaymentSplitActive()
                 || $this->configCreditCardInterface->getPaymentSplitType() !== PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
             )
@@ -63,7 +65,8 @@ class AdminhtmlOrderView
             return null;
         }
 
-        if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE
+        if (
+            $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE
             && (!$this->configDebitCardInterface->isPaymentSplitActive()
                 || $this->configDebitCardInterface->getPaymentSplitType() !== PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
             )
@@ -71,7 +74,8 @@ class AdminhtmlOrderView
             return null;
         }
 
-        if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE
+        if (
+            $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE
             && (!$this->configBoletoInterface->isPaymentSplitActive()
                 || $this->configBoletoInterface->getPaymentSplitType() !== PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
             )
@@ -79,11 +83,11 @@ class AdminhtmlOrderView
             return null;
         }
 
-        if ($this->_coreRegistry->registry('sales_order')
+        if (
+            $this->_coreRegistry->registry('sales_order')
             && $this->_authorization
-                ->isAllowed('Webjump_BraspagPagador::action_paymentsplit_posttransactionsend')
+                ->isAllowed('braspag_BraspagPagador::action_paymentsplit_posttransactionsend')
         ) {
-
             $subject->addButton('send_paymentSplitPostTransaction', [
                 'label'   => __('Send Payment Split'),
                 'class'   => 'paymentsplit_sendttransactionalpost',

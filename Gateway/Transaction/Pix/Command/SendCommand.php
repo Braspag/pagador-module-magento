@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface;
 
 /**
  * Braspag Transaction Pix Send Command

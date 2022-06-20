@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Source;
+namespace Braspag\BraspagPagador\Model\Source;
 
 class PixTypes extends \Magento\Payment\Model\Source\Cctype
 {

@@ -8,11 +8,11 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
-use Webjump\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
-use Webjump\BraspagPagador\Api\AntiFraudManagerInterface;
+use Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
+use Braspag\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
+use Braspag\BraspagPagador\Api\AntiFraudManagerInterface;
 use Magento\Framework\DataObject;
 
 class AntiFraudManager implements AntiFraudManagerInterface
@@ -39,7 +39,7 @@ class AntiFraudManager implements AntiFraudManagerInterface
         \Magento\Customer\Model\SessionFactory $customerSession,
         \Magento\Quote\Model\QuoteFactory $quoteFactory,
         DataObject $dataObject
-    ){
+    ) {
         $this->setFingerPrint($fingerPrint);
         $this->setCookieManager($cookieManager);
         $this->setCookieMetadataFactory($cookieMetadataFactory);

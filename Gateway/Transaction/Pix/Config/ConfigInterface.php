@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Config;
 
 /*
  * Copyright (C) 2021 Signativa/FGP Desenvolvimento de Software
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
+interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
 {
     const CONFIG_XML_BRASPAG_PAGADOR_PIX_DEMONSTRATIVE = 'payment/braspag_pagador_pix/demonstrative';
     const CONFIG_XML_BRASPAG_PAGADOR_PIX_INSTRUCTIONS = 'payment/braspag_pagador_pix/instructions';

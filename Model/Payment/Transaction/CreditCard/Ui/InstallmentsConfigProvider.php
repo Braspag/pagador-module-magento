@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
-use Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui\AbstractInstallmentsConfigProvider;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
+use Braspag\BraspagPagador\Model\Payment\Transaction\Base\Ui\AbstractInstallmentsConfigProvider;
 
 /**
  * Braspag Transaction CreditCard Authorize Command

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2021 Webjump (http://www.webjump.com.br)
@@ -7,19 +8,19 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model\Notification;
+namespace Braspag\BraspagPagador\Model\Notification;
 
-use Webjump\BraspagPagador\Model\SubordinateApprovalManager;
-use \Webjump\BraspagPagador\Api\NotificationManagerInterface;
+use Braspag\BraspagPagador\Model\SubordinateApprovalManager;
+use Braspag\BraspagPagador\Api\NotificationManagerInterface;
 
 /**
  * Class SubordinateApprovalStatusChangedCommand
- * @package Webjump\BraspagPagador\Model\Notification
+ * @package Braspag\BraspagPagador\Model\Notification
  */
 class SubordinateApprovalStatusChangedCommand
 {
     /**
-     * @var Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
+     * @var Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
      **/
     protected $config;
 
@@ -29,21 +30,21 @@ class SubordinateApprovalStatusChangedCommand
     protected $approvalManager;
 
     /**
-     * @var \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand
+     * @var \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand
      */
     protected $getSubordinateCommand;
 
     /**
      * SubordinateApprovalStatusChangedCommand constructor.
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config
      * @param SubordinateApprovalManager $approvalManager
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
      */
     public function __construct(
-        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
+        \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         SubordinateApprovalManager $approvalManager,
-        \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
-    ){
+        \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
+    ) {
         $this->setApprovalManager($approvalManager);
         $this->setConfig($config);
         $this->setGetSubordinateCommand($getSubordinateCommand);
@@ -82,7 +83,7 @@ class SubordinateApprovalStatusChangedCommand
     }
 
     /**
-     * @return Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand
+     * @return Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand
      */
     public function getGetSubordinateCommand()
     {
@@ -90,7 +91,7 @@ class SubordinateApprovalStatusChangedCommand
     }
 
     /**
-     * @param Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
+     * @param Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\GetSubordinateCommand $getSubordinateCommand
      */
     public function setGetSubordinateCommand($getSubordinateCommand)
     {
@@ -111,7 +112,6 @@ class SubordinateApprovalStatusChangedCommand
                 'subordinate' => null,
                 'merchantId' => $merchantId
             ]);
-
         } catch (\Exception $e) {
             return false;
         }

@@ -9,10 +9,10 @@
 /*global define*/
 define(
     [
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard',
-        'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard',
+        'Braspag_BraspagPagador/js/action/redirect-after-placeorder',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'Webjump_BraspagPagador/js/model/superdebito',
+        'Braspag_BraspagPagador/js/model/superdebito',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/totals',
         'Magento_Checkout/js/action/redirect-on-success',
@@ -20,14 +20,14 @@ define(
         'jquery',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Webjump_BraspagPagador/js/action/place-order',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
-        'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
-        'Webjump_BraspagPagador/js/model/card.view',
-        'Webjump_BraspagPagador/js/model/card',
-        'Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
+        'Braspag_BraspagPagador/js/action/place-order',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
+        'Braspag_BraspagPagador/js/model/authentication3ds20',
+        'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
+        'Braspag_BraspagPagador/js/model/card.view',
+        'Braspag_BraspagPagador/js/model/card',
+        'Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
     ],
     function (
         Component,
@@ -54,7 +54,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/debitcard',
+                template: 'Braspag_BraspagPagador/payment/debitcard',
                 redirectAfterPlaceOrder: window.checkoutConfig.payment.redirect_after_place_order,
                 bpmpiInitControl: 0,
                 bpmpiAuthFailureType: ko.observable(),
@@ -316,7 +316,7 @@ define(
                 this.updateCreditCardExpData();
                 var self = this;
                 if (! (sopt.isActive(this.getCode()) && this.isSoptActive())) {
-                    
+
                     let data = this.getData();
                     return $.when(
                         placeOrderAction(data, this.messageContainer)
@@ -333,7 +333,7 @@ define(
                             if (orderId.length == 0) {
                                 errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
                             } else {
-                                
+
                                 fullScreenLoader.startLoader();
                                 $.when(
                                     RedirectAfterPlaceOrder(orderId)

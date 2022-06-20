@@ -26,7 +26,7 @@
         <field id="vertical_segment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Vertical Segment</label>
             <comment />
-            <source_model>\Webjump\BraspagPagador\Model\Source\VerticalSegment</source_model>
+            <source_model>\Braspag\BraspagPagador\Model\Source\VerticalSegment</source_model>
         </field>
 
         <field id="store_identity" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">

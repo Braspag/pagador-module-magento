@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction Pix Send Request Builder
@@ -25,7 +25,7 @@ class RequestBuilder implements BuilderInterface
 
     /**
      * RequestBuilder constructor.
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory $requestFactory
      * @param RequestPaymentSplitLibInterface $requestPaymentSplit
      * @param ConfigInterface $config
      */
@@ -72,7 +72,7 @@ class RequestBuilder implements BuilderInterface
     }
 
     /**
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestFactory $requestFactory
      * @return $this
      */
     protected function setRequestFactory(RequestFactory $requestFactory)

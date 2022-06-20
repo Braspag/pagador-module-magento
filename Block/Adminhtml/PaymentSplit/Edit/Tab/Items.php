@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -10,20 +11,20 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab;
+namespace Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab;
 
-use \Magento\Backend\Block\Widget\Form;
-use \Magento\Framework\Data\Form as DataForm;
-use Webjump\BraspagPagador\Api\SplitItemRepositoryInterface;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Framework\Data\Form as DataForm;
+use Braspag\BraspagPagador\Api\SplitItemRepositoryInterface;
 
 /**
  * Class Items
- * @package Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab
+ * @package Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab
  * @codeCoverageIgnore
  */
 class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Backend\Block\Widget\Tab\TabInterface
@@ -34,7 +35,7 @@ class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
     protected $_shippingConfig;
 
     /**
-     * @var \Webjump\BraspagPagador\Helper\Data
+     * @var \Braspag\BraspagPagador\Helper\Data
      */
     protected $_hlp;
 
@@ -44,7 +45,7 @@ class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
 
     public function __construct(
         \Magento\Shipping\Model\Config $shippingConfig,
-        \Webjump\BraspagPagador\Helper\Data $helper,
+        \Braspag\BraspagPagador\Helper\Data $helper,
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
@@ -71,21 +72,20 @@ class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
         }
 
         $form = $this->_formFactory->create();
-        $fieldset = $form->addFieldset('items_fieldset', ['legend'=>__('Items')]);
+        $fieldset = $form->addFieldset('items_fieldset', ['legend' => __('Items')]);
 
         foreach ($paymentSplitItemCollection as $paymentSplitItemKey => $paymentSplitItemModel) {
-
             if (!empty($paymentSplitItemModel->getSalesQuoteItemId())) {
                 $quoteItemFactory = $this->quoteItem->create();
                 $quoteItem = $quoteItemFactory->load($paymentSplitItemModel->getSalesQuoteItemId());
 
-                $fieldset->addField('sales_quote_item_label_'.$paymentSplitItemKey, 'label', [
+                $fieldset->addField('sales_quote_item_label_' . $paymentSplitItemKey, 'label', [
                     'name'      => 'sales_quote_item_label',
-                    'label'     => __('SKU ').$quoteItem->getSku(),
+                    'label'     => __('SKU ') . $quoteItem->getSku(),
                 ]);
             }
 
-            $fieldset->addField('sales_quote_item__'.$paymentSplitItemKey, 'text', [
+            $fieldset->addField('sales_quote_item__' . $paymentSplitItemKey, 'text', [
                 'name'      => 'sales_quote_item_id',
                 'label'     => __('Sales Quote Item ID'),
                 'required'  => false,
@@ -93,7 +93,7 @@ class Items extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
                 'value'  => !empty($paymentSplitItemModel->getSalesQuoteItemId()) ? $paymentSplitItemModel->getSalesQuoteItemId() : '',
             ]);
 
-            $fieldset->addField('sales_order_item_id__'.$paymentSplitItemKey, 'text', [
+            $fieldset->addField('sales_order_item_id__' . $paymentSplitItemKey, 'text', [
                 'name'      => 'sales_order_item_id',
                 'label'     => __('Sales Order Item ID'),
                 'required'  => false,

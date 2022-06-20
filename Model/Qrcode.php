@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Framework\Filesystem\DriverPool;
 

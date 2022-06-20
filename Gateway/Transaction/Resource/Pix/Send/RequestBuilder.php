@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Resource\Pix\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Resource\Pix\Send;
 
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
@@ -15,7 +15,7 @@ use Magento\Quote\Model\ResourceModel\Quote\Item;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Model\Buyer\Handler;
+use Braspag\BraspagPagador\Model\Buyer\Handler;
 
 class RequestBuilder implements BuilderInterface
 {

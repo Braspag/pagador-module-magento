@@ -8,7 +8,7 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items;
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items;
 
 
 use Magento\Framework\ObjectManagerInterface;

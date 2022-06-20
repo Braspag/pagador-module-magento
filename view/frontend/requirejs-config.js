@@ -7,7 +7,7 @@
  */
 var config = {
 	shim: {
-		"Webjump_BraspagPagador/js/vendor/superdebitoLib": {
+		"Braspag_BraspagPagador/js/vendor/superdebitoLib": {
 			export: 'superdebito',
 			init: function () {
 				return {
@@ -18,7 +18,7 @@ var config = {
 	},
     config: {
         map: {
-            'Magento_Checkout/js/action/place-order': 'Webjump_BraspagPagador/js/action/place-order'
+            'Magento_Checkout/js/action/place-order': 'Braspag_BraspagPagador/js/action/place-order'
             }
     }
 }

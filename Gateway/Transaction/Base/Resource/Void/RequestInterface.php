@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 

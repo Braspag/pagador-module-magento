@@ -1,15 +1,17 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Webjump\BraspagPagador\Api;
 
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
+namespace Braspag\BraspagPagador\Api;
+
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
 
 /**
  * Interface CommandInterface
- * @package Webjump\BraspagPagador\Api
+ * @package Braspag\BraspagPagador\Api
  */
 interface PaymentSplitLockCommandInterface
 {

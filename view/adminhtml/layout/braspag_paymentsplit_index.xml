@@ -4,7 +4,7 @@
     <update handle="braspag_paymentsplit_grid_block"/>
     <body>
         <referenceContainer name="content">
-            <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit" name="braspag.paymentsplit.grid.container" />
+            <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit" name="braspag.paymentsplit.grid.container" />
         </referenceContainer>
     </body>
 </page>

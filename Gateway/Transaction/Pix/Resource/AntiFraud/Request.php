@@ -9,16 +9,16 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\AntiFraud;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\AntiFraud;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
-use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
+use Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface
 {
@@ -38,7 +38,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         ConfigInterface $config,
         RequestFactory $requestItemFactory,
         AdapterGeneralInterface $adapterGeneral,
-        \Webjump\BraspagPagador\Helper\Data $helperData,
+        \Braspag\BraspagPagador\Helper\Data $helperData,
         FingerPrint $fingerPrint
     ) {
         $this->setConfig($config);

@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Config;
+namespace Braspag\BraspagPagador\Model\Config;
 
 interface ConfigInterface
 {
-    const CONFIG_XML_ENVIRONMENT = 'webjump_braspagpagador/global/payment_environment';
-    const CONFIG_XML_AUTHORIZATION_KEY = 'webjump_braspagpagador/global/zpk_access';
-    const CONFIG_XML_AUTHORIZATION_KEY_TESTE = 'webjump_braspagpagador/global/zpk_access_teste';
-    const CONFIG_XML_CRON_ORDER_PROCESS = 'webjump_braspagpagador/global/cron_order_process';
+    const CONFIG_XML_ENVIRONMENT = 'braspag_braspagpagador/global/payment_environment';
+    const CONFIG_XML_AUTHORIZATION_KEY = 'braspag_braspagpagador/global/zpk_access';
+    const CONFIG_XML_AUTHORIZATION_KEY_TESTE = 'braspag_braspagpagador/global/zpk_access_teste';
+    const CONFIG_XML_CRON_ORDER_PROCESS = 'braspag_braspagpagador/global/cron_order_process';
 
     //pix
     const CONFIG_XML_PIX_IS_ACTIVE = 'payment/braspag_pagador_pix/active';

@@ -6,7 +6,7 @@
  */
 -->
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
-    <group id="webjump_braspag_pagador_transaction_debitcard" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+    <group id="braspag_braspag_pagador_transaction_debitcard" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Debit Card</label>
 	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
 	        <label>Enabled</label>
@@ -20,7 +20,7 @@
 	    </field>
         <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
             <label>New Order Status</label>
-			<source_model>Webjump\BraspagPagador\Model\Source\Status\NewPending</source_model>
+			<source_model>Braspag\BraspagPagador\Model\Source\Status\NewPending</source_model>
             <config_path>payment/braspag_pagador_debitcard/order_status</config_path>
         </field>
 	    <field id="superdebito" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
@@ -40,9 +40,9 @@
 			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 			<config_path>payment/braspag_pagador_debitcard/redirect_after_place_order</config_path>
 		</field>
-	    <include path="Webjump_BraspagPagador::system/transaction/debitcard/types.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/debitcard/authenticate3ds20.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/debitcard/paymentsplit.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/debitcard/cardview.xml"/>
+	    <include path="Braspag_BraspagPagador::system/transaction/debitcard/types.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/debitcard/authenticate3ds20.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/debitcard/paymentsplit.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/debitcard/cardview.xml"/>
     </group>
 </include>

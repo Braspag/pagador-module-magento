@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Payment\Info;
+namespace Braspag\BraspagPagador\Model\Payment\Info;
 
 use Magento\Sales\Api\Data\OrderInterface;
 

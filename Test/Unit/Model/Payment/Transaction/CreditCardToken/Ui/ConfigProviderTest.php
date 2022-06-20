@@ -1,32 +1,32 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCardToken\Ui;
+namespace Braspag\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCardToken\Ui;
 
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider;
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui\ConfigProvider;
 use Magento\Framework\Phrase;
 
 class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
-	private $configProvider;
+    private $configProvider;
 
     private $builderComposite;
 
-	public function setUp()
-	{
-        $this->installmentsBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
-        $this->tokensBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
-        $this->installmentsConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+    public function setUp()
+    {
+        $this->installmentsBuilderMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface');
+        $this->tokensBuilderMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface');
+        $this->installmentsConfigMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
-		$this->configProvider = new ConfigProvider(
+        $this->configProvider = new ConfigProvider(
             $this->installmentsBuilderMock,
             $this->tokensBuilderMock,
             $this->installmentsConfigMock
         );
-	}
+    }
 
     public function testGetConfig()
     {
-        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments1->expects($this->once())
             ->method('getId')
@@ -36,7 +36,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('1x R$10,00 without interest')));
 
-        $installments2 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments2->expects($this->once())
             ->method('getId')
@@ -46,7 +46,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getLabel')
             ->will($this->returnValue(__('2x R$5,00 without interest')));
 
-        $installments3 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $installments3->expects($this->once())
             ->method('getId')
@@ -64,9 +64,9 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
                 $installments3,
             ]));
 
-        // $token1 = $this->createMock('Webjump\BraspagPagador\Api\Data\CardTokenInterface');
+        // $token1 = $this->createMock('Braspag\BraspagPagador\Api\Data\CardTokenInterface');
 
-        $token1 = $this->getMockBuilder(\Webjump\BraspagPagador\Model\CardToken::class)
+        $token1 = $this->getMockBuilder(\Braspag\BraspagPagador\Model\CardToken::class)
             ->setMethods(['getToken', 'getAlias'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -79,7 +79,7 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('getAlias')
             ->will($this->returnValue(__('alias 1')));
 
-        $token2 = $this->getMockBuilder(\Webjump\BraspagPagador\Model\CardToken::class)
+        $token2 = $this->getMockBuilder(\Braspag\BraspagPagador\Model\CardToken::class)
             ->setMethods(['getToken', 'getAlias'])
             ->disableOriginalConstructor()
             ->getMock();

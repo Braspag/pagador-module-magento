@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,9 +8,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Config;
 
 class Request extends Config implements RequestInterface
 {

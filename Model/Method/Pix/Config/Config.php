@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Method\Pix\Config;
+namespace Braspag\BraspagPagador\Model\Method\Pix\Config;
 
-class Config extends \Webjump\BraspagPagador\Model\Config\Config
+class Config extends \Braspag\BraspagPagador\Model\Config\Config
 {
 
 }

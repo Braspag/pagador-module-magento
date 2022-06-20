@@ -1,8 +1,9 @@
 <?php
-namespace Webjump\BraspagPagador\Helper\GrandTotal;
+
+namespace Braspag\BraspagPagador\Helper\GrandTotal;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 
 /**
  * Pricing data helper

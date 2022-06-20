@@ -5,10 +5,10 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-namespace Webjump\BraspagPagador\Model\Method\Pix\Ui;
+namespace Braspag\BraspagPagador\Model\Method\Pix\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Model\Method\Pix\Config\Config;
+use Braspag\BraspagPagador\Model\Method\Pix\Config\Config;
 
 final class ConfigProvider implements ConfigProviderInterface
 {

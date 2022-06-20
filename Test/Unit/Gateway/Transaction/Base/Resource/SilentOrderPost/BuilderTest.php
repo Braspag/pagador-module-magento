@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\SilentOrderPost;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\SilentOrderPost;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder;
 
 /**
  *
@@ -16,13 +16,13 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
-        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
+        $this->configMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
         $this->transferBuilderMock = $this->createMock('Magento\Payment\Gateway\Http\TransferBuilder');
 
         $this->clientMock = $this->createMock('Magento\Payment\Gateway\Http\ClientInterface');
 
-    	$this->builder =  new Builder(
+        $this->builder =  new Builder(
             $this->configMock,
             $this->transferBuilderMock,
             $this->clientMock
@@ -31,13 +31,12 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testTest()
     {
-    	$merchantId = 'BC5D3432-527F-40C6-84BF-C549285536BE';
-    	$accessToken = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
+        $merchantId = 'BC5D3432-527F-40C6-84BF-C549285536BE';
+        $accessToken = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
         $uri = 'https://homologacao.pagador.com.br/post/api/public/v1/accesstoken?merchantid=BC5D3432-527F-40C6-84BF-C549285536BE';
 
         $this->tranferMock = $this->createMock('Magento\Payment\Gateway\Http\TransferInterface');
@@ -73,19 +72,19 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->method('build')
             ->will($this->returnValue($this->tranferMock));
 
-        $this->responseMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\SilentOrderPostInterface');
+        $this->responseMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\SilentOrderPostInterface');
 
         $this->responseMock->expects($this->once())
             ->method('getAccessToken')
-            ->will($this->returnValue($accessToken));            
+            ->will($this->returnValue($accessToken));
 
         $this->clientMock->expects($this->once())
             ->method('placeRequest')
             ->with($this->tranferMock)
             ->will($this->returnValue($this->responseMock));
 
-    	$result = $this->builder->build();
+        $result = $this->builder->build();
 
-    	static::assertEquals($accessToken, $result);
+        static::assertEquals($accessToken, $result);
     }
 }

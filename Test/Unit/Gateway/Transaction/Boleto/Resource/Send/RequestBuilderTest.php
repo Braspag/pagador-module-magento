@@ -1,28 +1,28 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send;
 
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
-	private $requestBuilder;
+    private $requestBuilder;
 
-	private $requestFactoryMock;
-	private $requestMock;
-	private $requestAntiFraudMock;
-	private $requestPaymentSplitMock;
-	private $configMock;
+    private $requestFactoryMock;
+    private $requestMock;
+    private $requestAntiFraudMock;
+    private $requestPaymentSplitMock;
+    private $configMock;
 
     public function setUp()
     {
-    	$this->requestFactoryMock = $this->getMockBuilder('Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory')
+        $this->requestFactoryMock = $this->getMockBuilder('Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,22 +31,22 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             Request::class
         );
 
-    	$this->requestAntiFraudMock = $this->createMock(
+        $this->requestAntiFraudMock = $this->createMock(
             RequestAntiFraudLibInterface::class
-    	);
-    	$this->requestPaymentSplitMock = $this->createMock(
+        );
+        $this->requestPaymentSplitMock = $this->createMock(
             RequestPaymentSplitLibInterface::class
-    	);
-    	$this->configMock = $this->createMock(
+        );
+        $this->configMock = $this->createMock(
             ConfigInterface::class
-    	);
+        );
 
-    	$this->requestBuilder = new RequestBuilder(
+        $this->requestBuilder = new RequestBuilder(
             $this->requestFactoryMock,
             $this->requestAntiFraudMock,
             $this->requestPaymentSplitMock,
             $this->configMock
-    	);
+        );
     }
 
     public function testBuilder()
@@ -59,9 +59,9 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getPayment'])
-    		->getMock();
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getPayment'])
+            ->getMock();
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getOrder')
@@ -71,13 +71,13 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->willReturn($infoMock);
 
-    	$buildSubject = ['payment' => $paymentDataObjectMock];
+        $buildSubject = ['payment' => $paymentDataObjectMock];
 
         $this->requestFactoryMock->expects($this->once())
             ->method('create')
             ->willReturn($this->requestMock);
 
-    	$result = $this->requestBuilder->build($buildSubject);
+        $result = $this->requestBuilder->build($buildSubject);
 
         static::assertSame($this->requestMock, $result);
     }

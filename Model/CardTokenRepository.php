@@ -1,18 +1,18 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Braintree\Exception;
-use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
-use Webjump\BraspagPagador\Model\CardTokenFactory;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Model\CardTokenFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
-use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
+use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\Search\FilterGroup;
-use Webjump\BraspagPagador\Model\ResourceModel\CardToken\Collection;
+use Braspag\BraspagPagador\Model\ResourceModel\CardToken\Collection;
 
 /**
  * Card Token repository
@@ -58,7 +58,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
     /**
      * CardTokenRepository constructor.
      *
-     * @param \Webjump\BraspagPagador\Model\CardTokenFactory $cardTokenFactory
+     * @param \Braspag\BraspagPagador\Model\CardTokenFactory $cardTokenFactory
      * @param StoreManagerInterface                          $storeManager
      * @param Session                                        $session
      * @param CardTokenResourceModel                         $resource
@@ -70,8 +70,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
         Session $session,
         CardTokenResourceModel $resource,
         SearchResultsInterface $searchResults
-    )
-    {
+    ) {
         $this->setCardTokenFactory($cardTokenFactory);
         $this->setStoreManager($storeManager);
         $this->setSession($session);
@@ -143,7 +142,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
      *
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete(CardTokenInterface  $cardToken)
+    public function delete(CardTokenInterface $cardToken)
     {
         try {
             $this->getResource()->delete($cardToken);
@@ -232,7 +231,7 @@ class CardTokenRepository implements CardTokenRepositoryInterface
     }
 
     /**
-     * @param \Webjump\BraspagPagador\Model\CardTokenFactory $cardTokenFactory
+     * @param \Braspag\BraspagPagador\Model\CardTokenFactory $cardTokenFactory
      *
      * @return $this
      */

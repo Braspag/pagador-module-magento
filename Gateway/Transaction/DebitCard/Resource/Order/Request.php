@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface as BraspaglibRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 
@@ -43,8 +43,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function __construct(
         ConfigInterface $config,
-        \Webjump\BraspagPagador\Helper\Data $helperData
-    ){
+        \Braspag\BraspagPagador\Helper\Data $helperData
+    ) {
         $this->setConfig($config);
         $this->helperData = $helperData;
     }
@@ -84,7 +84,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getCustomerName()
     {
         $customerName = $this->getBillingAddress()->getFirstname() . ' ' . $this->getBillingAddress()->getLastname();
-    	return $this->helperData->removeSpecialCharacters($customerName);
+        return $this->helperData->removeSpecialCharacters($customerName);
     }
 
     public function getPaymentAmount()
@@ -96,12 +96,12 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
         if ($provider === "Braspag") {
             $availableTypes = explode(',', $this->getConfig()->getDcTypes());
 
-            foreach($availableTypes as $key => $availableType) {
+            foreach ($availableTypes as $key => $availableType) {
                 $typeDetail = explode("-", $availableType);
                 if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
                     return $typeDetail[0];
@@ -128,32 +128,32 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentReturnUrl()
     {
-    	return $this->getConfig()->getPaymentReturnUrl();
+        return $this->getConfig()->getPaymentReturnUrl();
     }
 
     public function getPaymentDebitCardCardNumber()
     {
-    	return $this->getPaymentData()->getCcNumber();
+        return $this->getPaymentData()->getCcNumber();
     }
 
     public function getPaymentDebitCardHolder()
     {
-    	return $this->getPaymentData()->getCcOwner();
+        return $this->getPaymentData()->getCcOwner();
     }
 
     public function getPaymentDebitCardExpirationDate()
     {
-    	return str_pad($this->getPaymentData()->getCcExpMonth(), 2, '0', STR_PAD_LEFT) . '/' . $this->getPaymentData()->getCcExpYear();
+        return str_pad($this->getPaymentData()->getCcExpMonth(), 2, '0', STR_PAD_LEFT) . '/' . $this->getPaymentData()->getCcExpYear();
     }
 
     public function getPaymentDebitCardSecurityCode()
     {
-    	return $this->getPaymentData()->getCcCid();
+        return $this->getPaymentData()->getCcCid();
     }
 
     public function getPaymentDebitCardBrand()
     {
-        List($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
         return $brand;
     }
@@ -172,7 +172,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardSaveCard()
     {
-        return (boolean) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
+        return (bool) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
     }
 
     /**

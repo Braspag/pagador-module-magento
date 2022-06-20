@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
 /**
  * Interface Auth3DS20CartInformationInterface
  *
- * @package Webjump\BraspagPagador\Api\Data
+ * @package Braspag\BraspagPagador\Api\Data
  */
 interface Auth3DS20CartInformationInterface
 {
-    const BPMPI_CART_DESCRIPTION= 'bpmpi_cart_description';
+    const BPMPI_CART_DESCRIPTION = 'bpmpi_cart_description';
 
     const BPMPI_CART_NAME = 'bpmpi_cart_name';
 
@@ -69,7 +70,7 @@ interface Auth3DS20CartInformationInterface
      * @param int $bpmpiCartQuantity
      * @return void
      */
-    public function setBpmpiCartQuantity(int $bpmpiCartQuantity ): void;
+    public function setBpmpiCartQuantity(int $bpmpiCartQuantity): void;
 
     /**
      * @return float

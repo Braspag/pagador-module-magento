@@ -1,13 +1,15 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
+
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
 
 /**
  * Interface HandlerInterface
- * @package Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request
+ * @package Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request
  */
 interface HandlerInterface
 {

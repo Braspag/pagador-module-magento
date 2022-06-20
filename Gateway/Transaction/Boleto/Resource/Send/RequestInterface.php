@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
@@ -16,5 +16,5 @@ use Magento\Payment\Model\InfoInterface;
  */
 interface RequestInterface
 {
-	public function setOrderAdapter(OrderAdapterInterface $order);
+    public function setOrderAdapter(OrderAdapterInterface $order);
 }

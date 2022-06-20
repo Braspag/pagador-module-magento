@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Helper;
+namespace Braspag\BraspagPagador\Helper;
 
 use Magento\Framework\App\Helper\Context;
 
 /**
  * Class Validator
- * @package Webjump\BraspagPagador\Helper
+ * @package Braspag\BraspagPagador\Helper
  */
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {

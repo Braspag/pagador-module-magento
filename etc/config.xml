@@ -116,12 +116,12 @@
                 <address_sanitize_district_dictionary>Neighborhood-Nb.;Housing-Hs</address_sanitize_district_dictionary>
             </braspag_pagador_customer_address>
         </address>
-        <webjump_braspag>
+        <braspag_braspag>
             <pagador>
                 <test_mode>1</test_mode>
             </pagador>
-        </webjump_braspag>
-        <webjump_braspag_antifraud>
+        </braspag_braspag>
+        <braspag_braspag_antifraud>
             <fingerprint>
                 <src_js>https://h.online-metrix.net/fp/tags.js</src_js>
             </fingerprint>
@@ -132,6 +132,6 @@
                 <capture_in_low_risk>0</capture_in_low_risk>
                 <void_in_high_risk>0</void_in_high_risk>
             </options>
-        </webjump_braspag_antifraud>
+        </braspag_braspag_antifraud>
     </default>
 </config>

@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface as PixConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface as PixConfig;
 
 /**
  * Braspag Transaction Pix Send Command

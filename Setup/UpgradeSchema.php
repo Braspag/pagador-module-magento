@@ -1,5 +1,6 @@
 <?php
-namespace Webjump\BraspagPagador\Setup;
+
+namespace Braspag\BraspagPagador\Setup;
 
 use Magento\Framework\Setup\UpgradeSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -72,7 +73,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     {
 
         $table = $setup->getConnection()->newTable(
-            $setup->getTable('webjump_braspagpagador_cardtoken')
+            $setup->getTable('braspag_braspagpagador_cardtoken')
         )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
@@ -110,19 +111,19 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ['nullable' => false, 'default' => 0],
             'Active'
         )->addForeignKey(
-            $setup->getFkName('webjump_braspagpagador_cardtoken', 'store_id', 'store', 'store_id'),
+            $setup->getFkName('braspag_braspagpagador_cardtoken', 'store_id', 'store', 'store_id'),
             'store_id',
             $setup->getTable('store'),
             'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->addForeignKey(
-            $setup->getFkName('webjump_braspagpagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
+            $setup->getFkName('braspag_braspagpagador_cardtoken', 'customer_id', 'customer_entity', 'entity_id'),
             'customer_id',
             $setup->getTable('customer_entity'),
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
-            'Webjump Braspag Pagador'
+            'Braspag Braspag Pagador'
         );
 
         $setup->getConnection()->createTable($table);
@@ -135,7 +136,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeTwoZeroTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->getConnection()->addColumn(
-            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            $setup->getTable('braspag_braspagpagador_cardtoken'),
             'provider',
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -146,7 +147,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
 
         $setup->getConnection()->addColumn(
-            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            $setup->getTable('braspag_braspagpagador_cardtoken'),
             'brand',
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -164,7 +165,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeThreeFiveTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->getConnection()->addColumn(
-            $setup->getTable('webjump_braspagpagador_cardtoken'),
+            $setup->getTable('braspag_braspagpagador_cardtoken'),
             'method',
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -174,8 +175,8 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
 
         $setup->getConnection()->addIndex(
-            $setup->getTable('webjump_braspagpagador_cardtoken'),
-            $setup->getIdxName('webjump_braspagpagador_cardtoken', ['customer_id', 'method']),
+            $setup->getTable('braspag_braspagpagador_cardtoken'),
+            $setup->getIdxName('braspag_braspagpagador_cardtoken', ['customer_id', 'method']),
             ['customer_id', 'method'],
             \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
         );
@@ -203,7 +204,8 @@ class UpgradeSchema implements UpgradeSchemaInterface
     /**
      * @param SchemaSetupInterface $setup
      */
-    protected function upgradeThreeFiveFour(SchemaSetupInterface $setup) {
+    protected function upgradeThreeFiveFour(SchemaSetupInterface $setup)
+    {
         $connection = $setup->getConnection();
 
         $setup->startSetup();
@@ -216,14 +218,14 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * @param SchemaSetupInterface $setup
      * @param ModuleContextInterface $context
      */
-    protected function upgradeThreeFiveFive(SchemaSetupInterface $setup, ModuleContextInterface $context) {
+    protected function upgradeThreeFiveFive(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
 
-        if ($setup->getConnection()->isTableExists($setup->getTable('webjump_braspagpagador_cardtoken'))) {
-
+        if ($setup->getConnection()->isTableExists($setup->getTable('braspag_braspagpagador_cardtoken'))) {
             $setup->getConnection()->dropForeignKey(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
                 $setup->getFkName(
-                    'webjump_braspagpagador_cardtoken',
+                    'braspag_braspagpagador_cardtoken',
                     'customer_id',
                     'customer_entity',
                     'entity_id'
@@ -231,9 +233,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
             $setup->getConnection()->dropIndex(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
                 $setup->getIdxName(
-                    'webjump_braspagpagador_cardtoken',
+                    'braspag_braspagpagador_cardtoken',
                     ['customer_id', 'method'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
                 )
@@ -241,12 +243,12 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
             $setup->getConnection()->addForeignKey(
                 $setup->getFkName(
-                    'webjump_braspagpagador_cardtoken',
+                    'braspag_braspagpagador_cardtoken',
                     'customer_id',
                     'customer_entity',
                     'entity_id'
                 ),
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
                 'customer_id',
                 $setup->getTable('customer_entity'),
                 'entity_id',
@@ -254,9 +256,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
             $setup->getConnection()->addIndex(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
                 $setup->getIdxName(
-                    'webjump_braspagpagador_cardtoken',
+                    'braspag_braspagpagador_cardtoken',
                     ['customer_id', 'method'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
                 ),
@@ -265,7 +267,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
             $setup->getConnection()->addColumn(
-                $setup->getTable('webjump_braspagpagador_cardtoken'),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
                 'mask',
                 [
                     'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -290,60 +292,115 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $setup->getConnection()->dropTable($splitItemTableName);
 
         $splitTable = $setup->getConnection()->newTable($splitTableName)
-            ->addColumn('entity_id', \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT, null,
+            ->addColumn(
+                'entity_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                null,
                 array(
                     'identity' => true,
                     'unsigned' => true,
                     'nullable' => false,
                     'primary' => true,
-                ), 'Entity Id')
-            ->addColumn('subordinate_merchant_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 36, array(
+                ),
+                'Entity Id'
+            )
+            ->addColumn(
+                'subordinate_merchant_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                36,
+                array(
                 'nullable' => false,
-            ),
-                'Subordinate Merchant Id')
-            ->addColumn('store_merchant_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 36, array(
+                ),
+                'Subordinate Merchant Id'
+            )
+            ->addColumn(
+                'store_merchant_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                36,
+                array(
                 'nullable' => true,
-            ),
-                'Store Merchant Id')
-            ->addColumn('sales_quote_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Store Merchant Id'
+            )
+            ->addColumn(
+                'sales_quote_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
-                ), 'Sales Quote Id')
-            ->addColumn('sales_order_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Sales Quote Id'
+            )
+            ->addColumn(
+                'sales_order_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
-                ), 'Sales Order Id')
-            ->addColumn('mdr_applied', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4', array(
+                ),
+                'Sales Order Id'
+            )
+            ->addColumn(
+                'mdr_applied',
+                \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                '12,4',
+                array(
                 'nullable' => true,
                 'default' => '0',
-            ),
-                'MDR Applied')
-            ->addColumn('tax_applied', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4',
+                ),
+                'MDR Applied'
+            )
+            ->addColumn(
+                'tax_applied',
+                \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                '12,4',
                 array(
                     'nullable' => true,
                     'default' => '0',
-                ), 'Tax Applied')
-            ->addColumn('total_amount', \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL, '12,4',
+                ),
+                'Tax Applied'
+            )
+            ->addColumn(
+                'total_amount',
+                \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                '12,4',
                 array(
                     'nullable' => true,
                     'default' => '0',
-                ), 'Total Amount')
-            ->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Total Amount'
+            )
+            ->addColumn(
+                'store_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
-                ), 'Store Id')
-            ->addColumn('created_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                ),
+                'Store Id'
+            )
+            ->addColumn(
+                'created_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
                 array(
                     'nullable' => false,
                     'default'  => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT
-                ), 'Created At')
-            ->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                ),
+                'Created At'
+            )
+            ->addColumn(
+                'updated_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
                 array(
                     'nullable'  => true
-                ), 'Updated At')
+                ),
+                'Updated At'
+            )
             ->addIndex(
                 $setup->getIdxName($splitTableName, ['sales_quote_id', 'store_merchant_id']),
                 ['sales_quote_id', 'store_merchant_id'],
@@ -365,40 +422,70 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         $splitItemTable = $setup->getConnection()
             ->newTable($splitItemTableName)
-            ->addColumn('split_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT, null,
+            ->addColumn(
+                'split_item_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                null,
                 array(
                     'identity' => true,
                     'unsigned' => true,
                     'nullable' => false,
                     'primary' => true,
-                ), 'Split Item Id')
-            ->addColumn('split_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Split Item Id'
+            )
+            ->addColumn(
+                'split_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
                     'default' => '0',
-                ), 'Split Id')
-            ->addColumn('sales_quote_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Split Id'
+            )
+            ->addColumn(
+                'sales_quote_item_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
                     'default' => '0',
-                ), 'Sales Quote Item Id')
-            ->addColumn('sales_order_item_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null,
+                ),
+                'Sales Quote Item Id'
+            )
+            ->addColumn(
+                'sales_order_item_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
                 array(
                     'unsigned' => true,
                     'nullable' => false,
                     'default' => '0',
-                ), 'Sales Order Item Id')
-            ->addColumn('created_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                ),
+                'Sales Order Item Id'
+            )
+            ->addColumn(
+                'created_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
                 array(
                     'nullable' => false,
                     'default'  => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT
-                ), 'Created At')
-            ->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null,
+                ),
+                'Created At'
+            )
+            ->addColumn(
+                'updated_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
                 array(
                     'nullable'  => true
-                ), 'Updated At')
+                ),
+                'Updated At'
+            )
             ->addIndex(
                 $setup->getIdxName($splitTableName, ['split_id', 'sales_quote_item_id']),
                 ['split_id', 'sales_quote_item_id'],
@@ -432,7 +519,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeThreeThirteenZero(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
-
             $setup->getConnection()->addColumn(
                 $setup->getTable('braspag_paymentsplit_split'),
                 'locked',
@@ -442,7 +528,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment' => 'Locked'
                 ]
             );
-
         }
     }
 
@@ -454,7 +539,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeThreeSixteenTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
-
             $setup->getConnection()->dropColumn(
                 $setup->getTable('braspag_paymentsplit_split'),
                 'locked'
@@ -469,7 +553,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
     protected function upgradeThreeSixteenFour(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->getConnection()->isTableExists($setup->getTable('braspag_paymentsplit_split'))) {
-
             $setup->getConnection()->addColumn(
                 $setup->getTable('braspag_paymentsplit_split'),
                 'sales_order_increment_id',

@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 
 /**
  * Braspag Transaction DebitCard Authorize Command

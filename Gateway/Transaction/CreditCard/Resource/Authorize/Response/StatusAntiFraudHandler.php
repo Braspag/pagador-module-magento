@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\ResponseInterface as AntiFraudResponseInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
 
@@ -45,9 +45,9 @@ class StatusAntiFraudHandler extends AbstractHandler implements HandlerInterface
             case self::STATUS_REJECT:
                 $payment->setIsFraudDetected(true);
                 break;
-            case self::STATUS_REVIEW :
-            case self::STATUS_ABORTED :
-            case self::STATUS_ERROR :
+            case self::STATUS_REVIEW:
+            case self::STATUS_ABORTED:
+            case self::STATUS_ERROR:
                 $payment->setIsTransactionPending(true);
                 break;
         }

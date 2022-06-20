@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Buyer;
+namespace Braspag\BraspagPagador\Model\Buyer;
 
-use Webjump\BraspagPagador\Model\AbstractHandler;
-use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
+use Braspag\BraspagPagador\Model\AbstractHandler;
+use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
 
 class Handler extends AbstractHandler
 {

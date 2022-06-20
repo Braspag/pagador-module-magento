@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Transaction;
+use Braspag\BraspagPagador\Gateway\Transaction\Transaction;
 
 class SendCommand extends AbstractCommand
 {

@@ -1,33 +1,33 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\DebitCard\Ui;
+namespace Braspag\BraspagPagador\Test\Unit\Model\Payment\Transaction\DebitCard\Ui;
 
-use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider;
+use Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider;
 
 class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
-	private $configProvider;
-	private $debitcardConfig;
+    private $configProvider;
+    private $debitcardConfig;
 
-	public function setUp()
-	{
-		$this->debitcardConfig = $this
-            ->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
+    public function setUp()
+    {
+        $this->debitcardConfig = $this
+            ->createMock('Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface');
 
-		$this->configProvider = new ConfigProvider(
-			$this->debitcardConfig
-		);
-	}
+        $this->configProvider = new ConfigProvider(
+            $this->debitcardConfig
+        );
+    }
 
     public function testGetConfig()
     {
-    	$this->debitcardConfig->expects($this->once())
-    		->method('isSuperDebitoActive')
-    		->will($this->returnValue(true));
+        $this->debitcardConfig->expects($this->once())
+            ->method('isSuperDebitoActive')
+            ->will($this->returnValue(true));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('isAuth3Ds20Active')
-    		->will($this->returnValue(true));
+        $this->debitcardConfig->expects($this->once())
+            ->method('isAuth3Ds20Active')
+            ->will($this->returnValue(true));
 
         $this->debitcardConfig->expects($this->once())
             ->method('isAuth3Ds20MCOnlyNotifyActive')
@@ -45,25 +45,25 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
             ->method('isAuth3Ds20AuthorizeOnUnenrolled')
             ->will($this->returnValue(true));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('getAuth3Ds20Mdd1')
-    		->will($this->returnValue('mdd 1'));
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd1')
+            ->will($this->returnValue('mdd 1'));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('getAuth3Ds20Mdd2')
-    		->will($this->returnValue('mdd 2'));
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd2')
+            ->will($this->returnValue('mdd 2'));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('getAuth3Ds20Mdd3')
-    		->will($this->returnValue('mdd 3'));
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd3')
+            ->will($this->returnValue('mdd 3'));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('getAuth3Ds20Mdd4')
-    		->will($this->returnValue('mdd 4'));
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd4')
+            ->will($this->returnValue('mdd 4'));
 
-    	$this->debitcardConfig->expects($this->once())
-    		->method('getAuth3Ds20Mdd5')
-    		->will($this->returnValue('mdd 5'));
+        $this->debitcardConfig->expects($this->once())
+            ->method('getAuth3Ds20Mdd5')
+            ->will($this->returnValue('mdd 5'));
 
         $this->debitcardConfig->expects($this->once())
             ->method('isCardViewActive')
@@ -101,9 +101,9 @@ class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetConfigDisabled()
     {
-    	$this->debitcardConfig->expects($this->once())
-    		->method('isSuperDebitoActive')
-    		->will($this->returnValue(false));
+        $this->debitcardConfig->expects($this->once())
+            ->method('isSuperDebitoActive')
+            ->will($this->returnValue(false));
 
         $this->debitcardConfig->expects($this->once())
             ->method('isAuth3Ds20Active')

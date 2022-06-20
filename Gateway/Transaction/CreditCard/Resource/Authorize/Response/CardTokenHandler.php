@@ -1,16 +1,16 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\BraspagPagador\Api\CardTokenManagerInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
 
 /**
  * Braspag Transaction CreditCard Authorize Response Handler
@@ -63,8 +63,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         CardTokenManagerInterface $cardTokenManager,
         Response $response
-    )
-    {
+    ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
@@ -92,7 +91,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
      * @param $response
      *
      * @return mixed
-     * @todo: refact to use Webjump\BraspagPagador\Model\CardTokenManager
+     * @todo: refact to use Braspag\BraspagPagador\Model\CardTokenManager
      */
     protected function saveCardToken($payment, $response)
     {
@@ -204,6 +203,4 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
     {
         return $this->cardTokenManager;
     }
-
-
 }

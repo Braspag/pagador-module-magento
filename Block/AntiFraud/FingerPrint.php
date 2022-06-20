@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,12 +9,12 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\AntiFraud;
-
+namespace Braspag\BraspagPagador\Block\AntiFraud;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
+use Braspag\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
+
 class FingerPrint extends Template
 {
     protected $fingerPrint;

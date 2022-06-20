@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
 
 class Config extends AbstractConfig implements ConfigInterface
 {

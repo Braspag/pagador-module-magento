@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,11 +8,11 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Psr\Log\LoggerInterface;
-use \Webjump\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface;
-use \Webjump\BraspagPagador\Model\Notification\SubordinateApprovalStatusChangedCommand;
+use Braspag\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface;
+use Braspag\BraspagPagador\Model\Notification\SubordinateApprovalStatusChangedCommand;
 
 class SubordinateApprovalNotificationManager implements SubordinateApprovalNotificationManagerInterface
 {
@@ -33,7 +34,7 @@ class SubordinateApprovalNotificationManager implements SubordinateApprovalNotif
     public function __construct(
         LoggerInterface $logger,
         SubordinateApprovalStatusChangedCommand $subordinateApprovalStatusChangedCommand
-    ){
+    ) {
         $this->setLogger($logger);
         $this->setSubordinateApprovalStatusChangedCommand($subordinateApprovalStatusChangedCommand);
     }
@@ -79,12 +80,11 @@ class SubordinateApprovalNotificationManager implements SubordinateApprovalNotif
      */
     public function save($MerchantId, $Status, $Score, $DenialReason = null)
     {
-        $this->getLogger()->info("Subordinate Approval Notification: 
-            - MerchantId {$MerchantId} 
-            - Status {$Status} 
+        $this->getLogger()->info("Subordinate Approval Notification:
+            - MerchantId {$MerchantId}
+            - Status {$Status}
             - Score {$Score}
-            - DenialReason {$DenialReason}"
-        );
+            - DenialReason {$DenialReason}");
 
         return $this->getSubordinateApprovalStatusChangedCommand()->execute($MerchantId, $Status, $Score, $DenialReason);
     }

@@ -1,13 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Config;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Config;
 
-
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\Config;
 use Magento\Framework\Stdlib\DateTime;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 use Magento\Framework\App\State;
-
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -39,14 +37,14 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
 
         $this->scopeConfigMock->expects($this->at(0))
-    	    ->method('getValue')
-    	    ->with('webjump_braspag/pagador/merchant_id')
-    	    ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+            ->method('getValue')
+            ->with('braspag_braspag/pagador/merchant_id')
+            ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
-    	$this->scopeConfigMock->expects($this->at(1))
-    	    ->method('getValue')
-    	    ->with('webjump_braspag/pagador/merchant_key')
-    	    ->will($this->returnValue('0123456789012345678901234567890123456789'));
+        $this->scopeConfigMock->expects($this->at(1))
+            ->method('getValue')
+            ->with('braspag_braspag/pagador/merchant_key')
+            ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
         $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
@@ -153,7 +151,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(21))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/general/active')
+            ->with('braspag_braspag_antifraud/general/active')
             ->will($this->returnValue(true));
 
         $this->contextMock->expects($this->exactly(22))

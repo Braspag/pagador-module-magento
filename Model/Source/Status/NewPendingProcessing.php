@@ -1,7 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Source\Status;
-
+namespace Braspag\BraspagPagador\Model\Source\Status;
 
 use Magento\Sales\Model\Config\Source\Order\Status;
 

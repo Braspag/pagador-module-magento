@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -10,19 +11,19 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab;
+namespace Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab;
 
-use \Magento\Backend\Block\Widget\Form as WidgetForm;
-use \Magento\Config\Model\Config\Source\Website;
-use \Magento\Framework\Data\Form as DataForm;
-use \Magento\Framework\Event\ManagerInterface;
-use \Magento\Framework\Registry;
-use \Webjump\BraspagPagador\Helper\Data as HelperData;
+use Magento\Backend\Block\Widget\Form as WidgetForm;
+use Magento\Config\Model\Config\Source\Website;
+use Magento\Framework\Data\Form as DataForm;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Registry;
+use Braspag\BraspagPagador\Helper\Data as HelperData;
 
 /**
  * Class Main
@@ -73,7 +74,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         $this->setForm($form);
 
         $fieldset = $form->addFieldset('shipping_form', [
-            'legend'=>__('Payment Split')
+            'legend' => __('Payment Split')
         ]);
 
         $fieldset->addField('store_merchant_id', 'text', [
@@ -126,7 +127,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         ]);
 
         $options = $this->storeOptions->toOptionArray();
-        array_unshift($options, ['label'=>'All stores', 'value'=>0]);
+        array_unshift($options, ['label' => 'All stores', 'value' => 0]);
         $fieldset->addField('store_id', 'select', [
             'name'      => 'store_id',
             'label'     => __('Store'),
@@ -135,7 +136,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             'values'    => $options,
         ]);
 
-        $this->_eventManager->dispatch('braspag_adminhtml_paymentsplit_edit_prepare_form', ['block'=>$this, 'form'=>$form, 'id'=>$id]);
+        $this->_eventManager->dispatch('braspag_adminhtml_paymentsplit_edit_prepare_form', ['block' => $this, 'form' => $form, 'id' => $id]);
 
         if ($this->_coreRegistry->registry('paymentsplit_data')) {
             $form->setValues($this->_coreRegistry->registry('paymentsplit_data')->getData());

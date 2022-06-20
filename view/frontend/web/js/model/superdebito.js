@@ -9,13 +9,13 @@
 /*global define*/
 define(
     [
-    	"Webjump_BraspagPagador/js/vendor/superdebitoLib"
+    	"Braspag_BraspagPagador/js/vendor/superdebitoLib"
     ],
     function(superdebitoLib) {
         'use strict';
 
         return {
-			
+
         	isActive: function (code) {
         		return window.checkoutConfig.payment.dcform.superdebito.active[code];
         	},

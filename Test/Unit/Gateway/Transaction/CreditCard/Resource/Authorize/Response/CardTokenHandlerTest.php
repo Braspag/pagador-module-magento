@@ -1,19 +1,19 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
 use Magento\Sales\Model\Order;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler;
 use Magento\Framework\DataObject;
-use \Magento\Framework\Api\SearchCriteriaBuilder;
-use \Magento\Framework\Api\SearchCriteria;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SearchCriteria;
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface;
 use Magento\Framework\Api\SearchResultsInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
 
     private $eventManagerMock;
 
@@ -47,7 +47,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->cardTokenRepositoryMock = $this->createMock('Webjump\BraspagPagador\Api\CardTokenRepositoryInterface');
+        $this->cardTokenRepositoryMock = $this->createMock('Braspag\BraspagPagador\Api\CardTokenRepositoryInterface');
 
         $this->eventManagerMock = $this->createMock('Magento\Framework\Event\ManagerInterface');
 
@@ -72,7 +72,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getItems'])
             ->getMockForAbstractClass();
 
-    	$this->handler = $this->objectManagerHelper->getObject(
+        $this->handler = $this->objectManagerHelper->getObject(
             CardTokenHandler::class,
             [
                 'cardTokenRepository' => $this->cardTokenRepositoryMock,
@@ -84,7 +84,6 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
@@ -156,7 +155,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getOrder')
             ->will($this->returnValue($this->orderMock));
 
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -172,10 +171,10 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
         $this->eventManagerMock->expects($this->once())
             ->method('dispatch');
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleWithAlreadyCardToken()
@@ -196,7 +195,7 @@ class CardTokenHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
             ->getMock();
 

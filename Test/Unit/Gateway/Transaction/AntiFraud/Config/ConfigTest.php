@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Config;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\Config as AntiFraudConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\Config as AntiFraudConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {

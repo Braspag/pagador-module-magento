@@ -1,18 +1,18 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Braintree\Exception;
-use Webjump\BraspagPagador\Api\Data\SplitItemInterface;
-use Webjump\BraspagPagador\Model\Split\ItemFactory as SplitItemFactory;
+use Braspag\BraspagPagador\Api\Data\SplitItemInterface;
+use Braspag\BraspagPagador\Model\Split\ItemFactory as SplitItemFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
-use Webjump\BraspagPagador\Model\ResourceModel\Split\Item as SplitItemResourceModel;
-use Webjump\BraspagPagador\Api\SplitItemRepositoryInterface;
+use Braspag\BraspagPagador\Model\ResourceModel\Split\Item as SplitItemResourceModel;
+use Braspag\BraspagPagador\Api\SplitItemRepositoryInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\Search\FilterGroup;
-use Webjump\BraspagPagador\Model\ResourceModel\Split\Item\Collection;
+use Braspag\BraspagPagador\Model\ResourceModel\Split\Item\Collection;
 
 /**
  * SplitItem repository
@@ -58,7 +58,7 @@ class SplitItemRepository implements SplitItemRepositoryInterface
     /**
      * SplitItemRepository constructor.
      *
-     * @param \Webjump\BraspagPagador\Model\Split\ItemFactory $splitItemFactory
+     * @param \Braspag\BraspagPagador\Model\Split\ItemFactory $splitItemFactory
      * @param StoreManagerInterface                          $storeManager
      * @param Session                                        $session
      * @param SplitItemResourceModel                         $resource
@@ -70,8 +70,7 @@ class SplitItemRepository implements SplitItemRepositoryInterface
         Session $session,
         SplitItemResourceModel $resource,
         SearchResultsInterface $searchResults
-    )
-    {
+    ) {
         $this->setSplitItemFactory($splitItemFactory);
         $this->setStoreManager($storeManager);
         $this->setSession($session);
@@ -141,7 +140,7 @@ class SplitItemRepository implements SplitItemRepositoryInterface
      *
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete(SplitItemInterface  $splitItem)
+    public function delete(SplitItemInterface $splitItem)
     {
         try {
             $this->getResource()->delete($splitItem);
@@ -230,7 +229,7 @@ class SplitItemRepository implements SplitItemRepositoryInterface
     }
 
     /**
-     * @param \Webjump\BraspagPagador\Model\Split\ItemFactory $splitItemFactory
+     * @param \Braspag\BraspagPagador\Model\Split\ItemFactory $splitItemFactory
      *
      * @return $this
      */

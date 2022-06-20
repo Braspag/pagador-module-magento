@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config;
+namespace Tests\Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\State;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 /**
  * Class ConfigTest.
  *
- * @covers \Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config
+ * @covers \Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config
  */
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {

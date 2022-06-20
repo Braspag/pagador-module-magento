@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Request;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface as PixConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface as PixConfigInterface;
 
 /**
  * Validator

@@ -19,7 +19,7 @@
             Primeiro Analise (Analyse First) <br />
             Primeiro Autorização (Authorize First)
             ]]></comment>
-            <source_model>Webjump\BraspagPagador\Model\Source\Sequence</source_model>
+            <source_model>Braspag\BraspagPagador\Model\Source\Sequence</source_model>
         </field>
 
         <field id="sequence_criteria" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
@@ -29,7 +29,7 @@
                 On Success - Só realiza a analise se tiver sucesso na transação. <br />
                 Always - Sempre realiza a analise <br />
             ]]></comment>
-            <source_model>Webjump\BraspagPagador\Model\Source\SequenceCriteria</source_model>
+            <source_model>Braspag\BraspagPagador\Model\Source\SequenceCriteria</source_model>
         </field>
 
         <field id="capture_in_low_risk" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">

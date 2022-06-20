@@ -10,7 +10,7 @@
 define(
     [
         "jquery",
-    	"Webjump_BraspagPagador/js/vendor/card.view",
+    	"Braspag_BraspagPagador/js/vendor/card.view",
     ],
     function(
         $,

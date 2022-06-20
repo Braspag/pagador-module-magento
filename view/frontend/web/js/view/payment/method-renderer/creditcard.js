@@ -11,24 +11,24 @@ define(
     [
         'Magento_Checkout/js/view/payment/default',
         'mage/translate',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
         'jquery',
         'Magento_Checkout/js/action/place-order',
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'Webjump_BraspagPagador/js/action/redirect-after-placeorder',
-        'Webjump_BraspagPagador/js/action/installments',
+        'Braspag_BraspagPagador/js/action/redirect-after-placeorder',
+        'Braspag_BraspagPagador/js/action/installments',
         'Magento_Checkout/js/action/redirect-on-success',
         'Magento_Checkout/js/model/quote',
         'ko',
         'Magento_Checkout/js/model/error-processor',
         'mage/validation',
         'mage/url',
-        'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
-        'Webjump_BraspagPagador/js/model/card.view',
-        'Webjump_BraspagPagador/js/model/card'
+        'Braspag_BraspagPagador/js/model/authentication3ds20',
+        'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
+        'Braspag_BraspagPagador/js/model/card.view',
+        'Braspag_BraspagPagador/js/model/card'
     ],
     function (
         Component,
@@ -56,7 +56,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/creditcard',
+                template: 'Braspag_BraspagPagador/payment/creditcard',
                 creditCardInstallments: '',
                 creditCardsavecard: 0,
                 creditCardExpDate: '',

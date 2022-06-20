@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 
 interface InstallmentFactoryInterface
 {

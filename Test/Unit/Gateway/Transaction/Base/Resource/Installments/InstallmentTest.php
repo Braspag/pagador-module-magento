@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
 
 class InstallmentTest extends \PHPUnit\Framework\TestCase
 {
-	protected $installment;
+    protected $installment;
 
     public function setUp()
     {
@@ -20,24 +20,23 @@ class InstallmentTest extends \PHPUnit\Framework\TestCase
             ->with(10.00, true, false)
             ->will($this->returnValue('R$10,00'));
 
-    	$this->installment = new Installment(
+        $this->installment = new Installment(
             $this->pricingHelper
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testSetData()
     {
-    	$this->installment->setIndex(1);
-    	$this->installment->setPrice(10.00);
+        $this->installment->setIndex(1);
+        $this->installment->setPrice(10.00);
         $this->installment->setWithInterest(true);
 
-    	static::assertEquals(1, $this->installment->getId());
-    	static::assertEquals('1x R$10,00 with interest*', $this->installment->getLabel());
+        static::assertEquals(1, $this->installment->getId());
+        static::assertEquals('1x R$10,00 with interest*', $this->installment->getLabel());
     }
 
     public function testSetDataWithoutInterest()

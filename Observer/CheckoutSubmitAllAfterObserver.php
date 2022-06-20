@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Observer;
+namespace Braspag\BraspagPagador\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\InvoiceService;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 /**
  * Checkout Submit All After Observer
@@ -20,7 +20,7 @@ use Webjump\BraspagPagador\Model\SplitManager;
 class CheckoutSubmitAllAfterObserver implements ObserverInterface
 {
     /**
-     * @var \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
+     * @var \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
      */
     protected $config;
 
@@ -52,7 +52,7 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
     protected $orderStatusModel;
 
     public function __construct(
-        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
+        \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Magento\Sales\Api\OrderManagementInterface $orderManagement,
         \Magento\Framework\DB\TransactionFactory $transactionFactory,

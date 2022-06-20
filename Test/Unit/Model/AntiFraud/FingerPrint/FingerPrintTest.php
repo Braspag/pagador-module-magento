@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,10 +9,9 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\AntiFraud\FingerPrint;
+namespace Braspag\BraspagPagador\Test\Unit\Model\AntiFraud\FingerPrint;
 
-
-use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
+use Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 
@@ -133,12 +133,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
     {
         $this->scopeFingerPrintMock->expects($this->at(0))
             ->method('getValue')
-            ->with(\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
+            ->with(\Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
             ->will($this->returnValue(false));
 
         $this->scopeFingerPrintMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
+            ->with('braspag_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
         $this->quote->expects($this->at(2))
@@ -152,10 +152,11 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
             $this->quoteFactory
         );
 
-        $sessionIdExpected = self::MERCHANT_ID.'d41d8cd98f00b204e9800998ecf8427e';
+        $sessionIdExpected = self::MERCHANT_ID . 'd41d8cd98f00b204e9800998ecf8427e';
 
-        $this->assertEquals($sessionIdExpected,
-            $this->fingerPrint->getSessionId(false, $this->quote,null)
+        $this->assertEquals(
+            $sessionIdExpected,
+            $this->fingerPrint->getSessionId(false, $this->quote, null)
         );
     }
 
@@ -163,12 +164,12 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
     {
         $this->scopeFingerPrintMock->expects($this->at(0))
             ->method('getValue')
-            ->with(\Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
+            ->with(\Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint::XML_ORDER_ID_TO_FINGERPRINT)
             ->will($this->returnValue(true));
 
         $this->scopeFingerPrintMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/fingerprint/merchant_id')
+            ->with('braspag_braspag_antifraud/fingerprint/merchant_id')
             ->will($this->returnValue(self::MERCHANT_ID));
 
         $quoteMock = $this->getMockBuilder('Magento\Quote\Model\Quote')
@@ -201,5 +202,4 @@ class FingerPrintTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($sessionIdExpected, $this->fingerPrint->getSessionId());
     }
-
 }

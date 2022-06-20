@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
-	private $responseMock;
+    private $handler;
+    private $responseMock;
 
     public function setUp()
     {
@@ -16,19 +16,18 @@ class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->handler = new AntiFraudHandler(
-    	    $this->responseMock
+        $this->handler = new AntiFraudHandler(
+            $this->responseMock
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()
@@ -42,7 +41,7 @@ class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-        $antiFraudAnalisysMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\ResponseInterface');
+        $antiFraudAnalisysMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\ResponseInterface');
 
         $antiFraudAnalisysMock->expects($this->once())
             ->method('getId')
@@ -112,9 +111,9 @@ class AntiFraudHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPaymentFraudAnalysis')
             ->will($this->returnValue($antiFraudAnalisysMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 }

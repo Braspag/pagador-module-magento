@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
 
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
 
 /**
  *
@@ -22,8 +22,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->configMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config');
-        $this->helperData = $this->createMock('\Webjump\BraspagPagador\Helper\Data');
+        $this->configMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config');
+        $this->helperData = $this->createMock('\Braspag\BraspagPagador\Helper\Data');
 
         $this->request = new Request(
             $this->configMock,
@@ -33,7 +33,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()

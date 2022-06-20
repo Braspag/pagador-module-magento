@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
 interface BuilderInterface
 {
-	public function build();
+    public function build();
 }

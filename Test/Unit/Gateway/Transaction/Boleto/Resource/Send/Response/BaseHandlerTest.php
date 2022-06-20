@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send\Response;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send\Response;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
 
 class BaseHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
-	private $responseMock;
+    private $handler;
+    private $responseMock;
 
     public function setUp()
     {
@@ -16,7 +16,7 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
             Response::class
         );
 
-    	$this->handler = new BaseHandler(
+        $this->handler = new BaseHandler(
             $this->responseMock
         );
     }
@@ -28,16 +28,16 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
      */
     public function testHandleWithExpectedGenericError()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
-    		->getMock();
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 
     /**
@@ -47,7 +47,7 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
      */
     public function testHandleWithExpectedPaymentDataError()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
         $handlingSubject = [];
 
         $response = ['response' => $responseMock];
@@ -77,7 +77,7 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
      */
     public function testHandleSuccessfully()
     {
-//        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
+//        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface');
 
         $this->responseMock->expects($this->once())
             ->method('getPaymentPaymentId')

@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-
-use Webjump\BraspagPagador\Api\SilentAuthTokenInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface;
+use Braspag\BraspagPagador\Api\SilentAuthTokenInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface;
 
 class SilentAuthToken implements SilentAuthTokenInterface
 {
@@ -36,5 +35,4 @@ class SilentAuthToken implements SilentAuthTokenInterface
     {
         return $this->builder;
     }
-
 }

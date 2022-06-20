@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\Base\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as BaseConfig;
 
 /**
  * Braspag Transaction Base Authorize Command
@@ -16,24 +16,24 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface as Ba
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-	protected $baseConfig;
+    protected $baseConfig;
 
-	public function __construct(
-		BaseConfig $baseConfig
-	) {
-		$this->setBaseConfig($baseConfig);
-	}
+    public function __construct(
+        BaseConfig $baseConfig
+    ) {
+        $this->setBaseConfig($baseConfig);
+    }
 
     public function getConfig()
     {
         return [
             'payment' => [
-        		'braspag' => [
+                'braspag' => [
                     'merchantId'    => '',
                     'merchantKey'   => '',
                     'isTestEnvironment'   => $this->getBaseConfig()->getIsTestEnvironment()
                 ]
-        	]
+            ]
         ];
     }
 

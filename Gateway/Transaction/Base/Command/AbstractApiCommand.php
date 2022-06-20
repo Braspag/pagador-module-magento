@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Command;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\CommandInterface;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
 use Magento\Payment\Gateway\Response\HandlerInterface as ResponseHandler;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface as RequestHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface as RequestHandler;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Command\CommandException;
 
@@ -41,8 +41,7 @@ abstract class AbstractApiCommand implements CommandInterface
         ResponseHandler $responseHandler,
         ValidatorInterface $requestValidator = null,
         ValidatorInterface $responseValidator = null
-    )
-    {
+    ) {
         $this->setApi($api);
         $this->setRequestBuilder($requestBuilder);
         $this->setResponseHandler($responseHandler);
@@ -79,7 +78,6 @@ abstract class AbstractApiCommand implements CommandInterface
             );
 
             if (!$result->isValid()) {
-
                 $errorMessage = $result->getFailsDescription();
 
                 throw new LocalizedException(

@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
 
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\MDD\GeneralRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\MDD\GeneralRequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 

@@ -3,12 +3,12 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit" name="braspag_paymentsplit_edit"/>
+            <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit" name="braspag_paymentsplit_edit"/>
         </referenceContainer>
         <referenceContainer name="left">
-            <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tabs" name="braspag_paymentsplit_edit_tabs">
-                <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab\Main" name="braspag_paymentsplit_edit_tab_main"/>
-                <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab\Items" name="braspag_paymentsplit_edit_tab_items"/>
+            <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tabs" name="braspag_paymentsplit_edit_tabs">
+                <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab\Main" name="braspag_paymentsplit_edit_tab_main"/>
+                <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit\Tab\Items" name="braspag_paymentsplit_edit_tab_items"/>
                 <action method="addTab">
                     <argument name="name" xsi:type="string">main_section</argument>
                     <argument name="block" xsi:type="string">braspag_paymentsplit_edit_tab_main</argument>

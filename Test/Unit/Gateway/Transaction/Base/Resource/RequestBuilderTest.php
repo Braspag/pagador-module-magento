@@ -1,26 +1,26 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Resource;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Resource;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
-	private $requestBuilder;
+    private $requestBuilder;
 
-	private $requestMock;
+    private $requestMock;
 
     public function setUp()
     {
-    	$this->requestMock = $this->createMock(
-    		RequestInterface::class
-    	);
+        $this->requestMock = $this->createMock(
+            RequestInterface::class
+        );
 
-    	$this->requestBuilder = new RequestBuilder(
-    		$this->requestMock
-    	);	
+        $this->requestBuilder = new RequestBuilder(
+            $this->requestMock
+        );
     }
 
     public function testBuilder()
@@ -33,9 +33,9 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
         $infoMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getPayment'])
-    		->getMock();
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getPayment'])
+            ->getMock();
 
         $paymentDataObjectMock->expects($this->once())
             ->method('getOrder')
@@ -45,7 +45,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($infoMock));
 
-    	$buildSubject = ['payment' => $paymentDataObjectMock];
+        $buildSubject = ['payment' => $paymentDataObjectMock];
 
         $this->requestMock->expects($this->once())
             ->method('setOrderAdapter')
@@ -56,7 +56,7 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->method('setPaymentData')
             ->with($infoMock);
 
-    	$result = $this->requestBuilder->build($buildSubject);
+        $result = $this->requestBuilder->build($buildSubject);
 
         static::assertSame($this->requestMock, $result);
     }

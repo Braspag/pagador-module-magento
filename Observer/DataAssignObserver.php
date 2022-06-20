@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Observer;
+namespace Braspag\BraspagPagador\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
-use Webjump\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as PixConfigProvider;
+use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
+use Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as PixConfigProvider;
 
 /**
  * Credit Card Data Assign

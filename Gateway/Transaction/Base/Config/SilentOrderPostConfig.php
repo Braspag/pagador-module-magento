@@ -1,11 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
-
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 class SilentOrderPostConfig extends Config implements SilentOrderPostConfigInterface
 {
-	protected $code;
+    protected $code;
 
     protected function _construct(array $data = [])
     {
@@ -17,19 +16,19 @@ class SilentOrderPostConfig extends Config implements SilentOrderPostConfigInter
         $this->setCode($code);
     }
 
-	public function isActive()
-	{
-		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_IS_ACTIVE);
-	}
+    public function isActive()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_IS_ACTIVE);
+    }
 
-	public function getPaymentTokenUrl()
-	{
-		if ($this->isTestMode()) {
-			return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_URL_HOMOLOG);
-		}
+    public function getPaymentTokenUrl()
+    {
+        if ($this->isTestMode()) {
+            return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_URL_HOMOLOG);
+        }
 
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_URL_PRODUCTION);
-	}
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_SILENTORDERPOST_URL_PRODUCTION);
+    }
 
     public function getAccessTokenUrl()
     {

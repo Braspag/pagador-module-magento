@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Command;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\CommandInterface;
@@ -16,8 +16,8 @@ use Magento\Payment\Gateway\Request\BuilderInterface as RequestBuilder;
 use Magento\Payment\Gateway\Response\HandlerInterface as ResponseHandler;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Psr\Log\LoggerInterface;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Transaction;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Transaction;
 
 abstract class AbstractCommand implements CommandInterface
 {

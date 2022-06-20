@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface;
 
 /**
  * Braspag Transaction Credit Capture Command
@@ -36,4 +36,3 @@ class VoidCommand extends AbstractApiCommand
         }
     }
 }
-

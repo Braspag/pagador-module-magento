@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,9 +8,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config;
 
 class Request extends Config implements RequestInterface
 {
@@ -18,6 +19,6 @@ class Request extends Config implements RequestInterface
         $clientId = $this->getAuth3Ds20ClientId();
         $clientSecret = $this->getAuth3Ds20ClientSecret();
 
-        return base64_encode($clientId.":".$clientSecret);
+        return base64_encode($clientId . ":" . $clientSecret);
     }
 }

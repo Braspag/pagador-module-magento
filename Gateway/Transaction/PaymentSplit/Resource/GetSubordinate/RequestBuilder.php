@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestFactory;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -18,7 +18,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordin
 
 /**
  * Class RequestBuilder
- * @package Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate
+ * @package Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate
  */
 class RequestBuilder implements BuilderInterface
 {
@@ -28,7 +28,7 @@ class RequestBuilder implements BuilderInterface
 
     /**
      * RequestBuilder constructor.
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\RequestFactory $requestFactory
      * @param ConfigInterface $config
      * @param \Magento\Framework\App\Request\Http $requestHttp
      */

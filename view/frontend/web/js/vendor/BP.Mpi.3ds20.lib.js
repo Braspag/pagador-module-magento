@@ -11,7 +11,7 @@
 define(
     [
         'jquery',
-        'Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
+        'Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
     ],
     function(
         $,

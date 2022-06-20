@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,17 +9,17 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\Payment\Info;
+namespace Braspag\BraspagPagador\Block\Payment\Info;
 
 use Magento\Payment\Block\Info;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Model\Payment\Info\BoletoFactoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Info\BoletoFactory;
+use Braspag\BraspagPagador\Model\Payment\Info\BoletoFactoryInterface;
+use Braspag\BraspagPagador\Model\Payment\Info\BoletoFactory;
 
 class Boleto extends Info
 {
-    const TEMPLATE = 'Webjump_BraspagPagador::payment/info/boleto.phtml';
+    const TEMPLATE = 'Braspag_BraspagPagador::payment/info/boleto.phtml';
 
     /** @var BoletoFactory */
     protected $boletoFactory;

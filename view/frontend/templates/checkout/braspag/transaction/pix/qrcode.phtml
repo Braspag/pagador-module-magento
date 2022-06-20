@@ -6,14 +6,14 @@
  *
  * @link        http://www.webjump.com.br
  *
- * @var \Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode $this
+ * @var \Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode $this
  */
 ?>
 <?php if ($block->shouldDisplay()) : ?>
 <div class="signapay-pix-container">
     <p class="pix-codigo">Seu código pix foi gerado</p>
     <img class="image-pix"
-        src="<?php echo $block->getViewFileUrl('Webjump_BraspagPagador::images/pix/logo_pix.png'); ?>" alt='pix'>
+        src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/logo_pix.png'); ?>" alt='pix'>
     <p class="signapay-info"> Para pagar no banco on-line ou aplicativo do seu banco,
     <p class="signapay-codigo"><strong>Escanei o QR Code ou copie o código Pix:</strong></p>
 
@@ -26,7 +26,7 @@
     </div>
     <div class="signapay-pix-time">
         <img class="image-time"
-            src="<?php echo $block->getViewFileUrl('Webjump_BraspagPagador::images/pix/timer.svg'); ?>" alt='timer'>
+            src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/timer.svg'); ?>" alt='timer'>
         <?php if ($expirationTime = $block->getExpirationTime()) : ?>
         <p class="signapay-stopwatch"> Validade do código Pix até às:
             <strong><?= $expirationTime ?></strong>
@@ -44,11 +44,11 @@
     <div class="pix-button-copy">
         <button class="button-copy-cod" onclick="copyToClipBoard()">
             <img class="image-copy check-image"
-                src="<?php echo $block->getViewFileUrl('Webjump_BraspagPagador::images/pix/check.png'); ?>"
+                src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/check.png'); ?>"
                 alt='content_copy' width="150">
             <span>Copiar código PIX</span>
             <img class="image-copy content-copy-image"
-                src="<?php echo $block->getViewFileUrl('Webjump_BraspagPagador::images/pix/content_copy.svg'); ?>"
+                src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/content_copy.svg'); ?>"
                 alt='content_copy' width="150">
         </button>
     </div>

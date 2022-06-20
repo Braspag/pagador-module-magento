@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Api;
+namespace Braspag\BraspagPagador\Api;
 
 /**
- * 
+ *
  *
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)

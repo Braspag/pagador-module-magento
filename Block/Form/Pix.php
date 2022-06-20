@@ -9,7 +9,7 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\Form;
+namespace Braspag\BraspagPagador\Block\Form;
 
 class Pix extends \Magento\Payment\Block\Form
 {
@@ -18,5 +18,5 @@ class Pix extends \Magento\Payment\Block\Form
      *
      * @var string
      */
-    protected $_template = 'Webjump_BraspagPagador::form/pix.phtml';
+    protected $_template = 'Braspag_BraspagPagador::form/pix.phtml';
 }

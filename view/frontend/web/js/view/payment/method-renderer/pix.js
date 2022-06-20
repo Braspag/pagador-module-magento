@@ -11,10 +11,10 @@ define(
     ],
     function (Component) {
         'use strict';
-        
+
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/pix',
+                template: 'Braspag_BraspagPagador/payment/pix',
                 demonstrative: window.checkoutConfig.payment.braspag_pagador_pix.info.demonstrative
             },
             /**

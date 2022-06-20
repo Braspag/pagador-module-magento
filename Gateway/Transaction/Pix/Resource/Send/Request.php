@@ -1,15 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Pix\Send\RequestInterface as BraspaglibRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Helper\Validator;
+use Braspag\BraspagPagador\Helper\Validator;
 
 /**
  * Braspag Transaction Pix Send Request
@@ -70,7 +70,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function __construct(
         ConfigInterface $config,
         Validator $validator,
-        \Webjump\BraspagPagador\Helper\Data $helperData
+        \Braspag\BraspagPagador\Helper\Data $helperData
     ) {
         $this->setConfig($config);
         $this->validator = $validator;

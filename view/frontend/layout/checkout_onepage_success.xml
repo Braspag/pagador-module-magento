@@ -8,12 +8,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block  class="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link"
+            <block  class="Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link"
                     name="checkout.braspag.transaction.boleto.link"
                     template="checkout/braspag/transaction/boleto/link.phtml"
                     before="order.success.additional.info"
                     cacheable="false" />
-            <block  class="Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode"
+            <block  class="Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode"
                     name="checkout.braspag.transaction.pix.qrcode"
                     template="checkout/braspag/transaction/pix/qrcode.phtml"
                     before="order.success.additional.info"

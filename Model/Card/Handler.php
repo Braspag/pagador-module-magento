@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Card;
+namespace Braspag\BraspagPagador\Model\Card;
 
-use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
+use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
 
 class Handler
 {

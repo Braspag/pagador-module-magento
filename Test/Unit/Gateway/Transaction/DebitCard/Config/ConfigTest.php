@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Config;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Config;
 
 use Magento\Store\Model\StoreManagerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,17 +35,17 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
         $this->scopeConfigMock->expects($this->at(0))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_id')
+            ->with('Braspag_braspag/pagador/merchant_id')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
         $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_key')
+            ->with('Braspag_braspag/pagador/merchant_key')
             ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
         $this->scopeConfigMock->expects($this->at(2))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/return_url')
+            ->with('Braspag_braspag/pagador/return_url')
             ->will($this->returnValue('http://return.url'));
 
         $this->scopeConfigMock->expects($this->at(3))
@@ -55,7 +55,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(4))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/test_mode')
+            ->with('Braspag_braspag/pagador/test_mode')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(5))
@@ -70,7 +70,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(7))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/general/active')
+            ->with('Braspag_braspag_antifraud/general/active')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(8))

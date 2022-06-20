@@ -8,17 +8,17 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\Session\SessionManagerInterface;
-use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
+use Braspag\BraspagPagador\Api\SplitDataProviderInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Webjump\BraspagPagador\Model\SplitDataAdapter;
+use Braspag\BraspagPagador\Model\SplitDataAdapter;
 
 /**
  * Class SplitDataProvider
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class SplitDataProvider implements SplitDataProviderInterface
 {
@@ -45,15 +45,15 @@ class SplitDataProvider implements SplitDataProviderInterface
      * @param \Magento\Checkout\Model\Session $session
      * @param \Magento\Framework\DataObjectFactory $objectFactory
      * @param StoreManagerInterface $storeManager
-     * @param \Webjump\BraspagPagador\Model\SplitDataAdapter $splitAdapter
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config $paymentSplitConfig
+     * @param \Braspag\BraspagPagador\Model\SplitDataAdapter $splitAdapter
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config $paymentSplitConfig
      */
     public function __construct(
         \Magento\Checkout\Model\Session $session,
         \Magento\Framework\DataObjectFactory $objectFactory,
         StoreManagerInterface $storeManager,
         SplitDataAdapter $splitAdapter,
-        \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config $paymentSplitConfig
+        \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\Config $paymentSplitConfig
     ) {
         $this->setObjectFactory($objectFactory);
         $this->setStoreManager($storeManager);
@@ -204,7 +204,7 @@ class SplitDataProvider implements SplitDataProviderInterface
      */
     public function getData($storeMerchantId, $storeDefaultMdr = 0, $storeDefaultFee = 0)
     {
-        if ($this->paymentSplitConfig->getPaymentSplitMarketPlaceVendor() !== 'braspag' ) {
+        if ($this->paymentSplitConfig->getPaymentSplitMarketPlaceVendor() !== 'braspag') {
             return [];
         }
 
@@ -232,11 +232,12 @@ class SplitDataProvider implements SplitDataProviderInterface
         }
 
         foreach ($items as $item) {
-
             $product = $item->getProduct();
 
             $braspagSubordinateMerchantId = $product->getResource()
-                ->getAttributeRawValue($product->getId(),'braspag_subordinate_merchantid',
+                ->getAttributeRawValue(
+                    $product->getId(),
+                    'braspag_subordinate_merchantid',
                     $this->getStoreManager()->getStore()->getId()
                 );
 
@@ -261,7 +262,7 @@ class SplitDataProvider implements SplitDataProviderInterface
                 $this->subordinates[$braspagSubordinateMerchantId]['skus'] = [];
             }
 
-            $itemPrice = floatval(($item->getPriceInclTax()*$item->getQty()) - $item->getDiscountAmount());
+            $itemPrice = floatval(($item->getPriceInclTax() * $item->getQty()) - $item->getDiscountAmount());
 
             $this->subordinates[$braspagSubordinateMerchantId]['amount'] += ($itemPrice * 100);
 
@@ -331,18 +332,17 @@ class SplitDataProvider implements SplitDataProviderInterface
     protected function removeMarketplaceParticipationValuesFromSubordinates()
     {
         foreach ($this->subordinates as $subordinateId => $subordinateData) {
-
             $subordinateAmountOriginal = floatval($subordinateData['amount']) / 100;
 
             if ($this->marketplaceSalesParticipation && $subordinateId !== $this->marketplaceMerchantId) {
-
                 $subordinateAmount = $subordinateAmountOriginal;
 
                 if ($this->marketplaceSalesParticipationType === '1') {
                     $subordinateAmount = (floatval($this->marketplaceSalesParticipationPercent) / 100) * $subordinateAmount;
                 }
 
-                if ($this->marketplaceSalesParticipationType === '2'
+                if (
+                    $this->marketplaceSalesParticipationType === '2'
                     && $subordinateAmount >= $this->marketplaceSalesParticipationFixedValue
                 ) {
                     $subordinateAmount = floatval($subordinateAmount) - floatval($this->marketplaceSalesParticipationFixedValue);
@@ -350,7 +350,7 @@ class SplitDataProvider implements SplitDataProviderInterface
 
                 $this->subordinates[$subordinateId]['amount'] = $subordinateAmount * 100;
 
-                $this->marketplaceParticipationFinalValue += $subordinateAmountOriginal-$subordinateAmount;
+                $this->marketplaceParticipationFinalValue += $subordinateAmountOriginal - $subordinateAmount;
             }
         }
 

@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Info;
+namespace Braspag\BraspagPagador\Model\Payment\Info;
 
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderPaymentInterface;
-
 
 class CreditCard
 {
@@ -40,10 +39,9 @@ class CreditCard
     public function getPayment()
     {
         if (! ($this->getOrder()->getPayment()) instanceof OrderPaymentInterface) {
-            throw new \InvalidArgumentException;
+            throw new \InvalidArgumentException();
         }
 
         return $this->getOrder()->getPayment();
     }
-
 }

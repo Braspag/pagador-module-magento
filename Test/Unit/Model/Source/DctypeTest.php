@@ -11,9 +11,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Source;
+namespace Braspag\BraspagPagador\Test\Unit\Model\Source;
 
-use Webjump\BraspagPagador\Model\Source\Dctype;
+use Braspag\BraspagPagador\Model\Source\Dctype;
 
 class DctypeTest extends \PHPUnit\Framework\TestCase
 {

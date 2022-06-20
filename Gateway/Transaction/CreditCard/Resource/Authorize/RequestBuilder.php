@@ -1,20 +1,20 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -44,8 +44,7 @@ class RequestBuilder implements BuilderInterface
         ConfigInterface $config,
         QuoteFactory $quoteFactory,
         ItemFactory $quoteItemFactory
-    )
-    {
+    ) {
         $this->setRequestFactory($requestFactory);
         $this->setAntiFraudRequest($requestAntiFraud);
         $this->setAvsRequest($requestAvs);
@@ -82,7 +81,8 @@ class RequestBuilder implements BuilderInterface
             $request->setAvsRequest($this->getRequestAvs());
         }
 
-        if ($this->getConfig()->isPaymentSplitActive()
+        if (
+            $this->getConfig()->isPaymentSplitActive()
             && ($this->getConfig()->isAuthorizeAndCapture()
                 && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
             )
@@ -216,5 +216,4 @@ class RequestBuilder implements BuilderInterface
         $quoteItemId = $firstItem->getQuoteItemId();
         return $quoteItemId;
     }
-
 }

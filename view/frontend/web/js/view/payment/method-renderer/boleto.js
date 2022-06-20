@@ -13,10 +13,10 @@ define(
     ],
     function (Component) {
         'use strict';
-        
+
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/boleto',
+                template: 'Braspag_BraspagPagador/payment/boleto',
                 demonstrative: window.checkoutConfig.payment.braspag_pagador_boleto.info.demonstrative
             }
         });

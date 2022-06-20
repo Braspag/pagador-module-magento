@@ -8,9 +8,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Api;
+namespace Braspag\BraspagPagador\Api;
 
-use Webjump\BraspagPagador\Api\Data\SplitInterface;
+use Braspag\BraspagPagador\Api\Data\SplitInterface;
 
 interface SplitManagerInterface
 {

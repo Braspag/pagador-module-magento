@@ -9,17 +9,17 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix;
+namespace Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix;
 
 use DateInterval;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\BaseHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\BaseHandler;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Sales\Api\Data\OrderInterface as Order;
 use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;
-use Webjump\BraspagPagador\Helper\Pix as HelperPix;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
+use Braspag\BraspagPagador\Helper\Pix as HelperPix;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Config\ConfigInterface;
 
 class Qrcode extends Template
 {
@@ -89,17 +89,17 @@ class Qrcode extends Template
 
     public function shouldDisplay()
     {
-        return $this->getPayment()->getMethod() == \Webjump\BraspagPagador\Model\Method\Pix\Ui\ConfigProvider::CODE;
+        return $this->getPayment()->getMethod() == \Braspag\BraspagPagador\Model\Method\Pix\Ui\ConfigProvider::CODE;
     }
 
     public function getQrCodeSrc()
     {
-        return $this->getPayment()->getAdditionalInformation(\Webjump\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response\BaseResponseHandler::ADDITIONAL_INFORMATION_PIX_QRCODESTRING);
+        return $this->getPayment()->getAdditionalInformation(\Braspag\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response\BaseResponseHandler::ADDITIONAL_INFORMATION_PIX_QRCODESTRING);
     }
 
     public function getQrCode()
     {
-        return $this->getPayment()->getAdditionalInformation(\Webjump\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response\BaseResponseHandler::ADDITIONAL_INFORMATION_PIX_QRCODEBASE64IMAGE);
+        return $this->getPayment()->getAdditionalInformation(\Braspag\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response\BaseResponseHandler::ADDITIONAL_INFORMATION_PIX_QRCODEBASE64IMAGE);
     }
 
     /**

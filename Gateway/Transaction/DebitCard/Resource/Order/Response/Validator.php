@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as DebitCardConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\DebitCard\Send\ResponseInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as DebitCardConfigInterface;
 
 /**
  * Validator

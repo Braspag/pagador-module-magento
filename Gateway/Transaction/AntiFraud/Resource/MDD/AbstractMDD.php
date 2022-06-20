@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
-
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
 
 use Detection\MobileDetect;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as OrderCollectionFactory;
@@ -22,9 +21,8 @@ abstract class AbstractMDD
         MDDConfigInterface $config,
         OrderCollectionFactory $orderCollectionFactory,
         MobileDetect $mobileDetect,
-        \Webjump\BraspagPagador\Helper\Data $helperData
-    )
-    {
+        \Braspag\BraspagPagador\Helper\Data $helperData
+    ) {
         $this->setConfig($config);
         $this->setOrderCollectionFactory($orderCollectionFactory);
         $this->setMobileDetect($mobileDetect);
@@ -63,7 +61,7 @@ abstract class AbstractMDD
 
     public function getOrderAdapter()
     {
-        return $this-$this->orderAdapter;
+        return $this - $this->orderAdapter;
     }
 
     /**
@@ -103,5 +101,4 @@ abstract class AbstractMDD
         $this->mobileDetect = $mobileDetect;
         return $this;
     }
-
 }

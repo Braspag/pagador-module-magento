@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Request;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\RequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\RequestInterface;
 
 /**
  * Validator

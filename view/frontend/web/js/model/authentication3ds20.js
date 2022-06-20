@@ -10,9 +10,9 @@
 define(
     [
         "jquery",
-    	"Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf",
-    	// "Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.lib"
-        "Webjump_BraspagPagador/js/vendor/BP.Mpi.3ds20.min"
+    	"Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf",
+    	// "Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.lib"
+        "Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.min"
     ],
     function(
         $,

@@ -1,21 +1,21 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order\Request;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order\Request;
 
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as DebitCardConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request\Validator;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as DebitCardConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request\Validator;
 use Magento\Payment\Gateway\Validator\Result;
 
 class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
-	private $validator;
-	private $requestMock;
-	private $debitCardConfigInterface;
+    private $validator;
+    private $requestMock;
+    private $debitCardConfigInterface;
 
     public function setUp()
     {
-    	$result = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
-    	$this->requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
+        $result = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
+        $this->requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getMerchantKey',
@@ -46,20 +46,20 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             ])
             ->getMock();
 
-    	$this->debitCardConfigInterface = $this->createMock(DebitCardConfigInterface::class);
+        $this->debitCardConfigInterface = $this->createMock(DebitCardConfigInterface::class);
 
-    	$this->validator = new Validator(
+        $this->validator = new Validator(
             $this->debitCardConfigInterface
-    	);
+        );
     }
 
     public function testValidateWithSuccess()
     {
-    	$result = $this->validator->validate(
-    		['request' => $this->requestMock]
-    	);
+        $result = $this->validator->validate(
+            ['request' => $this->requestMock]
+        );
 
-    	$this->assertEquals(new Result(true, [[]]), $result);
+        $this->assertEquals(new Result(true, [[]]), $result);
     }
 
     /**
@@ -68,7 +68,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
      */
     public function testValidateShouldThrowAnExceptionWhenInvalidRequest()
     {
-    	$this->validator->validate([]);
+        $this->validator->validate([]);
     }
 
     public function testValidateShouldReturnErrorMessageWhenAuthentication3DS20ReturnsError()

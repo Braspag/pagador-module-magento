@@ -8,10 +8,10 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Quote\Model\Quote;
-use Webjump\BraspagPagador\Api\SplitDataAdapterInterface;
+use Braspag\BraspagPagador\Api\SplitDataAdapterInterface;
 
 class SplitDataAdapter implements SplitDataAdapterInterface
 {
@@ -53,7 +53,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
         $dataSplitPayments = $this->objectFactory->create();
         $splitPayments = [];
         foreach ($splitPaymentData as $subordinateId => $subordinate) {
-
             $subordinateDataObject = $this->objectFactory->create();
 
             $subordinateMerchantId = isset($subordinate['SubordinateMerchantId']) ?
@@ -66,16 +65,13 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             ];
 
             if (isset($subordinate['fares'])) {
-
                 $subordinateFaresDataObject = $this->objectFactory->create();
 
                 $subordinateFaresData = [
                     "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
-                        $subordinate['Fares']['Mdr'] : $subordinate['fares']['mdr']
-                    ),
+                        $subordinate['Fares']['Mdr'] : $subordinate['fares']['mdr']),
                     "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
-                        $subordinate['Fares']['Fee'] : $subordinate['fares']['fee']
-                    )
+                        $subordinate['Fares']['Fee'] : $subordinate['fares']['fee'])
                 ];
 
                 $subordinateFaresDataObject->addData($subordinateFaresData);
@@ -148,7 +144,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
         $merchantId = $splitPaymentData['Merchant']['Id'];
 
         foreach ($splitPaymentData['Splits'] as $subordinate) {
-
             $subordinateDataObject = $this->objectFactory->create();
 
             $subordinateMerchantId = isset($subordinate['Merchant']['Id']) ?
@@ -161,16 +156,13 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             ];
 
             if (isset($subordinate['Fares'])) {
-
                 $subordinateFaresDataObject = $this->objectFactory->create();
 
                 $subordinateFaresData = [
                     "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
-                        $subordinate['Fares']['Mdr'] : 0
-                    ),
+                        $subordinate['Fares']['Mdr'] : 0),
                     "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
-                        $subordinate['Fares']['Fee'] : 0
-                    )
+                        $subordinate['Fares']['Fee'] : 0)
                 ];
 
                 $subordinateFaresDataObject->addData($subordinateFaresData);
@@ -207,7 +199,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
         $splitPayments = [];
 
         foreach ($splitPaymentData as $subordinate) {
-
             $subordinateDataObject = $this->objectFactory->create();
 
             $subordinateMerchantId = isset($subordinate['SubordinateMerchantId']) ?
@@ -220,16 +211,13 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             ];
 
             if (isset($subordinate['Fares'])) {
-
                 $subordinateFaresDataObject = $this->objectFactory->create();
 
                 $subordinateFaresData = [
                     "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
-                        $subordinate['Fares']['Mdr'] : 0
-                    ),
+                        $subordinate['Fares']['Mdr'] : 0),
                     "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
-                        $subordinate['Fares']['Fee'] : 0
-                    )
+                        $subordinate['Fares']['Fee'] : 0)
                 ];
 
                 $subordinateFaresDataObject->addData($subordinateFaresData);
@@ -265,7 +253,6 @@ class SplitDataAdapter implements SplitDataAdapterInterface
         $splitPayments = [];
 
         foreach ($splitPaymentData as $subordinate) {
-
             $subordinateDataObject = $this->objectFactory->create();
 
             $subordinateMerchantId = isset($subordinate['SubordinateMerchantId']) ?
@@ -278,16 +265,13 @@ class SplitDataAdapter implements SplitDataAdapterInterface
             ];
 
             if (isset($subordinate['Fares'])) {
-
                 $subordinateFaresDataObject = $this->objectFactory->create();
 
                 $subordinateFaresData = [
                     "mdr" => floatval(isset($subordinate['Fares']['Mdr']) ?
-                        $subordinate['Fares']['Mdr'] : 0
-                    ),
+                        $subordinate['Fares']['Mdr'] : 0),
                     "fee" => floatval(isset($subordinate['Fares']['Fee']) ?
-                        $subordinate['Fares']['Fee'] : 0
-                    )
+                        $subordinate['Fares']['Fee'] : 0)
                 ];
 
                 $subordinateFaresDataObject->addData($subordinateFaresData);

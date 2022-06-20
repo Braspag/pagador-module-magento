@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 /**
  *
@@ -13,14 +13,14 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
  */
 interface ConfigInterface
 {
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID     = 'webjump_braspag/pagador/merchant_id';
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY    = 'webjump_braspag/pagador/merchant_key';
-    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_NAME = 'webjump_braspag/pagador/merchant_name';
-    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_ESTABLISHMENT_CODE = 'webjump_braspag/pagador/establishment_code';
-    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MMC = 'webjump_braspag/pagador/mcc';
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL    = 'webjump_braspag/pagador/return_url';
-	const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT    = 'webjump_braspag/pagador/test_mode';
-	const DATE_FORMAT = 'Y-m-d';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_ID     = 'braspag_braspag/pagador/merchant_id';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_KEY    = 'braspag_braspag/pagador/merchant_key';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MERCHANT_NAME = 'braspag_braspag/pagador/merchant_name';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_ESTABLISHMENT_CODE = 'braspag_braspag/pagador/establishment_code';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_MMC = 'braspag_braspag/pagador/mcc';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL    = 'braspag_braspag/pagador/return_url';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_IS_TEST_ENVIRONMENT    = 'braspag_braspag/pagador/test_mode';
+    const DATE_FORMAT = 'Y-m-d';
 
     public function getMerchantId();
 
@@ -33,5 +33,4 @@ interface ConfigInterface
     public function getMCC();
 
     public function getIsTestEnvironment();
-
 }

@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Method\Pix;
+namespace Braspag\BraspagPagador\Model\Method\Pix;
 
-use Webjump\BraspagPagador\Model\Method\AbstractMethod;
+use Braspag\BraspagPagador\Model\Method\AbstractMethod;
 
 class Pix extends AbstractMethod
 {

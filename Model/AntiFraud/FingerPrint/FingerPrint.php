@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,10 +9,9 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Model\AntiFraud\FingerPrint;
+namespace Braspag\BraspagPagador\Model\AntiFraud\FingerPrint;
 
-
-use Webjump\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
+use Braspag\BraspagPagador\Api\Data\AntiFraudFingerPrintInterface;
 
 class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInterface
 {
@@ -67,7 +67,7 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
      */
     public function makeCustomCustomerSessionId($quote = null)
     {
-        return md5($quote->getCustomerId().$quote->getId());
+        return md5($quote->getCustomerId() . $quote->getId());
     }
 
     /**

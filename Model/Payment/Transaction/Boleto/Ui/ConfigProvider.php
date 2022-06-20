@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as BoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as BoletoConfig;
 
 /**
  * Braspag Transaction Boleto Send Command
@@ -21,9 +21,9 @@ final class ConfigProvider implements ConfigProviderInterface
     protected $boletoConfig;
 
     public function __construct(
-    	BoletoConfig $boletoConfig
+        BoletoConfig $boletoConfig
     ) {
-    	$this->setBoletoConfig($boletoConfig);
+        $this->setBoletoConfig($boletoConfig);
     }
 
     public function getConfig()
@@ -39,7 +39,7 @@ final class ConfigProvider implements ConfigProviderInterface
         ];
     }
 
-    
+
     protected function getBoletoConfig()
     {
         return $this->boletoConfig;

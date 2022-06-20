@@ -1,12 +1,13 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
 
-use Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit\SendTransactionalPost;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Model\SplitManager;
+namespace Braspag\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
+
+use Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit\SendTransactionalPost;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 {
@@ -73,9 +74,9 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['create'])
             ->getMock();
 
-        $this->splitMock = $this->createMock(\Webjump\BraspagPagador\Model\Split::class);
+        $this->splitMock = $this->createMock(\Braspag\BraspagPagador\Model\Split::class);
 
-        $this->splitFactory = $this->getMockBuilder('\Webjump\BraspagPagador\Model\SplitFactory')
+        $this->splitFactory = $this->getMockBuilder('\Braspag\BraspagPagador\Model\SplitFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -155,7 +156,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->orderPayment->expects($this->once())
             ->method('getMethod')
-            ->willReturn(\Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE);
+            ->willReturn(\Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE);
 
         $this->orderModel->expects($this->exactly(2))
             ->method('getPayment')
@@ -171,7 +172,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configCreditCardInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $resultPage = $this->controller->execute();
     }
@@ -195,7 +196,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->orderPayment->expects($this->once())
             ->method('getMethod')
-            ->willReturn(\Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE);
+            ->willReturn(\Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE);
 
         $this->orderModel->expects($this->exactly(2))
             ->method('getPayment')
@@ -211,7 +212,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configDebitCardInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $resultPage = $this->controller->execute();
     }
@@ -235,7 +236,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->orderPayment->expects($this->once())
             ->method('getMethod')
-            ->willReturn(\Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE);
+            ->willReturn(\Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE);
 
         $this->orderModel->expects($this->exactly(2))
             ->method('getPayment')
@@ -251,7 +252,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configBoletoInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $resultPage = $this->controller->execute();
     }
@@ -312,7 +313,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->orderPayment->expects($this->once())
             ->method('getMethod')
-            ->willReturn(\Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE);
+            ->willReturn(\Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE);
 
         $this->orderModel->expects($this->exactly(2))
             ->method('getPayment')
@@ -328,7 +329,7 @@ class SendTransactionalPostTest extends \PHPUnit\Framework\TestCase
 
         $this->configBoletoInterface->expects($this->once())
             ->method('getPaymentSplitType')
-            ->willReturn(\Webjump\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
+            ->willReturn(\Braspag\BraspagPagador\Model\Source\PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST);
 
         $this->splitPaymentTransactionPostCommand->expects($this->once())
             ->method('execute')

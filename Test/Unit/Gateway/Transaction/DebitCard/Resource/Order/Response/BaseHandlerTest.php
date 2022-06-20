@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
 
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\BaseHandler;
-use Webjump\Braspag\Pagador\Transaction\Resource\DebitCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Response\BaseHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\DebitCard\Send\Response;
 
 class BaseHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
     private $responseMock;
 
     public function setUp()
@@ -16,14 +16,13 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->handler = new BaseHandler(
+        $this->handler = new BaseHandler(
             $this->responseMock
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
@@ -64,9 +63,9 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 }

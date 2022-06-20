@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit;
 
 class MassUnlock extends AbstractPaymentSplit
 {
@@ -17,13 +17,13 @@ class MassUnlock extends AbstractPaymentSplit
 
                 $successedLocks = 0;
                 foreach ($paymentSplits as $paymentSplitId) {
-
                     try {
                         $paymentSplit = $modelFactory->load($paymentSplitId);
 
                         if (empty($paymentSplit->getSalesOrderId())) {
                             throw new \Exception(
-                                __('Could not unlock payment split. It does not exist at Braspag.'));
+                                __('Could not unlock payment split. It does not exist at Braspag.')
+                            );
                         }
 
                         $order = $this->orderRepository->get($paymentSplit->getSalesOrderId());
@@ -39,10 +39,10 @@ class MassUnlock extends AbstractPaymentSplit
                         $paymentSplit->save();
 
                         $successedLocks++;
-
                     } catch (\Exception $e) {
                         $this->messageManager->addError(
-                            __('Could not unlock Payment Split')." ".$paymentSplitId);
+                            __('Could not unlock Payment Split') . " " . $paymentSplitId
+                        );
                     }
                 }
                 $this->messageManager->addSuccess(

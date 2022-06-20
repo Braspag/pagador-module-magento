@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\ResourceModel\Split;
+namespace Braspag\BraspagPagador\Model\ResourceModel\Split;
 
 /**
  * Split Item Resource
@@ -14,8 +14,8 @@ namespace Webjump\BraspagPagador\Model\ResourceModel\Split;
  */
 class Item extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-	protected function _construct()
-	{
-		$this->_init('braspag_paymentsplit_split_item', 'split_item_id');
-	}
+    protected function _construct()
+    {
+        $this->_init('braspag_paymentsplit_split_item', 'split_item_id');
+    }
 }

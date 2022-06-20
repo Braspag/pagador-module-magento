@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Method;
+namespace Braspag\BraspagPagador\Model\Method;
 
 use Magento\Checkout\Model\Session;
 use Magento\Store\Model\StoreManagerInterface;
-use Webjump\BraspagPagador\Model\Buyer\Handler as buyerHandler;
-use Webjump\BraspagPagador\Model\Card\Handler as cardHandler;
-use Webjump\BraspagPagador\Model\Config\Config;
-use Webjump\BraspagPagador\Model\Token\Handler as tokenHandler;
-use Webjump\BraspagPagador\Gateway\Transaction\Transaction;
+use Braspag\BraspagPagador\Model\Buyer\Handler as buyerHandler;
+use Braspag\BraspagPagador\Model\Card\Handler as cardHandler;
+use Braspag\BraspagPagador\Model\Config\Config;
+use Braspag\BraspagPagador\Model\Token\Handler as tokenHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Transaction;
 
 abstract class AbstractMethod
 {

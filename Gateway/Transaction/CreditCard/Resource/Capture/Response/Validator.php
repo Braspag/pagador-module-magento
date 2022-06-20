@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface;
 
 /**
  * Validator
@@ -39,6 +39,4 @@ class Validator implements ValidatorInterface
 
         return new Result($status, $message);
     }
-
 }
-

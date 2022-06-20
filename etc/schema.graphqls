@@ -1,7 +1,7 @@
 type Query {
     braspagAccessToken: AccessTokenResult
     @resolver(
-        class: "Webjump\\BraspagPagador\\Model\\Resolver\\AccessToken"
+        class: "Braspag\\BraspagPagador\\Model\\Resolver\\AccessToken"
     )
     @doc(
         description: "Request braspag pagador to get access token"

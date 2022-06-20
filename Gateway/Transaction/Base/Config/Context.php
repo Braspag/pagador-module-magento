@@ -1,7 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
-
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -23,8 +22,7 @@ class Context implements ContextInterface
         StoreManagerInterface $storeManager,
         DateTime $dateTime,
         CurrentDate $currentDate
-    )
-    {
+    ) {
         $this->setConfig($config);
         $this->setSession($session);
         $this->setStoreManager($storeManager);
@@ -39,7 +37,6 @@ class Context implements ContextInterface
     public function getSession()
     {
         return $this->session;
-
     }
 
     public function getStoreManager()

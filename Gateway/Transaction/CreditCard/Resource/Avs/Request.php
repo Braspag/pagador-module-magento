@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Capture Request
  *
@@ -8,13 +9,14 @@
  *
  * @link        http://www.webjump.com.br
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs;
+
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs;
 
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface
@@ -42,7 +44,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getZipCode()
     {
-        return preg_replace('/[^0-9]/','', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
     }
 
     public function getStreet()

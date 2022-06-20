@@ -1,18 +1,18 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Braintree\Exception;
-use Webjump\BraspagPagador\Api\Data\SplitInterface;
-use Webjump\BraspagPagador\Model\SplitFactory;
+use Braspag\BraspagPagador\Api\Data\SplitInterface;
+use Braspag\BraspagPagador\Model\SplitFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session;
-use Webjump\BraspagPagador\Model\ResourceModel\Split as SplitResourceModel;
-use Webjump\BraspagPagador\Api\SplitRepositoryInterface;
+use Braspag\BraspagPagador\Model\ResourceModel\Split as SplitResourceModel;
+use Braspag\BraspagPagador\Api\SplitRepositoryInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\Search\FilterGroup;
-use Webjump\BraspagPagador\Model\ResourceModel\Split\Collection;
+use Braspag\BraspagPagador\Model\ResourceModel\Split\Collection;
 
 /**
  * Split repository
@@ -58,7 +58,7 @@ class SplitRepository implements SplitRepositoryInterface
     /**
      * SplitRepository constructor.
      *
-     * @param \Webjump\BraspagPagador\Model\SplitFactory $splitFactory
+     * @param \Braspag\BraspagPagador\Model\SplitFactory $splitFactory
      * @param StoreManagerInterface                          $storeManager
      * @param Session                                        $session
      * @param SplitResourceModel                         $resource
@@ -70,8 +70,7 @@ class SplitRepository implements SplitRepositoryInterface
         Session $session,
         SplitResourceModel $resource,
         SearchResultsInterface $searchResults
-    )
-    {
+    ) {
         $this->setSplitFactory($splitFactory);
         $this->setStoreManager($storeManager);
         $this->setSession($session);
@@ -141,7 +140,7 @@ class SplitRepository implements SplitRepositoryInterface
      *
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete(SplitInterface  $split)
+    public function delete(SplitInterface $split)
     {
         try {
             $this->getResource()->delete($split);
@@ -230,7 +229,7 @@ class SplitRepository implements SplitRepositoryInterface
     }
 
     /**
-     * @param \Webjump\BraspagPagador\Model\SplitFactory $splitFactory
+     * @param \Braspag\BraspagPagador\Model\SplitFactory $splitFactory
      *
      * @return $this
      */

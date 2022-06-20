@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
 
 /**
  * Braspag Transaction CreditCard Capture Request Builder
@@ -17,15 +17,15 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
  */
 class RequestBuilder implements BuilderInterface
 {
-	protected $request;
+    protected $request;
 
-	public function __construct(
-		RequestInterface $request,
+    public function __construct(
+        RequestInterface $request,
         ConfigInterface $config
-	) {
+    ) {
         $this->setRequest($request);
         $this->setConfig($config);
-	}
+    }
 
     protected function setConfig(ConfigInterface $config)
     {

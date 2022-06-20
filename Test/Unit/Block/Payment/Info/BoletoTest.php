@@ -1,9 +1,10 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Payment\Info;
+
+namespace Braspag\BraspagPagador\Test\Unit\Block\Payment\Info;
 
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Block\Payment\Info\Boleto;
-use Webjump\BraspagPagador\Model\Payment\Info\BoletoFactoryInterface;
+use Braspag\BraspagPagador\Block\Payment\Info\Boleto;
+use Braspag\BraspagPagador\Model\Payment\Info\BoletoFactoryInterface;
 
 class BoletoTest extends \PHPUnit\Framework\TestCase
 {
@@ -40,7 +41,6 @@ class BoletoTest extends \PHPUnit\Framework\TestCase
                 'data' => []
             ]
         );
-
     }
 
     public function testConstructShouldSetTemplateWithSuccess()

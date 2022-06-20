@@ -1,11 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface;
-use Webjump\BraspagPagador\Api\InstallmentsInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface;
+use Braspag\BraspagPagador\Api\InstallmentsInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment;
 
 class Installments implements InstallmentsInterface
 {
@@ -47,5 +46,4 @@ class Installments implements InstallmentsInterface
     {
         return $this->builder;
     }
-
 }

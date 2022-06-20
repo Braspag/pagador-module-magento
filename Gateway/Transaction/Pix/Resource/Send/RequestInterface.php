@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Model\InfoInterface;

@@ -1,43 +1,42 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\ResponseHandler;
 
 class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
 
     public function setUp()
     {
-    	$this->handler = new ResponseHandler();
+        $this->handler = new ResponseHandler();
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
 
-    	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
-    		->disableOriginalConstructor()
-    	    ->getMock();
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
-    		->getMock();
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
 
-    	$paymentDataObjectMock->expects($this->once())
-    	    ->method('getPayment')
-    	    ->will($this->returnValue($paymentMock));
+        $paymentDataObjectMock->expects($this->once())
+            ->method('getPayment')
+            ->will($this->returnValue($paymentMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 
     /**
@@ -46,20 +45,20 @@ class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
      */
     public function testHandleShouldThrowAnExceptionWhenInvalidPayment()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
 
-    	$paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
-    		->disableOriginalConstructor()
-    	    ->getMock();
+        $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    	$paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
-    		->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
-    		->getMock();
+        $paymentDataObjectMock = $this->getMockBuilder('Magento\Payment\Gateway\Data\PaymentDataObjectInterface')
+            ->setMethods(['getOrder', 'getShippingAddress', 'getPayment'])
+            ->getMock();
 
-    	$handlingSubject = [];
-    	$response = ['response' => $responseMock];
+        $handlingSubject = [];
+        $response = ['response' => $responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 
     /**
@@ -68,7 +67,7 @@ class ResponseHandlerTest extends \PHPUnit\Framework\TestCase
      */
     public function testHandleShouldThrowAnExceptionWhenInvalidResponse()
     {
-        $responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface');
 
         $paymentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Payment')
             ->disableOriginalConstructor()

@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Config;
+namespace Braspag\BraspagPagador\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\State;
-// use Webjump\BraspagPagador\Model\Context\ContextInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+// use Braspag\BraspagPagador\Model\Context\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 abstract class AbstractConfig
 {

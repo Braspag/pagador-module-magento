@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,7 +8,7 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Framework\DB\Transaction;
 use Magento\Framework\Event\Manager;
@@ -16,12 +17,11 @@ use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\InvoiceService;
 use Psr\Log\LoggerInterface;
-
-use Webjump\BraspagPagador\Model\NotificationManager;
+use Braspag\BraspagPagador\Model\NotificationManager;
 
 /**
  * Class InvoiceManager
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class InvoiceManager
 {
@@ -64,7 +64,7 @@ class InvoiceManager
         InvoiceSender $invoiceSender,
         Manager $eventManager,
         \Magento\Sales\Model\Order\Status $orderStatusModel
-    ){
+    ) {
         $this->setInvoiceService($invoiceService);
         $this->setTransaction($transaction);
         $this->setInvoiceSender($invoiceSender);
@@ -199,7 +199,7 @@ class InvoiceManager
             ->setStatus($processingDefaultStatus->getStatus());
 
         $order->save();
-        $this->getEventManager()->dispatch('webjump_braspagPagador_setstate_after', ['order' => $order]);
+        $this->getEventManager()->dispatch('braspag_braspagPagador_setstate_after', ['order' => $order]);
 
         return true;
     }

@@ -5,7 +5,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 /**
  * Class Checkmo
@@ -29,12 +29,12 @@ class Pix extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @var string
      */
-    protected $_formBlockType = \Webjump\BraspagPagador\Block\Form\Pix::class;
+    protected $_formBlockType = \Braspag\BraspagPagador\Block\Form\Pix::class;
 
     /**
      * @var string
      */
-    protected $_infoBlockType = \Webjump\BraspagPagador\Block\Info\Pix::class;
+    protected $_infoBlockType = \Braspag\BraspagPagador\Block\Info\Pix::class;
 
     /**
      * Availability option

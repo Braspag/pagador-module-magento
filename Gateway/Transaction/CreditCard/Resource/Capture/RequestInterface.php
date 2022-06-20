@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 

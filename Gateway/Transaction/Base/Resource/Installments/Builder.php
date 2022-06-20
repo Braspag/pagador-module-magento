@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\State;
-use \Magento\Backend\Model\Session\Quote as SessionAdmin;
+use Magento\Backend\Model\Session\Quote as SessionAdmin;
 
 class Builder implements BuilderInterface
 {
@@ -52,8 +52,7 @@ class Builder implements BuilderInterface
     public function build()
     {
         $installmentItems = $this->getInstallmentsNumber();
-        for ($i = 1; $i < $installmentItems ; $i++) {
-
+        for ($i = 1; $i < $installmentItems; $i++) {
             if (!$this->canProcessInstallment($i)) {
                 break;
             }
@@ -169,6 +168,4 @@ class Builder implements BuilderInterface
     {
         $this->sessionAdmin = $sessionAdmin;
     }
-
-
 }

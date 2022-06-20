@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Void\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
@@ -22,7 +22,8 @@ class Validator implements ValidatorInterface
 
     public function validate(array $validationSubject)
     {
-        if (!isset($validationSubject['response'])
+        if (
+            !isset($validationSubject['response'])
             || !$validationSubject['response'] instanceof \Webjump\Braspag\Pagador\Transaction\Resource\Actions\Response
         ) {
             throw new \InvalidArgumentException('Braspag Transaction Void Response object should be provided');
@@ -39,6 +40,4 @@ class Validator implements ValidatorInterface
 
         return new Result($status, $message);
     }
-
 }
-

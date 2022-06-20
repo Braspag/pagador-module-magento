@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\RequestInterface;
 
 /**
  * Braspag Transaction Credit Create Subordinate Command
@@ -67,8 +67,8 @@ class GetSubordinateCommand extends AbstractApiCommand
      * @return mixed
      * @throws \Magento\Sales\Exception\CouldNotInvoiceException
      */
-	protected function sendRequest($request)
-	{
+    protected function sendRequest($request)
+    {
         if (!isset($request) || !$request instanceof RequestInterface) {
             throw new \InvalidArgumentException('Braspag Split Transaction Create Subordinate Send Request Lib object should be provided');
         }
@@ -76,10 +76,9 @@ class GetSubordinateCommand extends AbstractApiCommand
         try {
             return $this->getApi()->sendSplitPaymentGetSubordinate($request);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-
             throw new \Magento\Sales\Exception\CouldNotInvoiceException(
                 __('Braspag communication error. Error code: ' . $e->getCode())
             );
         }
-	}
+    }
 }

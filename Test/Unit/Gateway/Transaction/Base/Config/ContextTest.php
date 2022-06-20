@@ -1,8 +1,8 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Context;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;

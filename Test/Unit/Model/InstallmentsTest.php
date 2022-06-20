@@ -11,9 +11,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model;
+namespace Braspag\BraspagPagador\Test\Unit\Model;
 
-use Webjump\BraspagPagador\Model\Installments;
+use Braspag\BraspagPagador\Model\Installments;
 
 class InstallmentsTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,8 +22,8 @@ class InstallmentsTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->builderMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface::class);
-        $this->InstallmentMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface::class);
+        $this->builderMock = $this->createMock(\Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface::class);
+        $this->InstallmentMock = $this->createMock(\Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface::class);
 
         $this->model = $objectManager->getObject(
             Installments::class,

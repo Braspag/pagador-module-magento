@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction;
+namespace Braspag\BraspagPagador\Gateway\Transaction;
 
 use Magento\Checkout\Model\Session;
 use Psr\Log\LoggerInterface;
-use Webjump\BraspagPagador\Model\AbstractHandler;
-use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
+use Braspag\BraspagPagador\Model\AbstractHandler;
+use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
 
 class Transaction extends AbstractHandler
 {

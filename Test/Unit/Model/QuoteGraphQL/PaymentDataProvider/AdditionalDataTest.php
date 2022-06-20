@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\QuoteGraphQL\PaymentDataProvider;
+namespace Braspag\BraspagPagador\Test\Unit\Model\QuoteGraphQL\PaymentDataProvider;
 
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Webjump\BraspagPagador\Model\QuoteGraphQL\PaymentDataProvider\AdditionalData;
+use Braspag\BraspagPagador\Model\QuoteGraphQL\PaymentDataProvider\AdditionalData;
 
 class AdditionalDataTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdditionalDataTest extends TestCase
     {
         $expected = ['foo' => 'bar'];
         $data = [
-            self::PATH_ADDITIONAL_DATA => ['foo'=> 'bar'],
+            self::PATH_ADDITIONAL_DATA => ['foo' => 'bar'],
             'code' => 'braspag_pagador_creditcard'
         ];
 
@@ -65,5 +65,4 @@ class AdditionalDataTest extends TestCase
 
         $this->assertEquals($expected, $result);
     }
-
 }

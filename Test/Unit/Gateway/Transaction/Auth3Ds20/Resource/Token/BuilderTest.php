@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Auth3Ds20\Resource\Token;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder;
-use Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
-
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder;
+use Braspag\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
 
 class BuilderTest extends \PHPUnit\Framework\TestCase
 {
@@ -29,7 +28,6 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()
@@ -43,6 +41,5 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue('123'));
 
         static::assertEquals($this->dataObjectMock, $this->builder->build($this->tokenResponseMock));
-
     }
 }

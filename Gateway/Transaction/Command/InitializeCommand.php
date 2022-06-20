@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Command;
 
 use Magento\Payment\Gateway\CommandInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Payment;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface;
 
 class InitializeCommand implements CommandInterface
 {

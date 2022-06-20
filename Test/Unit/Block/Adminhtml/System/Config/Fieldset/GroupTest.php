@@ -1,7 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Block\Adminhtml\System\Config\Fieldset;
-
+namespace Braspag\BraspagPagador\Test\Unit\Block\Adminhtml\System\Config\Fieldset;
 
 class GroupTest extends \PHPUnit\Framework\TestCase
 {
@@ -65,7 +64,7 @@ class GroupTest extends \PHPUnit\Framework\TestCase
             ->with('getUser')
             ->will($this->returnValue($this->_user));
         $this->_model = $helper->getObject(
-            'Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Group',
+            'Braspag\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Group',
             ['authSession' => $this->_authSession]
         );
         $this->_model->setGroup($this->_group);

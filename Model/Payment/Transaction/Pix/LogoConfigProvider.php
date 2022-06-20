@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\Pix;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\Pix;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
-// use Webjump\BraspagPagador\Model\Pix;
-use Webjump\BraspagPagador\Model\Method\Pix\Ui\ConfigProvider;
+// use Braspag\BraspagPagador\Model\Pix;
+use Braspag\BraspagPagador\Model\Method\Pix\Ui\ConfigProvider;
 use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Payment\Model\Method\AbstractMethod;
 

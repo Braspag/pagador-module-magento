@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Source;
+namespace Braspag\BraspagPagador\Model\Source;
 
 /**
  *
@@ -13,7 +13,7 @@ namespace Webjump\BraspagPagador\Model\Source;
 
 /**
  * Class AllPaymentMethods
- * @package Webjump\BraspagPagador\Model\Source
+ * @package Braspag\BraspagPagador\Model\Source
  */
 class AllPaymentMethods implements \Magento\Framework\Option\ArrayInterface
 {
@@ -50,8 +50,7 @@ class AllPaymentMethods implements \Magento\Framework\Option\ArrayInterface
         $options = [];
 
         foreach ($this->getPaymentMethods() as $code => $data) {
-
-            if(!isset($data['active']) || $data['active'] !== '1' || $code === 'free') {
+            if (!isset($data['active']) || $data['active'] !== '1' || $code === 'free') {
                 continue;
             }
 

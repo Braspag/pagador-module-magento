@@ -1,18 +1,18 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send\Request;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\Send\Request;
 
 use Magento\Quote\Model\Quote;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request\SplitHandler;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request\SplitHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Request;
 use Magento\Payment\Gateway\Request\HandlerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
-use Webjump\BraspagPagador\Model\SplitDataAdapter;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Model\SplitDataAdapter;
 
 class SplitHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
     private $splitManager;
     private $requestMock;
     private $splitAdapter;
@@ -43,9 +43,9 @@ class SplitHandlerTest extends \PHPUnit\Framework\TestCase
 
         $this->sessionMock = $this->createMock(\Magento\Checkout\Model\Session::class);
 
-        $this->paymentSplitRequestMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\PaymentSplit\Request::class);
+        $this->paymentSplitRequestMock = $this->createMock(\Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\PaymentSplit\Request::class);
 
-    	$this->handler = new SplitHandler(
+        $this->handler = new SplitHandler(
             $this->splitManager,
             $this->requestMock,
             $this->sessionMock
@@ -54,7 +54,6 @@ class SplitHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testHandleShouldHandleWithSuccess()
@@ -87,12 +86,12 @@ class SplitHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$request = ['request' => $this->requestMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $request = ['request' => $this->requestMock];
 
-    	$result = $this->handler->handle($handlingSubject, $request);
+        $result = $this->handler->handle($handlingSubject, $request);
 
-    	$this->assertEquals($this->requestMock, $result);
+        $this->assertEquals($this->requestMock, $result);
     }
 
     public function testHandleShouldNotHandleWhenInvalidPaymentSplitRequest()

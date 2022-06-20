@@ -1,11 +1,12 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Form;
+
+namespace Braspag\BraspagPagador\Test\Unit\Block\Form;
 
 use Magento\Payment\Model\MethodInterface;
-use Webjump\BraspagPagador\Block\Form\CreditCard;
-use \Magento\Framework\View\Element\Template\Context;
-use \Magento\Payment\Model\Config;
-use Webjump\BraspagPagador\Api\InstallmentsInterface;
+use Braspag\BraspagPagador\Block\Form\CreditCard;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Payment\Model\Config;
+use Braspag\BraspagPagador\Api\InstallmentsInterface;
 
 class CreditCardTest extends \PHPUnit\Framework\TestCase
 {
@@ -61,7 +62,6 @@ class CreditCardTest extends \PHPUnit\Framework\TestCase
                 'data' => []
             ]
         );
-
     }
 
     public function testGetAllInstallments()

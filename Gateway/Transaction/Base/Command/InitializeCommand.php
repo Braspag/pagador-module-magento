@@ -1,14 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Command;
 
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Payment\Gateway\CommandInterface;
 use Magento\Sales\Model\Order\Payment;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as CreditCardProvider;
-
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as CreditCardProvider;
 
 /**
  * Class CaptureCommand
@@ -46,14 +45,14 @@ class InitializeCommand implements CommandInterface
             $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
         }
 
-        if ($payment->getMethod() === CreditCardProvider::CODE
+        if (
+            $payment->getMethod() === CreditCardProvider::CODE
             && empty($payment->getMethodInstance()->getConfigData('order_status'))
         ) {
             $stateObject->setData(OrderInterface::STATE, Order::STATE_PROCESSING);
         }
 
         if (!empty($payment->getMethodInstance()->getConfigData('order_status'))) {
-
             $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
 
             if (in_array($payment->getMethodInstance()->getConfigData('order_status'), ['fraud', 'processing'])) {
@@ -78,7 +77,7 @@ class InitializeCommand implements CommandInterface
         $stateObject->setData('is_notified', false);
 
         $this->eventManager->dispatch(
-            'webjump_braspagador_creditcard_transaction_initialize',
+            'braspag_braspagador_creditcard_transaction_initialize',
             [   'state_object' => $stateObject,
                 'payment' => $payment,
                 'invoice' => false

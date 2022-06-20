@@ -9,11 +9,11 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Model\Payment\Info;
+namespace Braspag\BraspagPagador\Model\Payment\Info;
 
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderPaymentInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\BaseHandler as ResponseHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response\BaseHandler as ResponseHandler;
 
 class Pix
 {

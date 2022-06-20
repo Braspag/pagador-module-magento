@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInterface
 {
-	protected $code;
+    protected $code;
 
     protected function _construct(array $data = [])
     {
@@ -20,44 +20,44 @@ class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInt
     }
 
     public function isActive()
-	{
-		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_ACTIVE);
-	}
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_ACTIVE);
+    }
 
-	public function getInstallmentsNumber()
-	{
-		return (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_NUMBER);
-	}
+    public function getInstallmentsNumber()
+    {
+        return (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_NUMBER);
+    }
 
-	public function isWithInterest()
-	{
-		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_WITH_INTEREST);
-	}
+    public function isWithInterest()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_IS_WITH_INTEREST);
+    }
 
-	public function getInstallmentMinAmount()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MIN_MOUNT);
-	}
+    public function getInstallmentMinAmount()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MIN_MOUNT);
+    }
 
-	public function getInterestRate()
-	{
-		return ((int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
-	}
+    public function getInterestRate()
+    {
+        return ((int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
+    }
 
-	public function isInterestByIssuer()
-	{
-		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_BY_ISSUER);
-	}
+    public function isInterestByIssuer()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_BY_ISSUER);
+    }
 
-	public function getInstallmentsMaxWithoutInterest()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MAX_WITHOUT_INTEREST);
-	}
+    public function getInstallmentsMaxWithoutInterest()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MAX_WITHOUT_INTEREST);
+    }
 
-	protected function _getConfig($uri)
-	{
-		return parent::_getConfig(sprintf($uri, $this->getCode()));
-	}
+    protected function _getConfig($uri)
+    {
+        return parent::_getConfig(sprintf($uri, $this->getCode()));
+    }
 
     protected function getCode()
     {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Pix\Resource\Send\Response;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
-use Webjump\Braspag\Pagador\Transaction\Api\Pix\Send\ResponseInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Pix\Send\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
+use Braspag\Braspag\Pagador\Transaction\Api\Pix\Send\ResponseInterface;
+use Braspag\Braspag\Pagador\Transaction\Resource\Pix\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
 
 /**
  * Braspag Transaction Pix Send Response Handler

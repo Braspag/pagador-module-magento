@@ -1,33 +1,33 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\Ui;
+namespace Braspag\BraspagPagador\Test\Unit\Model\Payment\Transaction\CreditCard\Ui;
 
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider;
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\SilentOrderPostConfigProvider;
 use Magento\Framework\Phrase;
 
 class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
-	private $configProvider;
+    private $configProvider;
 
     private $builderComposite;
 
-	public function setUp()
-	{
-        $this->silentorderPostBuilderMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
+    public function setUp()
+    {
+        $this->silentorderPostBuilderMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface');
 
-        $this->silentorderPostConfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
+        $this->silentorderPostConfigMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface');
 
-		$this->configProvider = new SilentOrderPostConfigProvider(
+        $this->configProvider = new SilentOrderPostConfigProvider(
             'braspag_pagador_creditcard',
             $this->silentorderPostBuilderMock,
             $this->silentorderPostConfigMock
         );
-	}
+    }
 
     public function testGetConfig()
     {
         $token = 'ZTJlNDk1YzUtNzMwYy00ZjlkLTkzZTYtOWM5YWQxYTQ1YTc0LTIwOTE3NjI0NDY=';
-        $code = \Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE;
+        $code = \Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE;
 
         $this->silentorderPostBuilderMock->expects($this->once())
             ->method('build')
@@ -54,7 +54,6 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
                     ]
                 ]
             ],
-
             $this->configProvider->getConfig()
         );
     }
@@ -82,7 +81,6 @@ class SilentOrderPostConfigProviderTest extends \PHPUnit\Framework\TestCase
                     ]
                 ]
             ],
-
             $this->configProvider->getConfig()
         );
     }

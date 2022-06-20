@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit;
 
 class Edit extends AbstractPaymentSplit
 {

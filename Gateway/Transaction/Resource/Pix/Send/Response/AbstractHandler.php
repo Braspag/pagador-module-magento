@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Resource\Pix\Send\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Model\Qrcode;
+use Braspag\BraspagPagador\Model\Qrcode;
 
 abstract class AbstractHandler implements HandlerInterface
 {

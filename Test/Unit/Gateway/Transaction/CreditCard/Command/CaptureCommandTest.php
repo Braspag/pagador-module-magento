@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Command;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Command\CaptureCommand;
 
 class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,42 +15,41 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-    	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
-    	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
-        $this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
-    	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
+        $this->apiMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\FacadeInterface');
+        $this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+        $this->requestHandlerMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
+        $this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
         $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
         $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
     }
 
     public function tearDown()
     {
-
     }
 
     public function testExecute()
     {
-    	$this->command = new CaptureCommand(
+        $this->command = new CaptureCommand(
             $this->apiMock,
             $this->requestBuilderMock,
             $this->requestHandlerMock,
             $this->responseHandlerMock,
             null,
             null
-    	);
+        );
 
-    	$buildObject = [];
+        $buildObject = [];
 
-    	$requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->getMock();
 
-    	$this->requestBuilderMock->expects($this->once())
-    	    ->method('build')
-    	    ->with($buildObject)
-    	    ->will($this->returnValue($requestMock));
+        $this->requestBuilderMock->expects($this->once())
+            ->method('build')
+            ->with($buildObject)
+            ->will($this->returnValue($requestMock));
 
         $this->apiMock->expects($this->once())
             ->method('captureCreditCard')
@@ -61,10 +60,10 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
             ->method('handle')
             ->with($buildObject, ['response' => $responseMock]);
 
-    	$this->command->execute($buildObject);
+        $this->command->execute($buildObject);
     }
 
-	public function testExecuteWithValidator()
+    public function testExecuteWithValidator()
     {
         $this->command = new CaptureCommand(
             $this->apiMock,
@@ -77,10 +76,10 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -133,10 +132,10 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->setMethods(
                 [
                     'getStatus',
@@ -146,7 +145,8 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
                     'getProviderReturnCode',
                     'getProviderReturnMessage',
                     'getLinks'
-                ])
+                ]
+            )
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -189,10 +189,10 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface')
             ->setMethods(
                 [
                     'getStatus',
@@ -202,7 +202,8 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
                     'getProviderReturnCode',
                     'getProviderReturnMessage',
                     'getLinks'
-                ])
+                ]
+            )
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -259,7 +260,7 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestWrongMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\AuthRequestInterface')
+        $requestWrongMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\AuthRequestInterface')
             ->getMock();
 
         $this->command->execute($buildObject);
@@ -280,8 +281,8 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
         );
 
         $buildObject = [];
-        $message ="Any Error Message";
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
+        $message = "Any Error Message";
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface')
             ->getMock();
 
         $psrRequestInterface = $this->createMock(\Psr\Http\Message\RequestInterface::class);
@@ -298,5 +299,4 @@ class CaptureCommandTest extends \PHPUnit\Framework\TestCase
 
         $this->command->execute($buildObject);
     }
-
 }

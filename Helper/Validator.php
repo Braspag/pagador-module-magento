@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Helper;
+namespace Braspag\BraspagPagador\Helper;
 
 use Magento\Framework\App\Helper\Context;
 
 /**
  * Class Validator
- * @package Webjump\BraspagPagador\Helper
+ * @package Braspag\BraspagPagador\Helper
  */
 class Validator extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -39,15 +39,14 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function __construct(
         Context $context
-    )
-    {
-        $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+    ) {
+        $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
 
 
         parent::__construct($context);
     }
-    
+
     /**
      * Sanitize District value based on configuration
      *
@@ -56,22 +55,20 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function sanitizeDistrict($district)
     {
-        
+
         $sanitizeCache = array();
         $sanitizeCache = $this->sanitizeDictionary;
 
-        if($this->isSanitizeActive && is_string($district))
-        {
+        if ($this->isSanitizeActive && is_string($district)) {
             $sanitizeCache = $this->prepareDictionay();
             preg_match_all("/[^ ]+/", $district, $districtArray);
             $result = [];
-            foreach ($districtArray[0] as $word)
-            {
-                if(array_key_exists($word,$sanitizeCache)){
+            foreach ($districtArray[0] as $word) {
+                if (array_key_exists($word, $sanitizeCache)) {
                     $result[] = $sanitizeCache[$word];
                 } else {
                     $result[] = $word;
-                 }
+                }
             }
             $result = implode(" ", $result);
             $resultLength = strlen($result);
@@ -89,8 +86,7 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
     protected function prepareDictionay()
     {
         $data = [];
-        foreach ($this->sanitizeDictionary as $item)
-        {
+        foreach ($this->sanitizeDictionary as $item) {
             preg_match_all("/[^-]+/", $item, $keyValue);
             $data[$keyValue[0][0]] = $keyValue[0][1];
         }

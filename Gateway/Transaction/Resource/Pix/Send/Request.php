@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Resource\Pix\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Resource\Pix\Send;
 
 use Magento\Checkout\Model\Session;
-use Webjump\BraspagPagador\Model\Buyer\Handler;
-use Webjump\BraspagPagador\Model\Method\Pix\Pix;
-use Webjump\BraspagPagador\Gateway\Transaction\Transaction;
+use Braspag\BraspagPagador\Model\Buyer\Handler;
+use Braspag\BraspagPagador\Model\Method\Pix\Pix;
+use Braspag\BraspagPagador\Gateway\Transaction\Transaction;
 
 class Request implements RequestInterface
 {

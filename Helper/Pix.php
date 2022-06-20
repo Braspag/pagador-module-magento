@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Helper;
+namespace Braspag\BraspagPagador\Helper;
 
 use DateTimeZone;
 use Magento\Framework\App\Helper\AbstractHelper;
-use Webjump\BraspagPagador\Model\Config\ConfigInterface;
+use Braspag\BraspagPagador\Model\Config\ConfigInterface;
 
 class Pix extends AbstractHelper
 {

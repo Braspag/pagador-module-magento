@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 /**
 
@@ -40,7 +40,7 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\SplitManager
+     * @return Braspag\BraspagPagador\Model\SplitManager
      */
     public function getSplitManager(): SplitManager
     {
@@ -48,7 +48,7 @@ class SplitHandler extends AbstractHandler implements HandlerInterface
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\SplitManager $splitManager
+     * @param Braspag\BraspagPagador\Model\SplitManager $splitManager
      */
     public function setSplitManager(SplitManager $splitManager)
     {

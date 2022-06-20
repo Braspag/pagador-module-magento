@@ -1,42 +1,41 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Command;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as CreditCardProvider;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand;
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as CreditCardProvider;
 use Magento\Framework\DataObject;
 
-//use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-//use Webjump\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface;
+//use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+//use Braspag\Braspag\Pagador\Transaction\Api\Auth3Ds20\Token\RequestInterface;
 
 class InitializeCommandTest extends \PHPUnit\Framework\TestCase
 {
-	private $command;
-	private $eventManager;
-	private $requestHandlerMock;
-	private $paymentDataObjectMock;
-	private $orderPaymentMock;
-	private $orderMock;
-	private $dataObjectMock;
-	private $paymentMethodMock;
+    private $command;
+    private $eventManager;
+    private $requestHandlerMock;
+    private $paymentDataObjectMock;
+    private $orderPaymentMock;
+    private $orderMock;
+    private $dataObjectMock;
+    private $paymentMethodMock;
 
     public function setUp()
     {
-    	$this->eventManager = $this->createMock(\Magento\Framework\Event\ManagerInterface::class);
-    	$this->paymentDataObjectMock = $this->createMock(\Magento\Payment\Gateway\Data\PaymentDataObjectInterface::class);
-    	$this->orderPaymentMock = $this->createMock(\Magento\Sales\Model\Order\Payment::class);
-    	$this->orderMock = $this->createMock(\Magento\Sales\Model\Order::class);
+        $this->eventManager = $this->createMock(\Magento\Framework\Event\ManagerInterface::class);
+        $this->paymentDataObjectMock = $this->createMock(\Magento\Payment\Gateway\Data\PaymentDataObjectInterface::class);
+        $this->orderPaymentMock = $this->createMock(\Magento\Sales\Model\Order\Payment::class);
+        $this->orderMock = $this->createMock(\Magento\Sales\Model\Order::class);
         $this->dataObjectMock = $this->createMock(DataObject::class);
         $this->paymentMethodMock = $this->createMock(\Magento\Payment\Model\MethodInterface::class);
 
-    	$this->command = new InitializeCommand(
-    		$this->eventManager
-    	);
+        $this->command = new InitializeCommand(
+            $this->eventManager
+        );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testExecuteInitCommandShouldFinishWithSuccess()
@@ -78,9 +77,9 @@ class InitializeCommandTest extends \PHPUnit\Framework\TestCase
             ->method('setData')
             ->willReturnSelf();
 
-    	$buildObject = ['stateObject' => $this->dataObjectMock, 'payment' => $this->paymentDataObjectMock];
+        $buildObject = ['stateObject' => $this->dataObjectMock, 'payment' => $this->paymentDataObjectMock];
 
-    	$result = $this->command->execute($buildObject);
+        $result = $this->command->execute($buildObject);
     }
 
     /**

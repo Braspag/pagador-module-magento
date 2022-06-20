@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 /**
 

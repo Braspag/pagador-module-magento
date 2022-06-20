@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,25 +8,25 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory as OrderPaymentCollectionFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 
 /**
  * Class SubordinateApprovalManager
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class SubordinateApprovalManager
 {
     /**
-     * @var \Webjump\Braspag\Pagador\Transaction\FacadeInterface
+     * @var \Braspag\Braspag\Pagador\Transaction\FacadeInterface
      */
     protected $api;
 
     /**
-     * @var Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
+     * @var Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
      */
     protected $paymentStatusRequest;
 
@@ -40,12 +41,12 @@ class SubordinateApprovalManager
     protected $orderStatusModel;
 
     /**
-     * @var Webjump\BraspagPagador\Model\InvoiceManager
+     * @var Braspag\BraspagPagador\Model\InvoiceManager
      */
     protected $invoiceManager;
 
     /**
-     * @var Webjump\BraspagPagador\Model\CreditMemoManager
+     * @var Braspag\BraspagPagador\Model\CreditMemoManager
      */
     protected $creditMemoManager;
 
@@ -69,12 +70,12 @@ class SubordinateApprovalManager
      */
     public function __construct(
         \Magento\Sales\Model\Order\Status $orderStatusModel,
-        \Webjump\BraspagPagador\Model\InvoiceManager $invoiceManager,
-        \Webjump\BraspagPagador\Model\CreditMemoManager $creditMemoManager,
+        \Braspag\BraspagPagador\Model\InvoiceManager $invoiceManager,
+        \Braspag\BraspagPagador\Model\CreditMemoManager $creditMemoManager,
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
         OrderPaymentCollectionFactory $orderPaymentCollectionFactory
-    ){
+    ) {
         $this->setOrderStatusModel($orderStatusModel);
         $this->setInvoiceManager($invoiceManager);
         $this->setCreditMemoManager($creditMemoManager);
@@ -100,7 +101,7 @@ class SubordinateApprovalManager
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\InvoiceManager
+     * @return Braspag\BraspagPagador\Model\InvoiceManager
      */
     public function getInvoiceManager()
     {
@@ -108,7 +109,7 @@ class SubordinateApprovalManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\InvoiceManager $invoiceManager
+     * @param Braspag\BraspagPagador\Model\InvoiceManager $invoiceManager
      */
     public function setInvoiceManager($invoiceManager)
     {
@@ -116,7 +117,7 @@ class SubordinateApprovalManager
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\CreditMemoManager
+     * @return Braspag\BraspagPagador\Model\CreditMemoManager
      */
     public function getCreditMemoManager()
     {
@@ -124,7 +125,7 @@ class SubordinateApprovalManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\CreditMemoManager $creditMemoManager
+     * @param Braspag\BraspagPagador\Model\CreditMemoManager $creditMemoManager
      */
     public function setCreditMemoManager($creditMemoManager)
     {
@@ -143,14 +144,14 @@ class SubordinateApprovalManager
      * @param BraspagApi $api
      * @return PaymentManager
      */
-    public function setApi(BraspagApi $api): \Webjump\BraspagPagador\Model\SubordinateApprovalManager
+    public function setApi(BraspagApi $api): \Braspag\BraspagPagador\Model\SubordinateApprovalManager
     {
         $this->api = $api;
         return $this;
     }
 
     /**
-     * @return Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
+     * @return Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
      */
     public function getPaymentStatusRequest()
     {
@@ -158,7 +159,7 @@ class SubordinateApprovalManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface $paymentStatusRequest
+     * @param Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface $paymentStatusRequest
      */
     public function setPaymentStatusRequest($paymentStatusRequest)
     {
@@ -203,7 +204,6 @@ class SubordinateApprovalManager
         $defaultMethodOrderStatus = $magentoPaymentData->getMethodInstance()->getConfigData('order_status');
 
         if (!empty($defaultMethodOrderStatus)) {
-
             $magentoPaymentData->getOrder()
                 ->setState($newState)
                 ->setStatus($defaultMethodOrderStatus);
@@ -243,7 +243,8 @@ class SubordinateApprovalManager
 
         $magentoPaymentData->setIsTransactionPending(false);
 
-        if ($createInvoice
+        if (
+            $createInvoice
             && $this->getInvoiceManager()->createInvoice($magentoPaymentData->getOrder(), $amount)
         ) {
             $magentoPaymentData->registerCaptureNotification($amount, true);
@@ -257,9 +258,10 @@ class SubordinateApprovalManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about captured amount of %1.',
+                __(
+                    'Registered notification about captured amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-capture"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -319,7 +321,7 @@ class SubordinateApprovalManager
         $amount = $braspagPaymentData->getPayment()['VoidedAmount'] / 100;
 
         try {
-            if($createCreditMemo) {
+            if ($createCreditMemo) {
                 $magentoPaymentData->registerRefundNotification($amount, true);
             }
         } catch (\Exception $e) {
@@ -328,9 +330,10 @@ class SubordinateApprovalManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about refunded amount of %1.',
+                __(
+                    'Registered notification about refunded amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-refund"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -359,7 +362,7 @@ class SubordinateApprovalManager
     {
         $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
         $orderPayment = $orderPaymentCollection
-            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId.'%'])
+            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId . '%'])
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {

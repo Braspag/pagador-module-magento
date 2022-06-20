@@ -1,11 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\ResponseInterface;
-//use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\ResponseInterface;
+
+//use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
 
 /**
  * Validator
@@ -30,5 +31,4 @@ class Validator implements ValidatorInterface
 
         return new Result($status, [$message]);
     }
-
 }

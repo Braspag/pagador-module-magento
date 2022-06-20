@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\Auth3DS20;
+namespace Braspag\BraspagPagador\Model\Auth3DS20;
 
-use Webjump\BraspagPagador\Api\Auth3DS20UserAccountInterface;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterfaceFactory;
+use Braspag\BraspagPagador\Api\Auth3DS20UserAccountInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterfaceFactory;
 
 /**
  * Class Auth3DS20UserAccount
  *
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class UserAccount implements Auth3DS20UserAccountInterface
 {
@@ -32,14 +33,14 @@ class UserAccount implements Auth3DS20UserAccountInterface
      */
     public function __construct(
         Auth3DS20UserAccountInformationInterfaceFactory $userAccountInformationFactory
-    ){
+    ) {
         $this->userAccountInformationFactory = $userAccountInformationFactory;
     }
 
     /**
      * @inheritDoc
      */
-    public function getUserAccount(\Magento\Quote\Api\Data\CartInterface $quote): \Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
+    public function getUserAccount(\Magento\Quote\Api\Data\CartInterface $quote): \Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
     {
         /** @var $auth3DS20UserAccount Auth3DS20UserAccountInformationInterface */
         $auth3DS20UserAccount = $this->userAccountInformationFactory->create();

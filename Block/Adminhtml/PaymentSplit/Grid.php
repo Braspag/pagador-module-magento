@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -10,21 +11,21 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit;
 
-use \Magento\Backend\Block\Template\Context;
-use \Magento\Backend\Block\Widget\Grid as WidgetGrid;
-use \Magento\Backend\Helper\Data as HelperData;
-use \Magento\Framework\Event\ManagerInterface;
-use \Magento\Framework\View\LayoutFactory;
-use \Magento\Store\Model\Website;
-use Webjump\BraspagPagador\Api\SplitRepositoryInterface;
-use \Webjump\BraspagPagador\Helper\Data as BraspagHelperData;
+use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Grid as WidgetGrid;
+use Magento\Backend\Helper\Data as HelperData;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\View\LayoutFactory;
+use Magento\Store\Model\Website;
+use Braspag\BraspagPagador\Api\SplitRepositoryInterface;
+use Braspag\BraspagPagador\Helper\Data as BraspagHelperData;
 
 class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 {
@@ -144,7 +145,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
                 'actions'   => [
                     [
                         'caption' => __('Edit'),
-                        'url'     => ['base'=>'braspag/paymentsplit/edit'],
+                        'url'     => ['base' => 'braspag/paymentsplit/edit'],
                         'field'   => 'id'
                     ]
                 ],
@@ -161,7 +162,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
     protected function _afterLoadCollection()
     {
-        $this->_eventManager->dispatch('braspag_adminhtml_paymentsplit_grid_after_load', ['grid'=>$this]);
+        $this->_eventManager->dispatch('braspag_adminhtml_paymentsplit_grid_after_load', ['grid' => $this]);
         return $this;
     }
 
@@ -190,6 +191,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
     public function getGridUrl()
     {
-        return $this->getUrl('*/*/grid', ['_current'=>true]);
+        return $this->getUrl('*/*/grid', ['_current' => true]);
     }
 }

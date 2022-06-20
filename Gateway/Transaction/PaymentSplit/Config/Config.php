@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 
 /**
  * Class Config
- * @package Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config
+ * @package Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config
  */
 class Config extends BaseConfig implements ConfigInterface
 {

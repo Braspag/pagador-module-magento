@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Webjump\BraspagPagador\Api\RedirectPaymentInterface;
+use Braspag\BraspagPagador\Api\RedirectPaymentInterface;
 use Magento\Framework\DataObject;
 
 /**
@@ -21,7 +21,7 @@ class RedirectPayment implements RedirectPaymentInterface
 
     public function __construct(
         OrderRepositoryInterface $OrderRepository
-    ){
+    ) {
         $this->setOrderRepository($OrderRepository);
     }
 

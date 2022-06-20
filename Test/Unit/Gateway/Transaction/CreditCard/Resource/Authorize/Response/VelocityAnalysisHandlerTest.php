@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\VelocityAnalysisHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
     private $responseMock;
 
     public function setUp()
@@ -16,19 +16,18 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->handler = new VelocityAnalysisHandler(
+        $this->handler = new VelocityAnalysisHandler(
             $this->responseMock
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
     {
-        $velocityReasonMock1 = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
+        $velocityReasonMock1 = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\Reasons\ResponseInterface');
 
         $velocityReasonMock1->expects($this->once())
             ->method('getRuleId')
@@ -46,7 +45,7 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getExpirationBlockTimeInSeconds')
             ->will($this->returnValue(200));
 
-        $velocityMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface');
+        $velocityMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Velocity\ResponseInterface');
 
         $velocityMock->expects($this->once())
             ->method('getId')
@@ -98,10 +97,10 @@ class VelocityAnalysisHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 
     public function testHandleWithoutVelocity()

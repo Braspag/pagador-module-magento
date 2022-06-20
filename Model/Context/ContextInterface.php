@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-namespace Webjump\BraspagPagador\Model\Context;
+namespace Braspag\BraspagPagador\Model\Context;
 
 interface ContextInterface
 {

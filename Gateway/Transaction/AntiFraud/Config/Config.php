@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
 
 class Config extends AbstractConfig implements ConfigInterface
 {

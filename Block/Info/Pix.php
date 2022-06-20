@@ -9,7 +9,7 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Block\Info;
+namespace Braspag\BraspagPagador\Block\Info;
 
 class Pix extends \Magento\Payment\Block\Info
 {
@@ -26,7 +26,7 @@ class Pix extends \Magento\Payment\Block\Info
     /**
      * @var string
      */
-    protected $_template = 'Webjump_BraspagPagador::info/pix.phtml';
+    protected $_template = 'Braspag_BraspagPagador::info/pix.phtml';
 
     /**
      * Enter description here...
@@ -70,7 +70,7 @@ class Pix extends \Magento\Payment\Block\Info
      */
     public function toPdf()
     {
-        $this->setTemplate('Webjump_BraspagPagador::info/pdf/pix.phtml');
+        $this->setTemplate('Braspag_BraspagPagador::info/pdf/pix.phtml');
         return $this->toHtml();
     }
 }
