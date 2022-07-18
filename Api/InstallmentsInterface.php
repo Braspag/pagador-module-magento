@@ -1,7 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Api;
-
+namespace Braspag\BraspagPagador\Api;
 
 interface InstallmentsInterface
 {

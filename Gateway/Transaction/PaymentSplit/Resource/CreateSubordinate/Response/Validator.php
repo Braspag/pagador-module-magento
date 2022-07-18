@@ -35,9 +35,7 @@ class Validator implements ValidatorInterface
         $errorsData = $response->getErrorData();
 
         if (isset($errorsData['Errors']) && is_array($errorsData['Errors']) && !empty($errorsData['Errors'])) {
-
             foreach ($errorsData['Errors'] as $error) {
-
                 if (isset($error['Message']) && !empty($error['Message'])) {
                     $status = false;
                     $message[] = __($error['Message']);
@@ -47,5 +45,4 @@ class Validator implements ValidatorInterface
 
         return new Result($status, $message);
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\ResourceModel;
+namespace Braspag\BraspagPagador\Model\ResourceModel;
 
 /**
  * Card Token Resource
@@ -14,8 +14,8 @@ namespace Webjump\BraspagPagador\Model\ResourceModel;
  */
 class CardToken extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-	protected function _construct()
-	{
-		$this->_init('webjump_braspagpagador_cardtoken', 'entity_id');
-	}
+    protected function _construct()
+    {
+        $this->_init('braspag_braspagpagador_cardtoken', 'entity_id');
+    }
 }

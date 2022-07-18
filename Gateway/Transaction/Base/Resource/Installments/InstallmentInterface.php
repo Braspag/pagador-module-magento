@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
 interface InstallmentInterface
 {
@@ -13,5 +13,4 @@ interface InstallmentInterface
     public function setPrice($price);
 
     public function setWithInterest($isWithInterest);
-
 }

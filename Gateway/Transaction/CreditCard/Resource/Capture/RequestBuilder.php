@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 
 /**
  * Braspag Transaction CreditCard Capture Request Builder
@@ -19,17 +19,17 @@ use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as Req
  */
 class RequestBuilder implements BuilderInterface
 {
-	protected $request;
+    protected $request;
 
-	public function __construct(
-		RequestInterface $request,
+    public function __construct(
+        RequestInterface $request,
         RequestPaymentSplitLibInterface $requestPaymentSplit,
         ConfigInterface $config
-	) {
+    ) {
         $this->setRequest($request);
         $this->setPaymentSplitRequest($requestPaymentSplit);
         $this->setConfig($config);
-	}
+    }
 
     protected function setPaymentSplitRequest(RequestPaymentSplitLibInterface $requestPaymentSplit)
     {

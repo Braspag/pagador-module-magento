@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -26,7 +26,7 @@ class RequestBuilder implements BuilderInterface
 
     /**
      * RequestBuilder constructor.
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
      * @param RequestPaymentSplitLibInterface $requestPaymentSplit
      * @param ConfigInterface $config
      */
@@ -58,7 +58,8 @@ class RequestBuilder implements BuilderInterface
         /** @var OrderAdapter $orderAdapter */
         $orderAdapter = $paymentDataObject->getOrder();
 
-        if ($this->getConfig()->isPaymentSplitActive()
+        if (
+            $this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
         ) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
@@ -72,7 +73,7 @@ class RequestBuilder implements BuilderInterface
     }
 
     /**
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestFactory $requestFactory
      * @return $this
      */
     protected function setRequestFactory(RequestFactory $requestFactory)

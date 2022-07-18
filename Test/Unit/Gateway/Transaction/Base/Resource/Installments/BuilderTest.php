@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Builder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentFactoryInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Magento\Framework\App\State;
-use \Magento\Backend\Model\Session\Quote as SessionAdmin;
+use Magento\Backend\Model\Session\Quote as SessionAdmin;
 
 class BuilderTest extends \PHPUnit\Framework\TestCase
 {
@@ -58,7 +58,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             $this->sessionMock,
             $this->stateMock,
             $this->sessionAdminMock
-        );        
+        );
     }
 
     public function testBuildAsFrontendSession()
@@ -87,9 +87,9 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
-        $installments2 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
-        $installments3 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')
@@ -147,7 +147,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')
@@ -189,9 +189,9 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
-        $installments2 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
-        $installments3 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments2 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments3 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')
@@ -249,7 +249,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ->method('getQuote')
             ->will($this->returnValue($quoteMock));
 
-        $installments1 = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
+        $installments1 = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\InstallmentInterface');
 
         $this->installmentFactoryMock->expects($this->at(0))
             ->method('create')

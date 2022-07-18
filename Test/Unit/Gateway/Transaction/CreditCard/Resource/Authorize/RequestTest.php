@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
 
 use Magento\Checkout\Model\Session;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,7 +28,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getQuote'])
             ->getMock();
 
-        $this->configMock = $this->getMockBuilder('Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface')
+        $this->configMock = $this->getMockBuilder('Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getSession',
@@ -73,19 +73,19 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
 
-        $this->installmentsconfigMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
+        $this->installmentsconfigMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface');
 
-        $this->validatorMock = $this->createMock('Webjump\BraspagPagador\Helper\Validator');
+        $this->validatorMock = $this->createMock('Braspag\BraspagPagador\Helper\Validator');
 
         $this->quoteMock = $this->createMock(\Magento\Quote\Model\Quote::class);
         $this->customerMock = $this->createMock(\Magento\Customer\Model\Customer::class);
 
-        $this->grandTotalPricingHelper = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\GrandTotal\Pricing')
+        $this->grandTotalPricingHelper = $this->getMockBuilder('\Braspag\BraspagPagador\Helper\GrandTotal\Pricing')
             ->disableOriginalConstructor()
             ->setMethods(['currency'])
             ->getMock();
 
-        $this->helperData = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+        $this->helperData = $this->getMockBuilder('\Braspag\BraspagPagador\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods(['removeSpecialCharacters', 'removeSpecialCharactersFromTaxvat'])
             ->getMock();
@@ -148,7 +148,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()
@@ -226,7 +225,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $this->billingAddressMock->expects($this->atLeastOnce())
             ->method('getStreetLine')
-            ->withConsecutive(['1'],['2'],['3'],['4'])
+            ->withConsecutive(['1'], ['2'], ['3'], ['4'])
             ->willReturnOnConsecutiveCalls('rua x', '123', 'casa 123', 'Centro');
 
         $this->billingAddressMock->expects($this->once())
@@ -256,7 +255,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $this->shippingAddressMock->expects($this->atLeastOnce())
             ->method('getStreetLine')
-            ->withConsecutive(['1'],['2'],['3'],['4'])
+            ->withConsecutive(['1'], ['2'], ['3'], ['4'])
             ->willReturnOnConsecutiveCalls('rua x', '123', 'casa 123', 'Centro');
 
         $this->shippingAddressMock->expects($this->atLeastOnce())
@@ -388,7 +387,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('0123456789012345678901234567890123456789', $this->request->getMerchantKey());
         static::assertEquals('2016000001', $this->request->getMerchantOrderId());
         static::assertEquals($expectedCustomerName, $this->request->getCustomerName());
-        static::assertEquals('12345678912',$this->request->getCustomerIdentity());
+        static::assertEquals('12345678912', $this->request->getCustomerIdentity());
         static::assertEquals('CPF', $this->request->getCustomerIdentityType());
         static::assertEquals('johndoe@webjump.com.br', $this->request->getCustomerEmail());
         static::assertNull($this->request->getCustomerBirthDate());
@@ -457,7 +456,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $this->helperData->expects($this->atLeastOnce())
             ->method('removeSpecialCharactersFromTaxvat')
-            ->willReturnOnConsecutiveCalls( false, '12345678912');
+            ->willReturnOnConsecutiveCalls(false, '12345678912');
 
         $this->quoteMock->expects($this->atLeastOnce())
             ->method('getBillingAddress')
@@ -500,7 +499,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->request->setQuote($this->quoteMock);
         $this->request->setPaymentData($infoMock);
 
-        static::assertEquals('12345678912',$this->request->getCustomerIdentity());
+        static::assertEquals('12345678912', $this->request->getCustomerIdentity());
     }
 
     public function testGetCustomerDeliveryAddressZipCodeShouldReturnNull()

@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\Request;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\CreateSubordinate\RequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\CreateSubordinate\RequestInterface;
 
 /**
  * Validator
@@ -243,7 +243,7 @@ class Validator implements ValidatorInterface
      */
     public function validateSubordinateAttachmentsData($request)
     {
-        $errorMessages= [];
+        $errorMessages = [];
         return $errorMessages;
     }
 
@@ -272,8 +272,7 @@ class Validator implements ValidatorInterface
     {
         $errorMessages = [];
 
-        foreach ($notEmptyValidationFields as $notEmptyValidationField => $notEmptyValidationFieldValue)
-        {
+        foreach ($notEmptyValidationFields as $notEmptyValidationField => $notEmptyValidationFieldValue) {
             if (empty($notEmptyValidationFieldValue['value']) && $notEmptyValidationFieldValue['not_empty']) {
                 $errorMessages[] = __("The '%1' field can not be empty.", __($notEmptyValidationField));
             }
@@ -290,8 +289,7 @@ class Validator implements ValidatorInterface
     {
         $errorMessages = [];
 
-        foreach ($notEmptyValidationFields as $notEmptyValidationField => $notEmptyValidationFieldValue)
-        {
+        foreach ($notEmptyValidationFields as $notEmptyValidationField => $notEmptyValidationFieldValue) {
             if (strlen($notEmptyValidationFieldValue['value']) > $notEmptyValidationFieldValue['max_length']) {
                 $errorMessages[] = __("The length of the '%1' field is longer than allowed. The limit is '%2' characters.", [__($notEmptyValidationField), $notEmptyValidationFieldValue['max_length']]);
             }

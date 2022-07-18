@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 /**
 
@@ -40,7 +40,7 @@ class TransactionPostSplitHandler extends AbstractHandler implements HandlerInte
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\SplitManager
+     * @return Braspag\BraspagPagador\Model\SplitManager
      */
     public function getSplitManager(): SplitManager
     {
@@ -48,7 +48,7 @@ class TransactionPostSplitHandler extends AbstractHandler implements HandlerInte
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\SplitManager $splitManager
+     * @param Braspag\BraspagPagador\Model\SplitManager $splitManager
      */
     public function setSplitManager(SplitManager $splitManager)
     {

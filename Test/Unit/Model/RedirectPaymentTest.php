@@ -11,9 +11,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model;
+namespace Braspag\BraspagPagador\Test\Unit\Model;
 
-use Webjump\BraspagPagador\Model\RedirectPayment;
+use Braspag\BraspagPagador\Model\RedirectPayment;
 
 class RedirectPaymentTest extends \PHPUnit\Framework\TestCase
 {

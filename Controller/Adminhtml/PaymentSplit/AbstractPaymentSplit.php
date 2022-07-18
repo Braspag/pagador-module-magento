@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -10,19 +11,19 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit;
 
-use \Magento\Backend\App\Action;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Model\SplitManager;
+use Magento\Backend\App\Action;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 abstract class AbstractPaymentSplit extends Action
 {
@@ -69,7 +70,7 @@ abstract class AbstractPaymentSplit extends Action
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
-     * @param \Webjump\BraspagPagador\Model\SplitFactory $splitFactory
+     * @param \Braspag\BraspagPagador\Model\SplitFactory $splitFactory
      * @param \Magento\Sales\Model\OrderRepository $orderRepository
      * @param Action\Context $context
      * @param SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand
@@ -84,7 +85,7 @@ abstract class AbstractPaymentSplit extends Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-        \Webjump\BraspagPagador\Model\SplitFactory $splitFactory,
+        \Braspag\BraspagPagador\Model\SplitFactory $splitFactory,
         \Magento\Sales\Model\OrderRepository $orderRepository,
         \Magento\Backend\App\Action\Context $context,
         SplitPaymentTransactionPostCommand $splitPaymentTransactionPostCommand,
@@ -109,14 +110,14 @@ abstract class AbstractPaymentSplit extends Action
     }
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Webjump_BraspagPagador::paymentsplit');
+        return $this->_authorization->isAllowed('Braspag_BraspagPagador::paymentsplit');
     }
 
     protected function _initAction()
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('Webjump_BraspagPagador::paymentsplit');
+        $resultPage->setActiveMenu('Braspag_BraspagPagador::paymentsplit');
         $resultPage->getConfig()->getTitle()->prepend(__('Payment Splits'));
         $resultPage->addBreadcrumb(__('Sales'), __('Sales'));
         $resultPage->addBreadcrumb(__('Braspag'), __('Braspag'));

@@ -1,34 +1,34 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
 class Builder implements BuilderInterface
 {
-	protected $config;
+    protected $config;
 
-	protected $transferBuilder;
+    protected $transferBuilder;
 
-	protected $client;
+    protected $client;
 
-	public function __construct(
-		SilentOrderPostConfigInterface $config,
-		TransferBuilder $transferBuilder,
-		ClientInterface $client
-	) {
-		$this->setConfig($config);
-		$this->setTransferBuilder($transferBuilder);
-		$this->setClient($client);
-	}
+    public function __construct(
+        SilentOrderPostConfigInterface $config,
+        TransferBuilder $transferBuilder,
+        ClientInterface $client
+    ) {
+        $this->setConfig($config);
+        $this->setTransferBuilder($transferBuilder);
+        $this->setClient($client);
+    }
 
-	public function build()
-	{
+    public function build()
+    {
         $transferO = $this->getTransferBuilder()
-        	->setUri($this->getConfig()->getAccessTokenUrl())
-        	->setMethod(\Zend\Http\Request::METHOD_POST)
+            ->setUri($this->getConfig()->getAccessTokenUrl())
+            ->setMethod(\Zend\Http\Request::METHOD_POST)
             ->setClientConfig([
                 'timeout' => 30
             ])->setHeaders(
@@ -41,7 +41,7 @@ class Builder implements BuilderInterface
         $response = $this->client->placeRequest($transferO);
 
         return $response->getAccessToken();
-	}
+    }
 
     protected function getClient()
     {

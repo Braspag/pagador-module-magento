@@ -8,15 +8,15 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
-use Webjump\BraspagPagador\Api\Auth3Ds20TokenManagerInterface;
-use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface as Auth3Ds20TokenRequest;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface;
+use Braspag\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
+use Braspag\BraspagPagador\Api\Auth3Ds20TokenManagerInterface;
+use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface as Auth3Ds20TokenRequest;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface;
 use Magento\Framework\DataObject;
 
 class Auth3Ds20TokenManager implements Auth3Ds20TokenManagerInterface
@@ -43,7 +43,7 @@ class Auth3Ds20TokenManager implements Auth3Ds20TokenManagerInterface
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory,
         BuilderInterface $builder,
         DataObject $dataObject
-    ){
+    ) {
         $this->setTokenCommand($tokenCommand);
         $this->setRequest($request);
         $this->setCookieManager($cookieManager);
@@ -215,7 +215,7 @@ class Auth3Ds20TokenManager implements Auth3Ds20TokenManagerInterface
             return [['token' => $this->getTokenObject()->getToken()]];
         }
 
-        return [['token' => 
+        return [['token' =>
             $this->getCookieManager()
                 ->getCookie(Auth3Ds20TokenRequest::BPMPI_ACCESS_TOKEN_COOKIE_NAME, null)
         ]];

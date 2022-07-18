@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Source;
+namespace Braspag\BraspagPagador\Model\Source;
 
 /**
  *
@@ -13,7 +13,7 @@ namespace Webjump\BraspagPagador\Model\Source;
 
 /**
  * Class BraspagPaymentMethods
- * @package Webjump\BraspagPagador\Model\Source
+ * @package Braspag\BraspagPagador\Model\Source
  */
 class BraspagPaymentMethods implements \Magento\Framework\Option\ArrayInterface
 {
@@ -43,6 +43,4 @@ class BraspagPaymentMethods implements \Magento\Framework\Option\ArrayInterface
             'braspag_pagador_debitcard' => __('Braspag Pagador Debit Card')
         ];
     }
-
-
 }

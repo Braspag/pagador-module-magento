@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\CreditCardToken\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface as InstallmentsBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface as TokensBuilder;
-use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface as InstallmentsBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Installments\InstallmentInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens\BuilderInterface as TokensBuilder;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 
 /**
  * Braspag Transaction CreditCard Token
@@ -61,8 +61,7 @@ final class ConfigProvider implements ConfigProviderInterface
         InstallmentsBuilder $installmentsBuilder,
         TokensBuilder $tokensBuilder,
         InstallmentsConfigInterface $installmentsConfig
-    )
-    {
+    ) {
         $this->setInstallmentsBuilder($installmentsBuilder);
         $this->setTokensBuilder($tokensBuilder);
         $this->setInstallmentsConfig($installmentsConfig);

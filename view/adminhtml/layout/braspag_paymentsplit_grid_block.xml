@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="braspag.paymentsplit.grid.container">
-            <block class="Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid" name="braspag.paymentsplit.grid" as="grid" />
+            <block class="Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid" name="braspag.paymentsplit.grid" as="grid" />
         </referenceBlock>
     </body>
 </page>

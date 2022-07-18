@@ -1,13 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens;
 
 use Magento\Store\Model\StoreManagerInterface;
 
-
 /**
  * Class Builder
- * @package Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens
+ * @package Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens
  */
 class Builder implements BuilderInterface
 {
@@ -47,7 +46,7 @@ class Builder implements BuilderInterface
      * @param \Magento\Framework\Api\SearchCriteriaBuilder             $searchCriteriaBuilder
      * @param \Magento\Framework\Api\FilterBuilder                     $filterBuilder
      * @param \Magento\Framework\Api\Search\FilterGroupBuilder         $filterGroupBuilder
-     * @param \Webjump\BraspagPagador\Api\CardTokenRepositoryInterface $cardTokenRepository
+     * @param \Braspag\BraspagPagador\Api\CardTokenRepositoryInterface $cardTokenRepository
      * @param \Magento\Customer\Model\Session                          $customerSession
      * @param \Magento\Store\Model\StoreManagerInterface               $storeManager
      */
@@ -55,7 +54,7 @@ class Builder implements BuilderInterface
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\Api\Search\FilterGroupBuilder $filterGroupBuilder,
-        \Webjump\BraspagPagador\Api\CardTokenRepositoryInterface $cardTokenRepository,
+        \Braspag\BraspagPagador\Api\CardTokenRepositoryInterface $cardTokenRepository,
         \Magento\Customer\Model\Session $customerSession,
         StoreManagerInterface $storeManager
     ) {

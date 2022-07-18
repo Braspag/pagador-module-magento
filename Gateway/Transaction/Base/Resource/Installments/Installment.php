@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
 use Magento\Framework\Pricing\Helper\Data;
 
@@ -48,7 +48,7 @@ class Installment implements InstallmentInterface
 
     public function setWithInterest($isWithInterest)
     {
-        $this->interest = (bool) $isWithInterest; 
+        $this->interest = (bool) $isWithInterest;
     }
 
     protected function getPriceHelper()

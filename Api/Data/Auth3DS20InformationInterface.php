@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
-use Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
 
 /**
  * Interface Auth3DS20InformationInterface
  *
- * @package Webjump\BraspagPagador\Api\Data
+ * @package Braspag\BraspagPagador\Api\Data
  */
 interface Auth3DS20InformationInterface
 {
@@ -140,18 +141,18 @@ interface Auth3DS20InformationInterface
     public function setBpmpiMerchantUrl(string $bpmpiMerchantUrl): void;
 
     /**
-     * @return \Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface
+     * @return \Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface
      */
-    public function getAddressData(): \Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
+    public function getAddressData(): \Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
 
     /**
-     * @param \Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData
+     * @param \Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData
      * @return void
      */
-    public function setAddressesData(\Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData): void;
+    public function setAddressesData(\Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData): void;
 
     /**
-     * @return \Webjump\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface[]
+     * @return \Braspag\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface[]
      */
     public function getCartData(): array;
 
@@ -162,13 +163,13 @@ interface Auth3DS20InformationInterface
     public function setCartData(array $cartData): void;
 
     /**
-     * @return \Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
+     * @return \Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
      */
-    public function getUserAccount(): \Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
+    public function getUserAccount(): \Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface;
 
     /**
-     * @param \Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount
+     * @param \Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount
      * @return void
      */
-    public function setUserAccount(\Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount): void;
+    public function setUserAccount(\Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount): void;
 }

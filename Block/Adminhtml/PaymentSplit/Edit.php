@@ -10,22 +10,22 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit;
 
 use \Magento\Backend\Block\Widget\Context;
 use \Magento\Backend\Block\Widget\Form\Container;
 use \Magento\Framework\Registry;
-use Webjump\BraspagPagador\Api\SplitRepositoryInterface;
+use Braspag\BraspagPagador\Api\SplitRepositoryInterface;
 
 class Edit extends Container
 {
     /**
-     * @var \Webjump\BraspagPagador\Helper\Data
+     * @var \Braspag\BraspagPagador\Helper\Data
      */
     protected $_hlp;
 
@@ -37,7 +37,7 @@ class Edit extends Container
     protected $_registry;
 
     public function __construct(
-        \Webjump\BraspagPagador\Helper\Data $dropshipHelper,
+        \Braspag\BraspagPagador\Helper\Data $dropshipHelper,
         Registry $registry,
         Context $context,
         SplitRepositoryInterface $splitRepository,
@@ -58,7 +58,7 @@ class Edit extends Container
     protected function _construct()
     {
         $this->_objectId = 'id';
-        $this->_blockGroup = 'Webjump_BraspagPagador';
+        $this->_blockGroup = 'Braspag_BraspagPagador';
         $this->_controller = 'adminhtml_paymentSplit';
 
         parent::_construct();

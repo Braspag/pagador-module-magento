@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Tokens;
 
 interface BuilderInterface
 {

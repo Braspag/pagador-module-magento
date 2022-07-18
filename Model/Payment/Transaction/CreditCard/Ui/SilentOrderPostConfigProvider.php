@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\BuilderInterface as SilentOrderPOstBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\SilentOrderPostConfigInterface;
 
 /**
  * Braspag Transaction CreditCard Authorize Command

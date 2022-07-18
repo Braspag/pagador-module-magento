@@ -1,0 +1,370 @@
+<?php
+/**
+ * @author      Webjump Core Team <dev@webjump.com>
+ * @copyright   2016 Webjump (http://www.webjump.com.br)
+ * @license     http://www.webjump.com.br  Copyright
+ *
+ * @link        http://www.webjump.com.br
+ *
+ * @var \Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Pix\Qrcode $this
+ */
+?>
+<?php if ($block->shouldDisplay()) : ?>
+<div class="signapay-pix-container">
+    <p class="pix-codigo">Seu código pix foi gerado</p>
+    <img class="image-pix"
+        src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/logo_pix.png'); ?>" alt='pix'>
+    <p class="signapay-info"> Para pagar no banco on-line ou aplicativo do seu banco,
+    <p class="signapay-codigo"><strong>Escanei o QR Code ou copie o código Pix:</strong></p>
+
+    <div class="show-qrcorde-mobile">
+        <p class="btn-show-qrcode"> Exibir QR Code</p>
+    </div>
+    <?php if ($qrCodeSrc = $block->getPixQrCode()) : ?>
+    <div class="qr-code-container">
+        <img src="data:image/png;base64,<?= $qrCodeSrc ?>" alt="pix-qr-code" id="signa-pay-qr-code" />
+    </div>
+    <div class="signapay-pix-time">
+        <img class="image-time"
+            src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/timer.svg'); ?>" alt='timer'>
+        <?php if ($expirationTime = $block->getExpirationTime()) : ?>
+        <p class="signapay-stopwatch"> Validade do código Pix até às:
+            <strong><?= $expirationTime ?></strong>
+        </p>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if ($qrCodeSrc = $block->getQrCode()) : ?>
+    <div class="pix-cod">
+        <textarea readonly id="signapay-cod-pix"><?= $qrCodeSrc ?></textarea>
+    </div>
+    <?php endif; ?>
+
+    <div class="pix-button-copy">
+        <button class="button-copy-cod" onclick="copyToClipBoard()">
+            <img class="image-copy check-image"
+                src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/check.png'); ?>"
+                alt='content_copy' width="150">
+            <span>Copiar código PIX</span>
+            <img class="image-copy content-copy-image"
+                src="<?php echo $block->getViewFileUrl('Braspag_BraspagPagador::images/pix/content_copy.svg'); ?>"
+                alt='content_copy' width="150">
+        </button>
+    </div>
+
+    <p class="email-pix">Seu código foi enviado para o email:
+        <strong><?php echo $block->getOrder()->getCustomerEmail() ?></strong>
+    </p>
+
+    <div class="signapay-instruction">
+        <p class="text-align-start"><strong>Como pagar com Pix:</strong></p>
+        <div class="instruction-pix">
+            <p>1 - Acesse o app ou site do seu banco</p>
+            <p>2 - Busque a opção para pagamento com pix</p>
+            <p>3 - Escaneie o QR code ou código Pix</p>
+            <p>4 - Pronto! Você verá a confirmação do pagamento</p>
+        </div>
+    </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&family=Space+Grotesk:wght@400;700&display=swap');
+</style>
+
+<style type="text/css">
+.signapay-pix-container,
+.signapay-pix-container input,
+.signapay-pix-container textarea,
+.signapay-pix-container button,
+.pix-button-copy {
+    font-family: 'Poppins', sans-serif;
+}
+
+.signapay-pix-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.signapay-info,
+.signapay-codigo,
+.signapay-pix-time,
+.text-align-start {
+    font-size: 15px;
+}
+
+.show-qrcorde-mobile {
+    display: none;
+}
+
+.pix-codigo {
+    font-size: 22px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.image-pix {
+    width: 15%;
+    margin: 23px 0;
+}
+
+.signapay-info {
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.qr-code-container {
+    display: flex;
+    justify-content: center;
+}
+
+.qr-code-container img {
+    margin: 24px 0 23px 0;
+    opacity: 0.6;
+}
+
+.signapay-pix-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signapay-stopwatch {
+    margin-left: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.signapay-pix-time strong {
+    margin-left: 6px;
+}
+
+#signapay-cod-pix {
+    width: 400px;
+    height: 100%;
+    border: none;
+    padding: 10px 20px 9px 22px;
+    text-align: center;
+}
+
+.pix-cod {
+    display: flex;
+    justify-content: center;
+}
+
+.pix-cod textarea {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    resize: none;
+    word-break: break-all;
+    outline: 0;
+    overflow: hidden;
+}
+
+.button-copy-cod {
+    display: flex;
+    align-items: center;
+    padding: 5px 9px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border: 1px solid #707070;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.pix-button-copy {
+    margin: 23px 0;
+}
+
+.email-pix {
+    text-align: center;
+}
+
+.image-copy {
+    width: 10%;
+}
+
+.button-copy-cod .content-copy-image {
+    margin-left: 10px;
+}
+
+.check-image {
+    margin-right: 10px;
+}
+
+.button-copy-cod .check-image {
+    display: none;
+}
+
+.copied-code {
+    color: #fff;
+    border: none;
+    background-color: #32BCAD;
+}
+
+.signapay-instruction {
+    margin: 23px 0;
+    background: #F1F1F1;
+    border-radius: 10px;
+}
+
+.text-align-start {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    text-align: left;
+    padding-left: 23px;
+}
+
+.instruction-pix {
+    padding-left: 36px;
+    padding-right: 20px;
+    font-size: 13px;
+    text-align: left;
+}
+
+.instruction-pix p {
+    margin-bottom: 7px;
+}
+
+.instruction-pix p:last-child {
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 770px) {
+    .qr-code-container img {
+        width: 200px;
+    }
+
+    .pix-cod {
+        width: 100%;
+        height: 90px;
+        margin-top: 14px;
+    }
+
+    .signapay-instruction {
+        width: 400px;
+    }
+
+}
+
+@media screen and (max-width: 769px) {
+
+    .show-qrcorde-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 14px 0;
+        padding: 5px 9px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #FFFFFF;
+        border: 1px solid #707070;
+        border-radius: 10px;
+        opacity: 1;
+    }
+
+    .qr-code-container {
+        display: none;
+    }
+
+    .qr-code-container img {
+        margin: 0;
+    }
+
+    .pix-cod {
+        width: 100%;
+    }
+
+    #signapay-cod-pix {
+        width: 100%;
+        height: 110px;
+        overflow-y: auto;
+    }
+
+    .signapay-pix-time {
+        margin-bottom: 14px;
+    }
+
+    .instruction-pix {
+        line-height: normal;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+    .image-pix {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+
+    .signapay-info,
+    .signapay-codigo,
+    .signapay-pix-time,
+    .text-align-start {
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .image-pix {
+        width: 60%;
+    }
+
+    .signapay-cod-pix {
+        width: 100%;
+        height: 110px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .pix-codigo {
+        font-size: 20px;
+    }
+
+    #signapay-cod-pix {
+        height: 110px;
+    }
+
+    .image-pix {
+        width: 55%;
+    }
+
+    .signapay-pix-time,
+    .email-pix {
+        font-size: 14px;
+    }
+}
+</style>
+
+
+
+<script>
+function copyToClipBoard() {
+    var content = document.getElementById('signapay-cod-pix');
+    content.select();
+    document.execCommand('copy');
+}
+require(['jquery'], function($) {
+    let copyImage = $(".content-copy-image");
+    let checkImage = $(".check-image");
+    let copyCodeBtn = $(".button-copy-cod");
+    let copyCodeBtnText = $(".button-copy-cod span");
+    $(".button-copy-cod").click(function() {
+        copyCodeBtn.addClass("copied-code");
+        copyCodeBtnText.text("Código copiado");
+        copyImage.hide();
+        checkImage.show();
+    });
+
+    let showMobileBtn = $(".show-qrcorde-mobile");
+    showMobileBtn.click(function() {
+        $(".qr-code-container").slideDown();
+        $(this).hide();
+    });
+});
+</script>
+
+<?php endif ?>

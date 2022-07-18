@@ -1,10 +1,11 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Payment\Info;
+
+namespace Braspag\BraspagPagador\Test\Unit\Block\Payment\Info;
 
 use Faker\Provider\ar_SA\Payment;
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Block\Payment\Info\CreditCard;
-use Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface;
+use Braspag\BraspagPagador\Block\Payment\Info\CreditCard;
+use Braspag\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface;
 use Magento\Payment\Block\Info;
 
 class CreditCardTest extends \PHPUnit\Framework\TestCase
@@ -60,7 +61,6 @@ class CreditCardTest extends \PHPUnit\Framework\TestCase
         );
 
         $objectManager->setBackwardCompatibleProperty($this->block, 'paymentInfo', $this->paymentData);
-
     }
 
     public function testConstructShouldSetTemplateWithSuccess()
@@ -72,7 +72,7 @@ class CreditCardTest extends \PHPUnit\Framework\TestCase
     {
         $result = $this->block->getInstallmentsInfo();
 
-        $expected = __('%1 Splitted in %2 '. 'time', null, null);
+        $expected = __('%1 Splitted in %2 ' . 'time', null, null);
 
         $this->assertEquals($expected, $result);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestFactory;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -18,7 +18,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubor
 
 /**
  * Class RequestBuilder
- * @package Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate
+ * @package Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate
  */
 class RequestBuilder implements BuilderInterface
 {
@@ -28,7 +28,7 @@ class RequestBuilder implements BuilderInterface
 
     /**
      * RequestBuilder constructor.
-     * @param \Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestFactory $requestFactory
+     * @param \Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\CreateSubordinate\RequestFactory $requestFactory
      * @param ConfigInterface $config
      * @param \Magento\Framework\App\Request\Http $requestHttp
      */
@@ -51,7 +51,6 @@ class RequestBuilder implements BuilderInterface
     {
 
         if (!isset($buildSubject['data']) || !is_array($buildSubject['data'])) {
-
             throw new \InvalidArgumentException(__('Subordinate data should be provided'));
         }
 
@@ -215,7 +214,6 @@ class RequestBuilder implements BuilderInterface
 
         $mdrResultData = [];
         foreach ($mdrsFromData as $mdrFromData) {
-
             if (empty(trim($mdrFromData))) {
                 continue;
             }

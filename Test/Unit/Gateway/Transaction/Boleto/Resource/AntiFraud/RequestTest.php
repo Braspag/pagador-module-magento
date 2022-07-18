@@ -1,19 +1,19 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\AntiFraud;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Boleto\Resource\AntiFraud;
 
 use Magento\Quote\Model\Quote;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\AntiFraud\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\AntiFraud\Request;
 use PHPUnit\Framework\TestCase;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
-use \Magento\Sales\Model\Order\Item;
-use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
+use Magento\Sales\Model\Order\Item;
+use Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class RequestTest extends TestCase
 {
@@ -94,7 +94,7 @@ class RequestTest extends TestCase
 
         $this->adapterGeneralMock = $this->createMock(AdapterGeneralInterface::class);
 
-        $this->helperDataMock = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+        $this->helperDataMock = $this->getMockBuilder('\Braspag\BraspagPagador\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods(['removeSpecialCharacters'])
             ->getMock();
@@ -132,7 +132,7 @@ class RequestTest extends TestCase
     public function testGetCartShippingPhone()
     {
         $phone = "1145454545";
-        $expectedResult = "55".$phone;
+        $expectedResult = "55" . $phone;
 
 
         $this->orderAdapterMock->expects($this->exactly(2))
@@ -153,7 +153,7 @@ class RequestTest extends TestCase
     public function testGetCartShippingPhoneShouldReturnEmptyWhenEmptyShippingAddress()
     {
         $phone = "1145454545";
-        $expectedResult = "55".$phone;
+        $expectedResult = "55" . $phone;
 
         $this->orderAdapterMock->expects($this->exactly(1))
             ->method('getShippingAddress')
@@ -359,7 +359,7 @@ class RequestTest extends TestCase
     public function testGetCartShippingAddressee()
     {
         $firstName = " Jôhn";
-        $lastName=" Doe. - ";
+        $lastName = " Doe. - ";
         $expectedResult = "John Doe";
 
         $this->orderAdapterMock
@@ -391,7 +391,7 @@ class RequestTest extends TestCase
     public function testGetCartShippingAddresseeShouldReturnEmptyValueWhenEmptyShippingAddress()
     {
         $firstName = " Jôhn";
-        $lastName=" Doe. - ";
+        $lastName = " Doe. - ";
         $expectedResult = "John Doe";
 
         $this->orderAdapterMock

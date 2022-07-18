@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Avs;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Avs;
 
 use Magento\Quote\Model\Quote;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Avs\Request;
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
@@ -49,7 +49,7 @@ class RequestTest extends TestCase
         $this->shippingAddressMock = $this->createMock(AddressAdapterInterface::class);
         $this->infoInterfaceMock = $this->createMock(InfoInterface::class);
 
-        $this->sessionMock = $this->getMockBuilder( 'Magento\Framework\Session\SessionManagerInterface')
+        $this->sessionMock = $this->getMockBuilder('Magento\Framework\Session\SessionManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getQuote',
@@ -122,11 +122,11 @@ class RequestTest extends TestCase
 
         $this->requestModel->setOrderAdapter($this->orderAdapterMock);
         $this->requestModel->setPaymentData($this->infoInterfaceMock);
-        $this->assertEquals('12345678912',  $this->requestModel->getCpf());
-        $this->assertEquals('12345678',  $this->requestModel->getZipCode());
-        $this->assertEquals('rua x',  $this->requestModel->getStreet());
-        $this->assertEquals('123',  $this->requestModel->getNumber());
-        $this->assertEquals(null,  $this->requestModel->getComplement());
-        $this->assertEquals('Centro',  $this->requestModel->getDistrict());
+        $this->assertEquals('12345678912', $this->requestModel->getCpf());
+        $this->assertEquals('12345678', $this->requestModel->getZipCode());
+        $this->assertEquals('rua x', $this->requestModel->getStreet());
+        $this->assertEquals('123', $this->requestModel->getNumber());
+        $this->assertEquals(null, $this->requestModel->getComplement());
+        $this->assertEquals('Centro', $this->requestModel->getDistrict());
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\OAuth2\Command;
 
-use Webjump\BraspagPagador\Api\OAuth2TokenCommandInterface;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-use Webjump\Braspag\Pagador\Transaction\Api\OAuth2\Token\RequestInterface;
+use Braspag\BraspagPagador\Api\OAuth2TokenCommandInterface;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\Braspag\Pagador\Transaction\Api\OAuth2\Token\RequestInterface;
 
 /**
  * Class TokenCommand
- * @package Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command
+ * @package Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command
  */
 class TokenCommand implements OAuth2TokenCommandInterface
 {

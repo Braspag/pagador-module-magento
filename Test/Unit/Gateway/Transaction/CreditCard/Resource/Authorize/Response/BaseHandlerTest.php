@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class BaseHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
     private $responseMock;
 
     public function setUp()
@@ -16,14 +16,13 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->handler = new BaseHandler(
+        $this->handler = new BaseHandler(
             $this->responseMock
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
@@ -56,9 +55,9 @@ class BaseHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('setAdditionalInformation')
             ->with('redirect_url', 'http://teste.com/');
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 }

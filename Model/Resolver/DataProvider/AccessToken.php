@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Developer Team <developer@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -9,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\Resolver\DataProvider;
+namespace Braspag\BraspagPagador\Model\Resolver\DataProvider;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder as SilentOrderBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\SilentOrderPost\Builder as SilentOrderBuilder;
 
 /**
  * Class AccessToken
- * @package Webjump\BraspagPagador\Model\Resolver\DataProvider
+ * @package Braspag\BraspagPagador\Model\Resolver\DataProvider
  */
 class AccessToken
 {
@@ -32,8 +33,7 @@ class AccessToken
      */
     public function __construct(
         SilentOrderBuilder $silentOrderBuilder
-    )
-    {
+    ) {
         $this->silentOrderBuilder =  $silentOrderBuilder;
     }
 

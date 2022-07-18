@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 use Magento\Framework\App\State;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -39,8 +39,7 @@ abstract class AbstractConfig
         ScopeConfigInterface $scopeConfig,
         State $appState,
         array $data = []
-    )
-    {
+    ) {
         $this->setContext($context);
         $this->setContextAdmin($contextAdmin);
         $this->setScopeConfig($scopeConfig);
@@ -49,7 +48,8 @@ abstract class AbstractConfig
     }
 
     protected function _construct(array $data = [])
-    {}
+    {
+    }
 
     protected function _getConfig($uri)
     {

@@ -1,16 +1,16 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Resource\MDD;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Resource\MDD;
 
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\GeneralRequest;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\GeneralRequest;
 use PHPUnit\Framework\TestCase;
 use Detection\MobileDetect;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfigInterface;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as OrderCollectionFactory;
-use \Magento\Customer\Api\Data\CustomerInterface;
-use \Magento\Quote\Model\Quote;
+use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Quote\Model\Quote;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;
-use \Magento\Quote\Model\Quote\Item;
+use Magento\Quote\Model\Quote\Item;
 use Magento\Catalog\Model\Product;
 use Magento\Quote\Model\Quote\Address;
 use Magento\Payment\Model\InfoInterface;
@@ -87,7 +87,7 @@ class GeneralRequestTest extends TestCase
         $this->paymentDataMock = $this->createMock(InfoInterface::class);
         $this->productMock = $this->createMock(Product::class);
 
-        $this->helperData = $this->getMockBuilder('\Webjump\BraspagPagador\Helper\Data')
+        $this->helperData = $this->getMockBuilder('\Braspag\BraspagPagador\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods(['removeSpecialCharacters'])
             ->getMock();
@@ -114,8 +114,8 @@ class GeneralRequestTest extends TestCase
     public function testGetCustomerName()
     {
         $firstName = "John";
-        $lastName="Doe";
-        $expectedResult = trim($firstName." ".$lastName);
+        $lastName = "Doe";
+        $expectedResult = trim($firstName . " " . $lastName);
 
 
         $this->mddConfigInterfacetMock

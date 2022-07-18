@@ -1,12 +1,13 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
 
-use Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit\Grid;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Model\SplitManager;
+namespace Braspag\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
+
+use Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit\Grid;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 class GridTest extends \PHPUnit\Framework\TestCase
 {
@@ -63,7 +64,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['create'])
             ->getMock();
 
-        $this->splitFactory = $this->getMockBuilder('\Webjump\BraspagPagador\Model\SplitFactory')
+        $this->splitFactory = $this->getMockBuilder('\Braspag\BraspagPagador\Model\SplitFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -87,7 +88,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
 
         $this->requestMock = $this->createMock(\Magento\Framework\App\RequestInterface::class);
 
-        $this->blockMock = $this->createMock(\Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid::class);
+        $this->blockMock = $this->createMock(\Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid::class);
 
         $this->viewLayoutMock = $this->createMock(\Magento\Framework\View\Layout::class);
 

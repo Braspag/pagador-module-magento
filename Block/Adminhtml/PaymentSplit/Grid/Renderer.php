@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -10,15 +11,15 @@
  * http://www.unirgy.com/LICENSE-M1.txt
  *
  * @category   Unirgy
- * @package    \Webjump\BraspagPagador
+ * @package    \Braspag\BraspagPagador
  * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid;
+namespace Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid;
 
-use \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
-use \Magento\Framework\DataObject;
+use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
+use Magento\Framework\DataObject;
 
 class Renderer extends AbstractRenderer
 {
@@ -49,5 +50,4 @@ class Renderer extends AbstractRenderer
         $index = $this->getColumn()->getIndex();
         $value = $row->getData($index);
     }
-
 }

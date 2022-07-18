@@ -17,7 +17,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/creditcardtoken/creditcardtoken',
+                template: 'Braspag_BraspagPagador/payment/creditcardtoken/creditcardtoken',
                 creditCardInstallments: '',
                 creditCardToken: ''
             },
@@ -72,7 +72,7 @@ define(
             getCcAvailableTokens: function () {
                 return window.checkoutConfig.payment.ccform.tokens.list[this.getCode()];
             },
-            
+
             getCcAvailableTokensValues: function() {
                 return _.map(this.getCcAvailableTokens(), function (value, key) {
                     return {

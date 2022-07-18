@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
+use Braspag\Braspag\Pagador\Transaction\Resource\Auth3Ds20\Token\Response as Auth3Ds20TokenResponse;
 
 interface BuilderInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
 /**
  * Card Token Interface
@@ -13,15 +13,15 @@ namespace Webjump\BraspagPagador\Api\Data;
  */
 interface CardTokenInterface
 {
-	const ENTITY_ID = 'entity_id';
+    const ENTITY_ID = 'entity_id';
 
-	const ALIAS = 'alias';
+    const ALIAS = 'alias';
 
-	const TOKEN = 'token';
+    const TOKEN = 'token';
 
-	const CUSTOMER_ID = 'customer_id';
+    const CUSTOMER_ID = 'customer_id';
 
-	const STORE_ID = 'store_id';
+    const STORE_ID = 'store_id';
 
     const ACTIVE = 'active';
 
@@ -73,4 +73,3 @@ interface CardTokenInterface
 
     public function setMask($mask);
 }
-

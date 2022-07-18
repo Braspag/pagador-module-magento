@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface;
 
 /**
  * Braspag Transaction Credit Authorize Command
@@ -16,8 +16,8 @@ use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface;
  */
 class TransactionPostCommand extends AbstractApiCommand
 {
-	protected function sendRequest($request)
-	{
+    protected function sendRequest($request)
+    {
         if (!isset($request) || !$request instanceof RequestInterface) {
             throw new \InvalidArgumentException('Braspag Split Transaction Post Send Request Lib object should be provided');
         }
@@ -25,10 +25,9 @@ class TransactionPostCommand extends AbstractApiCommand
         try {
             return $this->getApi()->sendSplitPaymentTransactionPost($request);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-
             throw new \Magento\Sales\Exception\CouldNotInvoiceException(
                 __('Braspag communication error. Error code: ' . $e->getCode())
             );
         }
-	}
+    }
 }

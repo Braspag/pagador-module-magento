@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\Base\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\Base\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface as InstallmentsConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\BuilderInterface  as InstallmentsBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface as InstallmentsConfig;
 
 /**
  * Braspag Transaction Base Authorize Command
@@ -59,7 +59,7 @@ abstract class AbstractInstallmentsConfigProvider implements ConfigProviderInter
             $this->installments[$this::CODE][$installment->getId()] = $installment->getLabel();
         }
 
-    	return $this->installments;
+        return $this->installments;
     }
 
     protected function getInstallmentsBuilder()

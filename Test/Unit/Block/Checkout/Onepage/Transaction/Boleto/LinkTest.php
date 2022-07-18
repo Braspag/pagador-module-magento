@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: leandro
@@ -6,11 +7,10 @@
  * Time: 16:24
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Block\Checkout\Onepage\Transaction\Boleto;
+namespace Braspag\BraspagPagador\Test\Unit\Block\Checkout\Onepage\Transaction\Boleto;
 
-
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
-use Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
+use Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto\Link;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Sales\Api\Data\OrderInterface as Order;
 use Magento\Sales\Api\Data\OrderPaymentInterface as Payment;

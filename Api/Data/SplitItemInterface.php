@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
 /**
  * Split Interface
@@ -13,13 +13,11 @@ namespace Webjump\BraspagPagador\Api\Data;
  */
 interface SplitItemInterface
 {
-	const ENTITY_ID = 'split_item_id';
+    const ENTITY_ID = 'split_item_id';
 
-	const ALIAS = 'alias';
+    const ALIAS = 'alias';
 
-	const STORE_ID = 'store_id';
+    const STORE_ID = 'store_id';
 
     const ACTIVE = 'active';
-
 }
-

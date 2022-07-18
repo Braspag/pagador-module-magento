@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Actions\Capture\ResponseInterface;
 
 /**
  * Braspag Transaction CreditCard Capture Response Handler

@@ -1,21 +1,21 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\PaymentSplit;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\PaymentSplit;
 
 use Magento\Quote\Model\Quote;
-use Webjump\BraspagPagador\Api\SplitDataProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Request;
+use Braspag\BraspagPagador\Api\SplitDataProviderInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\PaymentSplit\Request;
 use PHPUnit\Framework\TestCase;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config as PaymentSplitConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\MDD\AdapterGeneralInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config as PaymentSplitConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Items\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\MDD\AdapterGeneralInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\AddressAdapterInterface;
 use Magento\Payment\Model\InfoInterface;
-use \Magento\Sales\Model\Order\Item;
-use Webjump\BraspagPagador\Model\OAuth2TokenManager;
-use Webjump\BraspagPagador\Model\PaymentSplit\FingerPrint\FingerPrint;
+use Magento\Sales\Model\Order\Item;
+use Braspag\BraspagPagador\Model\OAuth2TokenManager;
+use Braspag\BraspagPagador\Model\PaymentSplit\FingerPrint\FingerPrint;
 
 class RequestTest extends TestCase
 {
@@ -37,8 +37,8 @@ class RequestTest extends TestCase
 
     protected function setUp()
     {
-        $this->dataProviderMock = $this->createMock(\Webjump\BraspagPagador\Model\SplitDataProvider::class);
-        $this->oAuth2TokenManagerMock = $this->createMock(\Webjump\BraspagPagador\Model\OAuth2TokenManager::class);
+        $this->dataProviderMock = $this->createMock(\Braspag\BraspagPagador\Model\SplitDataProvider::class);
+        $this->oAuth2TokenManagerMock = $this->createMock(\Braspag\BraspagPagador\Model\OAuth2TokenManager::class);
         $this->quoteMock = $this->createMock(\Magento\Quote\Model\Quote::class);
         $this->orderMock = $this->createMock(\Magento\Sales\Model\Order::class);
         $this->paymentMock = $this->createMock(\Magento\Sales\Model\Order\Payment::class);
@@ -315,5 +315,4 @@ class RequestTest extends TestCase
 
         $this->assertEquals($result, '123456789');
     }
-
 }

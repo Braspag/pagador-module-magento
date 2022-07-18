@@ -1,9 +1,10 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Adminhtml\PaymentSplit;
+
+namespace Braspag\BraspagPagador\Test\Unit\Block\Adminhtml\PaymentSplit;
 
 use Magento\Backend\Block\Widget\Context;
-use Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit;
-use \Magento\Framework\Registry;
+use Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Edit;
+use Magento\Framework\Registry;
 
 class EditTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,7 +50,6 @@ class EditTest extends \PHPUnit\Framework\TestCase
                 ['*/*/'],
                 ['*/*/delete'],
                 ['*/*/save']
-
             )
             ->willReturnOnConsecutiveCalls(
                 '*/*/',
@@ -82,15 +82,15 @@ class EditTest extends \PHPUnit\Framework\TestCase
             ->method('getRequest')
             ->willReturn($this->requestMock);
 
-        $this->dropshipHelperMock = $this->createMock(\Webjump\BraspagPagador\Helper\Data::class);
+        $this->dropshipHelperMock = $this->createMock(\Braspag\BraspagPagador\Helper\Data::class);
         $this->registryMock = $this->createMock(Registry::class);
 
-        $this->splitMock = $this->createMock(\Webjump\BraspagPagador\Model\Split::class);
+        $this->splitMock = $this->createMock(\Braspag\BraspagPagador\Model\Split::class);
         $this->splitMock->expects($this->once())
             ->method('load')
             ->willReturnSelf();
 
-        $this->splitRepositoryMock = $this->createMock(\Webjump\BraspagPagador\Api\SplitRepositoryInterface::class);
+        $this->splitRepositoryMock = $this->createMock(\Braspag\BraspagPagador\Api\SplitRepositoryInterface::class);
         $this->splitRepositoryMock->expects($this->once())
             ->method('create')
             ->willReturn($this->splitMock);

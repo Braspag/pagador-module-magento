@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset;
+namespace Braspag\BraspagPagador\Block\Adminhtml\System\Config\Fieldset;
 
 /**
  * @author      Webjump Core Team <dev@webjump.com>

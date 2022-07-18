@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -7,23 +8,24 @@
  */
 
 declare(strict_types=1);
-namespace Webjump\BraspagPagador\Model\Auth3DS20;
+
+namespace Braspag\BraspagPagador\Model\Auth3DS20;
 
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Model\AbstractExtensibleModel;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterface;
-use Webjump\BraspagPagador\Api\Auth3DS20GetAddressInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20InformationInterface;
+use Braspag\BraspagPagador\Api\Auth3DS20GetAddressInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
-use Webjump\BraspagPagador\Api\Auth3DS20GetCartInterface;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface;
-use Webjump\BraspagPagador\Api\Auth3DS20UserAccountInterface;
+use Braspag\BraspagPagador\Api\Auth3DS20GetCartInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface;
+use Braspag\BraspagPagador\Api\Auth3DS20UserAccountInterface;
 
 /**
  * Class Auth3DS20Information
  *
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class Information extends AbstractExtensibleModel implements Auth3DS20InformationInterface
 {
@@ -68,13 +70,13 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null, array $data = [],
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = [],
         Auth3DS20GetAddressInterface $auth3DS20AddressInformation,
         Auth3DS20GetCartInterface $auth3DS20CartInformation,
         Auth3DS20CartInformationInterface $auth3DS20CartInformationInterface,
         Auth3DS20UserAccountInterface $auth3DS20UserAccountInformation
-
-    ){
+    ) {
         $this->auth3DS20AddressInformation = $auth3DS20AddressInformation;
         $this->auth3DS20CartInformation = $auth3DS20CartInformation;
         $this->auth3DS20CartInformationInterface = $auth3DS20CartInformationInterface;
@@ -86,7 +88,8 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
             $customAttributeFactory,
             $resource,
             $resourceCollection,
-            $data);
+            $data
+        );
     }
 
 
@@ -237,7 +240,7 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
     /**
      * @inheritDoc
      */
-    public function getAddressData(): \Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface
+    public function getAddressData(): \Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface
     {
         return $this->getData(self::BPMPI_ADDRESSES_DATA);
     }
@@ -245,7 +248,7 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
     /**
      * @inheritDoc
      */
-    public function setAddressesData(\Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData): void
+    public function setAddressesData(\Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface $addressesData): void
     {
         $this->setData(self::BPMPI_ADDRESSES_DATA, $addressesData);
     }
@@ -269,7 +272,7 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
     /**
      * @inheritDoc
      */
-    public function getUserAccount(): \Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
+    public function getUserAccount(): \Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface
     {
         return $this->getData(self::BPMPI_USER_ACCOUNT);
     }
@@ -277,7 +280,7 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
     /**
      * @inheritDoc
      */
-    public function setUserAccount(\Webjump\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount): void
+    public function setUserAccount(\Braspag\BraspagPagador\Api\Data\Auth3DS20UserAccountInformationInterface $userAccount): void
     {
         $this->setData(self::BPMPI_USER_ACCOUNT, $userAccount);
     }

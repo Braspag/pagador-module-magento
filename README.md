@@ -48,9 +48,9 @@ This plugin supports:
 You can install our plugin through Composer:
 
 ```bash
-composer require webjump/magento2-module-braspagpagador
+composer require braspag/magento2-module-braspagpagador
 composer update
-bin/magento module:enable Webjump_BraspagPagador
+bin/magento module:enable Braspag_BraspagPagador
 bin/magento setup:upgrade
 ```
 
@@ -59,7 +59,7 @@ After installation has completed go to:
 
 Stores > Settings > Configuration
 
-Sales > Payment Methods > Other Payment Methods > Webjump Braspag.
+Sales > Payment Methods > Other Payment Methods > Braspag Braspag.
 
 ## Support
 You can create issues on our Magento Repository.

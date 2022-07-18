@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unirgy LLC
  *
@@ -15,7 +16,7 @@
  * @license    http:///www.unirgy.com/LICENSE-M1.txt
  */
 
-namespace Webjump\BraspagPagador\Setup;
+namespace Braspag\BraspagPagador\Setup;
 
 use Magento\Catalog\Setup\CategorySetupFactory;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -26,8 +27,8 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
  */
 class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 {
-    const MEDIUMTEXT_SIZE=16777216;
-    const TEXT_SIZE=65536;
+    const MEDIUMTEXT_SIZE = 16777216;
+    const TEXT_SIZE = 65536;
     protected $categorySetupFactory;
 
     public function __construct(
@@ -67,8 +68,8 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
-                'used_in_product_listing'=>true,
-                'is_used_for_price_rules'=>true,
+                'used_in_product_listing' => true,
+                'is_used_for_price_rules' => true,
             ]
         );
 
@@ -89,8 +90,8 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
-                'used_in_product_listing'=>true,
-                'is_used_for_price_rules'=>true,
+                'used_in_product_listing' => true,
+                'is_used_for_price_rules' => true,
             ]
         );
 
@@ -111,8 +112,8 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
-                'used_in_product_listing'=>true,
-                'is_used_for_price_rules'=>true,
+                'used_in_product_listing' => true,
+                'is_used_for_price_rules' => true,
             ]
         );
     }

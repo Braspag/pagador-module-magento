@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Braspag Transaction CreditCard Authorize Request
  *
@@ -8,22 +9,23 @@
  *
  * @link        http://www.webjump.com.br
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
 
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize;
+
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Helper\Validator;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Avs\RequestInterface as RequestAvsLibInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Helper\Validator;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
+use Braspag\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 
 /**
  * Class Request
- * @package Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize
+ * @package Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize
  */
 class Request implements BraspaglibRequestInterface, RequestInterface
 {
@@ -94,7 +96,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         InstallmentsConfigInterface $installmentsConfig,
         Validator $validator,
         GrandTotalPricingHelper $grandTotalPricingHelper,
-        \Webjump\BraspagPagador\Helper\Data $helperData
+        \Braspag\BraspagPagador\Helper\Data $helperData
     ) {
         $this->setConfig($config);
         $this->setInstallmentsConfig($installmentsConfig);
@@ -153,10 +155,10 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         $attribute = $this->getConfig()->getIdentityAttributeCode();
 
         return $this->helperData->removeSpecialCharactersFromTaxvat(
-                $this->getQuote()->getBillingAddress()->getData($attribute)
-            ) ?: $this->helperData->removeSpecialCharactersFromTaxvat(
-                $this->getQuote()->getData($attribute)
-            );
+            $this->getQuote()->getBillingAddress()->getData($attribute)
+        ) ?: $this->helperData->removeSpecialCharactersFromTaxvat(
+            $this->getQuote()->getData($attribute)
+        );
     }
 
     /**
@@ -164,7 +166,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerIdentityType()
     {
-        $identity = (string) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
+        $identity = (string) preg_replace('/[^0-9]/', '', $this->getCustomerIdentity());
         return (strlen($identity) > 11) ? 'CNPJ' : 'CPF';
     }
 
@@ -198,7 +200,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getCustomerAddressNumber()
     {
         return $this->getBillingAddressAttribute($this->getConfig()->getCustomerNumberAttribute());
-
     }
 
     /**
@@ -214,7 +215,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressZipCode()
     {
-        return preg_replace('/[^0-9]/','', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
     }
 
     /**
@@ -370,7 +371,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentCurrency()
     {
         return 'BRL';
-
     }
 
     /**
@@ -391,7 +391,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         if ($provider === "Braspag") {
             $availableTypes = explode(',', $this->getConfig()->getCcTypes());
 
-            foreach($availableTypes as $key => $availableType) {
+            foreach ($availableTypes as $key => $availableType) {
                 $typeDetail = explode("-", $availableType);
                 if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
                     return $typeDetail[0];
@@ -505,7 +505,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentCreditCardSaveCard()
     {
-        return (boolean) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
+        return (bool) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
     }
 
     /**

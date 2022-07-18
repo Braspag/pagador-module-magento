@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Config;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Config;
 
 use Magento\Store\Model\StoreManagerInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,12 +35,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
         $this->scopeConfigMock->expects($this->at(0))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_id')
+            ->with('braspag_braspag/pagador/merchant_id')
             ->will($this->returnValue('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
 
         $this->scopeConfigMock->expects($this->at(1))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/merchant_key')
+            ->with('braspag_braspag/pagador/merchant_key')
             ->will($this->returnValue('0123456789012345678901234567890123456789'));
 
         $this->scopeConfigMock->expects($this->at(2))
@@ -55,7 +55,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(4))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/general/active')
+            ->with('braspag_braspag_antifraud/general/active')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(5))
@@ -70,7 +70,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(7))
             ->method('getValue')
-            ->with('webjump_braspag/pagador/return_url')
+            ->with('braspag_braspag/pagador/return_url')
             ->will($this->returnValue('checkout/onepage/success'));
 
         $this->scopeConfigMock->expects($this->at(8))
@@ -130,7 +130,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->scopeConfigMock->expects($this->at(19))
             ->method('getValue')
-            ->with('webjump_braspag_antifraud/general/active')
+            ->with('braspag_braspag_antifraud/general/active')
             ->will($this->returnValue(true));
 
         $this->scopeConfigMock->expects($this->at(20))

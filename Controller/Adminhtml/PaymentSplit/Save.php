@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit;
 
 class Save extends AbstractPaymentSplit
 {
@@ -38,6 +38,5 @@ class Save extends AbstractPaymentSplit
             $this->messageManager->addError($e->getMessage());
             return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
         }
-
     }
 }

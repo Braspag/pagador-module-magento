@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2021 Webjump (http://www.webjump.com.br)
@@ -7,15 +8,15 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model\Notification;
+namespace Braspag\BraspagPagador\Model\Notification;
 
-use Webjump\BraspagPagador\Model\PaymentManager;
-use \Webjump\BraspagPagador\Api\NotificationManagerInterface;
+use Braspag\BraspagPagador\Model\PaymentManager;
+use Braspag\BraspagPagador\Api\NotificationManagerInterface;
 
 class AntifraudStatusChangedCommand
 {
     /**
-     * @var Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
+     * @var Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
      **/
     protected $config;
 
@@ -25,9 +26,9 @@ class AntifraudStatusChangedCommand
     protected $paymentManager;
 
     public function __construct(
-        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
+        \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         PaymentManager $paymentManager
-    ){
+    ) {
         $this->setPaymentManager($paymentManager);
         $this->setConfig($config);
     }
@@ -88,12 +89,11 @@ class AntifraudStatusChangedCommand
             return false;
         }
 
-        if (in_array($paymentFraudAnalysis->getStatus(), $this->getStatusesToAvoidOrderStatusUpdate())){
+        if (in_array($paymentFraudAnalysis->getStatus(), $this->getStatusesToAvoidOrderStatusUpdate())) {
             return false;
         }
 
         if ($paymentFraudAnalysis->getStatus() == NotificationManagerInterface::ANTIFRAUD_STATUS_ACCEPT) {
-
             if ($paymentStatus == 1) {
                 return $this->getPaymentManager()->registerAuthorizedPayment($braspagPaymentData, $magentoPaymentData);
             }

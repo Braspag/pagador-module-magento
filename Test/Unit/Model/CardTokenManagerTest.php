@@ -11,9 +11,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Test\Unit\Model;
+namespace Braspag\BraspagPagador\Test\Unit\Model;
 
-use Webjump\BraspagPagador\Model\CardTokenManager;
+use Braspag\BraspagPagador\Model\CardTokenManager;
 
 class CardTokenManagerTest extends \PHPUnit\Framework\TestCase
 {
@@ -23,13 +23,13 @@ class CardTokenManagerTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->responseMock = $this->createMock(\Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface::class);
-        $this->cardTokenRepositoryMock = $this->createMock(\Webjump\BraspagPagador\Api\CardTokenRepositoryInterface::class);
+        $this->responseMock = $this->createMock(\Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface::class);
+        $this->cardTokenRepositoryMock = $this->createMock(\Braspag\BraspagPagador\Api\CardTokenRepositoryInterface::class);
         $this->eventManagerMock = $this->createMock(\Magento\Framework\Event\ManagerInterface::class);
         $this->searchCriteriaBuilderMock = $this->createMock(\Magento\Framework\Api\SearchCriteriaBuilder::class);
         $this->searchCriteriaMock = $this->createMock(\Magento\Framework\Api\SearchCriteriaInterface::class);
         $this->searchCriteriaresultMock = $this->createMock(\Magento\Framework\Api\SearchResultsInterface::class);
-        $this->cartTokenMock = $this->createMock(\Webjump\BraspagPagador\Api\Data\CardTokenInterface::class);
+        $this->cartTokenMock = $this->createMock(\Braspag\BraspagPagador\Api\Data\CardTokenInterface::class);
 
         $this->searchCriteriaBuilderMock->expects($this->any())
             ->method('create')

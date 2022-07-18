@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,25 +9,25 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\Auth3DS20;
+namespace Braspag\BraspagPagador\Model\Auth3DS20;
 
-use Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterface;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterfaceFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config as DebitConfig;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20InformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20InformationInterfaceFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\Config;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\Config as DebitConfig;
 use Magento\Quote\Model\QuoteRepository;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
-use Webjump\BraspagPagador\Api\Auth3DS20GetAddressInterface;
-use Webjump\BraspagPagador\Api\Auth3DS20GetCartInterface;
-use Webjump\BraspagPagador\Api\Auth3DS20UserAccountInterface;
-use Webjump\BraspagPagador\Model\Auth3DS20\ConfigUrl;
+use Braspag\BraspagPagador\Api\Auth3DS20GetAddressInterface;
+use Braspag\BraspagPagador\Api\Auth3DS20GetCartInterface;
+use Braspag\BraspagPagador\Api\Auth3DS20UserAccountInterface;
+use Braspag\BraspagPagador\Model\Auth3DS20\ConfigUrl;
 
 /**
  * Class Auth3DS20ResultInformation
  *
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
-class ResultInformation implements \Webjump\BraspagPagador\Api\Auth3DS20ResultInformationInterface
+class ResultInformation implements \Braspag\BraspagPagador\Api\Auth3DS20ResultInformationInterface
 {
     /**
      * @var Auth3DS20InformationInterfaceFactory
@@ -96,7 +97,7 @@ class ResultInformation implements \Webjump\BraspagPagador\Api\Auth3DS20ResultIn
         Auth3DS20GetCartInterface $auth3DS20GetCart,
         Auth3DS20UserAccountInterface $auth3DS20UserAccount,
         ConfigUrl $configUrl
-    ){
+    ) {
         $this->auth3DS20InformationFactory = $auth3DS20InformationFactory;
         $this->creditConfig = $creditConfig;
         $this->debitConfig = $debitConfig;
@@ -111,7 +112,7 @@ class ResultInformation implements \Webjump\BraspagPagador\Api\Auth3DS20ResultIn
     /**
      * @inheritDoc
      */
-    public function getInformation(int $cartId): \Webjump\BraspagPagador\Api\Data\Auth3DS20InformationInterface
+    public function getInformation(int $cartId): \Braspag\BraspagPagador\Api\Data\Auth3DS20InformationInterface
     {
         /** @var $auth3DS20Information Auth3DS20InformationInterface */
         $auth3DS20Information = $this->auth3DS20InformationFactory->create();
@@ -123,7 +124,7 @@ class ResultInformation implements \Webjump\BraspagPagador\Api\Auth3DS20ResultIn
         $auth3DS20Information->setBpmpiDebitAuthNotifyonly($this->debitConfig->isAuth3Ds20MCOnlyNotifyActive());
         $auth3DS20Information->setBpmpiCurrency('BRL');
         $auth3DS20Information->setBpmpiMerchantUrl($this->configUrl->getValueUrl());
-        $auth3DS20Information->setBpmpiTotalAmount($this->priceHelper->currency($quote->getGrandTotal(),false, false));
+        $auth3DS20Information->setBpmpiTotalAmount($this->priceHelper->currency($quote->getGrandTotal(), false, false));
         $auth3DS20Information->setBpmpiOrderNumber($quote->getEntityId());
         $auth3DS20Information->setBpmpiTransactionMode('S');
 

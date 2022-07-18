@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Capture Request
  *
@@ -8,16 +9,17 @@
  *
  * @link        http://www.webjump.com.br
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\AntiFraud;
+
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\AntiFraud;
 
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Model\InfoInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
-use Webjump\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD\AdapterGeneralInterface;
+use Braspag\BraspagPagador\Model\AntiFraud\FingerPrint\FingerPrint;
 
 class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterface
 {
@@ -37,9 +39,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         ConfigInterface $config,
         RequestFactory $requestItemFactory,
         AdapterGeneralInterface $adapterGeneral,
-        \Webjump\BraspagPagador\Helper\Data $helperData,
+        \Braspag\BraspagPagador\Helper\Data $helperData,
         FingerPrint $fingerPrint
-    ){
+    ) {
         $this->setConfig($config);
         $this->setRequestItemFactory($requestItemFactory);
         $this->setMdd($adapterGeneral);
@@ -77,31 +79,34 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getCaptureOnLowRisk()
     {
-        return (boolean) $this->getConfig()->getCaptureOnLowRisk();
+        return (bool) $this->getConfig()->getCaptureOnLowRisk();
     }
 
     public function getVoidOnHighRisk()
     {
-        return (boolean) $this->getConfig()->getVoidOnHighRisk();
+        return (bool) $this->getConfig()->getVoidOnHighRisk();
     }
 
     /**
      * @codeCoverageIgnore
      */
     public function getBrowserCookiesAccepted()
-    {}
+    {
+    }
 
     /**
      * @codeCoverageIgnore
      */
     public function getBrowserEmail()
-    {}
+    {
+    }
 
     /**
      * @codeCoverageIgnore
      */
     public function getBrowserHostName()
-    {}
+    {
+    }
 
     public function getBrowserIpAddress()
     {
@@ -112,19 +117,22 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
      * @codeCoverageIgnore
      */
     public function getBrowserType()
-    {}
+    {
+    }
 
     /**
      * @codeCoverageIgnore
      */
     public function getCartIsGift()
-    {}
+    {
+    }
 
     /**
      * @codeCoverageIgnore
      */
     public function getCartReturnsAccepted()
-    {}
+    {
+    }
 
     /**
      * @return array
@@ -134,7 +142,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         $items = [];
         /** @var \Magento\Sales\Model\Order\Item $item */
         foreach ($this->getOrderAdapter()->getItems() as $item) {
-            if ($item->getProductType() !== 'simple'
+            if (
+                $item->getProductType() !== 'simple'
                 && $item->getProductType() !== 'grouped'
                 && $item->getProductType() !== 'virtual'
                 && $item->getProductType() !== 'downloadable'
@@ -171,7 +180,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         }
 
         return $this->helperData->removeSpecialCharacters(
-            $this->getShippingAddress()->getFirstname() . ' ' .$this->getShippingAddress()->getLastname()
+            $this->getShippingAddress()->getFirstname() . ' ' . $this->getShippingAddress()->getLastname()
         );
     }
 
@@ -179,7 +188,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
      * @codeCoverageIgnore
      */
     public function getCartShippingMethod()
-    {}
+    {
+    }
 
     public function getCartShippingPhone()
     {
@@ -302,6 +312,4 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     {
         return $this->storeId;
     }
-
-
 }

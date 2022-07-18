@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-use \Webjump\BraspagPagador\Api\Data\CardTokenInterface;
-
-use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceModel;
 
 /**
  * Card Token Model
@@ -16,43 +15,43 @@ use Webjump\BraspagPagador\Model\ResourceModel\CardToken as CardTokenResourceMod
  * @link        http://www.webjump.com.br
  * @codeCoverageIgnore
  */
-class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webjump\BraspagPagador\Api\Data\CardTokenInterface
+class CardToken extends \Magento\Framework\Model\AbstractModel implements \Braspag\BraspagPagador\Api\Data\CardTokenInterface
 {
-	const CACHE_TAG = 'webjump_braspagpagador_cardtoken';
+    const CACHE_TAG = 'braspag_braspagpagador_cardtoken';
 
-	protected function _construct()
-	{
-		$this->_init(CardTokenResourceModel::class);
-	}
+    protected function _construct()
+    {
+        $this->_init(CardTokenResourceModel::class);
+    }
 
-	public function getIdentities()
-	{
-		return [self::CACHE_TAG . '_' . $this->getId()];
-	}
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
+    }
 
     public function getId()
     {
-    	return $this->getData(self::ENTITY_ID);
+        return $this->getData(self::ENTITY_ID);
     }
 
     public function getAlias()
     {
-    	return $this->getData(self::ALIAS);
+        return $this->getData(self::ALIAS);
     }
 
     public function getToken()
     {
-    	return $this->getData(self::TOKEN);
+        return $this->getData(self::TOKEN);
     }
 
     public function getCustomerId()
     {
-    	return $this->getData(self::CUSTOMER_ID);
+        return $this->getData(self::CUSTOMER_ID);
     }
 
     public function getStoreId()
     {
-    	return $this->getData(self::STORE_ID);
+        return $this->getData(self::STORE_ID);
     }
 
     public function getMethod()
@@ -92,12 +91,12 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Webju
 
     public function isActive()
     {
-        return (boolean) $this->getData(self::ACTIVE);
+        return (bool) $this->getData(self::ACTIVE);
     }
 
     public function setActive($active)
     {
-        return $this->setData(self::ACTIVE, (boolean) $active);
+        return $this->setData(self::ACTIVE, (bool) $active);
     }
 
     public function getBrand()

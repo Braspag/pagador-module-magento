@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,8 +9,7 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
-
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
 
 interface MDDConfigInterface
 {

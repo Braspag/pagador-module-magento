@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,14 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Api\Data;
+namespace Braspag\BraspagPagador\Api\Data;
 
 /**
  * Interface Auth3DS20AddressInformationInterface
  *
- * @package Webjump\BraspagPagador\Api\Data
+ * @package Braspag\BraspagPagador\Api\Data
  */
-Interface Auth3DS20AddressInformationInterface
+interface Auth3DS20AddressInformationInterface
 {
     const BPMPI_BILLTO_PHONENUMBER = 'bpmpi_billto_phonenumber';
 
@@ -29,7 +30,7 @@ Interface Auth3DS20AddressInformationInterface
 
     const BPMPI_BILLTO_CITY = 'bpmpi_billto_city';
 
-    const BPMPI_BILLTO_STATE= 'bpmpi_billto_state';
+    const BPMPI_BILLTO_STATE = 'bpmpi_billto_state';
 
     const BPMPI_BILLTO_ZIPCODE = 'bpmpi_billto_zipcode';
 
@@ -75,7 +76,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiBilltoCustomerid
      * @return void;
      */
-    public function setBpmpiBilltoCustomerid(string $bpmpiBilltoCustomerid ): void;
+    public function setBpmpiBilltoCustomerid(string $bpmpiBilltoCustomerid): void;
 
     /**
      * @return string
@@ -163,7 +164,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiShiptoSameasbillto
      * @return void;
      */
-    public function setBpmpiShiptoSameasbillto(bool $bpmpiShiptoSameasbillto ): void;
+    public function setBpmpiShiptoSameasbillto(bool $bpmpiShiptoSameasbillto): void;
 
     /**
      * @return string
@@ -185,7 +186,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiShiptoPhonenumber
      * @return void;
      */
-    public function setBpmpiShiptoPhonenumber(string $bpmpiShiptoPhonenumber ): void;
+    public function setBpmpiShiptoPhonenumber(string $bpmpiShiptoPhonenumber): void;
 
     /**
      * @return string
@@ -207,7 +208,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiShiptoStreet1
      * @return void;
      */
-    public function setBpmpiShiptoStreet1(string $bpmpiShiptoStreet1 ): void;
+    public function setBpmpiShiptoStreet1(string $bpmpiShiptoStreet1): void;
 
     /**
      * @return string
@@ -218,7 +219,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiShiptoStreet2
      * @return void;
      */
-    public function setBpmpiShiptoStreet2(string $bpmpiShiptoStreet2 ): void;
+    public function setBpmpiShiptoStreet2(string $bpmpiShiptoStreet2): void;
 
     /**
      * @return string
@@ -229,7 +230,7 @@ Interface Auth3DS20AddressInformationInterface
      * @param string $bpmpiShiptoCity
      * @return void;
      */
-    public function setBpmpiShiptoCity(string $bpmpiShiptoCity ): void;
+    public function setBpmpiShiptoCity(string $bpmpiShiptoCity): void;
 
     /**
      * @return string

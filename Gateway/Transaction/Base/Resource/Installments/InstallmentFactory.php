@@ -1,28 +1,28 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\InstallmentsConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Pricing\Helper\Data;
 
 class InstallmentFactory implements InstallmentFactoryInterface
 {
-	protected $objectManager;
+    protected $objectManager;
 
-	protected $priceHelper;
+    protected $priceHelper;
 
     protected $installmentClass;
 
-	public function __construct(
-		ObjectManagerInterface $objectManager,
+    public function __construct(
+        ObjectManagerInterface $objectManager,
         Data $priceHelper,
-        $installmentClass = 'Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment'
-	) {
-		$this->setObjectManager($objectManager);
+        $installmentClass = 'Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments\Installment'
+    ) {
+        $this->setObjectManager($objectManager);
         $this->setPriceHelper($priceHelper);
         $this->setInstallmentClass($installmentClass);
-	}
+    }
 
     public function create($index, $total, InstallmentsConfigInterface $installmentsConfig)
     {
@@ -33,13 +33,13 @@ class InstallmentFactory implements InstallmentFactoryInterface
             $installmentAmount = $this->calcPriceWithInterest($index, $total, $installmentsConfig->getInterestRate());
             $interest = true;
         }
-       
-    	$installment = $this->getNewInstallmentInstance();
-    	$installment->setIndex($index);
-        $installment->setPrice($installmentAmount);
-    	$installment->setWithInterest($interest);
 
-    	return $installment;
+        $installment = $this->getNewInstallmentInstance();
+        $installment->setIndex($index);
+        $installment->setPrice($installmentAmount);
+        $installment->setWithInterest($interest);
+
+        return $installment;
     }
 
     protected function calcPriceWithInterest($i, $total, $interestRate)

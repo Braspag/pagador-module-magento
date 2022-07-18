@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -8,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\Auth3DS20;
+namespace Braspag\BraspagPagador\Model\Auth3DS20;
 
 use Magento\Framework\Model\AbstractExtensibleModel;
-use Webjump\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
+use Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface;
 
 /**
  * Class Auth3DS20AddressInformation
  *
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class AddressInformation extends AbstractExtensibleModel implements Auth3DS20AddressInformationInterface
 {
@@ -323,5 +324,4 @@ class AddressInformation extends AbstractExtensibleModel implements Auth3DS20Add
     {
         $this->setData(self::BPMPI_SHIPTO_COUNTRY, $bpmpiShiptoCountry);
     }
-
 }

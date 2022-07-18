@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
-use Webjump\BraspagPagador\Model\SplitDataAdapter;
+use Braspag\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Model\SplitDataAdapter;
 
 /**
 

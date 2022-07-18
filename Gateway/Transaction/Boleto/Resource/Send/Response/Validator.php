@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as BoletoConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as BoletoConfigInterface;
 
 /**
  * Validator

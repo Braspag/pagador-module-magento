@@ -1,13 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Resource\PaymentStatus;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Base\Resource\PaymentStatus;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request;
-
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Request;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\State;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -29,7 +28,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->appState = $this->createMock(State::class);
 
         $this->request = $this->objectManagerHelper->getObject(
-            Request::class, [
+            Request::class,
+            [
                 'context' => $this->context,
                 'contextAdmin' => $this->contextAdmin,
                 'scopeConfig' => $this->scopeConfig,
@@ -43,7 +43,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testIsTestEnvironment()

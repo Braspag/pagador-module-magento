@@ -1,12 +1,13 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
 
-use Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit\Edit;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
-use Webjump\BraspagPagador\Model\SplitManager;
+namespace Braspag\BraspagPagador\Test\Unit\Controller\Adminhtml\PaymentSplit;
+
+use Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit\Edit;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface as SplitPaymentBoletoConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as SplitPaymentCreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface as SplitPaymentDebitCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Command\TransactionPostCommand as SplitPaymentTransactionPostCommand;
+use Braspag\BraspagPagador\Model\SplitManager;
 
 class EditTest extends \PHPUnit\Framework\TestCase
 {
@@ -61,7 +62,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['create'])
             ->getMock();
 
-        $this->splitFactory = $this->getMockBuilder('\Webjump\BraspagPagador\Model\SplitFactory')
+        $this->splitFactory = $this->getMockBuilder('\Braspag\BraspagPagador\Model\SplitFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -106,7 +107,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
 
         $this->resultPageMock->expects($this->once())
             ->method('setActiveMenu')
-            ->with('Webjump_BraspagPagador::paymentsplit')
+            ->with('Braspag_BraspagPagador::paymentsplit')
             ->willReturnSelf();
 
         $this->resultPageConfigMock->expects($this->exactly(2))
@@ -119,7 +120,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
 
         $this->resultPageMock->expects($this->exactly(4))
             ->method('addBreadcrumb')
-            ->withConsecutive([__('Sales'), __('Sales')],[__('Braspag'), __('Braspag')],[__('Payment Splits'), __('Payment Splits')], [__('Edit Payment Split'), __('Edit Payment Split')])
+            ->withConsecutive([__('Sales'), __('Sales')], [__('Braspag'), __('Braspag')], [__('Payment Splits'), __('Payment Splits')], [__('Edit Payment Split'), __('Edit Payment Split')])
             ->willReturnSelf();
 
         $this->resultPageFactory->expects($this->once())

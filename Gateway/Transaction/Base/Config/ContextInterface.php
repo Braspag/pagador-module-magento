@@ -1,6 +1,6 @@
 <?php
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
 
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 interface ContextInterface
 {

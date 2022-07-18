@@ -1,15 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface as BraspaglibRequestInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface as BraspaglibRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Helper\Validator;
+use Braspag\BraspagPagador\Helper\Validator;
 
 /**
  * Braspag Transaction Boleto Send Request
@@ -69,12 +69,11 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      * @param Validator $validator
      */
     public function __construct(
-		ConfigInterface $config,
+        ConfigInterface $config,
         Validator $validator,
-        \Webjump\BraspagPagador\Helper\Data $helperData
-
+        \Braspag\BraspagPagador\Helper\Data $helperData
     ) {
-		$this->setConfig($config);
+        $this->setConfig($config);
         $this->validator = $validator;
         $this->helperData = $helperData;
     }
@@ -83,17 +82,17 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      * @return mixed
      */
     public function getMerchantId()
-	{
-		return $this->getConfig()->getMerchantId();
-	}
+    {
+        return $this->getConfig()->getMerchantId();
+    }
 
     /**
      * @return mixed
      */
     public function getMerchantKey()
-	{
-		return $this->getConfig()->getMerchantKey();
-	}
+    {
+        return $this->getConfig()->getMerchantKey();
+    }
 
     /**
      * @return mixed
@@ -107,20 +106,20 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      * @return mixed
      */
     public function getMerchantOrderId()
-	{
-		return $this->getOrderAdapter()->getOrderIncrementId();
-	}
+    {
+        return $this->getOrderAdapter()->getOrderIncrementId();
+    }
 
     /**
      * @return string
      */
     public function getCustomerName()
-	{
-	    $customerName = $this->getOrderAdapter()->getBillingAddress()->getFirstname(). ' ' .
+    {
+        $customerName = $this->getOrderAdapter()->getBillingAddress()->getFirstname() . ' ' .
             $this->getOrderAdapter()->getBillingAddress()->getLastname();
 
         return $this->helperData->removeSpecialCharacters($customerName);
-	}
+    }
 
     /**
      * @return mixed
@@ -141,7 +140,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerIdentityType()
     {
-        $identity = (string) preg_replace('/[^0-9]/','', $this->getCustomerIdentity());
+        $identity = (string) preg_replace('/[^0-9]/', '', $this->getCustomerIdentity());
         return (strlen($identity) > 11) ? 'CNPJ' : 'CPF';
     }
 
@@ -194,7 +193,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressZipCode()
     {
-        return preg_replace('/[^0-9]/','', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
     }
 
     /**
@@ -235,26 +234,26 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      * @return mixed
      */
     public function getPaymentAmount()
-	{
-		$amount = (float) round($this->getOrderAdapter()->getGrandTotalAmount(), 2) * 100;
-		return str_replace('.', '', $amount);
-	}
+    {
+        $amount = (float) round($this->getOrderAdapter()->getGrandTotalAmount(), 2) * 100;
+        return str_replace('.', '', $amount);
+    }
 
     /**
      * @return string
      */
     public function getPaymentAddress()
-	{
+    {
         return $this->getConfig()->getPaymentAssignorAddress();
-	}
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentProvider()
-	{
-		return $this->getConfig()->getPaymentProvider();
-	}
+    {
+        return $this->getConfig()->getPaymentProvider();
+    }
 
     /**
      * @return mixed
@@ -268,49 +267,49 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      * @return mixed
      */
     public function getPaymentBoletoNumber()
-	{
-		return $this->getOrderAdapter()->getOrderIncrementId();
-	}
+    {
+        return $this->getOrderAdapter()->getOrderIncrementId();
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentAssignor()
-	{
-		return $this->getConfig()->getPaymentAssignor();
-	}
+    {
+        return $this->getConfig()->getPaymentAssignor();
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentDemonstrative()
-	{
-		return $this->getConfig()->getPaymentDemonstrative();
-	}
+    {
+        return $this->getConfig()->getPaymentDemonstrative();
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentExpirationDate()
-	{
-		return $this->getConfig()->getExpirationDate();
-	}
+    {
+        return $this->getConfig()->getExpirationDate();
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentIdentification()
-	{
-		return $this->getConfig()->getPaymentIdentification();
-	}
+    {
+        return $this->getConfig()->getPaymentIdentification();
+    }
 
     /**
      * @return mixed
      */
     public function getPaymentInstructions()
-	{
-		return $this->getConfig()->getPaymentInstructions();
-	}
+    {
+        return $this->getConfig()->getPaymentInstructions();
+    }
 
     /**
      * @return mixed

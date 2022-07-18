@@ -8,9 +8,9 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Api;
+namespace Braspag\BraspagPagador\Api;
 
-use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
 
 interface CardTokenManagerInterface
 {
@@ -21,5 +21,5 @@ interface CardTokenManagerInterface
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function disable(CardTokenInterface  $cardToken);
+    public function disable(CardTokenInterface $cardToken);
 }

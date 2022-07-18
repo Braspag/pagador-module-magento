@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config;
 
 /**
  * Braspag Transaction Boleto Config Interface
@@ -11,16 +11,16 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config;
  *
  * @link        http://www.webjump.com.br
  */
-interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
+interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
 {
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_DEMONSTRATIVE = 'payment/braspag_pagador_boleto/demonstrative';
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_INSTRUCTIONS = 'payment/braspag_pagador_boleto/instructions';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_DEMONSTRATIVE = 'payment/braspag_pagador_boleto/demonstrative';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_INSTRUCTIONS = 'payment/braspag_pagador_boleto/instructions';
     const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_IDENTIFICATION = 'payment/braspag_pagador_boleto/identification';
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_ASSIGNOR = 'payment/braspag_pagador_boleto/assignor';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_ASSIGNOR = 'payment/braspag_pagador_boleto/assignor';
     const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_ASSIGNOR_ADDRESS = 'payment/braspag_pagador_boleto/assignor_address';
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_EXPIRATION_DATE = 'payment/braspag_pagador_boleto/expiration_days';
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PROVIDER = 'payment/braspag_pagador_boleto/types';
-	const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_BANK = 'payment/braspag_pagador_boleto/bank';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_EXPIRATION_DATE = 'payment/braspag_pagador_boleto/expiration_days';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PROVIDER = 'payment/braspag_pagador_boleto/types';
+    const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_BANK = 'payment/braspag_pagador_boleto/bank';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_STREET_ATTRIBUTE = 'payment/braspag_pagador_customer_address/street_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_NUMBER_ATTRIBUTE = 'payment/braspag_pagador_customer_address/number_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_COMPLEMENT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/complement_attribute';
@@ -32,21 +32,21 @@ interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY_AFTER_X_DAYS = 'payment/braspag_pagador_boleto/paymentsplit_transactional_post_send_request_automatically_after_x_hours';
     const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PAYMENTSPLIT_DEFAULT_MDR = 'payment/braspag_pagador_boleto/paymentsplit_mdr';
     const CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PAYMENTSPLIT_DEFAULT_FEE = 'payment/braspag_pagador_boleto/paymentsplit_fee';
-	const DAY_FORMAT = '+%s day';
+    const DAY_FORMAT = '+%s day';
 
-	public function getPaymentDemonstrative();
+    public function getPaymentDemonstrative();
 
-	public function getPaymentInstructions();
+    public function getPaymentInstructions();
 
-	public function getPaymentIdentification();
+    public function getPaymentIdentification();
 
-	public function getPaymentAssignor();
+    public function getPaymentAssignor();
 
     public function getPaymentAssignorAddress();
 
-	public function getExpirationDate();
+    public function getExpirationDate();
 
-	public function getPaymentProvider();
+    public function getPaymentProvider();
 
     public function getPaymentBank();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Developer Team <developer@webjump.com.br>
  * @copyright   2020 Webjump (http://www.webjump.com.br)
@@ -9,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\Resolver;
+namespace Braspag\BraspagPagador\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;

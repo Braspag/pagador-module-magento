@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/**
+ * @var \Braspag\BraspagPagador\Block\Payment\Info\Pix $pix
+ * @see \Braspag\BraspagPagador\Block\Payment\Info\Pix
+ */
+$specificInfo = $block->getSpecificInformation();
+?>
+<?php echo $block->escapeHtml($block->getMethod()->getTitle()); ?>
+
+<?php if ($specificInfo): ?>
+<table class="data-table admin__table-secondary">
+    <?php foreach ($specificInfo as $label => $value):?>
+    <tr>
+        <?php if($label === (string) __('Print Pix')): ?>
+        <td colspan="2">
+            <a class="action-default" target="_blank" href="<?php echo $value?>"><?php echo __('Print Pix') ?></a>
+        </td>
+        <?php continue;?>
+        <?php endif;?>
+        <th><?php echo $block->escapeHtml($label)?>:</th>
+        <?php if($label == "QRcode Image"):?>
+        <td>
+            <?php $qrC = "data:image/png;base64," . $value; ?>
+            <img src=<?= $qrC ?>>
+        </td>
+        <?php else: ?>
+        <td>
+            <?php /* @noEscape */ echo nl2br($block->escapeHtml(implode("\n", $block->getValueAsArray($value, true))));?>
+        </td>
+        <?php endif; ?>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<?php endif;?>
+
+<?php echo $block->getChildHtml()?>

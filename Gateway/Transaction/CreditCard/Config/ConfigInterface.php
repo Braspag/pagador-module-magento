@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
 /**
  * Braspag Transaction CreditCard Config Interface
@@ -11,7 +11,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
  *
  * @link        http://www.webjump.com.br
  */
-interface ConfigInterface extends \Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
+interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
 {
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CCTYPES = 'payment/braspag_pagador_creditcard/cctypes';

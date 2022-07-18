@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Model;
+namespace Braspag\BraspagPagador\Test\Unit\Model;
 
-use Webjump\BraspagPagador\Model\CardTokenRepository;
-use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Model\CardTokenRepository;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
 
 class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
 {
-	private $repository;
+    private $repository;
 
     private $cardTokenFactoryMock;
 
@@ -15,16 +15,16 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
     {
         // $this->markTestIncomplete();
 
-        $this->cardTokenFactoryMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardTokenFactory')
+        $this->cardTokenFactoryMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardTokenFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->collectionMock = $this->getMockBuilder(\Webjump\BraspagPagador\Model\ResourceModel\CardToken\Collection::class)
+        $this->collectionMock = $this->getMockBuilder(\Braspag\BraspagPagador\Model\ResourceModel\CardToken\Collection::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->cardTokenMock = $this->getMockBuilder(Webjump\BraspagPagador\Model\CardToken::class)
+        $this->cardTokenMock = $this->getMockBuilder(Braspag\BraspagPagador\Model\CardToken::class)
             ->setMethods(['getCollection', 'load', 'getId', 'setData', 'setCustomerId', 'setStoreId', 'setActive'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -44,8 +44,8 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-         $this->resourceMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\ResourceModel\CardToken')
-         	->disableOriginalConstructor()
+         $this->resourceMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\ResourceModel\CardToken')
+            ->disableOriginalConstructor()
             ->setMethods(['save', 'delete'])
             ->getMock();
 
@@ -66,40 +66,39 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->repository = new CardTokenRepository(
+        $this->repository = new CardTokenRepository(
             $this->cardTokenFactoryMock,
             $this->storeManagerMock,
             $this->sessionMock,
             $this->resourceMock,
             $this->searchresultMock
-    	);
+        );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testGet()
     {
-    	$token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
+        $token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
 
-    	$this->cardTokenMock->expects($this->once())
-    	    ->method('getId')
-    	    ->will($this->returnValue(1));
+        $this->cardTokenMock->expects($this->once())
+            ->method('getId')
+            ->will($this->returnValue(1));
 
-    	$this->cardTokenMock->expects($this->once())
-    	    ->method('load')
-    	    ->with($token, CardTokenInterface::TOKEN)
-    	    ->will($this->returnSelf());
+        $this->cardTokenMock->expects($this->once())
+            ->method('load')
+            ->with($token, CardTokenInterface::TOKEN)
+            ->will($this->returnSelf());
 
-    	$this->cardTokenFactoryMock->expects($this->once())
-    	    ->method('create')
-    	    ->will($this->returnValue($this->cardTokenMock));
+        $this->cardTokenFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($this->cardTokenMock));
 
-    	$result = $this->repository->get($token);
+        $result = $this->repository->get($token);
 
-    	static::assertSame($this->cardTokenMock, $result);
+        static::assertSame($this->cardTokenMock, $result);
     }
 
     public function testGetWithoutCardToken()
@@ -174,25 +173,25 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
 
 
 
-    	$this->repository->create($data);
+        $this->repository->create($data);
     }
 
     public function testSave()
     {
-    	$token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
+        $token = '6e1bf77a-b28b-4660-b14f-455e2a1c95e9';
 
-    	$cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
-    		->disableOriginalConstructor()
-    		->setMethods(['load', 'getId', 'getToken'])
-    		->getMock();
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
+            ->disableOriginalConstructor()
+            ->setMethods(['load', 'getId', 'getToken'])
+            ->getMock();
 
-    	$cardTokenMock->expects($this->exactly(2))
-    	    ->method('getToken')
-    	    ->will($this->returnValue($token));
+        $cardTokenMock->expects($this->exactly(2))
+            ->method('getToken')
+            ->will($this->returnValue($token));
 
-    	$this->cardTokenFactoryMock->expects($this->once())
-    	    ->method('create')
-    	    ->will($this->returnValue($cardTokenMock));
+        $this->cardTokenFactoryMock->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($cardTokenMock));
 
          $this->repository->save($cardTokenMock);
     }
@@ -202,14 +201,14 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testSaveWithException()
     {
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->resourceMock->expects($this->once())
             ->method('save')
             ->with($cardTokenMock)
-            ->will($this->throwException(new \Exception));
+            ->will($this->throwException(new \Exception()));
 
         $this->repository->save($cardTokenMock);
 
@@ -218,7 +217,7 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
 
     public function testDelete()
     {
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -235,14 +234,14 @@ class CardTokenRepositoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testDeleteWithException()
     {
-        $cardTokenMock = $this->getMockBuilder('Webjump\BraspagPagador\Model\CardToken')
+        $cardTokenMock = $this->getMockBuilder('Braspag\BraspagPagador\Model\CardToken')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->resourceMock->expects($this->once())
             ->method('delete')
             ->with($cardTokenMock)
-            ->will($this->throwException(new \Exception));
+            ->will($this->throwException(new \Exception()));
 
         $this->repository->delete($cardTokenMock);
 

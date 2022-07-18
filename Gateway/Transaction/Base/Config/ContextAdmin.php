@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -9,4 +9,5 @@ use Magento\Framework\Stdlib\DateTime;
 use Magento\Framework\Stdlib\DateTime\DateTime as CurrentDate;
 
 class ContextAdmin extends Context
-{}
+{
+}

@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\ResourceModel\Split\Item;
+namespace Braspag\BraspagPagador\Model\ResourceModel\Split\Item;
 
-use Webjump\BraspagPagador\Model\ResourceModel\Split\Item as SplitItemResourceModel;
-use Webjump\BraspagPagador\Model\Split\Item as SplitItemModel;
+use Braspag\BraspagPagador\Model\ResourceModel\Split\Item as SplitItemResourceModel;
+use Braspag\BraspagPagador\Model\Split\Item as SplitItemModel;
 
 /**
  * Card Token Collection
@@ -17,11 +17,11 @@ use Webjump\BraspagPagador\Model\Split\Item as SplitItemModel;
  */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-	protected function _construct()
-	{
-		$this->_init(
-			SplitItemModel::class,
-			SplitItemResourceModel::class
-		);
-	}
+    protected function _construct()
+    {
+        $this->_init(
+            SplitItemModel::class,
+            SplitItemResourceModel::class
+        );
+    }
 }

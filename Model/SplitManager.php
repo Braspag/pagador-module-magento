@@ -8,7 +8,7 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\DataObject;
@@ -16,14 +16,14 @@ use Magento\Quote\Model\Quote;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
-use Webjump\BraspagPagador\Api\SplitManagerInterface;
-use Webjump\BraspagPagador\Api\SplitRepositoryInterface;
-use Webjump\BraspagPagador\Api\SplitItemRepositoryInterface;
-use Webjump\BraspagPagador\Api\Data\SplitInterface;
+use Braspag\BraspagPagador\Api\SplitManagerInterface;
+use Braspag\BraspagPagador\Api\SplitRepositoryInterface;
+use Braspag\BraspagPagador\Api\SplitItemRepositoryInterface;
+use Braspag\BraspagPagador\Api\Data\SplitInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Webjump\BraspagPagador\Model\Source\Status\NewPending as OrderStatusesNew;
-use Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
-use Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
+use Braspag\BraspagPagador\Model\Source\Status\NewPending as OrderStatusesNew;
+use Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider as ConfigProviderCreditCard;
+use Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider as ConfigProviderDebitCard;
 use Magento\Framework\Stdlib\DateTime\DateTimeFactory;
 
 class SplitManager implements SplitManagerInterface
@@ -239,7 +239,6 @@ class SplitManager implements SplitManagerInterface
     public function createPaymentSplitByQuote(Quote $quote, DataObject $splitPaymentData)
     {
         foreach ($splitPaymentData->getSubordinates() as $splitSubordinate) {
-
             $paymentSplitSubordinate = $this
                 ->getPaymentSplitByQuote($quote, $splitSubordinate->getSubordinateMerchantId());
 
@@ -256,7 +255,7 @@ class SplitManager implements SplitManagerInterface
             $paymentSplitSubordinate
                 ->setSubordinateMerchantId($splitSubordinate->getSubordinateMerchantId())
                 ->setStoreMerchantId($splitPaymentData->getStoreMerchantId())
-                ->setTotalAmount($splitSubordinate->getAmount()/100)
+                ->setTotalAmount($splitSubordinate->getAmount() / 100)
                 ->setSalesQuoteId($quote->getId())
                 ->setStoreId($this->getStoreManager()->getStore()->getId())
                 ->setUpdatedAt($this->getDateFactory()->create()->gmtDate())
@@ -285,7 +284,6 @@ class SplitManager implements SplitManagerInterface
     public function createPaymentSplitByOrder(Order $order, DataObject $splitPaymentData)
     {
         foreach ($splitPaymentData->getSubordinates() as $splitSubordinate) {
-
             $paymentSplit = $this->getPaymentSplitByOrder($order, $splitSubordinate->getSubordinateMerchantId());
 
             $paymentSplit->setSalesOrderId($order->getId());
@@ -301,7 +299,7 @@ class SplitManager implements SplitManagerInterface
             }
 
             if (!empty($splitSubordinate->getAmount())) {
-                $paymentSplit->setTotalAmount($splitSubordinate->getAmount()/100);
+                $paymentSplit->setTotalAmount($splitSubordinate->getAmount() / 100);
             }
 
             if (!empty($order->getQuoteId())) {
@@ -309,7 +307,6 @@ class SplitManager implements SplitManagerInterface
             }
 
             if (!empty($splitSubordinate->getFares())) {
-
                 if (!empty($splitSubordinate->getFares()->getMdr())) {
                     $paymentSplit->setMdrApplied($splitSubordinate->getFares()->getMdr());
                 }

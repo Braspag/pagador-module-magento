@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com>
  * @copyright   2016 Webjump (http://www.webjump.com.br)
@@ -8,8 +9,7 @@
  *
  */
 
-namespace Webjump\BraspagPagador\Api\Data;
-
+namespace Braspag\BraspagPagador\Api\Data;
 
 interface AntiFraudFingerPrintInterface
 {
@@ -20,6 +20,6 @@ interface AntiFraudFingerPrintInterface
     public function getSrcJsUrl();
 
     public function getOrgId();
-    
+
     public function getSessionId();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,7 +8,7 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Sales\Model\Order\CreditmemoFactory;
 use Magento\Sales\Model\Service\CreditmemoService;
@@ -27,7 +28,7 @@ class CreditMemoManager
     public function __construct(
         CreditmemoFactory $creditmemoFactory,
         CreditmemoService $creditmemoService
-    ){
+    ) {
         $this->setCreditmemoFactory($creditmemoFactory);
         $this->setCreditmemoService($creditmemoService);
     }

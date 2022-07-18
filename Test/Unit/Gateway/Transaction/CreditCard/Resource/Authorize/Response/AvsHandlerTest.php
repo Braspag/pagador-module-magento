@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Authorize\Response;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler;
-use Webjump\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler;
+use Braspag\Braspag\Pagador\Transaction\Resource\CreditCard\Send\Response;
 
 class AvsHandlerTest extends \PHPUnit\Framework\TestCase
 {
-	private $handler;
+    private $handler;
     private $responseMock;
 
     public function setUp()
@@ -16,21 +16,20 @@ class AvsHandlerTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-    	$this->handler = new AvsHandler(
+        $this->handler = new AvsHandler(
             $this->responseMock
         );
     }
 
     public function tearDown()
     {
-
     }
 
     public function testHandle()
     {
-    	$responseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
+        $responseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface');
 
-        $avsResponseMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
+        $avsResponseMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Avs\ResponseInterface');
 
         $avsResponseMock->expects($this->once())
             ->method('getStatus')
@@ -64,9 +63,9 @@ class AvsHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('getPayment')
             ->will($this->returnValue($paymentMock));
 
-    	$handlingSubject = ['payment' => $paymentDataObjectMock];
-    	$response = ['response' => $this->responseMock];
+        $handlingSubject = ['payment' => $paymentDataObjectMock];
+        $response = ['response' => $this->responseMock];
 
-    	$this->handler->handle($handlingSubject, $response);
+        $this->handler->handle($handlingSubject, $response);
     }
 }

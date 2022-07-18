@@ -1,9 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config;
 
-
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\AbstractConfig;
 
 class MDDConfig extends AbstractConfig implements MDDConfigInterface
 {
@@ -53,8 +52,7 @@ class MDDConfig extends AbstractConfig implements MDDConfigInterface
 
     public function getStoreIdentity()
     {
-        return (int) preg_replace('/[^0-9]/','', $this->_getConfig(self::XML_PATH_STORE_IDENTITY));
-
+        return (int) preg_replace('/[^0-9]/', '', $this->_getConfig(self::XML_PATH_STORE_IDENTITY));
     }
 
     public function getCategoryAttributeCode()

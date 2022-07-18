@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Controller\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Controller\Adminhtml\PaymentSplit;
 
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
 
 class SendTransactionalPost extends AbstractPaymentSplit
 {
@@ -24,7 +24,8 @@ class SendTransactionalPost extends AbstractPaymentSplit
 
             $splitPaymentTransactionPostCommand = null;
 
-            if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE
+            if (
+                $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui\ConfigProvider::CODE
                 && ($this->configCreditCardInterface->isPaymentSplitActive()
                     && $this->configCreditCardInterface->getPaymentSplitType() === PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
                 )
@@ -32,7 +33,8 @@ class SendTransactionalPost extends AbstractPaymentSplit
                 $splitPaymentTransactionPostCommand = $this->splitPaymentTransactionPostCommand;
             }
 
-            if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE
+            if (
+                $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui\ConfigProvider::CODE
                 && ($this->configDebitCardInterface->isPaymentSplitActive()
                     && $this->configDebitCardInterface->getPaymentSplitType() === PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
                 )
@@ -40,7 +42,8 @@ class SendTransactionalPost extends AbstractPaymentSplit
                 $splitPaymentTransactionPostCommand = $this->splitPaymentTransactionPostCommand;
             }
 
-            if ($paymentMethod === \Webjump\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE
+            if (
+                $paymentMethod === \Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider::CODE
                 && ($this->configBoletoInterface->isPaymentSplitActive()
                     && $this->configBoletoInterface->getPaymentSplitType() === PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
                 )
@@ -55,17 +58,15 @@ class SendTransactionalPost extends AbstractPaymentSplit
             try {
                 $splitPaymentTransactionPostCommand->execute(['order' => $order, 'payment' => $order->getPayment()]);
             } catch (\Exception $e) {
-                $this->messageManager->addError('Exception message: Split Payment Error - Transaction Post: '.$e->getMessage());
-                $order->addCommentToStatusHistory('Exception message: Split Payment Error - Transaction Post: '.$e->getMessage(), false);
+                $this->messageManager->addError('Exception message: Split Payment Error - Transaction Post: ' . $e->getMessage());
+                $order->addCommentToStatusHistory('Exception message: Split Payment Error - Transaction Post: ' . $e->getMessage(), false);
                 $order->save();
             }
 
             return $resultRedirect->setPath('sales/order/view', ['order_id' => $this->getRequest()->getParam('order_id')]);
-
         } catch (\Exception $e) {
-            $this->messageManager->addError('Exception message: Split Payment Error - Transaction Post: '.$e->getMessage());
+            $this->messageManager->addError('Exception message: Split Payment Error - Transaction Post: ' . $e->getMessage());
             return $resultRedirect->setPath('sales/order/view', ['order_id' => $this->getRequest()->getParam('order_id')]);
         }
-
     }
 }

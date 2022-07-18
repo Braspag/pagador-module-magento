@@ -8,6 +8,9 @@
         <method name="braspag_pagador_creditcard">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
+        <method name="braspag_pagador_pix">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
     </methods>
 
     <credit_cards>
@@ -207,6 +210,11 @@
         </type>
         <type id="FirstData-Amex" order="640">
             <label>FirstData Amex</label>
+        </type>
+
+        <!-- Pix -->
+        <type id="Cielo30" order="650">
+            <label>Cielo</label>
         </type>
 
     </credit_cards>

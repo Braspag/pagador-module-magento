@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config;
 
 /**
  *
@@ -11,7 +11,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config;
  *
  * @link        http://www.webjump.com.br
  */
-interface  ConfigInterface
+interface ConfigInterface
 {
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_REDIRECT_AFTER_PLACE_ORDER = 'payment/braspag_pagador_debitcard/redirect_after_place_order';
     const CONFIG_XML_BRASPAG_PAGADOR_DEBIT_DCTYPES = 'payment/braspag_pagador_debitcard/cctypes';
@@ -42,13 +42,13 @@ interface  ConfigInterface
 
     public function getMerchantId();
 
-	public function getMerchantKey();
+    public function getMerchantKey();
 
-	public function getPaymentReturnUrl();
+    public function getPaymentReturnUrl();
 
-	public function isSuperDebitoActive();
+    public function isSuperDebitoActive();
 
-	public function getIsTestEnvironment();
+    public function getIsTestEnvironment();
 
     public function getRedirectAfterPlaceOrder();
 

@@ -6,12 +6,13 @@
  */
 -->
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
-    <group id="webjump_braspag_pagador_transaction" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+    <group id="braspag_braspag_pagador_transaction" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Pagador Transaction</label>
-        <frontend_model>Webjump\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
-        <include path="Webjump_BraspagPagador::system/transaction/boleto.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/creditcard.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken.xml"/>
-        <include path="Webjump_BraspagPagador::system/transaction/debitcard.xml"/>
+        <frontend_model>Braspag\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+        <include path="Braspag_BraspagPagador::system/transaction/boleto.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/creditcard.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/creditcardtoken.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/debitcard.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/pix.xml"/>
     </group>
 </include>

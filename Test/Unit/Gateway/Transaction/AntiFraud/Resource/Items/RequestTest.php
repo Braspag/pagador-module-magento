@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Resource\Items;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Resource\Items;
 
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\Items\Request;
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
@@ -25,7 +25,6 @@ class RequestTest extends TestCase
     {
         $this->sessionMock = $this->createMock(SessionManagerInterface::class);
         $this->itemAdapterMock = $this->createMock(OrderItemInterface::class);
-
     }
 
     /**

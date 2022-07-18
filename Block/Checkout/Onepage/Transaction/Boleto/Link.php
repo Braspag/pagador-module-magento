@@ -1,9 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto;
+namespace Braspag\BraspagPagador\Block\Checkout\Onepage\Transaction\Boleto;
 
-
-use Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response\BaseHandler;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Checkout\Model\Session as CheckoutSession;
@@ -31,7 +30,7 @@ class Link extends Template
     protected function getLastOrder()
     {
         if (! ($this->checkoutSession->getLastRealOrder()) instanceof Order) {
-            throw new \InvalidArgumentException;
+            throw new \InvalidArgumentException();
         }
 
         return $this->checkoutSession->getLastRealOrder();
@@ -43,7 +42,7 @@ class Link extends Template
     protected function getPayment()
     {
         if (! ($this->getLastOrder()->getPayment()) instanceof Payment) {
-            throw new \InvalidArgumentException;
+            throw new \InvalidArgumentException();
         }
 
         return $this->getLastOrder()->getPayment();

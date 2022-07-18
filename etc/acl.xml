@@ -16,7 +16,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Webjump_BraspagPagador::config" title="Braspag Pagador" sortOrder="99" />
+                            <resource id="Braspag_BraspagPagador::config" title="Braspag Pagador" sortOrder="99" />
                         </resource>
                     </resource>
                 </resource>

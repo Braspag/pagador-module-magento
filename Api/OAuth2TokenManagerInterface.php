@@ -8,7 +8,7 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Api;
+namespace Braspag\BraspagPagador\Api;
 
 interface OAuth2TokenManagerInterface
 {

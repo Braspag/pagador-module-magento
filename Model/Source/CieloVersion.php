@@ -1,6 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Source;
+namespace Braspag\BraspagPagador\Model\Source;
 
 use Magento\Framework\Option\ArrayInterface;
 

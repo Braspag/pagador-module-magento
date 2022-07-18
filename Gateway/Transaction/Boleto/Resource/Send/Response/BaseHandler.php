@@ -1,14 +1,14 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\Send\Response;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
-use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
+use Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\ResponseInterface;
+use Braspag\Braspag\Pagador\Transaction\Resource\Boleto\Send\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\Validator;
 
 /**
  * Braspag Transaction Boleto Send Response Handler
@@ -35,11 +35,13 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
 
     protected function _handle($payment, $response)
     {
-        if (in_array($response->getPaymentStatus(), [
+        if (
+            in_array($response->getPaymentStatus(), [
             Validator::NOTFINISHED,
             Validator::DENIED,
             Validator::ABORTED,
-            ])) {
+            ])
+        ) {
             throw new \InvalidArgumentException(__('An error has occurred, please try again later.'));
         }
 

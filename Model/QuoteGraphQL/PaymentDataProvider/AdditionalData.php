@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: jonatasavila
@@ -8,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Webjump\BraspagPagador\Model\QuoteGraphQL\PaymentDataProvider;
+namespace Braspag\BraspagPagador\Model\QuoteGraphQL\PaymentDataProvider;
 
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\QuoteGraphQl\Model\Cart\Payment\AdditionalDataProviderInterface;

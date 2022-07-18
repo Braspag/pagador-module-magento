@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token;
+namespace Braspag\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\OAuth2\Token\Response as OAuth2TokenResponse;
+use Braspag\Braspag\Pagador\Transaction\Resource\OAuth2\Token\Response as OAuth2TokenResponse;
 
 interface BuilderInterface
 {

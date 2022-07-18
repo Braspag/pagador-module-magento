@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\CreditCard\Resource\Capture;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Request;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,7 +15,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->configMock = $this->getMockBuilder('\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface')
+        $this->configMock = $this->getMockBuilder('\Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface')
             ->setMethods([
                 'getMerchantId',
                 'getMerchantKey',
@@ -73,7 +73,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ])
             ->getMock();
 
-        $this->paymentSplitRequestMock = $this->getMockBuilder('\Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface')
+        $this->paymentSplitRequestMock = $this->getMockBuilder('\Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface')
             ->setMethods([
                 'getSplits'
             ])
@@ -85,14 +85,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-    	$this->request = $objectManager->getObject(Request::class, [
-    	    'config' => $this->configMock
+        $this->request = $objectManager->getObject(Request::class, [
+            'config' => $this->configMock
         ]);
     }
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()
@@ -122,8 +121,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->method('getSubordinates')
             ->willReturn([
                     $subordinate
-                ]
-            );
+                ]);
 
         $this->paymentSplitRequestMock->expects($this->once())
             ->method('getSplits')
@@ -148,7 +146,5 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ]
         ]
         ]], $this->request->getRequestDataBody());
-
-
     }
 }

@@ -6,7 +6,7 @@
  */
 -->
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
-    <group id="webjump_braspag_pagador_transaction_boleto" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+    <group id="braspag_braspag_pagador_transaction_boleto" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Boleto</label>
 	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
 	        <label>Enabled</label>
@@ -21,7 +21,7 @@
 	    <field id="types" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
 	        <label>Type</label>
 	        <comment />
-	        <source_model>Webjump\BraspagPagador\Model\Source\BoletoTypes</source_model>
+	        <source_model>Braspag\BraspagPagador\Model\Source\BoletoTypes</source_model>
 	        <config_path>payment/braspag_pagador_boleto/types</config_path>
             <depends>
                 <field id="active">1</field>
@@ -30,7 +30,7 @@
         <field id="bank" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
             <label>Bank</label>
             <comment />
-            <source_model>Webjump\BraspagPagador\Model\Source\BoletoBanks</source_model>
+            <source_model>Braspag\BraspagPagador\Model\Source\BoletoBanks</source_model>
             <config_path>payment/braspag_pagador_boleto/bank</config_path>
             <depends>
                 <field id="types">Braspag</field>
@@ -96,6 +96,6 @@
 	        <config_path>payment/braspag_pagador_boleto/sort_order</config_path>
 	    </field>
 
-		<include path="Webjump_BraspagPagador::system/transaction/boleto/paymentsplit.xml"/>
+		<include path="Braspag_BraspagPagador::system/transaction/boleto/paymentsplit.xml"/>
     </group>
 </include>

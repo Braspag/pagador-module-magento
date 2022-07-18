@@ -11,15 +11,15 @@ define(
     [
         'uiElement',
         'jquery',
-        'Webjump_BraspagPagador/js/action/auth3ds20/token',
+        'Braspag_BraspagPagador/js/action/auth3ds20/token',
         'mage/translate',
         'Magento_Checkout/js/model/quote',
         'mage/validation',
         'mage/url',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Webjump_BraspagPagador/js/model/authentication3ds20',
-        'Webjump_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
+        'Braspag_BraspagPagador/js/model/authentication3ds20',
+        'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer'
     ],
     function (
         Component,
@@ -38,7 +38,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Webjump_BraspagPagador/payment/auth3ds20/bpmpi',
+                template: 'Braspag_BraspagPagador/payment/auth3ds20/bpmpi',
                 bpmpiAuthToken: ko.observable(),
                 bpmpiLoadControl: 0
             },

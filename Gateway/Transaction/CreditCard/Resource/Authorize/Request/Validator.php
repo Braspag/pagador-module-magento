@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Request;
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfigInterface;
 
 /**
  * Validator
@@ -38,34 +38,38 @@ class Validator implements ValidatorInterface
         $message = [];
 
         if ($this->creditCardConfigInterface->isAuth3Ds20Active()) {
-
             $failureType = $request->getPaymentExternalAuthenticationFailureType();
 
-            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
+            if (
+                $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR
                 && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizedOnError()
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
-            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
+            if (
+                $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE
                 && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizedOnFailure()
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
-            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED
+            if (
+                $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNENROLLED
                 && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizeOnUnenrolled()
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
-            if ($failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND
+            if (
+                $failureType == CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND
                 && !$this->creditCardConfigInterface->isAuth3Ds20AuthorizeOnUnsupportedBrand()
             ) {
                 return new Result(false, ["Credit Card Payment Failure. #MPI{$failureType}"]);
             }
 
-            if (!$this->creditCardConfigInterface->getIsTestEnvironment()
+            if (
+                !$this->creditCardConfigInterface->getIsTestEnvironment()
                 && !preg_match("#cielo#is", $request->getPaymentProvider())
                 && $failureType != CreditCardConfigInterface::BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_DISABLED
             ) {

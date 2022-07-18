@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface;
 
 /**
  * Braspag Transaction DebitCard Order Command
@@ -16,12 +16,12 @@ use Webjump\Braspag\Pagador\Transaction\Api\DebitCard\Send\RequestInterface;
  */
 class OrderCommand extends AbstractApiCommand
 {
-	protected function sendRequest($request)
-	{
+    protected function sendRequest($request)
+    {
         if (!isset($request) || !$request instanceof RequestInterface) {
             throw new \InvalidArgumentException('Braspag Debitcard Order Request Lib object should be provided');
         }
 
-		return $this->getApi()->sendDebit($request);
-	}
+        return $this->getApi()->sendDebit($request);
+    }
 }

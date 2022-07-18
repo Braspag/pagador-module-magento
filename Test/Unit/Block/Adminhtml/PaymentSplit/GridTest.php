@@ -1,10 +1,11 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Adminhtml\PaymentSplit;
 
-use Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid;
+namespace Braspag\BraspagPagador\Test\Unit\Block\Adminhtml\PaymentSplit;
+
+use Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit\Grid;
 use Magento\Backend\Helper\Data as HelperData;
 use Magento\Framework\View\LayoutFactory;
-use Webjump\BraspagPagador\Helper\Data as BraspagHelperData;
+use Braspag\BraspagPagador\Helper\Data as BraspagHelperData;
 
 class GridTest extends \PHPUnit\Framework\TestCase
 {
@@ -56,13 +57,13 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->viewLayoutFactory = $this->createMock(LayoutFactory::class);
         $this->storeOptions = $this->createMock(\Magento\Store\Model\System\Store::class);
 
-        $this->helperData = $this->createMock(\Webjump\BraspagPagador\Helper\Data::class);
+        $this->helperData = $this->createMock(\Braspag\BraspagPagador\Helper\Data::class);
 
         $this->backendHelper = $this->createMock(\Magento\Backend\Helper\Data::class);
 
         $this->sourceYesno = $this->createMock(\Magento\Config\Model\Config\Source\Yesno::class);
 
-        $this->splitRepositoryMock = $this->createMock(\Webjump\BraspagPagador\Api\SplitRepositoryInterface::class);
+        $this->splitRepositoryMock = $this->createMock(\Braspag\BraspagPagador\Api\SplitRepositoryInterface::class);
 
         $this->urlBuilderMock = $this->createMock(\Magento\Framework\UrlInterface::class);
 

@@ -8,15 +8,15 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-use Webjump\Braspag\Pagador\Transaction\Resource\OAuth2\Token\Response as OAuth2TokenResponse;
-use Webjump\BraspagPagador\Api\OAuth2TokenManagerInterface;
-use Webjump\Braspag\Pagador\Transaction\BraspagFacade;
-use Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\RequestInterface as OAuth2TokenRequest;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
-use Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Command\TokenCommand;
-use Webjump\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\BuilderInterface;
+use Braspag\Braspag\Pagador\Transaction\Resource\OAuth2\Token\Response as OAuth2TokenResponse;
+use Braspag\BraspagPagador\Api\OAuth2TokenManagerInterface;
+use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
+use Braspag\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\RequestInterface as OAuth2TokenRequest;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\BraspagPagador\Gateway\Transaction\OAuth2\Command\TokenCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\OAuth2\Resource\Token\BuilderInterface;
 use Magento\Framework\DataObject;
 
 class OAuth2TokenManager implements OAuth2TokenManagerInterface
@@ -43,7 +43,7 @@ class OAuth2TokenManager implements OAuth2TokenManagerInterface
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory,
         BuilderInterface $builder,
         DataObject $dataObject
-    ){
+    ) {
         $this->setTokenCommand($tokenCommand);
         $this->setRequest($request);
         $this->setCookieManager($cookieManager);

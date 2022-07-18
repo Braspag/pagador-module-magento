@@ -1,15 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Block\Form;
+namespace Braspag\BraspagPagador\Block\Form;
 
-use Webjump\BraspagPagador\Api\InstallmentsInterface;
+use Braspag\BraspagPagador\Api\InstallmentsInterface;
 
 class CreditCard extends \Magento\Payment\Block\Form\Cc
 {
     /**
      * @var string
      */
-    protected $_template = 'Webjump_BraspagPagador::form/credit-card.phtml';
+    protected $_template = 'Braspag_BraspagPagador::form/credit-card.phtml';
 
     /**
      * @var InstallmentsInterface

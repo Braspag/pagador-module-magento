@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Command;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Command;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
-use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Command\AbstractApiCommand;
+use Braspag\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface;
 
 /**
  * Braspag Transaction Boleto Send Command
@@ -16,12 +16,12 @@ use Webjump\Braspag\Pagador\Transaction\Api\Boleto\Send\RequestInterface;
  */
 class SendCommand extends AbstractApiCommand
 {
-	protected function sendRequest($request)
-	{
+    protected function sendRequest($request)
+    {
         if (!isset($request) || !$request instanceof RequestInterface) {
             throw new \InvalidArgumentException('Braspag Boleto Send Request Lib object should be provided');
         }
 
-		return $this->getApi()->sendBoleto($request);
-	}
+        return $this->getApi()->sendBoleto($request);
+    }
 }

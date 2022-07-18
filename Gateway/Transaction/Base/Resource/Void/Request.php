@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Void;
 
-use Webjump\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as BraspaglibRequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestInterface as BraspagMagentoRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\Actions\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Void\RequestInterface as BraspagMagentoRequestInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
-use Webjump\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
+use Braspag\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 
 /**
  * Capture Request
@@ -74,7 +74,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
         $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
 
-    	return [
+        return [
             'amount' => $integerValue
         ];
     }

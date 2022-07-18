@@ -1,18 +1,17 @@
 <?php
 
-namespace Webjump\BraspagPagador\Block\Payment\Info;
+namespace Braspag\BraspagPagador\Block\Payment\Info;
 
 use Magento\Payment\Block\Info;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template\Context;
-use Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface;
-use Webjump\BraspagPagador\Model\Payment\Info\CreditCardFactory;
+use Braspag\BraspagPagador\Model\Payment\Info\CreditCardFactoryInterface;
+use Braspag\BraspagPagador\Model\Payment\Info\CreditCardFactory;
 use Magento\Framework\Pricing\Helper\Data;
-
 
 class CreditCard extends Info
 {
-    const TEMPLATE = 'Webjump_BraspagPagador::payment/info/credit_card.phtml';
+    const TEMPLATE = 'Braspag_BraspagPagador::payment/info/credit_card.phtml';
 
     /** @var CreditCardFactory */
     protected $creditCardFactory;
@@ -62,7 +61,7 @@ class CreditCard extends Info
         $priceFormatted = $this->getPriceHelper()->currency($amountAuthorized, true, false);
         $time = $installments > 1 ? 'times' : 'time';
 
-        return __('%1 Splitted in %2 '. $time, $priceFormatted, $installments);
+        return __('%1 Splitted in %2 ' . $time, $priceFormatted, $installments);
     }
 
     protected function getPriceHelper()

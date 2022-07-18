@@ -26,5 +26,55 @@
                 <value id="braspag-antifraud-frames" type="host">https://h.online-metrix.net</value>
             </values>
         </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="braspag-antifraud-validate" type="host">https://mpisandbox.braspag.com.br/v2/3ds/validate</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="devdoccs" type="host">https://writer.cardinalcommerce.com/stag/log</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="braspag-antifraud-log" type="host">https://mpisandbox.braspag.com.br/v2/3ds/enroll</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="braspag-antifraud-continue" type="host">https://centinelapistag.cardinalcommerce.com/V1/Order/JWT/Continue</value>
+            </values>
+        </policy>
+        <policy id="script-src">
+            <values>
+                <value id="braspag-cardinal" type="host">*.cardinalcommerce.com</value>
+            </values>
+        </policy>
+        <policy id="form-action">
+            <values>
+                <value id="cardinalcommerce_com" type="host">*.cardinalcommerce.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="cardinalcommerce_com_frame" type="host">*.cardinalcommerce.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="braspag-aws" type="host">*.amazonaws.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="antifraud-braspag" type="host">*.braspag.com.br</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="braspag-antfd-img" type="host">*.d.aa.online-metrix.net</value>
+            </values>
+        </policy>
     </policies>
 </csp_whitelist>

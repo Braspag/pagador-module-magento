@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Observer;
+namespace Braspag\BraspagPagador\Test\Unit\Observer;
 
 use Magento\Framework\DataObject;
 use Magento\Payment\Model\MethodInterface;
 use Magento\Sales\Model\Order\Invoice;
-use Webjump\BraspagPagador\Model\SplitManager;
-use Webjump\BraspagPagador\Observer\CheckoutSubmitAllAfterObserver;
+use Braspag\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Observer\CheckoutSubmitAllAfterObserver;
 use Magento\Framework\Event\Observer;
 
 class CheckoutSubmitAllAfterObserverTest extends \PHPUnit\Framework\TestCase
@@ -49,7 +49,7 @@ class CheckoutSubmitAllAfterObserverTest extends \PHPUnit\Framework\TestCase
             ->method('getEvent')
             ->willReturn($this->eventMock);
 
-        $this->configMock = $this->createMock(\Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface::class);
+        $this->configMock = $this->createMock(\Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface::class);
         $this->invoiceServiceMock = $this->createMock(\Magento\Sales\Model\Service\InvoiceService::class);
         $this->orderManagementMock = $this->createMock(\Magento\Sales\Api\OrderManagementInterface::class);
         $this->transactionFactoryMock = $this->getMockBuilder('Magento\Framework\DB\TransactionFactory')
@@ -64,7 +64,7 @@ class CheckoutSubmitAllAfterObserverTest extends \PHPUnit\Framework\TestCase
 
         $this->objectMock = $this->createMock(DataObject::class);
 
-        $this->splitManagerMock = $this->createMock(\Webjump\BraspagPagador\Model\SplitManager::class);
+        $this->splitManagerMock = $this->createMock(\Braspag\BraspagPagador\Model\SplitManager::class);
 
         $this->methodInterfaceMock = $this->getMockForAbstractClass(
             MethodInterface::class,

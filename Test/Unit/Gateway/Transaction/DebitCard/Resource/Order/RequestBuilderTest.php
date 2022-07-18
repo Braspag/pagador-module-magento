@@ -1,16 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\DebitCard\Resource\Order;
 
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestBuilder;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\AntiFraud\Request as AntiFraudRequest;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestBuilder;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\AntiFraud\Request as AntiFraudRequest;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestFactory;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
-
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
@@ -221,5 +220,4 @@ class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 
         $this->requestBuilder->build($buildSubject);
     }
-
 }

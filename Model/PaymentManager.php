@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2017 Webjump (http://www.webjump.com.br)
@@ -7,25 +8,25 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory as OrderPaymentCollectionFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
-use Webjump\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
+use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
 
 /**
  * Class PaymentManager
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class PaymentManager
 {
     /**
-     * @var \Webjump\Braspag\Pagador\Transaction\FacadeInterface
+     * @var \Braspag\Braspag\Pagador\Transaction\FacadeInterface
      */
     protected $api;
 
     /**
-     * @var Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
+     * @var Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
      */
     protected $paymentStatusRequest;
 
@@ -40,12 +41,12 @@ class PaymentManager
     protected $orderStatusModel;
 
     /**
-     * @var Webjump\BraspagPagador\Model\InvoiceManager
+     * @var Braspag\BraspagPagador\Model\InvoiceManager
      */
     protected $invoiceManager;
 
     /**
-     * @var Webjump\BraspagPagador\Model\CreditMemoManager
+     * @var Braspag\BraspagPagador\Model\CreditMemoManager
      */
     protected $creditMemoManager;
 
@@ -55,7 +56,8 @@ class PaymentManager
     protected $types = [
         'braspag_pagador_creditcard' => 'creditCard',
         'braspag_pagador_creditcardtoken' => 'creditCard',
-        'braspag_pagador_boleto' => 'boleto'
+        'braspag_pagador_boleto' => 'boleto',
+        'braspag_pagador_pix' => 'pix'
     ];
 
     /**
@@ -69,12 +71,12 @@ class PaymentManager
      */
     public function __construct(
         \Magento\Sales\Model\Order\Status $orderStatusModel,
-        \Webjump\BraspagPagador\Model\InvoiceManager $invoiceManager,
-        \Webjump\BraspagPagador\Model\CreditMemoManager $creditMemoManager,
+        \Braspag\BraspagPagador\Model\InvoiceManager $invoiceManager,
+        \Braspag\BraspagPagador\Model\CreditMemoManager $creditMemoManager,
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
         OrderPaymentCollectionFactory $orderPaymentCollectionFactory
-    ){
+    ) {
         $this->setOrderStatusModel($orderStatusModel);
         $this->setInvoiceManager($invoiceManager);
         $this->setCreditMemoManager($creditMemoManager);
@@ -100,7 +102,7 @@ class PaymentManager
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\InvoiceManager
+     * @return Braspag\BraspagPagador\Model\InvoiceManager
      */
     public function getInvoiceManager()
     {
@@ -108,7 +110,7 @@ class PaymentManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\InvoiceManager $invoiceManager
+     * @param Braspag\BraspagPagador\Model\InvoiceManager $invoiceManager
      */
     public function setInvoiceManager($invoiceManager)
     {
@@ -116,7 +118,7 @@ class PaymentManager
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\CreditMemoManager
+     * @return Braspag\BraspagPagador\Model\CreditMemoManager
      */
     public function getCreditMemoManager()
     {
@@ -124,7 +126,7 @@ class PaymentManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\CreditMemoManager $creditMemoManager
+     * @param Braspag\BraspagPagador\Model\CreditMemoManager $creditMemoManager
      */
     public function setCreditMemoManager($creditMemoManager)
     {
@@ -150,7 +152,7 @@ class PaymentManager
     }
 
     /**
-     * @return Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
+     * @return Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface
      */
     public function getPaymentStatusRequest()
     {
@@ -158,7 +160,7 @@ class PaymentManager
     }
 
     /**
-     * @param Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface $paymentStatusRequest
+     * @param Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface $paymentStatusRequest
      */
     public function setPaymentStatusRequest($paymentStatusRequest)
     {
@@ -203,7 +205,6 @@ class PaymentManager
         $defaultMethodOrderStatus = $magentoPaymentData->getMethodInstance()->getConfigData('order_status');
 
         if (!empty($defaultMethodOrderStatus)) {
-
             $magentoPaymentData->getOrder()
                 ->setState($newState)
                 ->setStatus($defaultMethodOrderStatus);
@@ -243,7 +244,8 @@ class PaymentManager
 
         $magentoPaymentData->setIsTransactionPending(false);
 
-        if ($createInvoice
+        if (
+            $createInvoice
             && $this->getInvoiceManager()->createInvoice($magentoPaymentData->getOrder(), $amount)
         ) {
             $magentoPaymentData->registerCaptureNotification($amount, true);
@@ -257,9 +259,10 @@ class PaymentManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about captured amount of %1.',
+                __(
+                    'Registered notification about captured amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-capture"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -319,7 +322,7 @@ class PaymentManager
         $amount = $braspagPaymentData->getPayment()['VoidedAmount'] / 100;
 
         try {
-            if($createCreditMemo) {
+            if ($createCreditMemo) {
                 $magentoPaymentData->registerRefundNotification($amount, true);
             }
         } catch (\Exception $e) {
@@ -328,9 +331,10 @@ class PaymentManager
 
         $magentoPaymentData->getOrder()
             ->addStatusHistoryComment(
-                __('Registered notification about refunded amount of %1.',
+                __(
+                    'Registered notification about refunded amount of %1.',
                     $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
-                ).
+                ) .
                 __('Transaction ID: "%1-refund"', $braspagPaymentData->getPaymentPaymentId())
             )
             ->setIsCustomerNotified(true)
@@ -359,7 +363,7 @@ class PaymentManager
     {
         $orderPaymentCollection = $this->getOrderPaymentCollectionFactory()->create();
         $orderPayment = $orderPaymentCollection
-            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId.'%'])
+            ->addAttributeToFilter('last_trans_id', ['like' => $paymentId . '%'])
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {

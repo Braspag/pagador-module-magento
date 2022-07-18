@@ -1,8 +1,8 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\Boleto\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 
 /**
  * Braspag Transaction Boleto Config
@@ -16,25 +16,25 @@ use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
 class Config extends BaseConfig implements ConfigInterface
 {
 
-	public function getPaymentDemonstrative()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_DEMONSTRATIVE);
-	}
+    public function getPaymentDemonstrative()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_DEMONSTRATIVE);
+    }
 
-	public function getPaymentInstructions()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_INSTRUCTIONS);
-	}
+    public function getPaymentInstructions()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_INSTRUCTIONS);
+    }
 
     public function getPaymentIdentification()
     {
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_IDENTIFICATION);
     }
 
-	public function getPaymentAssignor()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_ASSIGNOR);
-	}
+    public function getPaymentAssignor()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_ASSIGNOR);
+    }
 
     public function getPaymentAssignorAddress()
     {
@@ -42,19 +42,19 @@ class Config extends BaseConfig implements ConfigInterface
     }
 
     public function getExpirationDate()
-	{
-		return $this->getDateTime()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_EXPIRATION_DATE))));
-	}
+    {
+        return $this->getDateTime()->gmDate(self::DATE_FORMAT, strtotime(sprintf(self::DAY_FORMAT, (int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_EXPIRATION_DATE))));
+    }
 
-	public function getPaymentProvider()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PROVIDER);
-	}
+    public function getPaymentProvider()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_PROVIDER);
+    }
 
-	public function getPaymentBank()
-	{
-		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_BANK);
-	}
+    public function getPaymentBank()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_BOLETO_BANK);
+    }
 
     public function getCustomerStreetAttribute()
     {

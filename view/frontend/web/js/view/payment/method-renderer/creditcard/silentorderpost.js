@@ -9,7 +9,7 @@
 /*global define*/
 define(
     [
-        'Webjump_BraspagPagador/js/view/payment/method-renderer/creditcard/paymenttoken',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/paymenttoken',
         'jquery'
     ],
     function(
@@ -19,7 +19,7 @@ define(
         'use strict';
 
         return {
-            
+
             isActive: function (code) {
                 return window.checkoutConfig.payment.ccform.silentorderpost.active[code];
             },

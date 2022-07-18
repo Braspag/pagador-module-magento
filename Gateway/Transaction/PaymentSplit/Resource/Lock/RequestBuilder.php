@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Lock;
 
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\Lock\RequestInterface;
 
 /**
  * Braspag Transaction Boleto Send Request Builder

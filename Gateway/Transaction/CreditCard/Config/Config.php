@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config;
+namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\Config as BaseConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface as AntiFraudConfigInterface;
 use Magento\Payment\Model\Method\AbstractMethod;
 
 class Config extends BaseConfig implements ConfigInterface
@@ -45,12 +45,12 @@ class Config extends BaseConfig implements ConfigInterface
 
     public function isSaveCardActive()
     {
-        return (boolean) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_ACTIVE);
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_ACTIVE);
     }
 
     public function isCreateInvoiceOnNotificationCaptured()
     {
-        return (boolean) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREATE_INVOICE_NOTIFICATION_CAPTURE);
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREATE_INVOICE_NOTIFICATION_CAPTURE);
     }
 
     public function getCustomerStreetAttribute()
@@ -75,7 +75,7 @@ class Config extends BaseConfig implements ConfigInterface
 
     public function getDecimalGrandTotal()
     {
-        if (!( $config = $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_DECIMAL_GRAND_TOTAL) ) ) {
+        if (!( $config = $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_DECIMAL_GRAND_TOTAL) )) {
             return self::DEFAULT_DECIMAL_GRAND_TOTAL;
         }
 

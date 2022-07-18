@@ -1,7 +1,8 @@
 <?php
-namespace Webjump\BraspagPagador\Test\Unit\Block\Adminhtml;
 
-use Webjump\BraspagPagador\Block\Adminhtml\PaymentSplit;
+namespace Braspag\BraspagPagador\Test\Unit\Block\Adminhtml;
+
+use Braspag\BraspagPagador\Block\Adminhtml\PaymentSplit;
 
 class PaymentSplitTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +18,6 @@ class PaymentSplitTest extends \PHPUnit\Framework\TestCase
             PaymentSplit::class,
             []
         );
-
     }
 
     public function testConstructShouldSetTemplateWithSuccess()

@@ -8,14 +8,14 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\DataObject;
 use Magento\Framework\Event\ManagerInterface;
-use Webjump\BraspagPagador\Api\CardTokenManagerInterface;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
-use Webjump\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Api\CardTokenManagerInterface;
+use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
 
 class CardTokenManager implements CardTokenManagerInterface
 {
@@ -46,8 +46,7 @@ class CardTokenManager implements CardTokenManagerInterface
         CardTokenRepositoryInterface $cardTokenRepository,
         ManagerInterface $eventManager,
         SearchCriteriaBuilder $searchCriteriaBuilder
-    )
-    {
+    ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
@@ -96,7 +95,7 @@ class CardTokenManager implements CardTokenManagerInterface
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function disable(CardTokenInterface  $cardToken)
+    public function disable(CardTokenInterface $cardToken)
     {
         try {
             $cardTokenId = $cardToken->getId();
@@ -104,7 +103,6 @@ class CardTokenManager implements CardTokenManagerInterface
                 $cardToken->setActive(0);
                 $this->getCardTokenRepository()->save($cardToken);
             }
-
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\LocalizedException(__('Unable to disable Card Token'));
         }

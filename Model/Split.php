@@ -1,10 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model;
+namespace Braspag\BraspagPagador\Model;
 
-use \Webjump\BraspagPagador\Api\Data\SplitInterface;
-
-use Webjump\BraspagPagador\Model\ResourceModel\Split as SplitResourceModel;
+use Braspag\BraspagPagador\Api\Data\SplitInterface;
+use Braspag\BraspagPagador\Model\ResourceModel\Split as SplitResourceModel;
 
 /**
  * Split Model
@@ -16,12 +15,12 @@ use Webjump\BraspagPagador\Model\ResourceModel\Split as SplitResourceModel;
  * @link        http://www.webjump.com.br
  * @codeCoverageIgnore
  */
-class Split extends \Magento\Framework\Model\AbstractModel implements \Webjump\BraspagPagador\Api\Data\SplitInterface
+class Split extends \Magento\Framework\Model\AbstractModel implements \Braspag\BraspagPagador\Api\Data\SplitInterface
 {
-	protected function _construct()
-	{
-		$this->_init(SplitResourceModel::class);
-	}
+    protected function _construct()
+    {
+        $this->_init(SplitResourceModel::class);
+    }
 
     /**
      * @return mixed

@@ -1,13 +1,13 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost;
 
 use Magento\Sales\Api\Data\OrderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\RequestFactory;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\TransactionPost\RequestFactory;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -26,8 +26,7 @@ class RequestBuilder implements BuilderInterface
     public function __construct(
         RequestInterface $request,
         ConfigInterface $config
-    )
-    {
+    ) {
         $this->setRequest($request);
         $this->setConfig($config);
     }
@@ -38,7 +37,8 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Order data object should be provided');
         }
 
-        if ($this->getConfig()->isPaymentSplitActive()
+        if (
+            $this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL_POST
         ) {
             $this->getRequest()->setConfig($this->getConfig());

@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
+
+namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request;
 
 use Magento\Framework\ObjectManager\TMap;
 use Magento\Framework\ObjectManager\TMapFactory;
 
 /**
  * Class HandlerChain
- * @package Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request
+ * @package Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request
  */
 class HandlerChain implements HandlerInterface
 {

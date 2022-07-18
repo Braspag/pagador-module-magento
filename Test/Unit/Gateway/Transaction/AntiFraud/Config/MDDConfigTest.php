@@ -1,10 +1,10 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Config;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\AntiFraud\Config;
 
-use Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\MDDConfig;
 use PHPUnit\Framework\TestCase;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Quote\Model\Quote;
 use Magento\Customer\Api\Data\CustomerInterface;

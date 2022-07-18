@@ -1,11 +1,11 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction\Auth3Ds20\Resource\Token;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction\Auth3Ds20\Resource\Token;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\State;
-use Webjump\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Request;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Request;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextInterface;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -31,7 +31,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->scopeConfig);
 
         $this->request = $this->objectManagerHelper->getObject(
-            Request::class, [
+            Request::class,
+            [
                 'context' => $this->context,
                 'contextAdmin' => $this->contextAdmin,
                 'scopeConfig' => $this->scopeConfig,
@@ -43,7 +44,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
-
     }
 
     public function testGetData()

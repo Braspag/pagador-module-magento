@@ -1,7 +1,6 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
-
+namespace Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Resource\MDD;
 
 class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
 {
@@ -10,11 +9,11 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return $this->helperData
             ->removeSpecialCharacters(
                 trim(
-                $this->getConfig()->getCustomer()->getFirstname() .
-                ' ' .
-                $this->getConfig()->getCustomer()->getLastname()
-            )
-        );
+                    $this->getConfig()->getCustomer()->getFirstname() .
+                    ' ' .
+                    $this->getConfig()->getCustomer()->getLastname()
+                )
+            );
     }
 
     public function getCustomerIsLogged()
@@ -80,7 +79,6 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         }
 
         return ($result) ? 'Sim' : 'Não';
-
     }
 
     public function getStoreCode()
@@ -93,7 +91,7 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         $quote = $this->getConfig()->getQuote();
 
         $result = false;
-        if ((bool) $quote->getGiftMessageId()){
+        if ((bool) $quote->getGiftMessageId()) {
             $result = true;
         }
 
@@ -163,7 +161,7 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         $quote = $this->getConfig()->getQuote();
         $result = $quote->getBillingAddress()->getTelephone();
 
-        return (int) preg_replace('/[^0-9]/','', $result);
+        return (int) preg_replace('/[^0-9]/', '', $result);
     }
 
     public function getStoreIdentity()
@@ -197,5 +195,4 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
     {
         return null;
     }
-
 }

@@ -1,56 +1,55 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Gateway\Transaction;
+namespace Braspag\BraspagPagador\Test\Unit\Gateway\Transaction;
 
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Command\AuthorizeCommand;
 
 class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 {
-	private $command;
-	private $apiMock;
-	private $requestHandlerMock;
-	private $responseHandlerMock;
+    private $command;
+    private $apiMock;
+    private $requestHandlerMock;
+    private $responseHandlerMock;
     private $validatorRequestMock;
     private $validatorResponseMock;
 
     public function setUp()
     {
-    	$this->apiMock = $this->createMock('Webjump\Braspag\Pagador\Transaction\FacadeInterface');
-    	$this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
-    	$this->requestHandlerMock = $this->createMock('Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
-    	$this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
+        $this->apiMock = $this->createMock('Braspag\Braspag\Pagador\Transaction\FacadeInterface');
+        $this->requestBuilderMock = $this->createMock('Magento\Payment\Gateway\Request\BuilderInterface');
+        $this->requestHandlerMock = $this->createMock('Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerInterface');
+        $this->responseHandlerMock = $this->createMock('Magento\Payment\Gateway\Response\HandlerInterface');
         $this->validatorRequestMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
         $this->validatorResponseMock = $this->createMock('Magento\Payment\Gateway\Validator\ValidatorInterface');
     }
 
     public function tearDown()
     {
-
     }
 
     public function testExecute()
     {
-    	$this->command = new AuthorizeCommand(
-    		$this->apiMock,
-    		$this->requestBuilderMock,
-    		$this->requestHandlerMock,
-    		$this->responseHandlerMock,
+        $this->command = new AuthorizeCommand(
+            $this->apiMock,
+            $this->requestBuilderMock,
+            $this->requestHandlerMock,
+            $this->responseHandlerMock,
             null,
             null
-    	);
+        );
 
-    	$buildObject = [];
+        $buildObject = [];
 
-    	$requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->getMock();
 
-    	$this->requestBuilderMock->expects($this->once())
-    	    ->method('build')
-    	    ->with($buildObject)
-    	    ->will($this->returnValue($requestMock));
+        $this->requestBuilderMock->expects($this->once())
+            ->method('build')
+            ->with($buildObject)
+            ->will($this->returnValue($requestMock));
 
         $this->apiMock->expects($this->once())
             ->method('sendCreditCard')
@@ -61,7 +60,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
             ->method('handle')
             ->with($buildObject, ['response' => $responseMock]);
 
-    	$this->command->execute($buildObject);
+        $this->command->execute($buildObject);
     }
 
     public function testExecuteWithValidator()
@@ -77,10 +76,10 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -133,10 +132,10 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $buildObject = [];
 
-        $requestMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
+        $requestMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\RequestInterface')
             ->getMock();
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->setMethods(
                 [
                     'getPayment',
@@ -162,7 +161,8 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
                     'getPaymentCardProvider',
                     'getVelocityAnalysis',
                     'getAvs'
-                ])
+                ]
+            )
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');
@@ -207,7 +207,7 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
 
         $requestMock = null;
 
-        $responseMock = $this->getMockBuilder('Webjump\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
+        $responseMock = $this->getMockBuilder('Braspag\Braspag\Pagador\Transaction\Api\CreditCard\Send\ResponseInterface')
             ->setMethods(
                 [
                     'getPayment',
@@ -233,7 +233,8 @@ class AuthorizeCommandTest extends \PHPUnit\Framework\TestCase
                     'getPaymentCardProvider',
                     'getVelocityAnalysis',
                     'getAvs'
-                ])
+                ]
+            )
             ->getMock();
 
         $resultMock = $this->createMock('Magento\Payment\Gateway\Validator\ResultInterface');

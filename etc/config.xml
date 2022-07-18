@@ -88,6 +88,27 @@
                 <can_initialize>1</can_initialize>
                 <can_use_internal>1</can_use_internal>
             </braspag_pagador_debitcard>
+            <braspag_pagador_pix>
+                <active>1</active>
+                <model>BraspagTransactionPixRemoteMethodAdapter</model>
+                <payment_action>order</payment_action>
+                <title>Braspag Pix</title>
+                <order_status>pending_payment</order_status>
+                <can_authorize>1</can_authorize>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+                <can_initialize>1</can_initialize>
+                <sort_order>1</sort_order>
+                <can_cancel>1</can_cancel>
+                <can_use_internal>1</can_use_internal>
+                <expiration_time>20</expiration_time>
+                <order_status_processing>1</order_status_processing>
+                <display_logo_title>0</display_logo_title>
+                <visible_on_cart>1</visible_on_cart>
+                <visible_on_product>1</visible_on_product>
+                <activate_export>1</activate_export>
+            </braspag_pagador_pix>
         </payment>
         <address>
             <braspag_pagador_customer_address>
@@ -95,12 +116,12 @@
                 <address_sanitize_district_dictionary>Neighborhood-Nb.;Housing-Hs</address_sanitize_district_dictionary>
             </braspag_pagador_customer_address>
         </address>
-        <webjump_braspag>
+        <braspag_braspag>
             <pagador>
                 <test_mode>1</test_mode>
             </pagador>
-        </webjump_braspag>
-        <webjump_braspag_antifraud>
+        </braspag_braspag>
+        <braspag_braspag_antifraud>
             <fingerprint>
                 <src_js>https://h.online-metrix.net/fp/tags.js</src_js>
             </fingerprint>
@@ -111,6 +132,6 @@
                 <capture_in_low_risk>0</capture_in_low_risk>
                 <void_in_high_risk>0</void_in_high_risk>
             </options>
-        </webjump_braspag_antifraud>
+        </braspag_braspag_antifraud>
     </default>
 </config>

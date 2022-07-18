@@ -1,15 +1,15 @@
 <?php
 
-namespace Webjump\BraspagPagador\Test\Unit\Observer;
+namespace Braspag\BraspagPagador\Test\Unit\Observer;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\Event;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Model\MethodInterface;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
-use Webjump\BraspagPagador\Observer\DataAssignObserver;
+use Braspag\BraspagPagador\Observer\DataAssignObserver;
 use Magento\Framework\Event\Observer;
-use Webjump\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 
 class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 {

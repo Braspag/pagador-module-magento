@@ -1,19 +1,19 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
+namespace Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
-use Webjump\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\AntiFraud\RequestInterface as RequestAntiFraudLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestFactory;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
+use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as RequestPaymentSplitLibInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Resource\Order\RequestFactory;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as BaseRequestInterface;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
-use Webjump\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
 
 /**
  * Braspag Transaction DebitCard Send Request Builder
@@ -41,8 +41,7 @@ class RequestBuilder implements BuilderInterface
         ConfigInterface $config,
         QuoteFactory $quoteFactory,
         ItemFactory $quoteItemFactory
-    )
-    {
+    ) {
         $this->setRequestFactory($requestFactory);
         $this->setAntiFraudRequest($requestAntiFraud);
         $this->setPaymentSplitRequest($requestPaymentSplit);
@@ -71,7 +70,8 @@ class RequestBuilder implements BuilderInterface
             $request->setAntiFraudRequest($this->getRequestAntiFraud());
         }
 
-        if ($this->getConfig()->isPaymentSplitActive()
+        if (
+            $this->getConfig()->isPaymentSplitActive()
             && $this->getConfig()->getPaymentSplitType() == PaymentSplitType::PAYMENT_SPLIT_TYPE_TRANSACTIONAL
         ) {
             $this->getRequestPaymentSplit()->setConfig($this->getConfig());
@@ -190,5 +190,4 @@ class RequestBuilder implements BuilderInterface
     {
         return $this->requestAntiFraud;
     }
-
 }

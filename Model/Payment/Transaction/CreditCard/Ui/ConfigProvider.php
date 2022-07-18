@@ -1,9 +1,9 @@
 <?php
 
-namespace Webjump\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
+namespace Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfig;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfig;
 
 /**
  * Braspag Transaction CreditCard Authorize Command
@@ -16,7 +16,7 @@ use Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-    const CODE = 'braspag_pagador_creditcard';
+    public const CODE = 'braspag_pagador_creditcard';
 
     protected $creditCardConfig;
 

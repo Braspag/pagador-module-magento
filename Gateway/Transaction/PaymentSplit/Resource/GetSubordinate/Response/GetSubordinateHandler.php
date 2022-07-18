@@ -1,12 +1,12 @@
 <?php
 
-namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response;
+namespace Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\GetSubordinate\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Webjump\Braspag\Pagador\Transaction\Resource\PaymentSplit\GetSubordinate\Response;
-use Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
-use Webjump\BraspagPagador\Model\SplitManager;
-use Webjump\BraspagPagador\Model\SplitDataAdapter;
+use Braspag\Braspag\Pagador\Transaction\Resource\PaymentSplit\GetSubordinate\Response;
+use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Braspag\BraspagPagador\Model\SplitManager;
+use Braspag\BraspagPagador\Model\SplitDataAdapter;
 
 /**
 
@@ -38,7 +38,7 @@ class GetSubordinateHandler extends AbstractHandler implements HandlerInterface
     }
 
     /**
-     * @return Webjump\BraspagPagador\Model\SplitManager
+     * @return Braspag\BraspagPagador\Model\SplitManager
      */
     public function getSplitManager(): SplitManager
     {
@@ -46,7 +46,7 @@ class GetSubordinateHandler extends AbstractHandler implements HandlerInterface
     }
 
     /**
-     * @param Webjump\BraspagPagador\Model\SplitManager $splitManager
+     * @param Braspag\BraspagPagador\Model\SplitManager $splitManager
      */
     public function setSplitManager(SplitManager $splitManager)
     {
@@ -88,7 +88,7 @@ class GetSubordinateHandler extends AbstractHandler implements HandlerInterface
     /**
      * @param array $handlingSubject
      * @param array $response
-     * @return array|mixed|void|\Webjump\BraspagPagador\Gateway\Transaction\Base\Resource\Response\ResponseInterface|GetSubordinateHandler
+     * @return array|mixed|void|\Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\ResponseInterface|GetSubordinateHandler
      */
     public function handle(array $handlingSubject, array $response)
     {

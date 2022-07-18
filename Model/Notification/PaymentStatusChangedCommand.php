@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Webjump Core Team <dev@webjump.com.br>
  * @copyright   2021 Webjump (http://www.webjump.com.br)
@@ -7,19 +8,19 @@
  * @link        http://www.webjump.com.br
  */
 
-namespace Webjump\BraspagPagador\Model\Notification;
+namespace Braspag\BraspagPagador\Model\Notification;
 
-use Webjump\BraspagPagador\Model\PaymentManager;
-use \Webjump\BraspagPagador\Api\NotificationManagerInterface;
+use Braspag\BraspagPagador\Model\PaymentManager;
+use Braspag\BraspagPagador\Api\NotificationManagerInterface;
 
 /**
  * Class PaymentStatusChangedCommand
- * @package Webjump\BraspagPagador\Model
+ * @package Braspag\BraspagPagador\Model
  */
 class PaymentStatusChangedCommand
 {
     /**
-     * @var Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
+     * @var Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
      **/
     protected $config;
 
@@ -29,9 +30,9 @@ class PaymentStatusChangedCommand
     protected $paymentManager;
 
     public function __construct(
-        \Webjump\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
+        \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         PaymentManager $paymentManager
-    ){
+    ) {
         $this->setPaymentManager($paymentManager);
         $this->setConfig($config);
     }
