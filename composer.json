@@ -1,5 +1,5 @@
 {
-    "name": "Braspag/magento2-module-braspagpagador",
+    "name": "braspag/magento2-module-braspagpagador",
     "license": "MIT",
     "type": "magento2-module",
     "description": "Braspag Pagador integration for Magento 2",
@@ -21,8 +21,8 @@
         "zendframework/zend-stdlib": "2.4.6|~2.7.7|^3.2.1",
         "zendframework/zend-escaper":"~2.4.6|^2.5",
         "zendframework/zend-http":"~2.4.6|^2.5.4",
-        "Braspag/braspagpagador-sdk-adapter":"^1.2.9",
-        "Braspag/mobiledetectlib": "^3.0"
+        "braspag/braspagpagador-sdk-adapter":"^1.2.9",
+        "braspag/mobiledetectlib": "^3.0"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "~1.2.0",
