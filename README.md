@@ -1,4 +1,4 @@
-# Braspag Pagador plugin for Magento 2
+# Braspag Pagador plugin for Magento 2 - Legacy
 Official Braspag plugin for Magento 2 build to offer frictionless payments online.
 
 ## Integration
@@ -33,6 +33,12 @@ The plugin integrates with Braspag Pagador API.
 - Split Payment
 - Expirations Day
 
+### PIX
+
+- Instructions
+- Bank
+- Provider
+
 ### Split Payment
 
 - Trava de pagamentos
@@ -41,8 +47,8 @@ The plugin integrates with Braspag Pagador API.
 
 ## Requirements
 This plugin supports:
-- PHP 5.6 version and higher.
-- Magento2 version 2.3.3 and higher.
+- PHP 7.2 version and higher.
+- Magento2 version 2.3.4 and higher.
 
 ## Installation
 You can install our plugin through Composer:
