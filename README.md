@@ -48,7 +48,7 @@ The plugin integrates with Braspag Pagador API.
 ## Requirements
 This plugin supports:
 - PHP 7.2 version and higher.
-- Magento2 version 2.3.4 and higher.
+- Magento 2 version 2.3.4 and lower than 2.4.3.
 
 ## Installation
 You can install our plugin through Composer:
