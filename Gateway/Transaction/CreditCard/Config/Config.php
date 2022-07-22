@@ -171,4 +171,9 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
     }
+
+    public function isAutoDisablePreviousCardsToken()
+    {
+        return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_DISABLE_PREVIOUSLY_USED_CARDS);
+    }
 }

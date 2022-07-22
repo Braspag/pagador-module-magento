@@ -40,6 +40,7 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SILENTORDERPOST_URL_HOMOLOG = 'payment/braspag_pagador_creditcard/silentorderpost_url_homolog';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_DECIMAL_GRAND_TOTAL = 'payment/braspag_pagador_creditcard/decimal_grand_total';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_ACTIVE = 'payment/braspag_pagador_creditcardtoken/active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_DISABLE_PREVIOUSLY_USED_CARDS = 'payment/braspag_pagador_creditcardtoken/auto_disable_previously_saved_cards';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_STREET_ATTRIBUTE = 'payment/braspag_pagador_customer_address/street_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_NUMBER_ATTRIBUTE = 'payment/braspag_pagador_customer_address/number_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_COMPLEMENT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/complement_attribute';
@@ -115,4 +116,6 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     public function getPaymentSplitDefaultFee();
 
     public function isCardViewActive();
+
+    public function isAutoDisablePreviousCardsToken();
 }

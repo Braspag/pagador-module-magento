@@ -34,6 +34,14 @@
             <comment />
             <config_path>payment/braspag_pagador_creditcardtoken/sort_order</config_path>
         </field>
+
+		<field id="auto_disable_previously_saved_cards" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Automatically Disable previously saved cards when saving a new card</label>
+            <comment />
+			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcardtoken/auto_disable_previously_saved_cards</config_path>
+        </field>
+
 	    <!-- <include path="Webjump_BraspagPagador::system/transaction/creditcardtoken/types.xml"/> -->
 	    <include path="Braspag_BraspagPagador::system/transaction/creditcardtoken/installments.xml"/>
     </group>

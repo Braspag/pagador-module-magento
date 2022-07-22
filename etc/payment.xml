@@ -193,6 +193,21 @@
         <type id="Safra-Amex" order="580">
             <label>Safra Amex</label>
         </type>
+        <type id="Safra2-Visa" order="540">
+            <label>Safra2 Visa</label>
+        </type>
+        <type id="Safra2-Master" order="550">
+            <label>Safra2 Master</label>
+        </type>
+        <type id="Safra2-Hipercard" order="560">
+            <label>Safra2 Hipercard</label>
+        </type>
+        <type id="Safra2-Elo" order="570">
+            <label>Safra2 Elo</label>
+        </type>
+        <type id="Safra2-Amex" order="580">
+            <label>Safra Amex</label>
+        </type>
         <type id="FirstData-Visa" order="590">
             <label>FirstData Visa</label>
         </type>
