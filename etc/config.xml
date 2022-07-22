@@ -71,6 +71,7 @@
                 <installments_interest_rate>10</installments_interest_rate>
                 <installments_max_without_interest>6</installments_max_without_interest>
                 <can_use_internal>1</can_use_internal>
+                <auto_disable_previously_saved_cards>0</auto_disable_previously_saved_cards>
             </braspag_pagador_creditcardtoken>
             <braspag_pagador_debitcard>
                 <active>1</active>

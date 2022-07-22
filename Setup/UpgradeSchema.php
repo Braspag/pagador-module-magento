@@ -24,6 +24,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
+        
 
         if (version_compare($context->getVersion(), '2.0.1') < 0) {
             $this->upgradeTwoZeroOne($setup, $context);
@@ -59,6 +60,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '3.16.4') < 0) {
             $this->upgradeThreeSixteenFour($setup, $context);
+        }
+        if (version_compare($context->getVersion(), '3.19.0') <= 0)
+        {
+            $this->upgradeThreeNineteenZero($setup,$context);
         }
 
         $setup->endSetup();
@@ -563,5 +568,80 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ]
             );
         }
+    }
+    protected function fkExists(SchemaSetupInterface $setup, $foreignKey, $table)
+    {
+        $fks = $setup->getConnection()->getForeignKeys($table);
+
+        return array_key_exists($foreignKey, $fks);
+
+    }
+    protected function upgradeThreeNineteenZero(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+            if ($this->fkExists($setup, $setup->getFkName(
+                'braspag_braspagpagador_cardtoken',
+                'customer_id',
+                'customer_entity',
+                'entity_id'
+            ),$setup->getTable('braspag_braspagpagador_cardtoken') ))
+            {
+                $setup->getConnection()->dropForeignKey(
+                    $setup->getTable('braspag_braspagpagador_cardtoken'),
+                    $setup->getFkName(
+                        'braspag_braspagpagador_cardtoken',
+                        'customer_id',
+                        'customer_entity',
+                        'entity_id'
+                    )
+                );
+            }
+
+            $setup->getConnection()->dropIndex(
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
+                $setup->getIdxName(
+                    'braspag_braspagpagador_cardtoken',
+                    ['customer_id', 'method'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+                )
+            );
+
+            $setup->getConnection()->addForeignKey(
+                $setup->getFkName(
+                    'braspag_braspagpagador_cardtoken',
+                    'customer_id',
+                    'customer_entity',
+                    'entity_id'
+                ),
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
+                'customer_id',
+                $setup->getTable('customer_entity'),
+                'entity_id',
+                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+            );
+
+            $setup->getConnection()->addIndex(
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
+                $setup->getIdxName(
+                    'braspag_braspagpagador_cardtoken',
+                    ['customer_id', 'method'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+                ),
+                ['customer_id', 'method'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            );
+
+            if (!$setup->getConnection()->tableColumnExists($setup->getTable('braspag_braspagpagador_cardtoken'), 'mask')) {
+
+                $setup->getConnection()->addColumn(
+                    $setup->getTable('braspag_braspagpagador_cardtoken'),
+                    'mask',
+                    [
+                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'length' => 255,
+                        'comment' => 'Payment method Mask'
+                    ]
+                );
+            }
+        
     }
 }
