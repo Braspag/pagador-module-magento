@@ -16,6 +16,7 @@ use Magento\Framework\Event\ManagerInterface;
 use Braspag\BraspagPagador\Api\CardTokenManagerInterface;
 use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
+use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 
 class CardTokenManager implements CardTokenManagerInterface
 {
@@ -34,6 +35,11 @@ class CardTokenManager implements CardTokenManagerInterface
      */
     protected $searchCriteriaBuilder;
 
+    /**
+     * @var ConfigInterface
+     */
+    protected $config;
+
 
     /**
      * CardTokenHandler constructor.
@@ -45,11 +51,14 @@ class CardTokenManager implements CardTokenManagerInterface
     public function __construct(
         CardTokenRepositoryInterface $cardTokenRepository,
         ManagerInterface $eventManager,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        ConfigInterface $config
+
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
+        $this->setConfig($config);
     }
 
     public function registerCardToken($customerId, $paymentMethod, $response)
@@ -57,16 +66,20 @@ class CardTokenManager implements CardTokenManagerInterface
         if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
             return $cardToken;
         }
-        $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
-        $searchCriteriaBuilder->addFilter('method', $paymentMethod);
-        $searchCriteriaBuilder->addFilter('customer_id', $customerId);
-        $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
-        $searchCriteria = $searchCriteriaBuilder->create();
 
-        $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
-
-        foreach ($searchResult->getItems() as $item) {
-            $this->disable($item);
+        if ($this->getConfig()->isAutoDisablePreviousCardsToken())
+        {
+            $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
+            $searchCriteriaBuilder->addFilter('method', $paymentMethod);
+            $searchCriteriaBuilder->addFilter('customer_id', $customerId);
+            $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
+            $searchCriteria = $searchCriteriaBuilder->create();
+    
+            $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
+    
+            foreach ($searchResult->getItems() as $item) {
+                $this->disable($item);
+            }
         }
 
         $data = new DataObject([
@@ -163,5 +176,16 @@ class CardTokenManager implements CardTokenManagerInterface
         $this->eventManager = $eventManager;
 
         return $this;
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
     }
 }
