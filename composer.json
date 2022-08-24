@@ -10,19 +10,19 @@
         }
     ],
     "require": {
-        "php": "~7.2.0|~7.3.0|~7.4.0",
-        "magento/module-payment": "100.1.*|^100.2|^100.3|^100.4",
-        "magento/module-sales": "100.1.*|~101.0|~102.0|~103.0",
-        "magento/module-config": "100.1.*|~101.0",
-        "magento/module-store": "100.1.*|~100.2|~101.0",
-        "magento/module-quote": "100.1.*|~101.0",
-        "magento/module-checkout": "100.1.*|~100.2|^100.4",
-        "magento/framework": "100.1.*|~101.0|^102.0.3|^103.0",
-        "zendframework/zend-stdlib": "2.4.6|~2.7.7|^3.2.1",
-        "zendframework/zend-escaper":"~2.4.6|^2.5",
-        "zendframework/zend-http":"~2.4.6|^2.5.4",
-        "braspag/braspagpagador-sdk-adapter":">=1.2.9",
-        "braspag/mobiledetectlib": ">=3.0"
+        "php": "~7.3.0||~8.1.*",
+        "magento/module-payment": "",
+        "magento/module-sales": "",
+        "magento/module-config": "",
+        "magento/module-store": "",
+        "magento/module-quote": "",
+        "magento/module-checkout": "",
+        "magento/framework": "",
+        "zendframework/zend-stdlib": "",
+        "zendframework/zend-escaper":"",
+        "zendframework/zend-http":"",
+        "braspag/braspagpagador-sdk-adapter":"",
+        "braspag/mobiledetectlib": ""
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "~1.2.0",
