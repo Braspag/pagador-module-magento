@@ -28,11 +28,11 @@ class RequestFactory
      * @param string $class
      * @param SessionManagerInterface $session
      */
-    public function __construct(ObjectManagerInterface $objectManager, $class = Request::class, SessionManagerInterface $session)
+    public function __construct(ObjectManagerInterface $objectManager,  SessionManagerInterface $session, $class = Request::class)
     {
         $this->setObjectManager($objectManager);
-        $this->setClass($class);
         $this->setSession($session);
+        $this->setClass($class);
     }
 
     public function create(OrderItemInterface $orderItem)

@@ -71,11 +71,11 @@ class Information extends AbstractExtensibleModel implements Auth3DS20Informatio
         AttributeValueFactory $customAttributeFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = [],
         Auth3DS20GetAddressInterface $auth3DS20AddressInformation,
         Auth3DS20GetCartInterface $auth3DS20CartInformation,
         Auth3DS20CartInformationInterface $auth3DS20CartInformationInterface,
-        Auth3DS20UserAccountInterface $auth3DS20UserAccountInformation
+        Auth3DS20UserAccountInterface $auth3DS20UserAccountInformation,
+        array $data = []
     ) {
         $this->auth3DS20AddressInformation = $auth3DS20AddressInformation;
         $this->auth3DS20CartInformation = $auth3DS20CartInformation;
