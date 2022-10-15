@@ -49,6 +49,8 @@ interface ConfigInterface
 
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/district_attribute';
 
+    const CONFIG_XML_BRASPAG_PAGADOR_VOUCHER_VCTYPES = 'payment/braspag_pagador_voucher/Vctypes';
+
 
     public function getMerchantId();
 
