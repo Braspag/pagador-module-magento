@@ -13,7 +13,8 @@
 }
 .checkout-payment-method .bp-card-container .card-wrapper,
 .checkout-payment-method .bp-card-container .debitcard-wrapper,
-.checkout-payment-method .bp-card-container .form-container { 
+.checkout-payment-method .bp-card-container .voucher-wrapper,
+.checkout-payment-method .bp-card-container .form-container {
 	float: left;
 	max-width: 50%;
 }
@@ -27,6 +28,7 @@
 }
 
 .checkout-payment-method .bp-card-container .card-wrapper,
+.checkout-payment-method .bp-card-container .voucher-wrapper
 .checkout-payment-method .bp-card-container .debitcard-wrapper {
 	margin-left: 100px;
 }

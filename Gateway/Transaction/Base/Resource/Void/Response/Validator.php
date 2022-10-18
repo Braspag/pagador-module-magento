@@ -24,7 +24,7 @@ class Validator implements ValidatorInterface
     {
         if (
             !isset($validationSubject['response'])
-            || !$validationSubject['response'] instanceof \Webjump\Braspag\Pagador\Transaction\Resource\Actions\Response
+            || !$validationSubject['response'] instanceof \Braspag\Braspag\Pagador\Transaction\Resource\Actions\Response
         ) {
             throw new \InvalidArgumentException('Braspag Transaction Void Response object should be provided');
         }
