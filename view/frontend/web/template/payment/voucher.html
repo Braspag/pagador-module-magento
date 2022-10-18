@@ -24,13 +24,14 @@
 
         <div class="bp-card-container">
             <div class="form-container active">
-                <form class="braspag-debitcard" data-bind="attr: {'id': getCode() + '-form'}">
+                <form class="braspag-voucher" data-bind="attr: {'id': getCode() + '-form'}">
                     <!-- ko template: 'Braspag_BraspagPagador/payment/vc-form' -->
                     <!-- /ko -->
                 </form>
             </div>
-            <div class="debitcard-wrapper"></div>
+            <div class="voucher-wrapper"></div>
         </div>
+
 
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->

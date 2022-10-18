@@ -277,7 +277,7 @@ define(
                  * @TODO alterar o card expiry para text ao inves de select
                  */
                 if (cardView.isDebitCardViewEnabled()) {
-                    $('.debitcard-wrapper .jp-card-expiry').empty().append(cardExpDate);
+                    $('.voucher-wrapper .jp-card-expiry').empty().append(cardExpDate);
                 }
             },
 
