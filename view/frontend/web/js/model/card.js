@@ -161,7 +161,7 @@ define(
         }, {
             type: 'ticket',
 			typeName: 'Ticket',
-			patterns: [6026, 6033],
+			patterns: [603342,602651,308513,603340],
 			regex_include: '',
 			regex_exclude: '',
 			format: defaultFormat,

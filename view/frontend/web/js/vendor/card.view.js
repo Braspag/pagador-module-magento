@@ -307,7 +307,8 @@ var cardView =
 	        QJ.removeClass(this.$card, 'jp-card-unknown');
 	        QJ.removeClass(this.$card, this.cardTypes.join(' '));
 	        QJ.addClass(this.$card, "jp-card-" + cardType);
-	        QJ.toggleClass(this.$card, 'jp-card-identified', cardType !== 'unknown');
+            QJ.toggleClass(this.$card, 'jp-card-identified', cardType !== 'unknown');
+            QJ.isTicketCard(this.$el);
 	        return this.cardType = cardType;
 	      }
 	    },
@@ -970,7 +971,41 @@ var cardView =
 	      }
 	    }
 	    return el.dispatchEvent(ev);
-	  };
+      };
+
+        QJ.isTicketCard = function (el) {
+            var formId = el.id;
+            var b, c;
+            const bins = ['603342', '602651', '308513', '603340'];
+            if (formId == 'braspag_pagador_voucher-form') {
+                var cardNumb = el.braspag_pagador_voucher_cc_number.value;
+                b = cardNumb.replace(/\s/g, '');
+                c = b.substring(0, 6);
+                if (bins.indexOf(c) > -1) {
+                    QJ.calculateNextYear();
+                    document.getElementById("braspag_pagador_voucher_expiration").disabled = true;
+                    document.getElementById("braspag_pagador_voucher_expiration_yr").disabled = true;
+                } else {
+                    document.getElementById("braspag_pagador_voucher_expiration").disabled = false;
+                    document.getElementById("braspag_pagador_voucher_expiration_yr").disabled = false;
+                }
+            }
+        };
+
+        QJ.calculateNextYear = function () {
+            var d = new Date();
+            var month = d.getMonth();
+            var year = d.getFullYear();
+
+            document.getElementById("braspag_pagador_voucher_expiration").value = month + 1;
+            document.getElementById("braspag_pagador_voucher_expiration_yr").value = year + 1;
+
+            const e = new Event("change");
+            document.getElementById("braspag_pagador_voucher_expiration").dispatchEvent(e);
+            document.getElementById("braspag_pagador_voucher_expiration_yr").dispatchEvent(e);
+
+            // document.getElementsByClassName('jp-card-expiry jp-card-display').innerHTML = month + '/' + year;
+        }
 
 	  module.exports = QJ;
 
@@ -1426,7 +1461,9 @@ var cardView =
 	      QJ.toggleClass(target, 'identified', cardType !== 'unknown');
 	      return QJ.trigger(target, 'payment.cardType', cardType);
 	    }
-	  };
+      };
+
+
 
 	  Payment = (function() {
 	    function Payment() {}
@@ -1514,28 +1551,29 @@ var cardView =
 	        return ((ref = cardFromNumber(num)) != null ? ref.type : void 0) || null;
 	      },
 	      formatCardNumber: function(num) {
-	        var card, groups, ref, upperLength;
-	        card = cardFromNumber(num);
-	        if (!card) {
-	          return num;
-	        }
-	        upperLength = card.length[card.length.length - 1];
-	        num = num.replace(/\D/g, '');
-	        num = num.slice(0, upperLength);
-	        if (card.format.global) {
-	          return (ref = num.match(card.format)) != null ? ref.join(' ') : void 0;
-	        } else {
-	          groups = card.format.exec(num);
-	          if (groups == null) {
-	            return;
-	          }
-	          groups.shift();
-	          groups = groups.filter(function(n) {
-	            return n;
-	          });
-	          return groups.join(' ');
-	        }
-	      }
+                var card, groups, ref, upperLength;
+                card = cardFromNumber(num);
+                if (!card) {
+                return num;
+                }
+                upperLength = card.length[card.length.length - 1];
+                num = num.replace(/\D/g, '');
+                num = num.slice(0, upperLength);
+                if (card.format.global) {
+                return (ref = num.match(card.format)) != null ? ref.join(' ') : void 0;
+                } else {
+                groups = card.format.exec(num);
+                if (groups == null) {
+                    return;
+                }
+                groups.shift();
+                groups = groups.filter(function(n) {
+                    return n;
+                });
+                return groups.join(' ');
+                }
+            }
+
 	    };
 
 	    Payment.restrictNumeric = function(el) {

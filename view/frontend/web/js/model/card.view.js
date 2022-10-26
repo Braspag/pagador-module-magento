@@ -32,6 +32,10 @@ define(
                 return window.checkoutConfig.payment.vcform.card_view.active;
             },
 
+            isPixiewEnabled: function () {
+                return window.checkoutConfig.payment.braspag.isTestEnvironment ? true : false;
+            },
+
             initialize: function () {
             },
         };

@@ -28,7 +28,10 @@ define(
              */
             displayTitleLogo: function () {
                 return window.checkoutConfig.payment.display_logo_title[this.item.method];
-            }
+            },
+            showType: function () {
+                return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' ? true : false;
+            },
         });
     }
 );
