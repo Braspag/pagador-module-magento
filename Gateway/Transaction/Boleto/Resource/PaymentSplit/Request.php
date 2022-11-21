@@ -13,7 +13,7 @@
 namespace Braspag\BraspagPagador\Gateway\Transaction\Boleto\Resource\PaymentSplit;
 
 use Magento\Framework\Session\SessionManagerInterface;
-use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
+use Braspag\BraspagPagador\Transaction\Api\PaymentSplit\RequestInterface as BraspaglibRequestInterface;
 use Braspag\BraspagPagador\Api\SplitDataProviderInterface;
 use Braspag\BraspagPagador\Model\OAuth2TokenManager;
 use Braspag\BraspagPagador\Gateway\Transaction\PaymentSplit\Config\ConfigInterface as PaymentSplitConfigInterface;
