@@ -39,6 +39,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function removeSpecialCharactersFromTaxvat($taxvat)
     {
-        return preg_replace('/[^A-Za-z0-9]/', '', $taxvat);
+        if (isset($taxvat)) {       
+            return preg_replace('/[^A-Za-z0-9]/', '', $taxvat);
+        }
+
+        return null;
     }
 }
