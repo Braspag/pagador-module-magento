@@ -389,6 +389,12 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentProvider()
     {
+
+        $ccType = $this->getPaymentData()->getCcType();
+
+       // if ($this->getPaymentData()->getAdditionalInformation('cc_token') || !isset($ccType))
+          //return '';
+
         list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
         if ($provider === "Braspag") {
@@ -511,12 +517,18 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return (bool) $this->getPaymentData()->getAdditionalInformation('cc_savecard');
     }
 
+   
     /**
      * @return string
      */
     public function getPaymentCreditCardBrand()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        $ccType =  $this->getPaymentData()->getCcType();
+
+        if ($this->getPaymentData()->getAdditionalInformation('cc_token'))
+          return null;
+
+        list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
         return ($brand) ? $brand : 'Visa';
     }

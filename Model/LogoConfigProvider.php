@@ -33,7 +33,7 @@ class LogoConfigProvider implements ConfigProviderInterface
      *
      * @var StoreManagerInterface
      */
-    protected $storeManager;
+    protected $_storeManager;
 
     /**
      * Scope config

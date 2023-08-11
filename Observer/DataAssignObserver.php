@@ -70,22 +70,32 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $additionalData = new DataObject($additionalData ?: []);
         }
 
-        list($provider, $brand) = array_pad(explode('-', $additionalData->getCcType(), 2), 2, null);
+        $ccType = $additionalData->getCcType();
+        $ccNumber = $additionalData->getCcNumber();
+        $ccToken = $additionalData->getCcToken();
 
-        $info->addData([
-            'cc_type' => $additionalData->getCcType(),
-            'cc_owner' => $additionalData->getCcOwner(),
-            'cc_number' => preg_replace('/\D/', '', $additionalData->getCcNumber()),
-            'cc_last_4' => substr($additionalData->getCcNumber(), -4),
-            'cc_cid' => $additionalData->getCcCid(),
-            'cc_exp_month' => $additionalData->getCcExpMonth(),
-            'cc_exp_year' => $additionalData->getCcExpYear(),
-            'cc_provider' => $provider
-        ]);
 
-        if ($brand) {
-            $info->setAdditionalInformation('cc_brand', $brand);
-        }
+        if (!isset($ccToken) && isset($ccNumber) && isset($ccType)) {
+
+            list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
+
+            $info->addData([
+                'cc_type' => $ccType,
+                'cc_owner' => $additionalData->getCcOwner(),
+                'cc_number' => preg_replace('/\D/', '', $ccNumber),
+                'cc_last_4' => substr($ccNumber, -4),
+                'cc_cid' => $additionalData->getCcCid(),
+                'cc_exp_month' => $additionalData->getCcExpMonth(),
+                'cc_exp_year' => $additionalData->getCcExpYear(),
+                'cc_provider' => $provider
+            ]);
+    
+            if ($brand) {
+                $info->setAdditionalInformation('cc_brand', $brand);
+            }
+
+         }
+   
 
         $info->setAdditionalInformation('cc_installments', 1);
 
@@ -97,7 +107,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->setAdditionalInformation('cc_savecard', (bool) $additionalData->getCcSavecard());
         }
 
-        if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {
+        if ($cardToken = $this->getCardTokenRepository()->get($ccToken)) {
             $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
         }
