@@ -4,7 +4,7 @@ namespace Webjump\BraspagPagador\Gateway\Transaction\PaymentSplit\Resource\Creat
 
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
 use Magento\Payment\Gateway\Validator\Result;
-use Braspag\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\ResponseInterface;
+use Webjump\Braspag\Pagador\Transaction\Api\PaymentSplit\GetSubordinate\ResponseInterface;
 
 /**
  * Validator

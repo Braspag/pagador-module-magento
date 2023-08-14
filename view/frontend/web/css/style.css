@@ -13,7 +13,8 @@
 }
 .checkout-payment-method .bp-card-container .card-wrapper,
 .checkout-payment-method .bp-card-container .debitcard-wrapper,
-.checkout-payment-method .bp-card-container .form-container { 
+.checkout-payment-method .bp-card-container .voucher-wrapper,
+.checkout-payment-method .bp-card-container .form-container {
 	float: left;
 	max-width: 50%;
 }
@@ -27,10 +28,92 @@
 }
 
 .checkout-payment-method .bp-card-container .card-wrapper,
+.checkout-payment-method .bp-card-container .voucher-wrapper
 .checkout-payment-method .bp-card-container .debitcard-wrapper {
 	margin-left: 100px;
 }
 
+.checkout-payment-method fieldset#payment_form_braspag_pagador_creditcard_two_card {
+	border-bottom: 1px solid #cccccc;
+	padding: 18px 0 15px;
+  }
+  .checkout-payment-method .check.two {
+	display: inline-flex;
+  }
+  .checkout-payment-method .check.two .switch {
+	position: relative;
+	display: inline-flex;
+	height: 20px;
+	line-height: 20px;
+	width: 45px;
+	margin-bottom: 25px;
+  }
+  .checkout-payment-method .check.two .switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+  .checkout-payment-method .check.two .switch .slider {
+	position: absolute;
+	cursor: pointer;
+	width: 40px;
+	top: 0;
+	left: 0px;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+  }
+  .checkout-payment-method .check.two .switch .slider:before {
+	position: absolute;
+	content: "";
+	height: 12px;
+	width: 12px;
+	left: 0px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+  }
+  .checkout-payment-method .check.two .switch input:checked + .slider {
+	background-color: #cc0000;
+  }
+  .checkout-payment-method .check.two .switch input:focus + .slider {
+	box-shadow: 0 0 1px #cc0000;
+  }
+  .checkout-payment-method .check.two .switch input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+  }
+  .checkout-payment-method .check.two .switch .slider.round {
+	border-radius: 34px;
+  }
+  .checkout-payment-method .check.two .switch .slider.round:before {
+	border-radius: 50%;
+  }
+  .checkout-payment-method .check.two .switch label.label {
+	margin-left: 42px;
+  }
+  .checkout-payment-method .braspag_pagador_creditcard_two_card .amount input {
+	width: 100px;
+  }
+  .checkout-payment-method .braspag_pagador_creditcard_two_card .amount p {
+	font-size: 12px;
+  }
+  .checkout-payment-method .braspag_pagador_creditcard_two_card .amount strong {
+	color: #cc0000;
+  }
+  .checkout-payment-method .braspag_pagador_creditcard_two_card .cvv .label {
+	display: block !important;
+  }
+  .checkout-payment-method .braspag_pagador_creditcard_two_card .cpf-card-two {
+	width: 140px;
+  }
+  .checkout-payment-method .cpf-card {
+	width: 140px;
+  }
 
 
 

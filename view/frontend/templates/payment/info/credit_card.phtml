@@ -16,6 +16,12 @@ $title = $block->escapeHtml($block->getMethod()->getTitle());
                 <p><?php echo $block->escapeHtml($specificInfo['brand']) . ' - ##########' . $block->escapeHtml($specificInfo['last_4_digits']);?>
                 </p>
                 <p><?php echo $block->getInstallmentsInfo(); ?></p>
+                <?php if($block->hasTwoCard()):?>
+                            <hr></hr>
+                        <p><?php echo $block->escapeHtml($specificInfo['cc_owner_two_card']);?></p>
+                        <p><?php echo $block->escapeHtml($specificInfo['brand_two_card']) . ' - ##########' . $block->escapeHtml($specificInfo['last_4_digits_two_card']);?></p>
+                        <p><?php echo $block->getInstallmentsInfoTwoCard(); ?></p>
+                <?php endif;?>
             </div>
         </table>
     </dd>

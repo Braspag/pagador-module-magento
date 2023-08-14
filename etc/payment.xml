@@ -11,6 +11,9 @@
         <method name="braspag_pagador_pix">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
+        <method name="braspag_pagador_voucher">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
     </methods>
 
     <credit_cards>
@@ -232,5 +235,17 @@
             <label>Cielo</label>
         </type>
 
+        <!-- Voucher -->
+        <type id="Alelo" order='660'>
+            <label>Elo</label>
+        </type>
+        <type id="Ticket" order="670">
+            <label>Ticket</label>
+        </type>
+
+        <!-- Wallet -->
+        <type id="PayPal" order="700">
+            <label>PayPal</label>
+        </type>
     </credit_cards>
 </payment>

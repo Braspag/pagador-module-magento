@@ -8,6 +8,12 @@
  */
 -->
 
+<div data-bind="scope: 'two_card_braspag'">
+    <!-- ko template: getTemplate() -->
+    <!-- /ko -->
+</div>
+
+
 <fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}, afterRender: loadCreditCardForm()">
     <!-- ko if: (isShowLegend())-->
     <legend class="legend">
@@ -15,6 +21,32 @@
     </legend><br />
     <!-- /ko -->
 
+    <!-- ko if: (getCcAvailableTokens())-->
+    <div class="field token required" data-bind="attr: {id: getCode() + '_cc_token'}">
+        <label data-bind="attr: {for: getCode() + '_cc_token'}" class="label">
+            <span><!-- ko i18n: 'Card'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <div class="fields">
+                <div class="field token">
+                    <div class="control">
+                        <select  name="payment[cc_token]"
+                                 class="select select-cc-token"
+                                 data-bind="attr: {id: getCode() + '_cc_token', 'data-container': getCode() + '-cc-token', 'data-validate': JSON.stringify({required:true})},
+                                            enable: isActive($parents),
+                                            options: getCcAvailableTokensValues(),
+                                            optionsValue: 'token',
+                                            optionsText: 'alias',
+                                            value: creditCardToken">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- /ko -->
+
+  <!-- ko if: (showCardElement())-->
     <!-- ko if: (showType())-->
     <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
         <label data-bind="attr: {for: getCode() + '_cc_type'}" class="label">
@@ -68,7 +100,11 @@
                                     'data-validate': JSON.stringify({'required-number':true})},
                               enable: isActive($parents),
                               value: creditCardNumber,
-                              valueUpdate: 'keyup' "/>
+                              valueUpdate: 'keyup',
+                              event: {
+                                    blur: creditCardNumberType
+                                    }
+                              "/>
         </div>
     </div>
     <!-- ko if: (isSaveCardActive())-->
@@ -90,6 +126,33 @@
         </div>
     </div>
     <!-- /ko -->
+
+     <div class="field cpf-card required">
+        <label data-bind="attr: {for: getCode() + 'value'}" class="label">
+            <span>
+                <!-- ko i18n: 'Card owner taxvat'-->
+                <!-- /ko -->
+            </span>
+        </label>
+        <div class="control">
+            <input type="text" name="payment[cc_taxvat_card]" class="input-text" value="" data-bind="attr: {
+                                        autocomplete: off,
+                                        id: getCode() + '_cpf',
+                                        title: $t('Card owner taxvat'),
+                                        'data-container': getCode() + '-cpf',
+                                        'data-validate': JSON.stringify({'required':true})},
+                                enable: isActive($parents),
+                                value: creditCardTaxvat,
+                                valueUpdate: 'keyup',
+                                event: {
+                                    keyup: maskCPF,
+                                    blur: validCPF
+                                    }" />
+            <!-- ko if: (taxvatError)-->
+            <div class="return mage-error" generated="true" translate="'Please enter a valid document number.'"></div>
+            <!-- /ko -->
+        </div>
+    </div>
     <div class="field owner required" data-bind="attr: {id: getCode() + '_cc_owner_div'}">
         <label data-bind="attr: {for: getCode() + '_cc_owner'}" class="label">
             <span><!-- ko i18n: 'Name on Card'--><!-- /ko --></span>
@@ -179,6 +242,8 @@
         </div>
     </div>
     <!-- /ko -->
+<!-- /ko -->  
+
     <!-- ko if: (isInstallmentsActive())-->
     <div class="field installments required" data-bind="attr: {id: getCode() + '_cc_installments'}">
         <label data-bind="attr: {for: getCode() + '_installments'}" class="label">

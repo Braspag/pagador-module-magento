@@ -15,6 +15,7 @@ use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\RequestInterface as
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\QuoteFactory;
 use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
+use Braspag\BraspagPagador\Model\Request\CardTwo;
 
 /**
  * Braspag Transaction Boleto Send Request Builder
@@ -35,6 +36,7 @@ class RequestBuilder implements BuilderInterface
     protected $config;
     protected $quoteItemFactory;
     protected $quoteFactory;
+    protected $cardTwo;
 
     public function __construct(
         RequestFactory $requestFactory,
@@ -43,7 +45,8 @@ class RequestBuilder implements BuilderInterface
         RequestPaymentSplitLibInterface $requestPaymentSplit,
         ConfigInterface $config,
         QuoteFactory $quoteFactory,
-        ItemFactory $quoteItemFactory
+        ItemFactory $quoteItemFactory,
+        CardTwo $cardTwo
     ) {
         $this->setRequestFactory($requestFactory);
         $this->setAntiFraudRequest($requestAntiFraud);
@@ -52,10 +55,12 @@ class RequestBuilder implements BuilderInterface
         $this->setConfig($config);
         $this->setQuoteFactory($quoteFactory);
         $this->setQuoteItemFactory($quoteItemFactory);
+        $this->cardTwo = $cardTwo;
     }
 
-    public function build(array $buildSubject)
+    public function build(array $buildSubject, $typeCard = '')
     {
+
         if (!isset($buildSubject['payment']) || !$buildSubject['payment'] instanceof PaymentDataObjectInterface) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
@@ -94,6 +99,7 @@ class RequestBuilder implements BuilderInterface
 
         $request->setOrderAdapter($orderAdapter);
         $request->setPaymentData($paymentData);
+        $request->setCardType($typeCard);
         $request->setQuote($quote);
 
         return $request;
@@ -215,5 +221,27 @@ class RequestBuilder implements BuilderInterface
         $firstItem = array_pop($items);
         $quoteItemId = $firstItem->getQuoteItemId();
         return $quoteItemId;
+    }
+
+    public function hasCardTwo()
+    {
+        return $this->cardTwo->hasCardTwo();
+    }
+
+    public function cardTowData()
+    {
+        return $this->cardTwo->getData();
+    }
+
+    public function setResponse($response)
+    {
+        return $this->cardTwo->setData('response', $response);
+    }
+
+    public function buildCardTwoVoid()
+    {
+        $responseTwoCard =  $this->cardTwo->getData('response');
+        $paymentId =  $responseTwoCard->getPaymentPaymentId();
+        $this->cardTwo->build($paymentId);
     }
 }

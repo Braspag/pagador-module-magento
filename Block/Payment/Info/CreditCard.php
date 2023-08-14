@@ -64,6 +64,28 @@ class CreditCard extends Info
         return __('%1 Splitted in %2 ' . $time, $priceFormatted, $installments);
     }
 
+    public function getInstallmentsInfoTwoCard()
+    {
+        $installments = $this->paymentInfo->getAdditionalInformation('two_card_cc_installments');
+        $amountAuthorized = $this->getTwoCardAmount();
+        $priceFormatted = $this->getPriceHelper()->currency($amountAuthorized, true, false);
+        $time = $installments > 1 ? 'times' : 'time';
+
+        return __('%1 Splitted in %2 '. $time, $priceFormatted, $installments);
+    }
+
+    public function hasTwoCard()
+    {
+        $twoCardInfo = $this->paymentInfo->getAdditionalInformation('two_card_paymentId');
+        return  isset($twoCardInfo);
+    }
+
+    protected function getTwoCardAmount()
+    {
+       return str_replace( ',', '.', str_replace('.' , '', $this->paymentInfo->getAdditionalInformation('two_card_total_amount')));
+
+    }
+
     protected function getPriceHelper()
     {
         return $this->priceHelper;
@@ -74,4 +96,6 @@ class CreditCard extends Info
         $this->priceHelper = $priceHelper;
         return $this;
     }
+
+    
 }

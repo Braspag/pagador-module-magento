@@ -380,9 +380,8 @@ class PaymentManager
         if (!empty($this->types[$method])) {
             $type = $this->types[$method];
         }
-        
-        $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
 
+        $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
         if (!$paymentInfo) {
             return false;
         }

@@ -8,6 +8,7 @@ use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Capture\Reque
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 use Braspag\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
+use Braspag\BraspagPagador\Model\Request\CardTwo;
 
 /**
  * Capture Request
@@ -30,6 +31,8 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     protected $captureAmount;
 
+    protected $cardTwo;
+
     /**
      * @var
      */
@@ -42,10 +45,12 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function __construct(
         ConfigInterface $config,
-        GrandTotalPricingHelper $grandTotalPricingHelper
+        GrandTotalPricingHelper $grandTotalPricingHelper,
+        CardTwo $cardTwo
     ) {
         $this->setConfig($config);
         $this->grandTotalPricingHelper = $grandTotalPricingHelper;
+        $this->cardTwo = $cardTwo;
     }
 
     public function getMerchantId()
@@ -144,7 +149,13 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
             $captureAmount = $this->getOrderAdapter()->getGrandTotalAmount();
         }
 
-        $integerValue = $this->grandTotalPricingHelper->currency($captureAmount);
+        if ($this->cardTwo->getData('type_card') == 'two_card' || $this->cardTwo->getData('type_card') == 'capture_two_card' )
+        $grandTotalAmount =  str_replace(',', '.', $this->cardTwo->getData('total_amount'));
+
+        if ($this->cardTwo->getData('type_card') == 'primary_card')
+        $grandTotalAmount =  $captureAmount -  str_replace(',', '.', $this->cardTwo->getData('total_amount'));
+
+        $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
 
         return [
             'amount' => $integerValue

@@ -10,7 +10,7 @@
         <label>Authentication 3DS 2.0</label>
         <field id="authentication_3ds_20" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
             <label>Active</label>
-            <comment>Currently the Authentication 3DS 2.0 is available only for acquirer Cielo.</comment>
+            <comment>Currently the Authentication 3DS 2.0 is available only for acquirer Cielo. For 2 card's is not available</comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20</config_path>
         </field>

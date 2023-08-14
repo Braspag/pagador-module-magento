@@ -16,7 +16,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 abstract class AbstractConfig
 {
-    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'braspag_braspag/pagador/test_mode';
+    const CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_TEST_MODE = 'webjump_braspag/pagador/test_mode';
 
     protected $config;
     protected $context;
