@@ -77,6 +77,7 @@ abstract class AbstractApiCommand implements CommandInterface
 
     protected function prepareRequest($commandSubject, $handle, $typeCard = '')
     {
+
         $request = $this->getRequestBuilder()->build($commandSubject, $typeCard);
 
         if ($this->getRequestValidator()) {
