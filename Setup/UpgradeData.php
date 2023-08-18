@@ -39,6 +39,8 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
+        $setup->startSetup();
+
         if (version_compare($context->getVersion(), '3.14.0') < 0) {
             $this->upgradeThreeFourteenZero($setup, $context);
         }
