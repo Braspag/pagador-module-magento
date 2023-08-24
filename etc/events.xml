@@ -15,6 +15,9 @@
     <event name="payment_method_assign_data_braspag_pagador_pix">
         <observer name="braspag_payment_method_assign_data_braspag_pagador_pix" instance="Braspag\BraspagPagador\Observer\DataAssignObserver" />
     </event>
+    <event name="payment_method_assign_data_braspag_pagador_voucher">
+        <observer name="braspag_payment_method_assign_data_braspag_pagador_voucher" instance="Braspag\BraspagPagador\Observer\DataAssignObserver" />
+    </event>
     <event name="checkout_submit_all_after">
         <observer name="braspag_payment_checkout_submit_all_after" instance="Braspag\BraspagPagador\Observer\CheckoutSubmitAllAfterObserver" />
     </event>

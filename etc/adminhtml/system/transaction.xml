@@ -14,5 +14,7 @@
         <include path="Braspag_BraspagPagador::system/transaction/creditcardtoken.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/debitcard.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/pix.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/voucher.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/wallet.xml"/>
     </group>
 </include>

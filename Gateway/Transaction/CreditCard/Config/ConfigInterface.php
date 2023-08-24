@@ -46,6 +46,9 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_COMPLEMENT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/complement_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/district_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CREATE_INVOICE_NOTIFICATION_CAPTURE = 'payment/braspag_pagador_creditcard/create_invoice_on_notification_captured';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_TWO_CARD_ACTIVE = 'payment/braspag_pagador_creditcard/two_card_active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES_ACTIVE = 'payment/braspag_pagador_creditcard/installments_rules_active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES = 'payment/braspag_pagador_creditcard/installments_rules';
     const DEFAULT_DECIMAL_GRAND_TOTAL = 2;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_SUCCESS = 0;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_FAILURE = 1;
@@ -54,6 +57,7 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_ERROR = 4;
     const BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND = 5;
     const BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW = 'payment/braspag_pagador_creditcard/card_view';
+
 
     public function isAuthorizeAndCapture();
 
@@ -118,4 +122,10 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     public function isCardViewActive();
 
     public function isAutoDisablePreviousCardsToken();
+
+    public function isTwoCardActive();
+
+    public function isInstallmentsRulesActive();
+
+    public function getInstallmentsCardsRules();
 }

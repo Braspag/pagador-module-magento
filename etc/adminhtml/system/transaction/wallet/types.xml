@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (C) 2021 Signativa/FGP Desenvolvimento de Software
+ *  @author Esmerio Neto <esmerio.neto@signativa.com.br>
+ * SPDX-License-Identifier: Apache-2.0
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="braspag_braspag_pagador_transaction_wallet_providers" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+    	<label>Types</label>
+	    <field id="cctypes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="multiselect">
+	        <label>Types</label>
+	        <comment />
+	        <source_model>Braspag\BraspagPagador\Model\Source\WalletTypes</source_model>
+	        <config_path>payment/braspag_pagador_wallet/Wctypes</config_path>
+	    </field>
+	</group>
+</include>

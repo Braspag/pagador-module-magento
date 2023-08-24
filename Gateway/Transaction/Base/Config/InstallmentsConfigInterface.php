@@ -11,6 +11,8 @@ interface InstallmentsConfigInterface
     const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE = 'payment/%s/installments_interest_rate';
     const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_BY_ISSUER = 'payment/%s/installments_interest_by_issuer';
     const CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_MAX_WITHOUT_INTEREST = 'payment/%s/installments_max_without_interest';
+	const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES_ACTIVE = 'payment/%s/installments_rules_active';
+    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES = 'payment/%s/installments_rules';
 
     public function isActive();
 
@@ -25,4 +27,9 @@ interface InstallmentsConfigInterface
     public function isInterestByIssuer();
 
     public function getInstallmentsMaxWithoutInterest();
+
+	public function isInstallmentsRulesActive();
+
+    public function getInstallmentsCardsRules();
+
 }

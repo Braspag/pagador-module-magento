@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (C) 2021 Signativa/FGP Desenvolvimento de Software
+ *  @author Esmerio Neto <esmerio.neto@signativa.com.br>
+ * SPDX-License-Identifier: Apache-2.0
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="braspag_braspag_pagador_transaction_voucher_cardview" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="100">
+        <label>Checkout Card View</label>
+        <field id="cardview" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+            <label>Active</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_voucher/card_view</config_path>
+        </field>
+    </group>
+</include>

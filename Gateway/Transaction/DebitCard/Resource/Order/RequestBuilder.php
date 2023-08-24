@@ -190,4 +190,12 @@ class RequestBuilder implements BuilderInterface
     {
         return $this->requestAntiFraud;
     }
+    
+    /**
+    * @return bool
+    */
+    public function hasCardTwo()
+    {
+        return false;
+    }
 }

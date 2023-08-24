@@ -5,14 +5,14 @@
  *
  * @link        http://www.webjump.com.br
  */
- /*browser:true*/
+/*browser:true*/
 /*global define*/
 define(
     [
         "jquery",
-    	"Braspag_BraspagPagador/js/vendor/card.view",
+        "Braspag_BraspagPagador/js/vendor/card.view",
     ],
-    function(
+    function (
         $,
         cardView
     ) {
@@ -22,11 +22,15 @@ define(
 
             isCreditCardViewEnabled: function () {
                 return window.checkoutConfig.payment.ccform.card_view.active;
-        	},
+            },
 
             isDebitCardViewEnabled: function () {
                 return window.checkoutConfig.payment.dcform.card_view.active;
-        	},
+            },
+
+            isVoucherViewEnabled: function () {
+                return window.checkoutConfig.payment.vcform.card_view.active;
+            },
 
             initialize: function () {
             },

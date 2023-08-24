@@ -56,11 +56,20 @@
                                                                         </item>
                                                                          <item name="braspag_pagador_pix" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-                                                                        </item>
+                                                                         </item>
+                                                                           
+                                                                        <item name="braspag_pagador_voucher" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>  
+
+                                                                        <!-- <item name="braspag_pagador_wallet" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item> -->
+
+                                                                        
                                                                     </item>
                                                                 </item>
                                                             </item>
-
                                                         </item>
                                                     </item>
                                                 </item>
@@ -68,6 +77,12 @@
                                         </item>
                                     </item>
                                 </item>
+                            </item>
+                        </item>
+                        <item name="two_card_braspag" xsi:type="array">
+                            <item name="component" xsi:type="string">Braspag_BraspagPagador/js/view/payment/method-renderer/two-card</item>
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">Braspag_BraspagPagador/payment/two-card</item>
                             </item>
                         </item>
                     </item>

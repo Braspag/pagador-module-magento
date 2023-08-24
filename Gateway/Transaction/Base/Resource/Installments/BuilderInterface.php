@@ -4,5 +4,5 @@ namespace Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Installments;
 
 interface BuilderInterface
 {
-    public function build();
+    public function build($amount , $cardType);
 }

@@ -122,6 +122,19 @@
         </arguments>
     </virtualType>
 
+
+<!-- Voucher -->
+    <virtualType name="BraspagTransactionVoucherOrderUiConfigProvider" type="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="braspag_pagador_voucher" xsi:type="const">Braspag\BraspagPagador\Model\Payment\Transaction\Voucher\Ui\ConfigProvider::CODE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+<!-- End Voucher-->
+
+
     <!-- Config Ui Provider -->
 
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
@@ -139,6 +152,9 @@
                 <item name="braspag_pagador_pix_config_provider" xsi:type="object">\Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider</item>
 
                 <item name="braspag_pagador_pix_logo_config_provider" xsi:type="object">Braspag\BraspagPagador\Model\LogoConfigProvider</item>
+
+                <item name="braspag_pagador_voucher_config_provider" xsi:type="object">BraspagTransactionVoucherOrderUiConfigProvider</item>
+                <item name="braspag_pagador_voucher_default_config_provider" xsi:type="object">\Braspag\BraspagPagador\Model\Payment\Transaction\Voucher\Ui\ConfigProvider</item>
 
             </argument>
         </arguments>

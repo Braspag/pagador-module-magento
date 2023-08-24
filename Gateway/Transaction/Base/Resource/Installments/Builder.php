@@ -49,15 +49,27 @@ class Builder implements BuilderInterface
         $this->setState($state);
     }
 
-    public function build()
+    public function build($amount = false, $cardType = false)
     {
-        $installmentItems = $this->getInstallmentsNumber();
-        for ($i = 1; $i < $installmentItems; $i++) {
-            if (!$this->canProcessInstallment($i)) {
+
+        if(!$amount)
+           $amount =  $this->getGrandTotal();
+
+        $amount = str_replace( ',', '.', str_replace('.' , '', $amount));
+        
+        if ($cardType) {
+            $installmentItems = $this->getInstallmentsNumber($cardType);
+        } else {
+            $installmentItems = $this->getInstallmentsNumber();
+        }
+       
+        for ($i = 1; $i < $installmentItems ; $i++) {
+
+            if (!$this->canProcessInstallment($i, $amount, $cardType)) {
                 break;
             }
 
-            $installment = $this->getInstallmentFactory()->create($i, $this->getGrandTotal(), $this->getInstallmentsConfig());
+            $installment = $this->getInstallmentFactory()->create($i, $amount, $this->getInstallmentsConfig());
             $this->addInstallment($installment);
         }
 
@@ -71,16 +83,31 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function canProcessInstallment($i)
+    protected function canProcessInstallment($i, $amount, $cardType = false)
     {
-        $installmentAmount = $this->getGrandTotal() / $i;
-        return !($i > 1 && $installmentAmount < $this->getInstallmentsConfig()->getInstallmentMinAmount());
+
+        $minAmount = $this->getInstallmentsConfig()->getInstallmentMinAmount();
+
+        if ($cardType) {
+          if($this->isInstallmentsRulesActive() &&  $this->getInstallmentsCardsRules($cardType))
+          $minAmount = $this->getInstallmentsCardsRules($cardType)['min_amount'];
+        }
+  
+        $installmentAmount = $amount / $i;
+        return !($i > 1 && $installmentAmount <  (int)$minAmount);
     }
 
-    protected function getInstallmentsNumber()
+    protected function getInstallmentsNumber($cardType = false)
     {
+      $minNumber =  $this->getInstallmentsConfig()->getInstallmentsNumber();
+
+      if ($cardType) {
+        if($this->isInstallmentsRulesActive() &&  $this->getInstallmentsCardsRules($cardType))
+        $minNumber = $this->getInstallmentsCardsRules($cardType)['number'];
+      }
+      
         if (!$this->installmentsNumber) {
-            $this->installmentsNumber = (int) $this->getInstallmentsConfig()->getInstallmentsNumber();
+            $this->installmentsNumber = (int) $minNumber;
             $this->installmentsNumber++;
         }
 
@@ -113,9 +140,34 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    protected function isInstallmentsRulesActive() :bool
+    {
+        return boolval( $this->getInstallmentsConfig()->isInstallmentsRulesActive());
+    }
+
     protected function getInstallmentFactory()
     {
         return $this->installmentFactory;
+    }
+
+      /**
+     * @param   $type
+     * @return array|mixed
+     */
+    protected function getInstallmentsCardsRules($type)
+    {
+    
+        $arrayRulesConfig = $this->getInstallmentsConfig()->getInstallmentsCardsRules();
+
+        if (isset($arrayRulesConfig)) {
+            $arrayRulesConfig = json_decode($arrayRulesConfig, true);
+            foreach ($arrayRulesConfig as $rule) {        
+                if(isset($rule['types']) && $rule['types'] == $type)
+                  return $rule;
+            }
+        }
+
+        return false;
     }
 
     protected function setInstallmentFactory(InstallmentFactoryInterface $installmentFactory)
