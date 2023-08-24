@@ -74,4 +74,9 @@ class Config extends AbstractConfig implements ConfigInterface
     {
         return $this->_getConfig(self::CONFIG_XML_PIX_LOGO);
     }
+
+    public function getDeadline()
+    {
+        return $this->_getConfig(self::CONFIG_XML_PIX_DEADLINE);
+    }
 }

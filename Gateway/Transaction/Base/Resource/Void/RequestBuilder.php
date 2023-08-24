@@ -18,6 +18,7 @@ use Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface;
 class RequestBuilder implements BuilderInterface
 {
     protected $request;
+    protected $config;
 
     public function __construct(
         RequestInterface $request,
@@ -44,8 +45,16 @@ class RequestBuilder implements BuilderInterface
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
+    
         $paymentDataObject = $buildSubject['payment'];
         $orderAdapter = $paymentDataObject->getOrder();
+
+
+        $method = $paymentDataObject->getPayment()->getMethodInstance();
+        $methodCode = $method->getCode();
+
+       if ($methodCode == 'braspag_pagador_pix')
+        return ;
 
         $paymentId = $paymentDataObject->getPayment()->getAdditionalInformation('payment_token');
 

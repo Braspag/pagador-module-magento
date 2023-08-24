@@ -24,8 +24,8 @@ interface ConfigInterface
     const CONFIG_XML_PIX_ORDER_STATUS = 'payment/braspag_pagador_pix/order_status';
     const CONFIG_XML_PIX_ORDER_STATUS_PROCESSING = 'payment/braspag_pagador_pix/order_status_processing';
     const CONFIG_XML_PIX_CRON_CANCEL_PENDING = 'payment/braspag_pagador_pix/cron_cancel_pending';
-
     const CONFIG_XML_PIX_LOGO = 'payment/braspag_pagador_pix/logo';
+    const CONFIG_XML_PIX_DEADLINE = 'payment/braspag_pagador_pix/deadline';
 
     const DATE_FORMAT = 'Y-m-d';
     const DAY_FORMAT = '+%s day';
@@ -53,4 +53,6 @@ interface ConfigInterface
     public function getPixCronCancelPending();
 
     public function getLogo();
+
+    public function getDeadline();
 }

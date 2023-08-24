@@ -4,5 +4,8 @@
         <job name="braspag_payment_split_transaction_post" instance="Braspag\BraspagPagador\Cron\PaymentSplitTransactionPost" method="execute">
             <schedule>*/10 * * * *</schedule>
         </job>
+        <job name="braspaga_pix_cancel_orders" instance="Braspag\BraspagPagador\Cron\PixCancelOrders" method="execute">
+			<schedule>0 0 * * * </schedule>
+		</job>
     </group>
 </config>

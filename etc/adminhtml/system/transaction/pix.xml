@@ -65,6 +65,14 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_pix/cron_cancel_pending</config_path>
         </field>
+        <field id="deadline" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="26" translate="label" type="text">
+	        <label>Canceling Days</label>
+	        <comment />
+	        <config_path>payment/braspag_pagador_pix/deadline</config_path>
+              <depends>
+                <field id="cron_cancel_pending">1</field>
+            </depends>
+	    </field>
 	    <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 	        <label>Sort Order</label>
 	        <comment />
