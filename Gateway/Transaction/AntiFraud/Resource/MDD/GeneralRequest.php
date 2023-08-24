@@ -86,6 +86,12 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return $this->getConfig()->getStoreCode();
     }
 
+    public function getVerticalSegment()
+    {
+        return $this->getConfig()->getVerticalSegment();
+    }
+
+
     public function getHasGiftCard()
     {
         $quote = $this->getConfig()->getQuote();
@@ -195,4 +201,14 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
     {
         return null;
     }
+
+    /**
+    * @return string
+    * @codeCoverageIgnore
+    */
+    public function getPlataformName()
+    {
+        return 'Magento';
+    }
+
 }
