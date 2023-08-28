@@ -99,6 +99,12 @@ class PaymentStatusChangedCommand
                 ->registerCapturedPayment($braspagPaymentData, $magentoPaymentData, $createInvoice);
         }
 
+         // 2 = capture
+         if ($paymentType == 'pix' && $paymentStatus == 2) {
+            return $this->getPaymentManager()->registerCapturedPayment($braspagPaymentData, $magentoPaymentData, true);
+         }
+
+
         // 3 = Denied/10 = Voided/13 = Aborted
         if (in_array($paymentStatus, [3, 10, 13])) {
             return $this->getPaymentManager()->registerCanceledPayment($braspagPaymentData, $magentoPaymentData, true);
