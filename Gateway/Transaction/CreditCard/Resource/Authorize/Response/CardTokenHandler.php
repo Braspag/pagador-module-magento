@@ -57,6 +57,12 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
 
 
     /**
+     * @var CardTokenRepositoryInterface
+     */
+    protected $CardTokenRepository;
+
+
+    /**
      * CardTokenHandler constructor.
      *
      * @param CardTokenRepositoryInterface $cardTokenRepository

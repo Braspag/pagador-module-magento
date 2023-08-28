@@ -27,20 +27,12 @@ define(
                 component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard'
             },
             {
-                type: 'braspag_pagador_creditcardtoken',
-                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/token'
-            },
-            {
                 type: 'braspag_pagador_debitcard',
                 component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/debitcard'
             },
             {
                 type: 'braspag_pagador_pix',
                 component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/pix'
-            },
-            {
-                type: 'braspag_pagador_voucher',
-                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/voucher'
             },
             {
                 type: 'braspag_pagador_wallet',

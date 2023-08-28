@@ -80,6 +80,12 @@ class CreditCard extends Info
         return  isset($twoCardInfo);
     }
 
+    
+    public function getTwoCardData($attr)
+    {
+        return  $this->paymentInfo->getAdditionalInformation($attr);
+    }
+
     protected function getTwoCardAmount()
     {
        return str_replace( ',', '.', str_replace('.' , '', $this->paymentInfo->getAdditionalInformation('two_card_total_amount')));

@@ -11,10 +11,10 @@
         <frontend_model>Braspag\BraspagPagador\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
         <include path="Braspag_BraspagPagador::system/transaction/boleto.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/creditcard.xml"/>
-        <include path="Braspag_BraspagPagador::system/transaction/creditcardtoken.xml"/>
+       <!-- <include path="Braspag_BraspagPagador::system/transaction/creditcardtoken.xml"/>-->
         <include path="Braspag_BraspagPagador::system/transaction/debitcard.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/pix.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/voucher.xml"/>
-        <include path="Braspag_BraspagPagador::system/transaction/wallet.xml"/>
+       <!-- <include path="Braspag_BraspagPagador::system/transaction/wallet.xml"/>-->
     </group>
 </include>

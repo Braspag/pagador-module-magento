@@ -115,6 +115,11 @@
             </div>
         </div>
     </div>
+
+    <!-- ko if: (!showType())-->
+    <input name="payment[cc_type_tow]" type="hidden" class="creditcard-type-two"/>
+    <!-- /ko -->
+
     <div class="field number required">
         <label data-bind="attr: {for: getCode() + '_cc_number'}" class="label">
             <span>

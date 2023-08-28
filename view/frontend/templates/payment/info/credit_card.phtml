@@ -18,8 +18,8 @@ $title = $block->escapeHtml($block->getMethod()->getTitle());
                 <p><?php echo $block->getInstallmentsInfo(); ?></p>
                 <?php if($block->hasTwoCard()):?>
                             <hr></hr>
-                        <p><?php echo $block->escapeHtml($specificInfo['cc_owner_two_card']);?></p>
-                        <p><?php echo $block->escapeHtml($specificInfo['brand_two_card']) . ' - ##########' . $block->escapeHtml($specificInfo['last_4_digits_two_card']);?></p>
+                        <p><?php echo  $block->getInstallmentsInfoTwoCard('two_card_cc_owner');?></p>
+                        <p><?php echo  $block->getInstallmentsInfoTwoCard('two_card_type'). ' - ##########' .$block->getInstallmentsInfoTwoCard('two_card_last_4');?></p>
                         <p><?php echo $block->getInstallmentsInfoTwoCard(); ?></p>
                 <?php endif;?>
             </div>

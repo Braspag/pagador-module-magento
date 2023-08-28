@@ -77,6 +77,9 @@ class PaymentStatusChangedCommand
     {
         $paymentInfo = $this->getPaymentManager()->getPaymentInfo($paymentId);
 
+        if(!isset($paymentInfo['paymentType']))
+         return true;
+
         $paymentType = $paymentInfo['paymentType'];
         $braspagPaymentData = $paymentInfo['paymentInfo'];
         $magentoPaymentData = $paymentInfo['orderPayment'];

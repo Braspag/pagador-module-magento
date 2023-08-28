@@ -75,23 +75,30 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $additionalData = new DataObject($additionalData ?: []);
         }
 
-        list($provider, $brand) = array_pad(explode('-', $additionalData->getCcType(), 2), 2, null);
+        $ccType = $additionalData->getCcType();
+        $ccNumber = $additionalData->getCcNumber();
+        $ccToken = $additionalData->getCcToken();
 
+       if (isset($ccNumber) && isset($ccType)) {
 
-        $info->addData([
-            'cc_type' => $additionalData->getCcType(),
-            'cc_owner' => $additionalData->getCcOwner(),
-            'cc_number' => ($additionalData->getCcNumber()) ? preg_replace('/\D/', '', $additionalData->getCcNumber()): null,
-            'cc_last_4' => ($additionalData->getCcNumber()) ?   substr($additionalData->getCcNumber(), -4) : null,
-            'cc_cid' => $additionalData->getCcCid(),
-            'cc_exp_month' => $additionalData->getCcExpMonth(),
-            'cc_exp_year' => $additionalData->getCcExpYear(),
-            'cc_provider' => $provider
-        ]);
+            list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
-        if ($brand) {
-            $info->setAdditionalInformation('cc_brand', $brand);
-        }
+            $info->addData([
+                'cc_type' => $ccType,
+                'cc_owner' => $additionalData->getCcOwner(),
+                'cc_number' => preg_replace('/\D/', '', $ccNumber),
+                'cc_last_4' => substr($ccNumber, -4),
+                'cc_cid' => $additionalData->getCcCid(),
+                'cc_exp_month' => $additionalData->getCcExpMonth(),
+                'cc_exp_year' => $additionalData->getCcExpYear(),
+                'cc_provider' => $provider
+            ]);
+    
+            if ($brand) {
+                $info->setAdditionalInformation('cc_brand', $brand);
+            }
+
+         }
 
         $info->setAdditionalInformation('cc_installments', 1);
 

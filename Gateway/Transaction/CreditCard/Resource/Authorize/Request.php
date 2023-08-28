@@ -445,32 +445,41 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentProvider()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
+        $ccType = $this->getPaymentData()->getCcType();
 
+       // if ($this->getPaymentData()->getAdditionalInformation('cc_token') || !isset($ccType))
+          //return '';
 
-        if ($this->getCardType() == 'two_card')
-            $type = $this->cardTwo->getData('cc_type');
+        if ($this->getPaymentData()->getCcType()) {
 
-        if ($provider === "Braspag") {
-            $availableTypes = explode(',', $this->getConfig()->getCcTypes());
+            list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
-            foreach ($availableTypes as $key => $availableType) {
-                $typeDetail = explode("-", $availableType);
-                if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
-                    return $typeDetail[0];
+            if ($provider === "Braspag") {
+                $availableTypes = explode(',', $this->getConfig()->getCcTypes());
+    
+                foreach ($availableTypes as $key => $availableType) {
+                    $typeDetail = explode("-", $availableType);
+                    if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
+                        return $typeDetail[0];
+                    }
                 }
+    
+                if ($this->getConfig()->getIsTestEnvironment()) {
+                    return "Simulado";
+                }
+    
+                return "";
             }
+    
+            return $provider;
 
-            if ($this->getConfig()->getIsTestEnvironment()) {
-                return "Simulado";
-            }
-
-            return "";
         }
-
-        return $provider;
+        
+        return "";
+     
     }
+
 
     /**
      * @return int
@@ -587,7 +596,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     {
         $ccType =  $this->getPaymentData()->getCcType();
 
-        if ($this->getPaymentData()->getAdditionalInformation('cc_token'))
+        if ($this->getPaymentData()->getAdditionalInformation('cc_token') || $this->cardTwo->getData('cc_token'))
           return null;
 
         if ($this->getCardType() == 'two_card') 

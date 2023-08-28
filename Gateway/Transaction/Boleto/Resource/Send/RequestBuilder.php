@@ -23,6 +23,8 @@ class RequestBuilder implements BuilderInterface
 {
     protected $requestFactory;
     protected $orderRepository;
+    protected $requestPaymentSplit;
+    protected $config;
 
     /**
      * RequestBuilder constructor.

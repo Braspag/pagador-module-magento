@@ -97,26 +97,13 @@ define(
                // this.loadCreditCardForm();
                 this.creditCardAmount(0);
 
-               // $(document).on('change', '.select-cc-token', this._setupChangeEvents.bind(this));
             },
 
 
-            // /**
-            // * Create template Participant Selected
-            // */
-            // _setupChangeEvents(event) {
-            //     event.stopImmediatePropagation();
-            //     var self = this;
-
-            //     console.log(event);
-
-
-            // },
-
-            maskCvv: function (data, event) {
+             maskCvv: function (data, event) {
                 var maxlength = 4;
 
-                let creditCardType = $('.creditcard-type');
+                let creditCardType = $('.creditcard-type-two');
 
                 if (
                     creditCardType.val() === 'Cielo-Amex' ||
@@ -323,7 +310,7 @@ define(
 
                 let showType = this.showType();
                 let creditCardNumber = this.creditCardNumber();
-                let creditCardType = $('.creditcard-type');
+                let creditCardType = $('.creditcard-type-two');
 
                 if (!showType && typeof creditCardNumber === undefined) {
                     return '';
@@ -684,7 +671,7 @@ define(
             getPlaceOrderDeferredObject: function () {
 
                 let creditCardNumber = this.creditCardNumber();
-                let creditCardType = $('.creditcard-type');
+                let creditCardType = $('.creditcard-type-two');
 
                 card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
