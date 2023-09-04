@@ -242,12 +242,14 @@ define(
                         'authentication_eci': this.bpmpiAuthEci(),
                         'authentication_version': this.bpmpiAuthVersion(),
                         'authentication_reference_id': this.bpmpiAuthReferenceId(),
-                        'cc_token': this.cardTokenValue()
+                        'cc_token': this.cardTokenValue(),
+                        'cc_taxvat': this.creditCardTaxvat(),
+                        'cc_installments_text' :$('select#braspag_pagador_creditcard_installments option:selected').text()
                     }
                 };
                 
                 let towCardComponent = uiRegistry.get("two_card_braspag");
-
+                
                 if (towCardComponent != undefined) {
                     
                     data.additional_data.cc_amount_card2 = towCardComponent.creditCardAmount()
@@ -258,9 +260,10 @@ define(
                     data.additional_data.cc_owner_card2 = towCardComponent.creditCardOwner()
                     data.additional_data.cc_installments_card2 = towCardComponent.creditCardInstallments()
                     data.additional_data.card_cc_token_card2 = towCardComponent.cardTokenValue()
+                    data.additional_data.cc_installments_text_card2 = $('select#braspag_pagador_creditcard_two_card_installments option:selected').text()
 
                     if (towCardComponent.creditCardType() != undefined) {
-                        data.additional_data.cc_type_card2 = towCardComponent.creditCardType()
+                        data.additional_data.cc_type_card2 = towCardComponent.creditCardTypeCustom()
                     }
                 }
               

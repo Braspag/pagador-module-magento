@@ -49,6 +49,8 @@ class CardTwo extends \Magento\Framework\DataObject
                     'taxvat_card' => isset($data['cc_taxvat']) ? $data['cc_taxvat']: null,
                     'transactionId' => isset($data['two_card_payment_id']) ? $data['two_card_payment_id']: null,
                     'cc_token' => isset($data['card_cc_token_card2']) ? $data['card_cc_token_card2']: null,
+                    'cc_alias' => isset($data['cc_alias_card2']) ? $data['cc_alias_card2']: null,
+                    'cc_installments_text' => isset($data['cc_installments_text_card2']) ? $data['cc_installments_text_card2']: null,
                 ]
             )->toArray();
         }

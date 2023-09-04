@@ -54,14 +54,44 @@ class CreditCard extends Info
         return parent::_prepareSpecificInformation($data);
     }
 
+    public function getCardInfo()
+    {
+        $cardLast4 =  ' - xxxx-xxxx-xxxx-' .$this->paymentInfo->getCcLast4();
+
+        if ($this->paymentInfo->getAdditionalInformation('cc_token'))
+          $cardLast4 =  ' - ' .$this->paymentInfo->getAdditionalInformation('cc_alias');
+
+        return  $this->paymentInfo->getCcType().' '.  $cardLast4;
+
+    }
+
+    public function getCardInfoTwoCard()
+    {
+        $cardLast4 =  ' - xxxx-xxxx-xxxx-' .$this->paymentInfo->getAdditionalInformation('two_card_last_4');
+
+        if ($this->paymentInfo->getAdditionalInformation('card_cc_token_card2'))
+          $cardLast4 =  ' - ' .$this->paymentInfo->getAdditionalInformation('card_cc_alias_card2');
+
+        return  $this->paymentInfo->getAdditionalInformation('two_card_type').' '.  $cardLast4;
+
+    }
+
     public function getInstallmentsInfo()
     {
+
         $installments = $this->paymentInfo->getAdditionalInformation('cc_installments');
         $amountAuthorized = $this->paymentInfo->getAmountAuthorized();
-        $priceFormatted = $this->getPriceHelper()->currency($amountAuthorized, true, false);
-        $time = $installments > 1 ? 'times' : 'time';
 
-        return __('%1 Splitted in %2 ' . $time, $priceFormatted, $installments);
+        $twoCardAmount = $this->getTwoCardAmount();
+
+        if($twoCardAmount)
+        $amountAuthorized = $amountAuthorized - $this->getTwoCardAmount();
+
+        $priceFormatted = $this->getPriceHelper()->currency(abs($amountAuthorized), true, false);
+        $time = $installments > 1 ? 'times' : 'time';
+        
+        return $priceFormatted . ' em '. str_replace('*', '', $this->paymentInfo->getAdditionalInformation('cc_installments_text'));
+
     }
 
     public function getInstallmentsInfoTwoCard()
@@ -71,7 +101,8 @@ class CreditCard extends Info
         $priceFormatted = $this->getPriceHelper()->currency($amountAuthorized, true, false);
         $time = $installments > 1 ? 'times' : 'time';
 
-        return __('%1 Splitted in %2 '. $time, $priceFormatted, $installments);
+        return $priceFormatted . ' em '. str_replace('*', '', $this->paymentInfo->getAdditionalInformation('cc_installments_text_card2'));
+
     }
 
     public function hasTwoCard()
@@ -80,7 +111,17 @@ class CreditCard extends Info
         return  isset($twoCardInfo);
     }
 
-    
+    public function getTwoCardCcOwner()
+    {
+        return  $this->paymentInfo->getAdditionalInformation('two_card_cc_owner');
+    }
+
+
+    public function getCardCcOwner()
+    {
+        return  $this->paymentInfo->getAdditionalInformation('cc_owner');
+    }
+  
     public function getTwoCardData($attr)
     {
         return  $this->paymentInfo->getAdditionalInformation($attr);
@@ -88,7 +129,12 @@ class CreditCard extends Info
 
     protected function getTwoCardAmount()
     {
-       return str_replace( ',', '.', str_replace('.' , '', $this->paymentInfo->getAdditionalInformation('two_card_total_amount')));
+        $amount = $this->paymentInfo->getAdditionalInformation('two_card_total_amount');
+
+        if(!isset($amount))
+         return false;
+
+        return str_replace( ',', '.', str_replace('.' , '', $this->paymentInfo->getAdditionalInformation('two_card_total_amount')));
 
     }
 

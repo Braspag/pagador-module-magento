@@ -80,6 +80,7 @@
   <!-- /ko -->
   
   <!-- ko if: (showCardElement())-->
+      <!-- ko if: (showType())-->
     <div class="field type required" data-bind="attr: {id: getCode() + '_cc_type'}">
         <label data-bind="attr: {for: getCode() + '_cc_type'}" class="label">
             <span>
@@ -115,6 +116,7 @@
             </div>
         </div>
     </div>
+        <!-- /ko -->
 
     <!-- ko if: (!showType())-->
     <input name="payment[cc_type_tow]" type="hidden" class="creditcard-type-two"/>

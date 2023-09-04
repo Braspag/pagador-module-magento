@@ -41,7 +41,7 @@ class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInt
 
     public function getInterestRate()
     {
-        return ((int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
+        return ( $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
     }
 
     public function isInterestByIssuer()

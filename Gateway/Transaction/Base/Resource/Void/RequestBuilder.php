@@ -22,6 +22,8 @@ class RequestBuilder implements BuilderInterface
 
     protected $cardTwo;
 
+    protected $config;
+
     public function __construct(
         RequestInterface $request,
         ConfigInterface $config,

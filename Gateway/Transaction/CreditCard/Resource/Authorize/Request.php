@@ -24,6 +24,7 @@ use Magento\Payment\Model\InfoInterface;
 use Braspag\BraspagPagador\Helper\GrandTotal\Pricing as GrandTotalPricingHelper;
 use Braspag\BraspagPagador\Model\Request\CardTwo as TowCard;
 
+
 /**
  * Class Request
  * @package Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize
@@ -96,6 +97,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     protected $cardTwo;
 
+    
     /**
      * Request constructor.
      * @param ConfigInterface $config
@@ -166,21 +168,24 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerIdentity()
     {
+
         if ($this->getCardType() == 'two_card') {
             $taxVat = $this->cardTwo->getData('taxvat_card2');
+            if(!is_null($taxVat) || isset($taxVat))
             return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
         }
 
         if ($this->getCardType() == 'primary_card') {
-            $taxVat = $this->cardTwo->getData('taxvat_card');
-           
-            if(!is_null($taxVat))
+            $taxVat = $this->cardTwo->getData('taxvat_card');           
+            if(!is_null($taxVat) || isset($taxVat) )
               return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
         }
 
-        
-        $attribute = $this->getConfig()->getIdentityAttributeCode();
+        $ccTaxvat = $this->getPaymentData()->getAdditionalInformation('cc_taxvat');
+        if(!is_null($ccTaxvat) || isset($ccTaxvat) )
+          return $this->helperData->removeSpecialCharactersFromTaxvat($ccTaxvat);
 
+                  
         return $this->helperData->removeSpecialCharactersFromTaxvat(
             ( $this->getQuote()->getBillingAddress()->getData('vat_id') != null ) ? 
             $this->getQuote()->getBillingAddress()->getData('vat_id') : 
@@ -412,15 +417,21 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentAmount()
     {
         $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
+        $installment = $this->getPaymentInstallments();
 
-        if ($this->getCardType() == 'two_card')
+          if ($this->getCardType() == 'two_card')
             $grandTotalAmount =   str_replace(',', '.',  $this->cardTwo->getData('total_amount'));
 
         if ($this->getCardType() == 'primary_card')
             $grandTotalAmount =  $grandTotalAmount -  str_replace(',', '.',  $this->cardTwo->getData('total_amount'));
 
-        $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
-
+        if ($this->getInstallmentsConfig()->isInterestByIssuer() && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
+            $amountTotal =  $this->calcPriceWithInterest( $installment, $grandTotalAmount, $this->getInstallmentsConfig()->getInterestRate() );
+            $integerValue = $this->grandTotalPricingHelper->currency($amountTotal * $installment);
+        } else {
+            $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
+        }
+        
         return $integerValue;
     }
 
@@ -908,5 +919,12 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     protected function getQuoteShippingAddress()
     {
         return $this->getQuote()->getShippingAddress();
+    }
+
+
+    protected function calcPriceWithInterest($i, $total, $interestRate)
+    {
+        $price = $total * $interestRate / (1 - (1 / pow((1 + $interestRate), $i)));
+        return sprintf("%01.2f", $price);
     }
 }

@@ -99,6 +99,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             }
 
          }
+         
 
         $info->setAdditionalInformation('cc_installments', 1);
 
@@ -113,15 +114,31 @@ class DataAssignObserver extends AbstractDataAssignObserver
         if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {
             $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
+            $info->setAdditionalInformation('cc_alias', $cardToken->getAlias());
+        }
+
+        if ($cardTokenTwo = $this->getCardTokenRepository()->get($additionalData->getData('card_cc_token_card2'))) {
+            $additionalData->setData('cc_alias_card2', $cardTokenTwo->getAlias());
         }
 
         if ($additionalData->getCcSoptpaymenttoken()) {
             $info->setAdditionalInformation('cc_soptpaymenttoken', $additionalData->getCcSoptpaymenttoken());
         }
 
+        if ($additionalData->getCcTaxvat()) {
+            $info->setAdditionalInformation('cc_taxvat', $additionalData->getCcTaxvat());
+        }
+
+        if ($additionalData->getCcInstallmentsText()) {
+            $info->setAdditionalInformation('cc_installments_text', $additionalData->getCcInstallmentsText());
+        }
+
+        if ($additionalData->getCcOwner()) {
+            $info->setAdditionalInformation('cc_owner', $additionalData->getCcOwner());
+        }
 
         $this->cardTwo->setAdditionalData($additionalData)->execute();
-
+        
         $this->processExtraData($additionalData, $info);
 
         return $this;
