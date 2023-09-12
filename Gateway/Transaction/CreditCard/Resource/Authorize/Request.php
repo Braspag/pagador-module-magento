@@ -149,7 +149,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getMerchantOrderId()
     {
-        return $this->getCardType() == 'two_card' ?  $this->getOrderAdapter()->getOrderIncrementId() . '_' . self::CODE_BY_CARD :  $this->getOrderAdapter()->getOrderIncrementId();
+        return  $this->getOrderAdapter()->getOrderIncrementId();
+        //return $this->getCardType() == 'two_card' ?  $this->getOrderAdapter()->getOrderIncrementId() . '_' . self::CODE_BY_CARD :  $this->getOrderAdapter()->getOrderIncrementId();
 
     }
 
