@@ -27,10 +27,6 @@ define(
                 component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard'
             },
             {
-                type: 'braspag_pagador_creditcardtoken',
-                component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/token'
-            },
-            {
                 type: 'braspag_pagador_debitcard',
                 component: 'Braspag_BraspagPagador/js/view/payment/method-renderer/debitcard'
             },

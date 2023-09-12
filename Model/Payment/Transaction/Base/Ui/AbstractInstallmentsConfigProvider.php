@@ -35,6 +35,7 @@ abstract class AbstractInstallmentsConfigProvider implements ConfigProviderInter
 
     public function getConfig()
     {
+
         $config = [
             'payment' => [
                 'ccform' => [

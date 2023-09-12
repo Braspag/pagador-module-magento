@@ -40,9 +40,7 @@ class CardTokenManager implements CardTokenManagerInterface
      */
     protected $config;
 
-    /**
-     * @var CardTokenRepositoryInterface
-     */
+    
     protected $CardTokenRepository;
 
 

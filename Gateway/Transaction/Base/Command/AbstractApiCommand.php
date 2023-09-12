@@ -34,6 +34,8 @@ abstract class AbstractApiCommand implements CommandInterface
 
     protected $responseValidator;
 
+    protected $twoCardResponse;
+
     public function __construct(
         BraspagApi $api,
         RequestBuilder $requestBuilder,
@@ -48,11 +50,35 @@ abstract class AbstractApiCommand implements CommandInterface
         $this->setRequestHandler($requestHandler);
         $this->setRequestValidator($requestValidator);
         $this->setResponseValidator($responseValidator);
+        $this->twoCardResponse = [];
     }
 
     public function execute(array $commandSubject)
     {
-        $request = $this->getRequestBuilder()->build($commandSubject);
+       
+        $hasCaptureTwoCard = $this->hasCaputureTwoCard($commandSubject);
+        
+        if ($this->getRequestBuilder()->hasCardTwo() || $hasCaptureTwoCard) {
+          
+            if($hasCaptureTwoCard){
+               $this->prepareRequest($commandSubject, false, 'capture_two_card');
+            }else {
+                $this->prepareRequest($commandSubject, false, 'two_card');
+            }
+           
+            $this->prepareRequest($commandSubject, true, 'primary_card');
+          
+        }else {
+             $this->prepareRequest($commandSubject, true, null);
+        }
+
+        return $this;
+    }
+
+    protected function prepareRequest($commandSubject, $handle, $typeCard = '')
+    {
+
+        $request = $this->getRequestBuilder()->build($commandSubject, $typeCard);
 
         if ($this->getRequestValidator()) {
             $result = $this->getRequestValidator()->validate(
@@ -68,8 +94,6 @@ abstract class AbstractApiCommand implements CommandInterface
             }
         }
 
-        $this->getRequestHandler()->handle($commandSubject, ['request' => $request]);
-
         $response = $this->sendRequest($request);
 
         if ($this->getResponseValidator()) {
@@ -80,19 +104,37 @@ abstract class AbstractApiCommand implements CommandInterface
             if (!$result->isValid()) {
                 $errorMessage = $result->getFailsDescription();
 
-               throw new LocalizedException(
-                   __(reset($errorMessage))
+                if($typeCard == 'primary_card')
+                    $this->getRequestBuilder()->buildCardTwoVoid();
+                
+                throw new LocalizedException(
+                    __(reset($errorMessage))
                 );
             }
         }
 
+        if($typeCard == 'two_card')
+         $this->getRequestBuilder()->setResponse($response);
+       
+
+       if($handle)
         $this->getResponseHandler()->handle($commandSubject, ['response' => $response]);
 
-        return $this;
+        return $response;
     }
 
     abstract protected function sendRequest($request);
 
+    protected function hasCaputureTwoCard($commandSubject)
+    {
+       $hasCapture =  $commandSubject['payment']->getPayment()->getAdditionalInformation('two_card_paymentId');
+
+       if(!isset($hasCapture))
+         return false;
+
+       return $this->getRequestBuilder()->setCardTowData($commandSubject);
+    }
+    
     protected function getResponseHandler()
     {
         return $this->responseHandler;

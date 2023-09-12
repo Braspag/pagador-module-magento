@@ -21,6 +21,7 @@ class AdminhtmlOrderView
     protected $configCreditCardInterface;
     protected $configDebitCardInterface;
     protected $configBoletoInterface;
+    protected $_authorization;
 
     /**
      * AdminhtmlOrderView constructor.

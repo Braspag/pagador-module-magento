@@ -34,6 +34,9 @@ final class ConfigProvider implements ConfigProviderInterface
                     'savecard' => [
                         'active' => [self::CODE => $this->getCreditCardConfig()->isSaveCardActive()]
                     ],
+                    'tow_card' => [
+                        'active' => [self::CODE => boolval($this->getCreditCardConfig()->isTwoCardActive())]
+                    ],
                     'bpmpi_authentication' => [
                         'active' => $this->getCreditCardConfig()->isAuth3Ds20Active(),
                         'mastercard_notify_only' => $this->getCreditCardConfig()->isAuth3Ds20MCOnlyNotifyActive(),
@@ -48,6 +51,12 @@ final class ConfigProvider implements ConfigProviderInterface
                     ],
                     'card_view' => [
                         'active' => $this->getCreditCardConfig()->isCardViewActive()
+                    ],
+                    self::CODE => [
+                        'installments_rules' => [
+                           'active' =>  boolval($this->getCreditCardConfig()->isInstallmentsRulesActive()),
+                           'rules'  =>  $this->getCreditCardConfig()->getInstallmentsCardsRules(),
+                        ]
                     ]
                 ]
             ]

@@ -109,6 +109,7 @@ class Builder implements BuilderInterface
             ->create();
 
         $result = $this->getCardTokenRepository()->getList($criteria);
+        
         return $result->getItems();
     }
 

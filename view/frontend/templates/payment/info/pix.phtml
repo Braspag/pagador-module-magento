@@ -17,7 +17,7 @@ $title = $block->escapeHtml($block->getMethod()->getTitle());
                 <?php if ($label == 'QRcode Image') : ?>
                 <th scope="row"><?php echo $block->escapeHtml(__($label))?></th>
                 <td>
-                    <img src="<?= $value ?>" alt="PIX QRcode" />
+                    <img src="data:image/png;base64,<?= $value ?>" alt="PIX QRcode"/>
                 </td>
                 <?php else : ?>
                 <th scope="row"><?php echo $block->escapeHtml($label)?></th>

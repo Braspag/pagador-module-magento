@@ -475,6 +475,7 @@
             <argument name="handlers" xsi:type="array">
                 <item name="base" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\BaseHandler</item>
                 <item name="antifraude" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AntiFraudHandler</item>
+                 <item name="two_card" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\TwoCardHandler</item>
                 <item name="avs" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\AvsHandler</item>
                 <item name="card_token" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\CardTokenHandler</item>
                 <item name="split" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Resource\Authorize\Response\SplitHandler</item>
@@ -1053,4 +1054,122 @@
     </virtualType>
 
     <!-- End Payment Pix -->
+
+    <!-- Voucher Card - START -->
+    <preference for="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Config\ConfigInterface" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Config\Config" />
+
+    <virtualType name="BraspagTransactionVoucherOrderRequest" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Request" />
+
+    <virtualType name="BraspagTransactionVoucherRemoteMethodAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Braspag\BraspagPagador\Model\Payment\Transaction\Voucher\Ui\ConfigProvider::CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">BraspagTransactionVoucherValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">BraspagTransactionVoucherCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Braspag\BraspagPagador\Block\Form\Voucher</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Braspag\BraspagPagador\Model\Payment\Transaction\Voucher\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">BraspagTransactionVoucherConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">BraspagTransactionVoucherConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\Base\Command\InitializeCommand</item>
+                <item name="authorize" xsi:type="string">BraspagTransactionVoucherOrderCommand</item>
+                <item name="cancel" xsi:type="string">BraspagTransactionCancelCommand</item>
+                <item name="void" xsi:type="string">BraspagTransactionVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherOrderCommandRequestHandlerPool" type="Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Request\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="split" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Request\SplitHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherOrderCommandResponseHandlerPool" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="base" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Response\BaseHandler</item>
+                <item name="split" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Response\SplitHandler</item>
+                <item name="nsu" xsi:type="string">Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Response\NsuHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherOrderCommand" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Command\OrderCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">BraspagTransactionVoucherOrderRequestBuilder</argument>
+            <argument name="requestHandler" xsi:type="object">BraspagTransactionVoucherOrderCommandRequestHandlerPool</argument>
+            <argument name="responseHandler" xsi:type="object">BraspagTransactionVoucherOrderCommandResponseHandlerPool</argument>
+            <argument name="api" xsi:type="object">\Braspag\Braspag\Pagador\Transaction\BraspagFacade</argument>
+            <argument name="requestValidator" xsi:type="object">\Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Request\Validator</argument>
+            <argument name="responseValidator" xsi:type="object">\Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\Response\Validator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BraspagTransactionVoucherOrderRequestConfig" type="Magento\Framework\App\Config">
+        <arguments>
+            <argument name="config" xsi:type="object">Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Voucher - Anti Fraud - START -->
+
+    <virtualType name="BraspagPagadorTransactionVoucherResourceAntiFraudRequest" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\AntiFraud\Request">
+        <arguments>
+            <argument name="requestItemFactory" xsi:type="object">BraspagPagadorTransactionResourceAntiFraudItemsRequestFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Voucher - Anti Fraud - END -->
+
+    <virtualType name="BraspagTransactionVoucherOrderRequestBuilder" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\Order\RequestBuilder">
+        <arguments>
+            <argument name="request" xsi:type="object">BraspagTransactionVoucherOrderRequest</argument>
+            <argument name="requestAntiFraud" xsi:type="object">BraspagPagadorTransactionVoucherResourceAntiFraudRequest</argument>
+            <argument name="requestPaymentSplit" xsi:type="object">BraspagPagadorTransactionVoucherResourcePaymentSplitRequest</argument>
+            <argument name="scopeConfigInterface" xsi:type="object">\Magento\Framework\App\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Config\Config">
+        <arguments>
+            <argument name="contextAdmin" xsi:type="object">Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
+        </arguments>
+    </type>
+
+    <!-- Voucher - Split - START -->
+
+    <virtualType name="BraspagPagadorTransactionVoucherResourcePaymentSplitRequest" type="Braspag\BraspagPagador\Gateway\Transaction\Voucher\Resource\PaymentSplit\Request">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
+            <argument name="dataProvider" xsi:type="object">Braspag\BraspagPagador\Model\SplitDataProvider</argument>
+        </arguments>
+    </virtualType>
+    <!-- Voucher - Split - END -->
+    <!-- Voucher - END -->
+
 </config>

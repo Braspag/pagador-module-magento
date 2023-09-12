@@ -8,6 +8,37 @@ use Magento\Payment\Model\Method\AbstractMethod;
 
 class Config extends BaseConfig implements ConfigInterface
 {
+    public function isTwoCardActive()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_TWO_CARD_ACTIVE);
+    }
+
+
+    public function isInstallmentsRulesActive()
+    {
+        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES_ACTIVE);
+    }
+
+     /**
+     * @return array|mixed
+     */
+    public function getInstallmentsCardsRules(): array
+    {
+        $arrayRules = [];
+        $arrayRulesConfig = $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES);
+
+        if (isset($arrayRulesConfig)) {
+            $arrayRulesConfig = json_decode($arrayRulesConfig, true);
+            foreach ($arrayRulesConfig as $rule) {
+               
+                if(isset($rule['types']))
+                $arrayRules[] = $rule;
+            }
+        }
+
+        return $arrayRules;
+    }
+ 
     public function isAuthorizeAndCapture()
     {
         return (AbstractMethod::ACTION_AUTHORIZE_CAPTURE === $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION));

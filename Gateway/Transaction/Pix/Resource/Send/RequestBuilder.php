@@ -126,4 +126,12 @@ class RequestBuilder implements BuilderInterface
     {
         return $this->config;
     }
+
+    /**
+    * @return bool
+    */
+    public function hasCardTwo()
+    {
+        return false;
+    }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="webjump_braspag_pagador_transaction_creditcard_two_card" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="120" translate="label">
+        <label>Two Card</label>
+        <field id="two_card_active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label,comment" type="select">
+            <label>Enable</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/braspag_pagador_creditcard/two_card_active</config_path>
+        </field>
+    </group>
+</include>

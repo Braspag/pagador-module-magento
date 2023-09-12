@@ -1,16 +1,7 @@
-/**
- * @author      Webjump Core Team <dev@webjump.com>
- * @copyright   2016 Webjump (http://www.webjump.com.br)
- * @license     http://www.webjump.com.br  Copyright
- *
- * @link        http://www.webjump.com.br
- */
-/*browser:true*/
-/*global define*/
 define(
     [
         'mage/storage',
-        'Magento_Checkout/js/model/url-builder'
+        'mage/url',
     ],
     function (
         storage,
@@ -18,10 +9,13 @@ define(
     ) {
         'use strict';
 
-        return function () {
-            var serviceUrl;
-            serviceUrl = urlBuilder.createUrl('/braspag/creditcard/installments/', {});
+        return function (amount, cardType) {
+           
+            if(!Number.isInteger(amount))
+             amount = amount.toString().replace('.',',');
 
+            let serviceUrl;
+            serviceUrl = urlBuilder.build('braspag/installments/index?amount='+amount+'&card='+cardType, {});
             return storage.post(
                 serviceUrl, false
             )

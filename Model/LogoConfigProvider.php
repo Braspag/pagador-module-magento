@@ -33,7 +33,7 @@ class LogoConfigProvider implements ConfigProviderInterface
      *
      * @var StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 
     /**
      * Scope config
@@ -55,7 +55,7 @@ class LogoConfigProvider implements ConfigProviderInterface
     ) {
         $this->escaper = $escaper;
         $this->config = $config;
-        $this->_storeManager = $storeManager;
+        $this->storeManager = $storeManager;
         $this->method = $paymentHelper->getMethodInstance($this->methodCode);
     }
 
@@ -67,7 +67,7 @@ class LogoConfigProvider implements ConfigProviderInterface
         $config = [];
 
         if ($this->method->isAvailable()) {
-            $config['payment']['logo'][$this->methodCode] = $this->_storeManager->getStore()->getBaseUrl() . $this->_storeManager->getStore()->getBaseMediaDir() . DIRECTORY_SEPARATOR . "payments/logo/" . DIRECTORY_SEPARATOR . $this->getLogo();
+            $config['payment']['logo'][$this->methodCode] = $this->storeManager->getStore()->getBaseUrl() . $this->storeManager->getStore()->getBaseMediaDir() . DIRECTORY_SEPARATOR . "payments/logo/" . DIRECTORY_SEPARATOR . $this->getLogo();
             $config['payment']['display_logo_title'][$this->methodCode] = "";
         }
 

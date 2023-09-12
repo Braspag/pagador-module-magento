@@ -158,7 +158,17 @@ define(
 			length: [16],
 			cvcLength: [3],
 			luhn: true
-		}
+        }, {
+            type: 'ticket',
+			typeName: 'Ticket',
+			patterns: [6026, 6033],
+			regex_include: '',
+			regex_exclude: '',
+			format: defaultFormat,
+			length: [16],
+			cvcLength: [3],
+			luhn: true
+        }
 	];
 
 	return {
@@ -227,6 +237,18 @@ define(
 					$('.debitcard-type').val("Braspag-"+card.typeName);
 				}
 			});
+
+			$('body').on('keyup', '.braspag-card input[name ="payment[cc_number_card2]"]', function(e) {
+
+				e.preventDefault();
+				let cardNumber = $(this).val();
+				let card = self.cardFromNumber(cardNumber);
+
+				if (card != undefined) {
+					$('.creditcard-type-two').val("Braspag-"+card.typeName);
+				}
+			});
+
 		},
 
 		forceRegisterCreditCardType: function(creditCardNumber, creditCardType) {

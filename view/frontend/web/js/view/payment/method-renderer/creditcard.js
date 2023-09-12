@@ -28,7 +28,9 @@ define(
         'Braspag_BraspagPagador/js/model/authentication3ds20',
         'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Braspag_BraspagPagador/js/model/card.view',
-        'Braspag_BraspagPagador/js/model/card'
+        'Braspag_BraspagPagador/js/model/card',
+        'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/token',
+        'uiRegistry',
     ],
     function (
         Component,
@@ -50,7 +52,9 @@ define(
         authentication3ds20,
         bpmpiRenderer,
         cardView,
-        card
+        card,
+        creditcardToken,
+        uiRegistry
     ) {
         'use strict';
 
@@ -68,7 +72,9 @@ define(
                 bpmpiAuthXid: ko.observable(),
                 bpmpiAuthEci: ko.observable(),
                 bpmpiAuthVersion: ko.observable(),
-                bpmpiAuthReferenceId: ko.observable()
+                bpmpiAuthReferenceId: ko.observable(),
+                showCardElement: ko.observable(true),
+                taxvatError: ko.observable(false),
             },
 
             initialize: function () {
@@ -102,6 +108,7 @@ define(
             },
 
             initObservable: function () {
+                var self = this;
                 this._super()
                     .observe([
                         'creditCardType',
@@ -110,11 +117,40 @@ define(
                         'creditCardExpYear',
                         'creditCardExpMonth',
                         'creditCardExpDate',
+                        'creditCardTaxvat',
                         'creditCardVerificationNumber',
                         'creditCardInstallments',
                         'creditCardsavecard',
-                        'creditCardSoptPaymentToken'
+                        'creditCardSoptPaymentToken',
+                        'creditCardToken',
+                        'cardTokenValue',
                     ]);
+
+                    this.creditCardType.subscribe(function () { 
+                        let  value = self.creditCardAmount();
+
+                        if(!Number.isInteger(value))
+                        value = value.replace('.', '').replace(',', '.');
+
+                        self.getCcInstallments(value)
+                    });
+
+                    this.creditCardToken.subscribe(function (value) {
+                        if (value == 'y_change_new') {
+                         self.showCardElement(true)
+                         self.cardTokenValue('');
+                         setTimeout(() => {self.loadCreditCardForm()}, 2000);
+                        } else {
+                         self.showCardElement(false)
+                         self.cardTokenValue(value);
+
+                         $('.card-wrapper .jp-card-container').remove();
+                         $('.card-wrapper').removeAttr('data-jp-card-initialized');
+                        
+                        }
+                          
+                     });
+
                 return this;
             },
 
@@ -126,11 +162,15 @@ define(
                 return true;
             },
 
+            creditCardNumberType : function () {
+                this.updateInstallments();
+            },
+
             loadCreditCardForm: function() {
 
-                if (!cardView.isCreditCardViewEnabled()) {
+                if (!cardView.isCreditCardViewEnabled())
                     return false;
-                }
+                
 
                 new Card({
                     form: document.querySelector('.braspag-card'),
@@ -153,6 +193,10 @@ define(
                         monthYear: 'mês/ano'
                     }
                 });
+                
+
+               // this.getCcInstallments();
+             
             },
 
             creditCardTypeCustom: function() {
@@ -161,11 +205,11 @@ define(
                 let creditCardNumber = this.creditCardNumber();
                 let creditCardType = $('.creditcard-type');
 
-                if (!showType && typeof creditCardNumber === undefined) {
+                if (!showType && creditCardNumber === undefined) {
                     return '';
                 }
 
-                if (!showType && creditCardType.length === 0) {
+                if (!showType && creditCardType.length === 0 ) {
                     card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
                     return creditCardType.val();
@@ -197,9 +241,32 @@ define(
                         'authentication_xid': this.bpmpiAuthXid(),
                         'authentication_eci': this.bpmpiAuthEci(),
                         'authentication_version': this.bpmpiAuthVersion(),
-                        'authentication_reference_id': this.bpmpiAuthReferenceId()
+                        'authentication_reference_id': this.bpmpiAuthReferenceId(),
+                        'cc_token': this.cardTokenValue(),
+                        'cc_taxvat': this.creditCardTaxvat(),
+                        'cc_installments_text' :$('select#braspag_pagador_creditcard_installments option:selected').text()
                     }
                 };
+                
+                let towCardComponent = uiRegistry.get("two_card_braspag");
+                
+                if (towCardComponent != undefined) {
+                    
+                    data.additional_data.cc_amount_card2 = towCardComponent.creditCardAmount()
+                    data.additional_data.cc_taxvat_card2 = towCardComponent.creditCardTaxvat()
+                    data.additional_data.cc_exp_year_card2 = towCardComponent.creditCardExpYear()
+                    data.additional_data.cc_exp_month_card2 = towCardComponent.creditCardExpMonth()
+                    data.additional_data.cc_number_card2 = towCardComponent.creditCardNumber()
+                    data.additional_data.cc_owner_card2 = towCardComponent.creditCardOwner()
+                    data.additional_data.cc_installments_card2 = towCardComponent.creditCardInstallments()
+                    data.additional_data.card_cc_token_card2 = towCardComponent.cardTokenValue()
+                    data.additional_data.cc_installments_text_card2 = $('select#braspag_pagador_creditcard_two_card_installments option:selected').text()
+
+                    if (towCardComponent.creditCardType() != undefined) {
+                        data.additional_data.cc_type_card2 = towCardComponent.creditCardTypeCustom()
+                    }
+                }
+              
 
                 if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
                     data = {
@@ -228,12 +295,101 @@ define(
                 return window.checkoutConfig.payment.ccform.installments.active[this.getCode()];
             },
 
-            getCcInstallments: function() {
+            updateInstallments: function() {
+                var self = this;
+                let  towCardComponent = uiRegistry.get("two_card_braspag"), 
+                amount = self.getGrandTotal(), 
+                cardType = self.creditCardType(), 
+                serviceUrl;
+
+                cardType = $('.creditcard-type').val();
+
+                if (towCardComponent ) {
+                    if(towCardComponent.creditCardAmount())
+                    amount -= towCardComponent.creditCardAmount().replace('.', '').replace(',' , '.');
+                }
+             
+
+                //if(cardType)  
+                return installments(amount,cardType);
+
+                return false;
+            },
+
+            maskCPF: function() {
+                $('#braspag_pagador_creditcard_cpf').mask('000.000.000-00');
+            },
+
+            validCPF: function (data, event) {
+                let self  = this;
+                let cpf = event.target.value;
+
+                if(cpf.length <= 0)
+                return this;
+
+                var cpf_filtrado = "", valor_1 = " ", valor_2 = " ", ch = "", i;
+                var valido = false;
+                for (i = 0; i < cpf.length; i++) {
+                    ch = cpf.substring(i, i + 1);
+                    if (ch >= "0" && ch <= "9") {
+                        cpf_filtrado = cpf_filtrado.toString() + ch.toString()
+                        valor_1 = valor_2;
+                        valor_2 = ch;
+                    }
+                    if ((valor_1 != " ") && (!valido))
+                        valido = !(valor_1 == valor_2);
+                }
+                if (!valido)
+                    cpf_filtrado = "12345678912";
+                if (cpf_filtrado.length < 11) {
+                    for (i = 1; i <= (11 - cpf_filtrado.length); i++) {
+                        cpf_filtrado = "0" + cpf_filtrado;
+                    }
+                }
+
+                if ((cpf_filtrado.substring(9, 11) == self._checkCPF(cpf_filtrado.substring(0, 9))) && (cpf_filtrado.substring(11, 12) == "")) {
+                   self.taxvatError(false);
+                   return true;
+                }
+                
+                $(event.target).val('');
+                self.taxvatError(true);
+                setTimeout(() => {self.taxvatError(false)}, 3000);
+            },
+
+            _checkCPF: function (vCPF) {
+                var mControle = ""
+                var mContIni = 2, mContFim = 10, mDigito = 0, i, j, mSoma, mControle1;
+                for (j = 1; j <= 2; j++) {
+                    mSoma = 0;
+                    for (i = mContIni; i <= mContFim; i++)
+                        mSoma = mSoma + (vCPF.substring((i - j - 1), (i - j)) * (mContFim + 1 + j - i));
+                    if (j == 2)
+                        mSoma = mSoma + (2 * mDigito);
+                    mDigito = (mSoma * 10) % 11;
+                    if (mDigito == 10)
+                        mDigito = 0;
+                    mControle1 = mControle;
+                    mControle = mDigito;
+                    mContIni = 3;
+                    mContFim = 11;
+                }
+    
+                return ((mControle1 * 10) + mControle);
+            },
+
+            getGrandTotal: function () {
+                let checkoutSumary = requirejs('Magento_Tax/js/view/checkout/summary/grand-total');
+                return checkoutSumary().totals().grand_total;
+             },
+
+
+           getCcInstallments: function() {
                 var self = this;
 
                 fullScreenLoader.startLoader();
                 $.when(
-                    installments()
+                    self.updateInstallments()
                 ).done(function (transport) {
                     self.allInstallments.removeAll();
 
@@ -265,6 +421,11 @@ define(
             getSaveCardHelpHtml: function () {
                 return '<span>' + $t('Add To Braspag JustClick') + '</span>';
             },
+
+            setCustomerTaxvat: function () {
+                if(window.customerData.taxvat)
+                 this.creditCardTaxvat(window.customerData.taxvat);
+             },
 
             updateCreditCardSoptPaymentToken: function () {
                 var self = this;
@@ -361,6 +522,16 @@ define(
                 }
             },
 
+            getCcAvailableTokens: function () {
+                let creditTokens = window.checkoutConfig.payment.ccform.tokens.list[creditcardToken().getCode()];
+                if (creditTokens ) {
+                  //this.showCardElement(false);
+                  return creditTokens;
+                }
+
+                 return false;
+            },
+
             pad: function(num, size) {
                 var s = "00" + num;
                 return s.substr(s.length-size);
@@ -371,6 +542,7 @@ define(
                 let creditCardNumber = this.creditCardNumber();
                 let creditCardType = $('.creditcard-type');
 
+                if (!this.cardTokenValue())
                 card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
                 var self = this;
@@ -713,7 +885,47 @@ define(
                         'name': 'Credit Card Number', value: this.formatDisplayCcNumber(this.creditCardNumber())
                     }
                 ];
-            }
+            },
+
+            getCcAvailableTokensValues: function() {
+
+                let ccAvaliables = this.getCcAvailableTokens();
+                let towCardComponent = uiRegistry.get("two_card_braspag");
+            
+                let tokensObj = {};
+
+                if(towCardComponent != undefined) {
+                    if (towCardComponent.cardTokenValue() != undefined ) {
+                        _.map(ccAvaliables, function (value, key) {
+                              if( key != towCardComponent.cardTokenValue()) {
+                                tokensObj[key] = value;
+                              }
+                        });   
+                        
+                        return _.map(tokensObj,  function (value, key) {
+                            return {
+                              'token': key,
+                              'alias': value
+                          };
+                      });
+
+                    }
+                }
+
+                 _.map(ccAvaliables,  function (value, key) {
+                    tokensObj[key] = value;
+                });
+
+               return _.map(tokensObj,  function (value, key) {
+                      return {
+                        'token': key,
+                        'alias': value
+                    };
+                });
+
+
+
+            },
         });
     }
 );

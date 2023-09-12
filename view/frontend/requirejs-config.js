@@ -16,9 +16,10 @@ var config = {
 			}
 		}
 	},
-    config: {
-        map: {
-            'Magento_Checkout/js/action/place-order': 'Braspag_BraspagPagador/js/action/place-order'
-            }
-    }
+	map: {
+		"*": {
+			'Magento_Checkout/js/action/place-order': 'Braspag_BraspagPagador/js/action/place-order',
+			'Magento_Checkout/js/view/billing-address':'Braspag_BraspagPagador/js/view/billing-address',
+		}
+	}
 }

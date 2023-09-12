@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (C) 2021 Signativa/FGP Desenvolvimento de Software
+ *  @author Esmerio Neto <esmerio.neto@signativa.com.br>
+ * SPDX-License-Identifier: Apache-2.0
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="braspag_braspag_pagador_transaction_voucher" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+        <label>Voucher</label>
+	    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+	        <label>Enabled</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_voucher/active</config_path>
+	    </field>
+	    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+	        <label>Title</label>
+	        <config_path>payment/braspag_pagador_voucher/title</config_path>
+	    </field>
+
+        <field id="types" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="multiselect">
+	        <label>Type</label>
+	        <comment />
+	        <source_model>Braspag\BraspagPagador\Model\Source\VcTypes</source_model>
+	        <config_path>payment/braspag_pagador_voucher/vc_types</config_path>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+	    </field>
+
+        <field id="order_status" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+            <label>New Order Status</label>
+			<source_model>Braspag\BraspagPagador\Model\Source\Status\NewPending</source_model>
+            <config_path>payment/braspag_pagador_voucher/order_status</config_path>
+        </field>
+	    <!-- <field id="superdebito" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+	        <label>Super Debito</label>
+	        <comment />
+	        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+	        <config_path>payment/braspag_pagador_voucher/superdebit_active</config_path>
+	    </field> -->
+        <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+            <label>Sort Order</label>
+            <comment />
+            <config_path>payment/braspag_pagador_voucher/sort_order</config_path>
+        </field>
+		<field id="redirect_after_place_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
+			<label>Redirect After Place Order?</label>
+			<comment />
+			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+			<config_path>payment/braspag_pagador_voucher/redirect_after_place_order</config_path>
+		</field>
+	    <include path="Braspag_BraspagPagador::system/transaction/voucher/types.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/voucher/paymentsplit.xml"/>
+        <include path="Braspag_BraspagPagador::system/transaction/voucher/cardview.xml"/>
+    </group>
+</include>

@@ -77,15 +77,14 @@ class PaymentStatusChangedCommand
     {
         $paymentInfo = $this->getPaymentManager()->getPaymentInfo($paymentId);
 
-        if(!$paymentInfo)
-         return false;
+        if(!isset($paymentInfo['paymentType']))
+         return true;
 
         $paymentType = $paymentInfo['paymentType'];
         $braspagPaymentData = $paymentInfo['paymentInfo'];
         $magentoPaymentData = $paymentInfo['orderPayment'];
 
         $paymentStatus = $braspagPaymentData->getPaymentStatus();
-
 
         // 2 = capture
         if ($paymentType == 'boleto' && $paymentStatus == 2) {
@@ -100,10 +99,10 @@ class PaymentStatusChangedCommand
                 ->registerCapturedPayment($braspagPaymentData, $magentoPaymentData, $createInvoice);
         }
 
-        // 2 = capture
-           if ($paymentType == 'pix' && $paymentStatus == 2) {
-             return $this->getPaymentManager()->registerCapturedPayment($braspagPaymentData, $magentoPaymentData, true);
-        }
+         // 2 = capture
+         if ($paymentType == 'pix' && $paymentStatus == 2) {
+            return $this->getPaymentManager()->registerCapturedPayment($braspagPaymentData, $magentoPaymentData, true);
+         }
 
 
         // 3 = Denied/10 = Voided/13 = Aborted

@@ -9,6 +9,7 @@ use Magento\Framework\DataObject;
 use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
 use Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as PixConfigProvider;
+use Braspag\BraspagPagador\Model\Request\CardTwo;
 
 /**
  * Credit Card Data Assign
@@ -22,11 +23,15 @@ use Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as Pi
 class DataAssignObserver extends AbstractDataAssignObserver
 {
     protected $cardTokenRepository;
+    
+    protected $cardTwo;
 
     public function __construct(
-        CardTokenRepositoryInterface $cardTokenRepository
+        CardTokenRepositoryInterface $cardTokenRepository,
+        CardTwo $cardTwo
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
+        $this->cardTwo = $cardTwo;
     }
 
     /**
@@ -74,8 +79,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
         $ccNumber = $additionalData->getCcNumber();
         $ccToken = $additionalData->getCcToken();
 
-
-        if (!isset($ccToken) && isset($ccNumber) && isset($ccType)) {
+       if (isset($ccNumber) && isset($ccType)) {
 
             list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
@@ -95,7 +99,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             }
 
          }
-   
+         
 
         $info->setAdditionalInformation('cc_installments', 1);
 
@@ -107,15 +111,34 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->setAdditionalInformation('cc_savecard', (bool) $additionalData->getCcSavecard());
         }
 
-        if ($cardToken = $this->getCardTokenRepository()->get($ccToken)) {
+        if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {
             $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
+            $info->setAdditionalInformation('cc_alias', $cardToken->getAlias());
+        }
+
+        if ($cardTokenTwo = $this->getCardTokenRepository()->get($additionalData->getData('card_cc_token_card2'))) {
+            $additionalData->setData('cc_alias_card2', $cardTokenTwo->getAlias());
         }
 
         if ($additionalData->getCcSoptpaymenttoken()) {
             $info->setAdditionalInformation('cc_soptpaymenttoken', $additionalData->getCcSoptpaymenttoken());
         }
 
+        if ($additionalData->getCcTaxvat()) {
+            $info->setAdditionalInformation('cc_taxvat', $additionalData->getCcTaxvat());
+        }
+
+        if ($additionalData->getCcInstallmentsText()) {
+            $info->setAdditionalInformation('cc_installments_text', $additionalData->getCcInstallmentsText());
+        }
+
+        if ($additionalData->getCcOwner()) {
+            $info->setAdditionalInformation('cc_owner', $additionalData->getCcOwner());
+        }
+
+        $this->cardTwo->setAdditionalData($additionalData)->execute();
+        
         $this->processExtraData($additionalData, $info);
 
         return $this;

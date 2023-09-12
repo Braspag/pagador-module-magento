@@ -41,7 +41,7 @@ class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInt
 
     public function getInterestRate()
     {
-        return ((int) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
+        return ( $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_INSTALLMENTS_INTEREST_RATE) / 100);
     }
 
     public function isInterestByIssuer()
@@ -59,6 +59,16 @@ class InstallmentsConfig extends AbstractConfig implements InstallmentsConfigInt
         return parent::_getConfig(sprintf($uri, $this->getCode()));
     }
 
+    public function isInstallmentsRulesActive()
+	{
+		return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES_ACTIVE);
+	}
+
+    public function getInstallmentsCardsRules()
+	{
+		return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_INSTALLMENTS_RULES);
+	}
+    
     protected function getCode()
     {
         return $this->code;
