@@ -49,14 +49,14 @@ class PixCancelOrders
      */
     public function execute()
     {
-        if(!$this->config->pixIsActive())
+        if(!$this->config->getPixCronCancelPending())
           return;
         
       
         $to = strtotime("-".$this->config->getDeadline()." days");     
         $orders = $this->getOrderCollection("braspag_pagador_pix", "new", $to);
     
-        if (empty(!$orders)) {
+        if (!empty($orders)) {
             foreach( $orders as $order) {
                 $this->cancelOrder($order->getId());
             }
@@ -80,11 +80,9 @@ class PixCancelOrders
             $payment = $order->getPayment();            
             $order->addStatusHistoryComment('Order Cancel Automatically');
             $order->cancel()->save();
-            $this->logger->info("Cronjob cancelOrders is executed." .$order->getIncrementId());
+           // $this->logger->info("Cronjob cancelOrders is executed." .$order->getIncrementId());
 
         } catch (\Exception $e) {
-
-            die( $e->getMessage());
             $this->logger->error('Cancel Order Pix Error'. $e->getMessage());
         }
     }
@@ -92,7 +90,7 @@ class PixCancelOrders
     /**
      * getOrderCollection
      *
-     * @return void
+     * @return array
      */
     protected function getOrderCollection($method, $status, $to)
     {

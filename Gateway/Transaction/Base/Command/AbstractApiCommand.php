@@ -94,6 +94,14 @@ abstract class AbstractApiCommand implements CommandInterface
             }
         }
 
+
+        //for order cancel Pix
+        if ( $commandSubject['payment']->getPayment()->getOrder()->getStatus() == 'pending' && $commandSubject['payment']->getPayment()->getMethod() == 'braspag_pagador_pix') 
+            {
+                return $this;
+            }
+         
+
         $response = $this->sendRequest($request);
 
         if ($this->getResponseValidator()) {

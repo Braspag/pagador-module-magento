@@ -90,7 +90,6 @@ class CheckoutSubmitAllAfterObserver implements ObserverInterface
             ) {
                 if (
                     $payment->getIsFraudDetected()
-                    && $payment->getMethodInstance()->getConfigData('reject_order_status') === 'canceled'
                 ) {
                     $this->orderManagement->cancel($order->getId());
                     return $this;

@@ -20,10 +20,8 @@ class RequestBuilder implements BuilderInterface
 {
     protected $request;
     protected $config;
-
     protected $cardTwo;
 
-    protected $config;
 
     public function __construct(
         RequestInterface $request,
@@ -60,8 +58,8 @@ class RequestBuilder implements BuilderInterface
         $method = $paymentDataObject->getPayment()->getMethodInstance();
         $methodCode = $method->getCode();
 
-       if ($methodCode == 'braspag_pagador_pix')
-        return ;
+      // if ($methodCode == 'braspag_pagador_pix')
+      //  return ;
 
         $paymentId = $paymentDataObject->getPayment()->getAdditionalInformation('payment_token');
 
@@ -72,11 +70,21 @@ class RequestBuilder implements BuilderInterface
             $paymentId = str_replace(['-capture', '-void', '-refund'], '', $paymentDataObject->getPayment()->getLastTransId());
         }
 
+
+        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer);
+        $logger->info(json_encode('paymentId'. $paymentId ));
+       
+
+
         $this->getRequest()->setPaymentId($paymentId);
 
         $this->getRequest()->setOrderAdapter($orderAdapter);
 
         $this->cardTwo->setData('type_card', $typeCard);
+
+        $logger->info(json_encode($this->getRequest()));
 
         return $this->getRequest();
     }
