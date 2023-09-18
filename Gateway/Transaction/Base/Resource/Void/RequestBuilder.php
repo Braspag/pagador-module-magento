@@ -70,21 +70,11 @@ class RequestBuilder implements BuilderInterface
             $paymentId = str_replace(['-capture', '-void', '-refund'], '', $paymentDataObject->getPayment()->getLastTransId());
         }
 
-
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
-        $logger->info(json_encode('paymentId'. $paymentId ));
-       
-
-
         $this->getRequest()->setPaymentId($paymentId);
 
         $this->getRequest()->setOrderAdapter($orderAdapter);
 
         $this->cardTwo->setData('type_card', $typeCard);
-
-        $logger->info(json_encode($this->getRequest()));
 
         return $this->getRequest();
     }
