@@ -37,11 +37,6 @@ class Config extends AbstractConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_VOUCHER_REDIRECT_AFTER_PLACE_ORDER);
     }
 
-    public function getIdentityAttributeCode()
-    {
-        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE);
-    }
-
     public function isAuth3Ds20Active()
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_VOUCHER_AUTHENTICATION_3DS_20);

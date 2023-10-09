@@ -125,12 +125,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerIdentity()
     {
-        $attribute = $this->getConfig()->getIdentityAttributeCode();
-
         return $this->helperData->removeSpecialCharactersFromTaxvat(
-            $this->getQuote()->getBillingAddress()->getData($attribute)
-        ) ?: $this->helperData->removeSpecialCharactersFromTaxvat(
-            $this->getQuote()->getData($attribute)
+            ( $this->getQuote()->getBillingAddress()->getData('vat_id') != null ) ? 
+            $this->getQuote()->getBillingAddress()->getData('vat_id') : 
+            $this->getQuote()->getData('customer_taxvat') 
         );
     }
 
@@ -139,9 +137,13 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerIdentityType()
     {
-        $identity = (string) preg_replace('/[^0-9]/', '', $this->getCustomerIdentity());
-        return (strlen($identity) > 11) ? 'CNPJ' : 'CPF';
+        $customerIdenty = $this->getCustomerIdentity();
+
+        if ($customerIdenty) {
+           return (strlen((string) preg_replace('/[^0-9]/', '', $customerIdenty)) > 11) ? 'CNPJ' : 'CPF';
+        }
     }
+       
 
     /**
      * @return mixed

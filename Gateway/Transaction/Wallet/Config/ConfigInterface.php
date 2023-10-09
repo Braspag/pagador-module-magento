@@ -21,7 +21,6 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_NUMBER_ATTRIBUTE = 'payment/braspag_pagador_customer_address/number_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_COMPLEMENT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/complement_attribute';
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_DISTRICT_ATTRIBUTE = 'payment/braspag_pagador_customer_address/district_attribute';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
     const CONFIG_XML_BRASPAG_PAGADOR_WALLET_PAYMENTSPLIT = 'payment/braspag_pagador_wallet/paymentsplit';
     const CONFIG_XML_BRASPAG_PAGADOR_WALLET_PAYMENTSPLIT_TYPE = 'payment/braspag_pagador_wallet/paymentsplit_type';
     const CONFIG_XML_BRASPAG_PAGADOR_WALLET_PAYMENTSPLIT_TRANSACTIONAL_POST_SEND_REQUEST_AUTOMATICALLY = 'payment/braspag_pagador_wallet/paymentsplit_transactional_post_send_request_automatically';
@@ -53,8 +52,6 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     public function getCustomerComplementAttribute();
 
     public function getCustomerDistrictAttribute();
-
-    public function getIdentityAttributeCode();
 
     public function isPaymentSplitActive();
 

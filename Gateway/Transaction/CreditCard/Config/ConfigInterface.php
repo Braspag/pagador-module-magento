@@ -35,7 +35,6 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AUTHENTICATION_3DS_20MDD5 = 'payment/braspag_pagador_creditcard/authentication_3ds_20_mdd5';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_PAYMENT_ACTION = 'payment/braspag_pagador_creditcard/payment_action';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SOFT_ACTION = 'payment/braspag_pagador_creditcard/soft_config';
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SILENTORDERPOST_URL_PRODUCTION = 'payment/braspag_pagador_creditcard/silentorderpost_url_production';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SILENTORDERPOST_URL_HOMOLOG = 'payment/braspag_pagador_creditcard/silentorderpost_url_homolog';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_DECIMAL_GRAND_TOTAL = 'payment/braspag_pagador_creditcard/decimal_grand_total';
@@ -62,8 +61,6 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
     public function isAuthorizeAndCapture();
 
     public function getSoftDescriptor();
-
-    public function getIdentityAttributeCode();
 
     public function hasAntiFraud();
 

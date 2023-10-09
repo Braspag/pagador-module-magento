@@ -17,6 +17,7 @@
 	    <field id="installments_number" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 	        <label>Number</label>
 	        <comment />
+			<validate>required-entry validate-number</validate>
 	        <config_path>payment/braspag_pagador_creditcard/installments_number</config_path>
             <depends>
                 <field id="installments_active">1</field>
@@ -25,6 +26,7 @@
 	    <field id="installment_min_amount" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
 	        <label>Min Amount</label>
 	        <comment />
+			<validate>required-entry validate-number</validate>
 	        <config_path>payment/braspag_pagador_creditcard/installment_min_amount</config_path>
             <depends>
                 <field id="installments_active">1</field>
@@ -42,6 +44,7 @@
 	    <field id="installments_interest_rate" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
 	        <label>Interest Rate (%)</label>
 	        <comment />
+			<validate>required-entry</validate>
 	        <config_path>payment/braspag_pagador_creditcard/installments_interest_rate</config_path>
             <depends>
             	<field id="installments_active">1</field>
@@ -51,6 +54,7 @@
 	    <field id="installments_max_without_interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
 	        <label>Max Without Interest</label>
 	        <comment />
+			<validate>required-entry</validate>
 	        <config_path>payment/braspag_pagador_creditcard/installments_max_without_interest</config_path>
             <depends>
             	<field id="installments_active">1</field>

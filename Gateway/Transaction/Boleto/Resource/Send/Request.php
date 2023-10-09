@@ -133,8 +133,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerIdentity()
     {
-        $attribute = $this->getConfig()->getIdentityAttributeCode();
-
+      
         return $this->helperData->removeSpecialCharactersFromTaxvat(
             ( $this->getQuote()->getBillingAddress()->getData('vat_id') != null ) ? 
             $this->getQuote()->getBillingAddress()->getData('vat_id') : 

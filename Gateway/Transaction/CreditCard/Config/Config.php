@@ -69,11 +69,6 @@ class Config extends BaseConfig implements ConfigInterface
         return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_GLOBAL_RETURN_URL);
     }
 
-    public function getIdentityAttributeCode()
-    {
-        return $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE);
-    }
-
     public function isSaveCardActive()
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_ACTIVE);

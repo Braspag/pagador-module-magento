@@ -11,7 +11,7 @@ define(
 
         return function (amount, cardType) {
            
-            if(!Number.isInteger(amount))
+            if(!Number.isInteger(amount) && amount)
              amount = amount.toString().replace('.',',');
 
             let serviceUrl;

@@ -115,7 +115,7 @@ final class ConfigProvider implements ConfigProviderInterface
             $this->tokens[self::CODE][$token->getToken()] = $token->getAlias();
         }
 
-        $this->tokens[self::CODE]["y_change_new"] = "Escolher Outro";
+        $this->tokens[self::CODE]["y_change_new"] = "Inserir Novo";
 
         return $this->tokens;
     }

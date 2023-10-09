@@ -709,7 +709,7 @@ define(
             getCcAvailableTokens: function () {
                 let creditTokens = window.checkoutConfig.payment.ccform.tokens.list[creditcardToken().getCode()];
                 if (creditTokens ) {
-                  this.showCardElement(false);
+                 // this.showCardElement(false);
                   return creditTokens;
                 }
 

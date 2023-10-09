@@ -39,8 +39,6 @@ interface ConfigInterface
     const BRASPAG_PAGADOR_VOUCHER_AUTHENTICATION_3DS_20_RETURN_TYPE_UNSUPPORTED_BRAND = 5;
     const BRASPAG_PAGADOR_VOUCHER_CARD_VIEW = 'payment/braspag_pagador_voucher/card_view';
 
-    const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CUSTOMER_IDENTITY_ATTRIBUTE_CODE = 'payment/braspag_pagador_creditcard/customer_identity_attribute_code';
-
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_STREET_ATTRIBUTE = 'payment/braspag_pagador_customer_address/street_attribute';
 
     const CONFIG_XML_BRASPAG_PAGADOR_CUSTOMER_ADDRESS_NUMBER_ATTRIBUTE = 'payment/braspag_pagador_customer_address/number_attribute';
@@ -97,8 +95,6 @@ interface ConfigInterface
     public function getPaymentSplitDefaultFee();
 
     public function isCardViewActive();
-
-    public function getIdentityAttributeCode();
 
     public function getCustomerStreetAttribute();
 
