@@ -97,7 +97,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
     protected $cardTwo;
 
-    
+
     /**
      * Request constructor.
      * @param ConfigInterface $config
@@ -172,28 +172,26 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
         if ($this->getCardType() == 'two_card') {
             $taxVat = $this->cardTwo->getData('taxvat_card2');
-            if(!is_null($taxVat) || isset($taxVat))
-            return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
+            if (!is_null($taxVat) || isset($taxVat))
+                return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
         }
 
         if ($this->getCardType() == 'primary_card') {
-            $taxVat = $this->cardTwo->getData('taxvat_card');           
-            if(!is_null($taxVat) || isset($taxVat) )
-              return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
+            $taxVat = $this->cardTwo->getData('taxvat_card');
+            if (!is_null($taxVat) || isset($taxVat))
+                return $this->helperData->removeSpecialCharactersFromTaxvat($taxVat);
         }
 
         $ccTaxvat = $this->getPaymentData()->getAdditionalInformation('cc_taxvat');
-        if(!is_null($ccTaxvat) || isset($ccTaxvat) )
-          return $this->helperData->removeSpecialCharactersFromTaxvat($ccTaxvat);
+        if (!is_null($ccTaxvat) || isset($ccTaxvat))
+            return $this->helperData->removeSpecialCharactersFromTaxvat($ccTaxvat);
 
-                  
+
         return $this->helperData->removeSpecialCharactersFromTaxvat(
-            ( $this->getQuote()->getBillingAddress()->getData('vat_id') != null ) ? 
-            $this->getQuote()->getBillingAddress()->getData('vat_id') : 
-            $this->getQuote()->getData('customer_taxvat') 
+            ($this->getQuote()->getBillingAddress()->getData('vat_id') != null) ?
+                $this->getQuote()->getBillingAddress()->getData('vat_id') :
+                $this->getQuote()->getData('customer_taxvat')
         );
-
-        
     }
 
     /**
@@ -204,7 +202,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         $customerIdenty = $this->getCustomerIdentity();
 
         if ($customerIdenty) {
-           return (strlen((string) preg_replace('/[^0-9]/', '', $customerIdenty)) > 11) ? 'CNPJ' : 'CPF';
+            return (strlen((string) preg_replace('/[^0-9]/', '', $customerIdenty)) > 11) ? 'CNPJ' : 'CPF';
         }
 
         return '';
@@ -218,7 +216,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return $this->getBillingAddress()->getEmail();
     }
 
-     /**
+    /**
      * @param  $typeCard
      * @return $this
      */
@@ -298,6 +296,14 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getCustomerAddressState()
     {
         return $this->getBillingAddress()->getRegionCode();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFromDevice()
+    {
+        return  $this->getPaymentData()->getAdditionalInformation('from_device');
     }
 
     /**
@@ -417,22 +423,32 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentAmount()
     {
-        $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
-        $installment = $this->getPaymentInstallments();
 
-          if ($this->getCardType() == 'two_card')
-            $grandTotalAmount =   str_replace(',', '.',  $this->cardTwo->getData('total_amount'));
+        try {
+            $grandTotalAmount = $this->getOrderAdapter()->getGrandTotalAmount();
+            $installment = $this->getPaymentInstallments();
 
-        if ($this->getCardType() == 'primary_card')
-            $grandTotalAmount =  $grandTotalAmount -  str_replace(',', '.',  $this->cardTwo->getData('total_amount'));
+            if ($this->getCardType() == 'two_card')
+                $grandTotalAmount =   str_replace(',', '.',  str_replace('.', '',  $this->cardTwo->getData('total_amount')));
 
-        if ($this->getInstallmentsConfig()->isInterestByIssuer() && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
-            $amountTotal =  $this->calcPriceWithInterest( $installment, $grandTotalAmount, $this->getInstallmentsConfig()->getInterestRate() );
-            $integerValue = $this->grandTotalPricingHelper->currency($amountTotal * $installment);
-        } else {
-            $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
+            if ($this->getCardType() == 'primary_card')
+                $grandTotalAmount =  $grandTotalAmount - str_replace(',', '.',  str_replace('.', '',  $this->cardTwo->getData('total_amount')));
+
+
+            if ($this->getInstallmentsConfig()->isInterestByIssuer() && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
+                $amountTotal =  $this->calcPriceWithInterest($installment, $grandTotalAmount, $this->getInstallmentsConfig()->getInterestRate());
+                $integerValue = $this->grandTotalPricingHelper->currency($amountTotal * $installment);
+            } else {
+                $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
+            }
+
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException('Error getPaymentAmount');
         }
-        
+
+        if ($integerValue <= 0 || is_null($integerValue))
+            throw new \InvalidArgumentException('Amount value zero');
+
         return $integerValue;
     }
 
@@ -460,8 +476,8 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
         $ccType = $this->getPaymentData()->getCcType();
 
-       // if ($this->getPaymentData()->getAdditionalInformation('cc_token') || !isset($ccType))
-          //return '';
+        // if ($this->getPaymentData()->getAdditionalInformation('cc_token') || !isset($ccType))
+        //return '';
 
         if ($this->getPaymentData()->getCcType()) {
 
@@ -469,27 +485,25 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
             if ($provider === "Braspag") {
                 $availableTypes = explode(',', $this->getConfig()->getCcTypes());
-    
+
                 foreach ($availableTypes as $key => $availableType) {
                     $typeDetail = explode("-", $availableType);
                     if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
                         return $typeDetail[0];
                     }
                 }
-    
+
                 if ($this->getConfig()->getIsTestEnvironment()) {
                     return "Simulado";
                 }
-    
+
                 return "";
             }
-    
-            return $provider;
 
+            return $provider;
         }
-        
+
         return "";
-     
     }
 
 
@@ -506,7 +520,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentInstallments()
     {
-       if (!$installments = $this->getPaymentData()->getAdditionalInformation('cc_installments')) {
+        if (!$installments = $this->getPaymentData()->getAdditionalInformation('cc_installments')) {
             $installments = 1;
         }
 
@@ -582,7 +596,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         $this->getCardType() == 'two_card' ? $ccExpYear  =  $this->cardTwo->getData('cc_exp_year') :  $ccExpYear = $this->getPaymentData()->getCcExpYear();
 
         return str_pad($ccExpMonth, 2, '0', STR_PAD_LEFT) . '/' . $ccExpYear;
-     }
+    }
 
     /**
      * @return mixed
@@ -590,7 +604,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentCreditCardSecurityCode()
     {
         return $this->getCardType() == 'two_card' ? $this->cardTwo->getData('cc_cid') :  $this->getPaymentData()->getCcCid();
-
     }
 
     /**
@@ -609,9 +622,9 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         $ccType =  $this->getPaymentData()->getCcType();
 
         if ($this->getPaymentData()->getAdditionalInformation('cc_token') || $this->cardTwo->getData('cc_token'))
-          return null;
+            return null;
 
-        if ($this->getCardType() == 'two_card') 
+        if ($this->getCardType() == 'two_card')
             $ccType = $this->cardTwo->getData('cc_type');
 
         list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
@@ -763,7 +776,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentCreditCardCardToken()
     {
         return $this->getCardType() == 'two_card' ?  $this->cardTwo->getData('cc_token') :   $this->getPaymentData()->getAdditionalInformation('cc_token');
-
     }
 
     /**
