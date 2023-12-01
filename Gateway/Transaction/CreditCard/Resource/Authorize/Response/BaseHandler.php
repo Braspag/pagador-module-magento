@@ -29,7 +29,7 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
         $payment->setTransactionId($response->getPaymentPaymentId());
         $payment->setIsTransactionClosed(false);
 
-        if ($authenticationUrl = $response->getAuthenticationUrl()) {
+          if ($authenticationUrl = $response->getAuthenticationUrl()) {
             $payment->setAdditionalInformation('redirect_url', $authenticationUrl);
         }
 

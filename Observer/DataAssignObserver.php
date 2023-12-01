@@ -137,6 +137,10 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->setAdditionalInformation('cc_owner', $additionalData->getCcOwner());
         }
 
+        if ($additionalData->getFromDevice()) {
+            $info->setAdditionalInformation('from_device', $additionalData->getFromDevice());
+        }
+
         $this->cardTwo->setAdditionalData($additionalData)->execute();
         
         $this->processExtraData($additionalData, $info);
