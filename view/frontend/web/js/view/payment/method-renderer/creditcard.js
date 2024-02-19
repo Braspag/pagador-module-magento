@@ -523,7 +523,7 @@ define(
             },
 
             getCcAvailableTokens: function () {
-                let creditTokens = window.checkoutConfig.payment.ccform.tokens.list[creditcardToken().getCode()];
+                let creditTokens = window.checkoutConfig.payment.ccform.tokens.list['braspag_pagador_creditcardtoken'];
                 if (creditTokens ) {
                   //this.showCardElement(false);
                   return creditTokens;
