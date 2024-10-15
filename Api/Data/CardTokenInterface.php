@@ -33,6 +33,8 @@ interface CardTokenInterface
 
     const MASK  =  'mask';
 
+    const EXPIRATION_DATE_TOKEN  =  'date_expiration_token';
+
     public function getId();
 
     public function getAlias();
@@ -53,6 +55,8 @@ interface CardTokenInterface
 
     public function getMask();
 
+    public function getExpirationDateToken();
+
     public function setId($id);
 
     public function setAlias($alias);
@@ -72,4 +76,6 @@ interface CardTokenInterface
     public function setMethod($method);
 
     public function setMask($mask);
+
+    public function setExpirationDateToken($expirationDateToken);
 }

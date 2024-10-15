@@ -110,8 +110,7 @@ define(
                         }
                         else {
                             $('div#braspag_pagador_voucher_cc_type_exp_div').show();
-                        }
-
+                        }        
                       
                        
                     });
@@ -347,6 +346,19 @@ define(
 
                 this.updateCreditCardExpData();
                 var self = this;
+
+                
+                let cardBrand = card.cardFromNumber(debitCardNumber);
+           
+                if (cardBrand != undefined ) {
+                    if (cardBrand.type != 'elo' || cardBrand.type != 'ticket'  ) {
+                        errorProcessor.process("Cartão inválido.", this.messageContainer);
+                       
+                    }
+                    return this;
+                }
+               
+
                 if (!(sopt.isActive(this.getCode()) && this.isSoptActive())) {
 
                     let data = this.getData();

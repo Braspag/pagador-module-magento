@@ -49,6 +49,12 @@ class PixCancelOrders
      */
     public function execute()
     {
+
+	    $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/braspag_cron_pix.log');
+$logger = new \Zend_Log();
+$logger->addWriter($writer);
+$logger->info('init');
+
         if(!$this->config->getPixCronCancelPending())
           return;
         

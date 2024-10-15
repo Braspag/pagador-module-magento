@@ -11,6 +11,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Braspag\BraspagPagador\Api\CardTokenManagerInterface;
 use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\Response\AbstractHandler;
+use Magento\Framework\Encryption\EncryptorInterface as Encryptor;
 
 use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
 
@@ -61,6 +62,8 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
      */
     protected $CardTokenRepository;
 
+    protected $encryptor;
+
 
     /**
      * CardTokenHandler constructor.
@@ -76,8 +79,8 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         CardTokenManagerInterface $cardTokenManager,
         Response $response,
-        ConfigInterface $config
-
+        ConfigInterface $config,
+        Encryptor $encryptor
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
@@ -85,6 +88,7 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
         $this->setCardTokenManager($cardTokenManager);
         $this->setResponse($response);
         $this->setConfig($config);
+        $this->encryptor = $encryptor;
     }
 
     /**
@@ -133,7 +137,8 @@ class CardTokenHandler extends AbstractHandler implements HandlerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $payment->getMethod(),
-            'mask'   => $response->getPaymentAuthorizationCode()
+            'mask'   => $response->getPaymentAuthorizationCode(),
+            'date_expiration_token' =>  $this->encryptor->encrypt($response->getPaymentCardExpirationDate())
         ]);
 
         $this->getEventManager()->dispatch(

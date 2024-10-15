@@ -30,4 +30,15 @@ class Config extends AbstractConfig implements ConfigInterface
     {
         return (bool) $this->_getConfig(self::XML_ORDER_ID_TO_FINGERPRINT);
     }
+
+    public function hasClearSale()
+    {
+        return $this->_getConfig(self::XML_PATH_CLEAR_SALE_ACTIVE);
+    }
+
+    public function getClearSaleFingerprint()
+    {
+        return $this->_getConfig(self::XML_PATH_CLEAR_SALE_FINGERPRINT);
+    }
+    
 }

@@ -197,8 +197,9 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
             return '';
         }
 
-        return ConfigInterface::COUNTRY_TELEPHONE_CODE .
-               preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone());
+        $phone =  preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone());
+        return '+'.ConfigInterface::COUNTRY_TELEPHONE_CODE . ' '.
+              substr($phone, 0, 2) .' '. substr($phone, 2,5) .'-'. substr($phone, 7);
     }
 
     public function setOrderAdapter(OrderAdapterInterface $orderAdapter)
@@ -311,5 +312,15 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     public function getStoreId()
     {
         return $this->storeId;
+    }
+
+    public function hasClearSale()
+    {
+        return $this->getConfig('braspag_braspag_antifraud/clearsale/active');
+    }
+
+    public function getClearSaleFingerprint()
+    {
+        return $this->getConfig('braspag_braspag_antifraud/clearsale/fingerprint');
     }
 }

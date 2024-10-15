@@ -17,6 +17,7 @@ use Braspag\BraspagPagador\Api\CardTokenManagerInterface;
 use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
 use Braspag\BraspagPagador\Api\Data\CardTokenInterface;
 use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface;
+use Magento\Framework\Encryption\EncryptorInterface as Encryptor;
 
 class CardTokenManager implements CardTokenManagerInterface
 {
@@ -40,8 +41,13 @@ class CardTokenManager implements CardTokenManagerInterface
      */
     protected $config;
 
-    
+
     protected $CardTokenRepository;
+
+    /**
+     * @var Encryptor
+     */
+    protected $encryptor;
 
 
     /**
@@ -55,31 +61,33 @@ class CardTokenManager implements CardTokenManagerInterface
         CardTokenRepositoryInterface $cardTokenRepository,
         ManagerInterface $eventManager,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        ConfigInterface $config
+        ConfigInterface $config,
+        Encryptor $encryptor
 
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->setEventManager($eventManager);
         $this->setSearchCriteriaBuilder($searchCriteriaBuilder);
         $this->setConfig($config);
+        $this->encryptor = $encryptor;
     }
 
     public function registerCardToken($customerId, $paymentMethod, $response)
     {
+
         if ($cardToken = $this->getCardTokenRepository()->get($response->getPaymentCardToken())) {
             return $cardToken;
         }
 
-        if ($this->getConfig()->isAutoDisablePreviousCardsToken())
-        {
+        if ($this->getConfig()->isAutoDisablePreviousCardsToken()) {
             $searchCriteriaBuilder = $this->getSearchCriteriaBuilder();
             $searchCriteriaBuilder->addFilter('method', $paymentMethod);
             $searchCriteriaBuilder->addFilter('customer_id', $customerId);
             $searchCriteriaBuilder->addFilter('brand', $response->getPaymentCardBrand());
             $searchCriteria = $searchCriteriaBuilder->create();
-    
+
             $searchResult = $this->getCardTokenRepository()->getList($searchCriteria);
-    
+
             foreach ($searchResult->getItems() as $item) {
                 $this->disable($item);
             }
@@ -91,7 +99,8 @@ class CardTokenManager implements CardTokenManagerInterface
             'provider' => $response->getPaymentCardProvider(),
             'brand' => $response->getPaymentCardBrand(),
             'method' => $paymentMethod,
-            'mask'   => $response->getPaymentAuthorizationCode()
+            'mask'   => $response->getPaymentAuthorizationCode(),
+            'date_expiration_token' => $this->encryptor->encrypt($response->getPaymentCardExpirationDate())
         ]);
 
         $cardToken = $this->getCardTokenRepository()->create($data->toArray());

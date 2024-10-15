@@ -13,6 +13,7 @@ namespace Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config;
  */
 interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ConfigInterface
 {
+    const COUNTRY_TELEPHONE_CODE = 55;
     const ACTION_AUTHORIZE_CAPTURE = 'authorize_capture';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_CCTYPES = 'payment/braspag_pagador_creditcard/cctypes';
     const CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_AVS_ACTIVE = 'payment/braspag_pagador_creditcard/avs_active';
@@ -126,3 +127,4 @@ interface ConfigInterface extends \Braspag\BraspagPagador\Gateway\Transaction\Ba
 
     public function getInstallmentsCardsRules();
 }
+

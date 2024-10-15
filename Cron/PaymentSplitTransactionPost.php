@@ -52,6 +52,12 @@ class PaymentSplitTransactionPost
      */
     public function execute()
     {
+
+	    $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/braspag_cron_split.log');
+$logger = new \Zend_Log();
+$logger->addWriter($writer);
+$logger->info('init');
+
         $orders = [];
 
         if (

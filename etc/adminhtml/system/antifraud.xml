@@ -24,6 +24,7 @@
             </field>
         </group>
 
+        <include path="Braspag_BraspagPagador::system/antifraud/clearsale.xml"/>
         <include path="Braspag_BraspagPagador::system/antifraud/fingerprint.xml"/>
         <include path="Braspag_BraspagPagador::system/antifraud/options.xml"/>
         <include path="Braspag_BraspagPagador::system/antifraud/mdd.xml"/>

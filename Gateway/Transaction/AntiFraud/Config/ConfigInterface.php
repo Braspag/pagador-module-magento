@@ -21,6 +21,9 @@ interface ConfigInterface
     const XML_PATH_CAPTURE_ON_LOW_RISK = 'braspag_braspag_antifraud/options/capture_in_low_risk';
     const XML_PATH_VOID_ON_HIGH_RISK = 'braspag_braspag_antifraud/options/void_in_high_risk';
     const XML_ORDER_ID_TO_FINGERPRINT   = 'braspag_braspag_antifraud/fingerprint/use_order_id_to_fingerprint';
+    const XML_PATH_CLEAR_SALE_ACTIVE = 'braspag_braspag_antifraud/clearsale/active';
+    const XML_PATH_CLEAR_SALE_FINGERPRINT = 'braspag_braspag_antifraud/clearsale/fingerprint';
+    
 
     public function getSequence();
 
@@ -31,4 +34,8 @@ interface ConfigInterface
     public function getVoidOnHighRisk();
 
     public function userOrderIdToFingerPrint();
+
+    public function hasClearSale();
+
+    public function getClearSaleFingerprint();
 }

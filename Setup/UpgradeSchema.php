@@ -66,6 +66,11 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->upgradeThreeNineteenZero($setup,$context);
         }
 
+        if (version_compare($context->getVersion(), '3.20.0') <= 0)
+        {
+            $this->upgradeThreeNineteenTwo($setup,$context);
+        }
+
         $setup->endSetup();
     }
 
@@ -644,6 +649,26 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 );
             }
         
+    }
+
+      /**
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Zend_Db_Exception
+     */
+    protected function upgradeThreeNineteenTwo(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        if ($setup->getConnection()->isTableExists($setup->getTable('braspag_braspagpagador_cardtoken'))) {
+            $setup->getConnection()->addColumn(
+                $setup->getTable('braspag_braspagpagador_cardtoken'),
+                'date_expiration_token',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'nullable' => true,
+                    'comment' => 'Expiration Date Token'
+                ]
+            );
+        }
     }
 
 }

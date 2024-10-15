@@ -319,6 +319,10 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressPhone()
     {
+        $phone =  preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getTelephone());
+        return '+'.ConfigInterface::COUNTRY_TELEPHONE_CODE . ' '.
+              substr($phone, 0, 2) .' '. substr($phone, 2,5) .'-'. substr($phone, 7);
+
         return $this->getBillingAddress()->getTelephone();
     }
 
@@ -941,3 +945,4 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return sprintf("%01.2f", $price);
     }
 }
+

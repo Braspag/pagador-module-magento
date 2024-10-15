@@ -186,11 +186,11 @@ define(
                         number: '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;',
                         cvc: '&bull;&bull;&bull;',
                         expiry: '&bull;&bull;/&bull;&bull;',
-                        name: 'Nome no cartÃ£o'
+                        name: 'Nome no cartão'
                     },
                     messages: {
-                        validDate: 'sequÃªncia\nvÃ¡lida',
-                        monthYear: 'mÃªs/ano'
+                        validDate: 'sequência\nválida',
+                        monthYear: 'mês/ano'
                     }
                 });
                 
@@ -244,7 +244,8 @@ define(
                         'authentication_reference_id': this.bpmpiAuthReferenceId(),
                         'cc_token': this.cardTokenValue(),
                         'cc_taxvat': this.creditCardTaxvat(),
-                        'cc_installments_text' :$('select#braspag_pagador_creditcard_installments option:selected').text()
+                        'cc_installments_text' :$('select#braspag_pagador_creditcard_installments option:selected').text(),
+                        'from_device': "web_checkout"
                     }
                 };
                 
@@ -476,7 +477,7 @@ define(
                             fullScreenLoader.startLoader();
 
                             if (orderId.length == 0) {
-                                errorProcessor.process("O pagamento nÃ£o pÃ´de ser finalizado.", self.messageContainer);
+                                errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
                                 fullScreenLoader.stopLoader();
                             } else {
 
@@ -509,8 +510,8 @@ define(
 
             updateCreditCardExpData: function () {
 
-                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : 'â€¢â€¢');
-                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : 'â€¢â€¢');
+                let cardExpMonth = (this.creditCardExpMonth() != undefined ? this.pad(this.creditCardExpMonth(), 2) : '••');
+                let cardExpYear = (this.creditCardExpYear() != undefined ? this.creditCardExpYear() : '••');
                 let cardExpDate = cardExpMonth + '/' + cardExpYear;
                 this.creditCardExpDate(cardExpDate);
 
@@ -562,7 +563,7 @@ define(
                             self.afterPlaceOrder();
 
                             if (orderId.length == 0) {
-                                errorProcessor.process("O pagamento nÃ£o pÃ´de ser finalizado.", self.messageContainer);
+                                errorProcessor.process("O pagamento não pôde ser finalizado.", self.messageContainer);
                             } else {
 
                                 fullScreenLoader.startLoader();

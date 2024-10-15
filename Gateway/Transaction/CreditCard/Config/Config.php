@@ -202,4 +202,6 @@ class Config extends BaseConfig implements ConfigInterface
     {
         return (bool) $this->_getConfig(self::CONFIG_XML_BRASPAG_PAGADOR_CREDITCARD_SAVECARD_DISABLE_PREVIOUSLY_USED_CARDS);
     }
+
+
 }

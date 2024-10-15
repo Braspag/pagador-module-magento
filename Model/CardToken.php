@@ -64,6 +64,11 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Brasp
         return $this->getData(self::MASK);
     }
 
+    public function getExpirationDateToken()
+    {
+        return $this->getData(self::EXPIRATION_DATE_TOKEN);
+    }
+
     public function setId($id)
     {
         return $this->setData(self::ENTITY_ID, $id);
@@ -127,5 +132,10 @@ class CardToken extends \Magento\Framework\Model\AbstractModel implements \Brasp
     public function setMask($mask)
     {
         return $this->setData(self::MASK, $mask);
+    }
+
+    public function setExpirationDateToken($mask)
+    {
+        return $this->setData(self::EXPIRATION_DATE_TOKEN, $mask);
     }
 }
