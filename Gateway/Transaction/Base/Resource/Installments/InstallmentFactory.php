@@ -29,7 +29,14 @@ class InstallmentFactory implements InstallmentFactoryInterface
         $installmentAmount = $total / $index;
         $interest = false;
 
-        if ($installmentsConfig->isInterestByIssuer() && ($index > $installmentsConfig->getinstallmentsMaxWithoutInterest())) {
+         $installmentsMaxWithoutInterest = $installmentsConfig->getinstallmentsMaxWithoutInterest();
+
+        if (
+            isset($installmentsMaxWithoutInterest)
+             && $installmentsMaxWithoutInterest > 0 
+             && ($index > $installmentsConfig->getinstallmentsMaxWithoutInterest())
+        
+        ) {
             $installmentAmount = $this->calcPriceWithInterest($index, $total, $installmentsConfig->getInterestRate());
             $interest = true;
         }
