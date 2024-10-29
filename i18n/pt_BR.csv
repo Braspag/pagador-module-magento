@@ -41,3 +41,4 @@
 "Enabled Installments Rules for Cards","Habilitar regra parcelamento por bandeiras"
 "Rules Installments","Regras parcelamento"
 "Currently the Authentication 3DS 2.0 is available only for acquirer Cielo. For 2 card's is not available", "Atualmente a Autenticação 3DS 2.0 está disponível apenas para adquirente Cielo. Para 2 cartões não está disponível"
+"Mark YES in this field so that the installment type is defined by the ISSUER. If NO, the installment type will be RETAILER. Note: Leave the fields below blank to NOT pay in installments with interest.","Marque SIM neste campo para que o tipo de parcelamento seja definido pelo EMISSOR. Caso NÃO, o tipo do parcelamento será LOJISTA. Obs: Deixe em branco os campos abaixo para NÃO parcelar com juros."
