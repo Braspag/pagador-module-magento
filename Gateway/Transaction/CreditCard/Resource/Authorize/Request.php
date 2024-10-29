@@ -418,7 +418,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return false;
     }
 
-    /**
+     /**
      * @return mixed
      */
     public function getPaymentAmount()
@@ -435,7 +435,15 @@ class Request implements BraspaglibRequestInterface, RequestInterface
                 $grandTotalAmount =  $grandTotalAmount - str_replace(',', '.',  str_replace('.', '',  $this->cardTwo->getData('total_amount')));
 
 
-            if ($this->getInstallmentsConfig()->isInterestByIssuer() && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
+             $installmentsMaxWithoutInterest   = $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest();
+             $interestRate = $this->getInstallmentsConfig()->getInterestRate();
+
+            if (
+             isset($installmentsMaxWithoutInterest)
+             && $installmentsMaxWithoutInterest > 0 
+             && isset($interestRate)
+             && $interestRate > 0 
+             && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
                 $amountTotal =  $this->calcPriceWithInterest($installment, $grandTotalAmount, $this->getInstallmentsConfig()->getInterestRate());
                 $integerValue = $this->grandTotalPricingHelper->currency($amountTotal * $installment);
             } else {
