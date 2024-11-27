@@ -192,8 +192,8 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getCustomerAddressComplement()
     {
         $addressComplement = $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
-
-        return $this->helperData->removeSpecialCharacters($addressComplement);
+        return isset($addressComplement) ? $addressComplement = $this->helperData->removeSpecialCharacters(substr($addressComplement, 0, 10)) : '';
+    
     }
 
     /**

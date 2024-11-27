@@ -263,7 +263,9 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressComplement()
     {
-        return $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+        $addressComplement = $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+        return isset($addressComplement) ? $addressComplement = $this->helperData->removeSpecialCharacters(substr($addressComplement, 0, 10)) : '';
+    
     }
 
     /**
@@ -343,7 +345,9 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerDeliveryAddressComplement()
     {
-        return $this->getShippingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+        $addressComplement = $this->getShippingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
+        return isset($addressComplement) ? $addressComplement = $this->helperData->removeSpecialCharacters(substr($addressComplement, 0, 10)) : '';
+    
     }
 
     /**
