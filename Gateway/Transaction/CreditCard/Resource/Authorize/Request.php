@@ -321,7 +321,11 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressPhone()
     {
-        return $this->getBillingAddress()->getTelephone();
+        
+        $phone =  substr(preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getTelephone()), 0, 11);
+        return ConfigInterface::COUNTRY_TELEPHONE_CODE . ''.
+              substr($phone, 0, 2) .''. substr($phone, 2,5) .''. substr($phone, 7);
+        
     }
 
     /**
