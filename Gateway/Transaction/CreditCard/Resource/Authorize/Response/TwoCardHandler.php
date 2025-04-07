@@ -33,7 +33,7 @@ class TwoCardHandler extends AbstractHandler implements HandlerInterface
             $payment->setAdditionalInformation('two_card_last_4', $this->cardTwo->getData('cc_last_4'));
             $payment->setAdditionalInformation('two_card_total_amount', $this->cardTwo->getData('total_amount'));
             $payment->setAdditionalInformation('two_card_cc_installments', $this->cardTwo->getData('cc_installments'));
-            $payment->setAdditionalInformation('two_card_type', $this->cardTwo->getData('cc_type'));
+            $payment->setAdditionalInformation('two_card_type', $responseTwoCard->getPayment()['CreditCard']['Brand']);
             $payment->setAdditionalInformation('two_card_cc_owner', $this->cardTwo->getData('cc_owner'));
             $payment->setAdditionalInformation('two_card2_taxvat', $this->cardTwo->getData('taxvat_card2'));
             $payment->setAdditionalInformation('two_card_taxvat', $this->cardTwo->getData('taxvat_card'));

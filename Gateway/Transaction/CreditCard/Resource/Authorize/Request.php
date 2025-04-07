@@ -635,13 +635,21 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentCreditCardBrand()
     {
+
         $ccType =  $this->getPaymentData()->getCcType();
 
-        if ($this->getPaymentData()->getAdditionalInformation('cc_token') || $this->cardTwo->getData('cc_token'))
-            return null;
+        if ($this->getCardType() == 'two_card') {
 
-        if ($this->getCardType() == 'two_card')
-            $ccType = $this->cardTwo->getData('cc_type');
+            if ($this->cardTwo->getData('cc_token')) {
+                return null;
+            } else {
+                $ccType = $this->cardTwo->getData('cc_type');
+            }
+
+        } elseif ($this->getPaymentData()->getAdditionalInformation('cc_token')) {
+            return null;
+        }
+
 
         list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
