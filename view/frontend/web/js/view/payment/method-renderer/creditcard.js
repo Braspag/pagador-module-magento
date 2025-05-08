@@ -75,6 +75,10 @@ define(
                 bpmpiAuthReferenceId: ko.observable(),
                 showCardElement: ko.observable(true),
                 taxvatError: ko.observable(false),
+                selectBrand:ko.observableArray([]),
+                showBrandList: false,
+                oldCardBrand : '',
+                oldCardNumber: ''
             },
 
             initialize: function () {
@@ -103,6 +107,17 @@ define(
                 return true;
             },
 
+            clearCard : function () {
+                var self = this;
+                self.creditCardType(null);  
+                self.creditCardNumber(null); 
+                $('li.opc-progress-bar-item._complete').click(function () {
+                    $('#braspag_pagador_creditcard_cc_number').val('');
+                })
+                $('#braspag_pagador_creditcard_cc_number').val('');
+
+            },
+
             validateForm: function (form) {
                 return $(form).validation() && $(form).validation('isValid');
             },
@@ -124,7 +139,12 @@ define(
                         'creditCardSoptPaymentToken',
                         'creditCardToken',
                         'cardTokenValue',
+                        'showBrandList',
+                        'oldCardBrand',
+                        'oldCardNumber'
                     ]);
+
+                    $('input#braspag_pagador_creditcard_cc_number').val('');
 
                     this.creditCardType.subscribe(function () { 
                         let  value = self.creditCardAmount();
@@ -132,7 +152,34 @@ define(
                         if(!Number.isInteger(value))
                         value = value.replace('.', '').replace(',', '.');
 
-                        self.getCcInstallments(value)
+                        self.getCcInstallments(value);
+                    
+
+                    });
+
+                    this.creditCardNumber.subscribe(function (value) { 
+                
+                        self.showBrandList(false);
+                        
+                        setTimeout(function(){ 
+                             self.oldCardBrand( $('.creditcard-type').val()) 
+                         }, 1000);
+
+                         self.oldCardNumber(value);
+                     });
+
+
+                    this.selectBrand.subscribe(function (value) { 
+
+                        $('.creditcard-type').val("Braspag-"+value.split('-')[1]);
+                
+                        if (self.oldCardBrand().split('-')[1] != undefined && self.oldCardBrand().split('-')[1] != value.split('-')[1] ) {
+                           $('.card-wrapper .jp-card-container').hide();
+                        }else if( self.oldCardBrand().split('-')[1] == value.split('-')[1]) {
+                            $('.card-wrapper .jp-card-container').show();
+                        }
+                        
+
                     });
 
                     this.creditCardToken.subscribe(function (value) {
@@ -166,6 +213,12 @@ define(
                 this.updateInstallments();
             },
 
+            brandListOptions: function () { 
+                return window.checkoutConfig.payment.ccform.braspag_pagador_creditcard.cc_types.split(",");
+            },
+            brandImage(brand) {
+               return require.toUrl('Braspag_BraspagPagador/images/cc/' + brand.split('-')[1] + '.png');
+            },
             loadCreditCardForm: function() {
 
                 if (!cardView.isCreditCardViewEnabled())
@@ -228,7 +281,7 @@ define(
                     'method': this.item.method,
                     'additional_data': {
                         'cc_cid': this.creditCardVerificationNumber (),
-                        'cc_type': this.creditCardTypeCustom(),
+                        'cc_type': $('.creditcard-type').val(),
                         'cc_exp_year': this.creditCardExpYear(),
                         'cc_exp_month': this.creditCardExpMonth(),
                         'cc_number': this.creditCardNumber(),
@@ -263,7 +316,7 @@ define(
                     data.additional_data.cc_installments_text_card2 = $('select#braspag_pagador_creditcard_two_card_installments option:selected').text()
 
                     if (towCardComponent.creditCardType() != undefined) {
-                        data.additional_data.cc_type_card2 = towCardComponent.creditCardTypeCustom()
+                        data.additional_data.cc_type_card2 = $('.creditcard-type-two').val()
                     }
                 }
               
@@ -273,7 +326,7 @@ define(
                         'method': this.item.method,
                         'additional_data': {
                             'cc_cid': this.creditCardVerificationNumber (),
-                            'cc_type': this.creditCardTypeCustom(),
+                            'cc_type': $('.creditcard-type').val(),
                             'cc_owner': this.creditCardOwner(),
                             'cc_installments': this.creditCardInstallments(),
                             'cc_savecard': this.creditCardsavecard() ? 1 : 0,
@@ -295,25 +348,54 @@ define(
                 return window.checkoutConfig.payment.ccform.installments.active[this.getCode()];
             },
 
+        
             updateInstallments: function() {
                 var self = this;
                 let  towCardComponent = uiRegistry.get("two_card_braspag"), 
                 amount = self.getGrandTotal(), 
-                cardType = self.creditCardType(), 
+                cardType = $('.creditcard-type').val(), 
                 serviceUrl;
-
-                cardType = $('.creditcard-type').val();
 
                 if (towCardComponent ) {
                     if(towCardComponent.creditCardAmount())
                     amount -= towCardComponent.creditCardAmount().replace('.', '').replace(',' , '.');
                 }
              
-
+                self.loadCreditCardBrands();
+            
+                
                 //if(cardType)  
                 return installments(amount,cardType);
 
-                return false;
+            },
+
+            loadCreditCardBrands :function (){
+
+               let self = this;
+
+               let  cardType = $('.creditcard-type').val();
+
+                if (cardType != undefined) {
+
+                    self.showBrandList(true);
+                    
+                    let brandsObject =  this.brandListOptions();
+
+                    for (let i = 0, len = brandsObject.length; i < len; i++) {
+                        if (!brandsObject[i]) continue;
+                      
+                       if(cardType.split('-')[1] == brandsObject[i].split('-')[1]) {
+                          self.selectBrand(brandsObject[i]);
+                          break;
+                       }
+    
+                    }
+
+                }
+
+                if(self.creditCardNumber() == undefined || self.creditCardNumber().length == 0)
+                    self.showBrandList(false);
+
             },
 
             maskCPF: function() {
@@ -542,8 +624,8 @@ define(
                 let creditCardNumber = this.creditCardNumber();
                 let creditCardType = $('.creditcard-type');
 
-                if (!this.cardTokenValue())
-                card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
+              //  if (!this.cardTokenValue())
+                //card.forceRegisterCreditCardType(creditCardNumber, creditCardType);
 
                 var self = this;
                 if (sopt.isActive(this.getCode()) && this.isSoptActive()) {
@@ -625,6 +707,7 @@ define(
                         self.bpmpiAuthEci($('.bpmpi_auth_eci').val());
                         self.bpmpiAuthVersion($('.bpmpi_auth_version').val());
                         self.bpmpiAuthReferenceId($('.bpmpi_auth_reference_id').val());
+                        self.bpmpiCcType($('.creditcard-type').val());
 
                         self.getPlaceOrderDeferredObject();
                         fullScreenLoader.stopLoader();
@@ -780,7 +863,8 @@ define(
             },
 
             showType: function () {
-                return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isCreditCardViewEnabled();
+               // return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isCreditCardViewEnabled();
+               return false;
             },
 
             /**

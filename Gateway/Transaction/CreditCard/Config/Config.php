@@ -195,7 +195,8 @@ class Config extends BaseConfig implements ConfigInterface
 
     public function isCardViewActive()
     {
-        return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
+        return false;
+        //return (bool) $this->_getConfig(self::BRASPAG_PAGADOR_CREDITCARD_CARD_VIEW);
     }
 
     public function isAutoDisablePreviousCardsToken()

@@ -265,7 +265,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     {
         $addressComplement = $this->getBillingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
         return isset($addressComplement) ? $addressComplement = $this->helperData->removeSpecialCharacters(substr($addressComplement, 0, 10)) : '';
-    
     }
 
     /**
@@ -321,11 +320,10 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressPhone()
     {
-        
+
         $phone =  substr(preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getTelephone()), 0, 11);
-        return ConfigInterface::COUNTRY_TELEPHONE_CODE . ''.
-              substr($phone, 0, 2) .''. substr($phone, 2,5) .''. substr($phone, 7);
-        
+        return ConfigInterface::COUNTRY_TELEPHONE_CODE . '' .
+            substr($phone, 0, 2) . '' . substr($phone, 2, 5) . '' . substr($phone, 7);
     }
 
     /**
@@ -351,7 +349,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     {
         $addressComplement = $this->getShippingAddressAttribute($this->getConfig()->getCustomerComplementAttribute());
         return isset($addressComplement) ? $addressComplement = $this->helperData->removeSpecialCharacters(substr($addressComplement, 0, 10)) : '';
-    
     }
 
     /**
@@ -426,7 +423,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
         return false;
     }
 
-     /**
+    /**
      * @return mixed
      */
     public function getPaymentAmount()
@@ -443,21 +440,21 @@ class Request implements BraspaglibRequestInterface, RequestInterface
                 $grandTotalAmount =  $grandTotalAmount - str_replace(',', '.',  str_replace('.', '',  $this->cardTwo->getData('total_amount')));
 
 
-             $installmentsMaxWithoutInterest   = $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest();
-             $interestRate = $this->getInstallmentsConfig()->getInterestRate();
+            $installmentsMaxWithoutInterest   = $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest();
+            $interestRate = $this->getInstallmentsConfig()->getInterestRate();
 
             if (
-             isset($installmentsMaxWithoutInterest)
-             && $installmentsMaxWithoutInterest > 0 
-             && isset($interestRate)
-             && $interestRate > 0 
-             && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())) {
+                isset($installmentsMaxWithoutInterest)
+                && $installmentsMaxWithoutInterest > 0
+                && isset($interestRate)
+                && $interestRate > 0
+                && ($installment > $this->getInstallmentsConfig()->getinstallmentsMaxWithoutInterest())
+            ) {
                 $amountTotal =  $this->calcPriceWithInterest($installment, $grandTotalAmount, $this->getInstallmentsConfig()->getInterestRate());
                 $integerValue = $this->grandTotalPricingHelper->currency($amountTotal * $installment);
             } else {
                 $integerValue = $this->grandTotalPricingHelper->currency($grandTotalAmount);
             }
-
         } catch (\Exception $e) {
             throw new \InvalidArgumentException('Error getPaymentAmount');
         }
@@ -490,18 +487,19 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getPaymentProvider()
     {
 
-        $ccType = $this->getPaymentData()->getCcType();
-
-        // if ($this->getPaymentData()->getAdditionalInformation('cc_token') || !isset($ccType))
-        //return '';
 
         if ($this->getPaymentData()->getCcType()) {
+
+                
+            if ($this->getConfig()->getIsTestEnvironment()) 
+            return "Simulado";   
 
             list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
 
             if ($provider === "Braspag") {
                 $availableTypes = explode(',', $this->getConfig()->getCcTypes());
 
+        
                 foreach ($availableTypes as $key => $availableType) {
                     $typeDetail = explode("-", $availableType);
                     if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
@@ -509,9 +507,6 @@ class Request implements BraspaglibRequestInterface, RequestInterface
                     }
                 }
 
-                if ($this->getConfig()->getIsTestEnvironment()) {
-                    return "Simulado";
-                }
 
                 return "";
             }
@@ -655,6 +650,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
 
         return ($brand) ? $brand : 'Visa';
     }
+
 
     /**
      * @return bool

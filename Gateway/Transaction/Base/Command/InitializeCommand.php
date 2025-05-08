@@ -65,8 +65,8 @@ class InitializeCommand implements CommandInterface
         }
 
         if ($isTransactionPending = $payment->getIsTransactionPending()) {
-            $stateObject->setData(OrderInterface::STATE, Order::STATE_PAYMENT_REVIEW);
-            $stateObject->setData(OrderInterface::STATUS, Order::STATE_PAYMENT_REVIEW);
+            $stateObject->setData(OrderInterface::STATE, Order::STATE_NEW);
+            $stateObject->setData(OrderInterface::STATUS, 'pending');
         }
 
         $stateObject->setData('is_notified', false);

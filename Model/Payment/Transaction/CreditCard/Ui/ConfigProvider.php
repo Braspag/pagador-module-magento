@@ -56,7 +56,8 @@ final class ConfigProvider implements ConfigProviderInterface
                         'installments_rules' => [
                            'active' =>  boolval($this->getCreditCardConfig()->isInstallmentsRulesActive()),
                            'rules'  =>  $this->getCreditCardConfig()->getInstallmentsCardsRules(),
-                        ]
+                        ],
+                        'cc_types' => $this->getCreditCardConfig()->getCcTypes(),
                     ]
                 ]
             ]

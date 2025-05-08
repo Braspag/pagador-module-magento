@@ -78,6 +78,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
         $ccType = $additionalData->getCcType();
         $ccNumber = $additionalData->getCcNumber();
         $ccToken = $additionalData->getCcToken();
+        
 
        if (isset($ccNumber) && isset($ccType)) {
 

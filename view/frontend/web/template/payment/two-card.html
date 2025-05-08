@@ -118,9 +118,8 @@
     </div>
         <!-- /ko -->
 
-    <!-- ko if: (!showType())-->
+
     <input name="payment[cc_type_tow]" type="hidden" class="creditcard-type-two"/>
-    <!-- /ko -->
 
     <div class="field number required">
         <label data-bind="attr: {for: getCode() + '_cc_number'}" class="label">
@@ -130,7 +129,7 @@
             </span>
         </label>
         <div class="control">
-            <input type="text" name="payment[cc_number_card2]"
+            <input type="text" name="payment[cc_number_card2]" autocomplete="off"
                 class="input-text bp-sop-cardnumber silentorderpost" value="" data-bind="attr: {
                                         autocomplete: off,
                                         id: getCode() + '_cc_number',
@@ -146,9 +145,28 @@
               <!-- ko if: (cardNumberError)-->
               <div class="return mage-error" generated="true" translate="'Card number already used.'"></div>
               <!-- /ko -->
+
+
+          <!-- ko if: showBrandList -->
+          <p style="background: #ffcdbc;padding: 5px;border-radius: 5px;color: #af3d19;margin: 12px 0 3px;">Atenção: Confira se o número e a bandeira do cartão estão corretos antes de finalizar o pedido</p>
+
+            <ul class="credit-card-types-card">
+                <!-- ko foreach: {data: brandListOptions(), as: 'brand'} -->
+                      <li>
+                           <label data-bind="attr: {'for': brand.toLowerCase()}">
+                              <input type="radio" data-bind="value: $data, checked: $parent.selectBrand, attr: { name: 'imageListRadio', id: brand.toLowerCase() }" />
+                              <img data-bind="attr: { src: $parent.brandImage(brand), alt: brand }, css: { 'selected-card': $parent.selectBrand() === $data }" style="width:46px; height: 30px;" />
+                           </label>
+                         
+                      </li>
+               <!--/ko-->
+              </ul>
+              <!-- /ko -->
+
         </div>
     </div>
 
+    
       <!-- ko if: (isSaveCardActive())-->
       <div class="field choice" data-bind="attr: {id: getCode() + '_cc_savecard'}">
         <input type="checkbox" class="checkbox" id="creditcard-save" data-bind="checked: creditCardsavecard" />

@@ -23,6 +23,7 @@ class TwoCardHandler extends AbstractHandler implements HandlerInterface
         $responseTwoCard =  $this->cardTwo->getData('response');
 
         $installmentsAmount = 0;
+        
 
         if (isset($responseTwoCard)) {
 

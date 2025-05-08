@@ -40,7 +40,7 @@
 	    <include path="Braspag_BraspagPagador::system/transaction/creditcard/avs.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/creditcard/authenticate3ds20.xml"/>
         <include path="Braspag_BraspagPagador::system/transaction/creditcard/paymentsplit.xml"/>
-        <include path="Braspag_BraspagPagador::system/transaction/creditcard/cardview.xml"/>
+        <!--<include path="Braspag_BraspagPagador::system/transaction/creditcard/cardview.xml"/>-->
         <include path="Braspag_BraspagPagador::system/transaction/creditcard/twocard.xml"/>
     </group>
 </include>

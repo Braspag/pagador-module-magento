@@ -57,7 +57,11 @@ define(
                 remaining: ko.observable(),
                 creditCardToken:ko.observable(),
                 grandTotal: window.checkoutConfig.quoteData.base_grand_total,
-                triggerInputAmount : "input#braspag_pagador_creditcard_two_card_amount"
+                triggerInputAmount : "input#braspag_pagador_creditcard_two_card_amount",
+                selectBrand:ko.observableArray([]),
+                showBrandList: false,
+                oldCardBrand : '',
+                oldCardNumber: ''
             },
 
             initialize: function () {
@@ -149,6 +153,9 @@ define(
                         'checkboxToggle',
                         'creditCardTokenOld',
                         'cardTokenValue',
+                        'showBrandList',
+                        'oldCardBrand',
+                        'oldCardNumber'
                     ]);
 
                     this.checkboxToggle.subscribe(function (value) {
@@ -178,11 +185,6 @@ define(
                                 setTimeout(() => {self.loadCreditCardForm()}, 2000);
                               } else {
 
-                                // if ($('.card-wrapper-two-card .jp-card-container').length > 0 ) {
-                                //     $('.card-wrapper-two-card .jp-card-container').remove();
-                                //     $('.card-wrapper-two-card').removeAttr('data-jp-card-initialized');
-                                // }
-                              
                                self.cardTokenValue(value);
                                self.showCardElement(false);
                                let creditComponent = uiRegistry.get("checkout.steps.billing-step.payment.payments-list.braspag_pagador_creditcard");
@@ -199,10 +201,38 @@ define(
                     this.creditCardType.subscribe(function () { 
                         let  value = self.creditCardAmount();
 
+                        if (value == null)
+                            return this;
+
                         if(!Number.isInteger(value))
                         value = value.replace('.', '').replace(',', '.');
 
-                        self.getCcInstallments(value)
+                        self.getCcInstallments(value);
+
+                        self.loadCreditCardBrands();
+
+                    });
+
+                    this.creditCardNumber.subscribe(function (value) { 
+                
+                        self.showBrandList(false);
+                        
+                        setTimeout(function(){ 
+                             self.oldCardBrand( $('.creditcard-type').val()) 
+                         }, 1000);
+
+                         self.oldCardNumber(value);
+                     });
+
+
+                    this.selectBrand.subscribe(function (value) { 
+                        $('.creditcard-type-two').val("Braspag-"+value.split('-')[1]);
+
+                        if (self.oldCardBrand().split('-')[1] != undefined && self.oldCardBrand().split('-')[1] != value.split('-')[1] ) {
+                            $('.card-wrapper-two-card .jp-card-container').hide();
+                         }else if( self.oldCardBrand().split('-')[1] == value.split('-')[1]) {
+                             $('.card-wrapper-two-card .jp-card-container').show();
+                         }
                     });
 
                     ko.computed(function() {
@@ -224,13 +254,98 @@ define(
                 return 'braspag_pagador_creditcard';
             },
 
-            
+            brandListOptions: function () { 
+                return window.checkoutConfig.payment.ccform.braspag_pagador_creditcard.cc_types.split(",");
+            },
+            brandImage(brand) {
+                return require.toUrl('Braspag_BraspagPagador/images/cc/' + brand.split('-')[1] + '.png');
+             },
             getCode: function() {
                 return 'braspag_pagador_creditcard_two_card';
             },
 
             isActive: function() {
                 return window.checkoutConfig.payment.ccform.tow_card.active.braspag_pagador_creditcard;
+            },
+
+            loadCreditCardBrands :function (){
+
+                let self = this;
+ 
+                let  cardType = $('.creditcard-type-two').val();
+ 
+                 if (cardType != undefined) {
+ 
+                     self.showBrandList(true);
+                     
+                     let brandsObject =  this.brandListOptions();
+ 
+                     for (let i = 0, len = brandsObject.length; i < len; i++) {
+                         if (!brandsObject[i]) continue;
+                       
+                        if(cardType.split('-')[1] == brandsObject[i].split('-')[1]) {
+                           self.selectBrand(brandsObject[i]);
+                           break;
+                        }
+     
+                     }
+ 
+                 }
+ 
+                 if(self.creditCardNumber() == undefined || self.creditCardNumber().length == 0)
+                     self.showBrandList(false);
+ 
+             },
+
+             
+            brandList(brandsObject, formObject) {
+
+                self = this;
+
+                self.creditCardType;
+
+                let html = '';
+                let checked = '';
+    
+                for (let i = 0, len = brandsObject.length; i < len; i++) {
+                    if (!brandsObject[i]) continue;
+
+
+                   let checked = '';
+                   let brandType = brandsObject[i].toLowerCase();
+                   let ccType =   self.creditCardType().toLowerCase();
+                   let img = require.toUrl('Braspag_BraspagPagador/images/cc/' + brandsObject[i].split('-')[1] + '.png');
+                   let style = "filter: grayscale(100%) opacity(60%)";
+                   style = "filter: none";
+                  
+                   if(ccType.split('-')[1] == brandType.split('-')[1]) {
+                     checked = "checked"
+                     style = "filter: none";
+                   }
+
+                    
+                    html +=
+                        "<li class='item'>" +
+                        "<label for='" + brandsObject[i].toLowerCase() + "'>" +
+                        "<input type='radio' name='payment[cc_type_tow]' id='" + brandsObject[i].toLowerCase() + "' value='" + brandsObject[i] + "' "+checked+" > " +
+                        "<img src='" + img + "' " +
+                        "alt='" + brandsObject[i] + "' " +
+                        "style='" + style + "' " +
+                        "width='46' " +
+                        "height='30' " +
+                        "class='brands-" +
+                        brandsObject[i].toLowerCase() +
+                        "'>" +
+                        "</label></li>"; 
+
+                       
+                }
+    
+                if (html == '') {
+                    $(formObject).find(".nobrand").show();
+                }
+    
+                $(formObject).html(html);
             },
 
             loadCreditCardForm: function() {
@@ -382,6 +497,8 @@ define(
                     return;
                 }
 
+                this.creditCardType();
+                
                 if (parseInt(number.substr(0,6)) === 960382) {
                     $('#braspag_pagador_creditcard_tow_card_cc_type_Credsystem').prop("checked", true);
                     this.creditCardType('Credsystem-Credsystem');
@@ -599,7 +716,8 @@ define(
             },
 
             showType: function () {
-                return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isCreditCardViewEnabled();
+                //return window.checkoutConfig.payment.braspag.isTestEnvironment == '1' && !cardView.isCreditCardViewEnabled();
+                return false;
             },
 
             /**
