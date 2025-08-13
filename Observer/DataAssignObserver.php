@@ -87,7 +87,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
             $info->addData([
                 'cc_type' => $ccType,
                 'cc_owner' => $additionalData->getCcOwner(),
-                'cc_number' => preg_replace('/\D/', '', $ccNumber),
+                'cc_number' => preg_replace('/\D/', '', trim($ccNumber)),
                 'cc_last_4' => substr($ccNumber, -4),
                 'cc_cid' => $additionalData->getCcCid(),
                 'cc_exp_month' => $additionalData->getCcExpMonth(),
