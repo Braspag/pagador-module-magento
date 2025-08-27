@@ -40,7 +40,7 @@ class CardTwo extends \Magento\Framework\DataObject
                     'cc_type' => isset($data['cc_type_card2']) ? $data['cc_type_card2']: null,
                     'cc_exp_year' => isset($data['cc_exp_year_card2']) ? $data['cc_exp_year_card2']: null,
                     'cc_exp_month' => isset($data['cc_exp_month_card2']) ? $data['cc_exp_month_card2']: null,
-                    'cc_number' => isset($data['cc_number_card2']) ? trim($data['cc_number_card2']): null,
+                    'cc_number' => isset($data['cc_number_card2']) ? preg_replace('/\D/', '', trim($data['cc_number_card2'])): null,
                     'cc_last_4' => isset($data['cc_number_card2']) ?substr(trim($data['cc_number_card2']), -4): null,
                     'cc_owner' =>isset($data['cc_owner_card2']) ? $data['cc_owner_card2']: null,
                     'cc_installments' => isset($data['cc_installments_card2']) ? $data['cc_installments_card2']: null,
