@@ -39,5 +39,57 @@
             <comment />
         </field>
 
+        <field id="custom_mdd" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
+            <label>Custom MDD? </label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment />
+        </field>
+
+        <field id="custom_value_85" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
+            <label>Custom Value(85):</label>
+             <depends>
+                <field id="custom_mdd">1</field>
+            </depends>
+            <comment />
+            <source_model>\Braspag\BraspagPagador\Model\Source\MddCustom</source_model>
+        </field>
+
+          <field id="custom_value_86" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="62" translate="label" type="select">
+            <label>Custom Value(86):</label>
+             <depends>
+                <field id="custom_mdd">1</field>
+            </depends>
+            <comment />
+            <source_model>\Braspag\BraspagPagador\Model\Source\MddCustom</source_model>
+        </field>
+
+          <field id="custom_value_87" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="63" translate="label" type="select">
+            <label>Custom Value(87):</label>
+             <depends>
+                <field id="custom_mdd">1</field>
+            </depends>
+            <comment />
+            <source_model>\Braspag\BraspagPagador\Model\Source\MddCustom</source_model>
+        </field>
+
+          <field id="custom_value_88" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="64" translate="label" type="select">
+            <label>Custom Value(88):</label>
+             <depends>
+                <field id="custom_mdd">1</field>
+            </depends>
+            <comment />
+            <source_model>\Braspag\BraspagPagador\Model\Source\MddCustom</source_model>
+        </field>
+
+          <field id="custom_value_89" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="65" translate="label" type="select">
+            <label>Custom Value(89):</label>
+             <depends>
+                <field id="custom_mdd">1</field>
+            </depends>
+            <comment />
+            <source_model>\Braspag\BraspagPagador\Model\Source\MddCustom</source_model>
+        </field>
+
+
     </group>
 </include>

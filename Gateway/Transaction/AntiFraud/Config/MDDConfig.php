@@ -62,4 +62,39 @@ class MDDConfig extends AbstractConfig implements MDDConfigInterface
     {
         return $this->_getConfig(self::XML_PATH_CATEGORY_ATTRIBUTE_CODE);
     }
+
+    public function getAFType()
+    {
+        return $this->_getConfig(self::XML_PATH_AF_TYPE);
+    }
+
+    public function hasCustomMDD()
+    {
+        return $this->_getConfig(self::XML_PATH_HAS_CUSTOM_MMD);
+    }
+
+    public function getCustomMDD85()
+    {
+        return $this->_getConfig(self::XML_PATH_CUSTOM_MMD_85);
+    }
+
+    public function getCustomMDD86()
+    {
+        return $this->_getConfig(self::XML_PATH_CUSTOM_MMD_86);
+    }
+
+    public function getCustomMDD87()
+    {
+        return $this->_getConfig(self::XML_PATH_CUSTOM_MMD_87);
+    }
+
+    public function getCustomMDD88()
+    {
+        return $this->_getConfig(self::XML_PATH_CUSTOM_MMD_88);
+    }
+
+    public function getCustomMDD89()
+    {
+        return $this->_getConfig(self::XML_PATH_CUSTOM_MMD_89);
+    }
 }

@@ -22,7 +22,19 @@
                 <comment />
                 <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             </field>
+           
+            <field id="af_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+                <label>Anti Fraud</label>
+                <depends>
+                    <field id="active">1</field>
+                </depends>
+                <comment />
+                <source_model>\Braspag\BraspagPagador\Model\Source\AntiFraud</source_model>
+           </field>
+
         </group>
+
+
 
         <include path="Braspag_BraspagPagador::system/antifraud/fingerprint.xml"/>
         <include path="Braspag_BraspagPagador::system/antifraud/options.xml"/>

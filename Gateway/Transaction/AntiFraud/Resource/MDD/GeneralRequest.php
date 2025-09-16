@@ -143,6 +143,12 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
         return number_format($grandTotal, 2, '.', '');
     }
 
+    public function getOrderData($data)
+    {
+       $quote = $this->getConfig()->getQuote();
+       return $quote->getData($data);
+    }
+
     public function getQtyInstallmentsOrder()
     {
         return (int) $this->getPaymentData()->getAdditionalInformation('cc_installments');
@@ -209,6 +215,41 @@ class GeneralRequest extends AbstractMDD implements AdapterGeneralInterface
     public function getPlataformName()
     {
         return 'Magento';
+    }
+
+    public function getAFType()
+    {
+        return $this->getConfig()->getAFType();
+    }
+
+    public function hasCustomMDD()
+    {
+        return $this->getConfig()->hasCustomMDD();
+    }
+
+    public function getCustomMDD85()
+    {
+        return $this->getConfig()->getCustomMDD85();
+    }
+
+    public function getCustomMDD86()
+    {
+        return $this->getConfig()->getCustomMDD86();
+    }
+
+    public function getCustomMDD87()
+    {
+        return $this->getConfig()->getCustomMDD87();
+    }
+
+    public function getCustomMDD88()
+    {
+        return $this->getConfig()->getCustomMDD88();
+    }
+
+    public function getCustomMDD89()
+    {
+        return $this->getConfig()->getCustomMDD89();
     }
 
 }
