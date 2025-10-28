@@ -26,9 +26,6 @@
         <type id="BancoDoBrasil2" order="20">
             <label>Banco Do Brasil</label>
         </type>
-        <type id="BankofAmerica" order="30">
-            <label>Bank of America</label>
-        </type>
         <type id="Bradesco2" order="40">
             <label>Bradesco</label>
         </type>
@@ -41,11 +38,8 @@
         <type id="Citibank2" order="70">
             <label>Citibank</label>
         </type>
-        <type id="Itau2" order="80">
+        <type id="Itau3" order="80">
             <label>Itau</label>
-        </type>
-        <type id="ItauShopline" order="90">
-            <label>ItauShopline</label>
         </type>
         <type id="Santander2" order="100">
             <label>Santander</label>

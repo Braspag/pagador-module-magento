@@ -39,13 +39,11 @@ class BoletoTypesTest extends \PHPUnit\Framework\TestCase
         $expected = [
             "Simulado",
             "BancoDoBrasil2",
-            "BankofAmerica",
             "Bradesco2",
             "Braspag",
             "Caixa2",
             "Citibank2",
-            "Itau2",
-            "ItauShopline",
+            "Itau3",
             "Santander2"
         ];
 
