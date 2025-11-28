@@ -39,6 +39,7 @@ class BoletoTypesTest extends \PHPUnit\Framework\TestCase
         $expected = [
             "Simulado",
             "BancoDoBrasil2",
+            "BancoDoBrasil3",
             "Bradesco2",
             "Braspag",
             "Caixa2",

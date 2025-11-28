@@ -21,6 +21,7 @@ class BoletoTypes extends \Magento\Payment\Model\Source\Cctype
         return [
             "Simulado",
             "BancoDoBrasil2",
+            "BancoDoBrasil3",
             "Bradesco2",
             "Braspag",
             "Caixa2",

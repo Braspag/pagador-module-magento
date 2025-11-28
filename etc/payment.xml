@@ -26,6 +26,9 @@
         <type id="BancoDoBrasil2" order="20">
             <label>Banco Do Brasil</label>
         </type>
+        <type id="BancoDoBrasil3" order="30">
+            <label>Banco Do Brasil 3</label>
+        </type>
         <type id="Bradesco2" order="40">
             <label>Bradesco</label>
         </type>
