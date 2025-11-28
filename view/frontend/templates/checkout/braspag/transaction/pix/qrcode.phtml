@@ -35,7 +35,7 @@
     </div>
     <?php endif; ?>
 
-    <?php if ($qrCodeSrc = $block->getQrCode()) : ?>
+    <?php if ($qrCodeSrc = $block->getQrCodeSrc()) : ?>
     <div class="pix-cod">
         <textarea readonly id="signapay-cod-pix"><?= $qrCodeSrc ?></textarea>
     </div>
