@@ -486,35 +486,37 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentProvider()
     {
+        $ccType = $this->getPaymentData()->getCcType();
 
+        if ($this->getCardType() == 'two_card') {
+            $ccType = $this->cardTwo->getData('cc_type');
+        }
 
-        if ($this->getPaymentData()->getCcType()) {
+        if (!empty($ccType)) {
 
-                
-            if ($this->getConfig()->getIsTestEnvironment()) 
-            return "Simulado";   
+            if ($this->getConfig()->getIsTestEnvironment()) {
+                return 'Simulado';
+            }
 
-            list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+            list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
-            if ($provider === "Braspag") {
+            if ($provider === 'Braspag') {
                 $availableTypes = explode(',', $this->getConfig()->getCcTypes());
 
-        
                 foreach ($availableTypes as $key => $availableType) {
-                    $typeDetail = explode("-", $availableType);
+                    $typeDetail = explode('-', $availableType);
                     if (isset($typeDetail[1]) && $typeDetail[1] == $brand) {
                         return $typeDetail[0];
                     }
                 }
 
-
-                return "";
+                return '';
             }
 
             return $provider;
         }
 
-        return "";
+        return '';
     }
 
 
@@ -630,25 +632,33 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getPaymentCreditCardBrand()
     {
-
-        $ccType =  $this->getPaymentData()->getCcType();
+        $ccType = $this->getPaymentData()->getCcType();
 
         if ($this->getCardType() == 'two_card') {
-
             if ($this->cardTwo->getData('cc_token')) {
                 return null;
             } else {
                 $ccType = $this->cardTwo->getData('cc_type');
             }
-
         } elseif ($this->getPaymentData()->getAdditionalInformation('cc_token')) {
             return null;
         }
 
+        if (empty($ccType)) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Credit card brand is required. Please select your card brand and try again.')
+            );
+        }
 
         list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
-        return ($brand) ? $brand : 'Visa';
+        if (empty($brand)) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Credit card brand is required. Please select your card brand and try again.')
+            );
+        }
+
+        return $brand;
     }
 
 

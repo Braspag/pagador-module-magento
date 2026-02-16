@@ -213,20 +213,25 @@ define(
 
                     });
 
-                    this.creditCardNumber.subscribe(function (value) { 
-                
+                    this.creditCardNumber.subscribe(function (value) {
+
                         self.showBrandList(false);
-                        
-                        setTimeout(function(){ 
-                             self.oldCardBrand( $('.creditcard-type').val()) 
+
+                        setTimeout(function(){
+                             self.oldCardBrand( $('.creditcard-type-two').val());
+                             self.loadCreditCardBrands();
                          }, 1000);
 
                          self.oldCardNumber(value);
                      });
 
 
-                    this.selectBrand.subscribe(function (value) { 
-                        $('.creditcard-type-two').val("Braspag-"+value.split('-')[1]);
+                    this.selectBrand.subscribe(function (value) {
+                        if (!value) return;
+
+                        var brandValue = 'Braspag-' + value.split('-')[1];
+                        $('.creditcard-type-two').val(brandValue);
+                        self.creditCardType(brandValue);
 
                         if (self.oldCardBrand().split('-')[1] != undefined && self.oldCardBrand().split('-')[1] != value.split('-')[1] ) {
                             $('.card-wrapper-two-card .jp-card-container').hide();
@@ -274,24 +279,29 @@ define(
  
                 let  cardType = $('.creditcard-type-two').val();
  
-                 if (cardType != undefined) {
- 
+                 if (cardType) {
+
                      self.showBrandList(true);
-                     
+
                      let brandsObject =  this.brandListOptions();
- 
+
                      for (let i = 0, len = brandsObject.length; i < len; i++) {
                          if (!brandsObject[i]) continue;
-                       
+
                         if(cardType.split('-')[1] == brandsObject[i].split('-')[1]) {
                            self.selectBrand(brandsObject[i]);
                            break;
                         }
-     
+
                      }
- 
+
+                 } else {
+                     self.selectBrand('');
+                     if (self.creditCardNumber() && self.creditCardNumber().length > 0) {
+                         self.showBrandList(true);
+                     }
                  }
- 
+
                  if(self.creditCardNumber() == undefined || self.creditCardNumber().length == 0)
                      self.showBrandList(false);
  
@@ -488,62 +498,24 @@ define(
 
             autoSelectBrand: function (data, event) {
                 var self = this;
-                let number = event.target.value;
+                var number = event.target.value;
 
-                if(number.length > 0 && number == $("input#braspag_pagador_creditcard_cc_number").val()){
+                if (number.length > 0 && number === $('input#braspag_pagador_creditcard_cc_number').val()) {
                     self.cardNumberError(true);
                     $(event.target).val('');
-                    setTimeout(() => {self.cardNumberError(false)}, 3000);
+                    setTimeout(function () { self.cardNumberError(false); }, 3000);
                     return;
                 }
 
-                this.creditCardType();
-                
-                if (parseInt(number.substr(0,6)) === 960382) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Credsystem').prop("checked", true);
-                    this.creditCardType('Credsystem-Credsystem');
-                    return;
+                var detectedCard = card.cardFromNumber(number);
+
+                if (detectedCard !== undefined) {
+                    var brandValue = 'Braspag-' + detectedCard.typeName;
+                    $('.creditcard-type-two').val(brandValue);
+                    self.creditCardType(brandValue);
                 }
-                if (parseInt(number.substr(0,1)) === 4) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Rede2-Visa').prop("checked", true);
-                    this.creditCardType('Rede2-Visa');
-                    return;
-                }
-                if (parseInt(number.substr(0,1)) === 5) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Rede2-Master').prop("checked", true);
-                    this.creditCardType('Rede2-Master');
-                    return;
-                }
-                if (parseInt(number.substr(0,2)) === 38 || parseInt(number.substr(0,2)) === 60) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Rede2-Hiper').prop("checked", true);
-                    this.creditCardType('Rede2-Hiper');
-                    return;
-                }
-                if (
-                    parseInt(number.substr(0,2)) === 36 ||
-                    parseInt(number.substr(0,3)) === 301 ||
-                    parseInt(number.substr(0,3)) === 305
-                ) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Rede2-Diners').prop("checked", true);
-                    this.creditCardType('Rede2-Diners');
-                    return;
-                }
-                if (
-                    parseInt(number.substr(0,6)) === 636368 ||
-                    parseInt(number.substr(0,6)) === 636369 ||
-                    parseInt(number.substr(0,6)) === 438935 ||
-                    parseInt(number.substr(0,6)) === 504175 ||
-                    parseInt(number.substr(0,6)) === 451416 ||
-                    parseInt(number.substr(0,6)) === 636297 ||
-                    parseInt(number.substr(0,4)) === 5067 ||
-                    parseInt(number.substr(0,4)) === 4576 ||
-                    parseInt(number.substr(0,4)) === 4011 ||
-                    parseInt(number.substr(0,6)) === 506699
-                ) {
-                    $('#braspag_pagador_creditcard_tow_card_cc_type_Rede2-Elo').prop("checked", true);
-                    this.creditCardType('Rede2-Elo');
-                    return;
-                }
+
+                self.loadCreditCardBrands();
             },
 
             isInstallmentsActive: function () {
@@ -669,6 +641,7 @@ define(
              * @returns {Object}
              */
             getCcYears: function () {
+                // return window.checkoutConfig.payment.ccform.years[this.getCodeMethod()];
                 return window.checkoutConfig.payment.braspag_ccform.years[this.getCodeMethod()];
             },
 

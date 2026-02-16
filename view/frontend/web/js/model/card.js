@@ -225,6 +225,8 @@ define(
 
 				if (card != undefined) {
 					$('.creditcard-type').val("Braspag-"+card.typeName);
+				} else {
+					$('.creditcard-type').val('');
 				}
 			});
 
@@ -246,6 +248,8 @@ define(
 
 				if (card != undefined) {
 					$('.creditcard-type-two').val("Braspag-"+card.typeName);
+				} else {
+					$('.creditcard-type-two').val('');
 				}
 			});
 
