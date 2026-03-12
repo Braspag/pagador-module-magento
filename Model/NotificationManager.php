@@ -104,17 +104,36 @@ class NotificationManager implements NotificationManagerInterface
      */
     public function save($PaymentId, $ChangeType, $RecurrentPaymentId = '')
     {
-        $this->getLogger()->info("Payment Notification:
+        $this->getLogger()->info("Braspag Notification Received:
             - PaymentId {$PaymentId}
             - ChangeType {$ChangeType}
             - RecurrentPaymentId {$RecurrentPaymentId}");
 
-        if ($ChangeType == self::NOTIFICATION_PAYMENT_STATUS_CHANGED) {
-            return $this->getPaymentStatusChangedCommand()->execute($PaymentId);
-        }
+        try {
+            if ($ChangeType == self::NOTIFICATION_PAYMENT_STATUS_CHANGED) {
+                $result = $this->getPaymentStatusChangedCommand()->execute($PaymentId);
+                $this->getLogger()->info(
+                    "Braspag Notification: PaymentId {$PaymentId} processed successfully. Result: " . ($result ? 'true' : 'false')
+                );
+                return $result;
+            }
 
-        if ($ChangeType == self::NOTIFICATION_ANTI_FRAUD_STATUS_CHANGED) {
-            return $this->getAntifraudStatusChangedCommand()->execute($PaymentId);
+            if ($ChangeType == self::NOTIFICATION_ANTI_FRAUD_STATUS_CHANGED) {
+                $result = $this->getAntifraudStatusChangedCommand()->execute($PaymentId);
+                $this->getLogger()->info(
+                    "Braspag Notification: PaymentId {$PaymentId} antifraud processed. Result: " . ($result ? 'true' : 'false')
+                );
+                return $result;
+            }
+
+            $this->getLogger()->warning(
+                "Braspag Notification: PaymentId {$PaymentId} - Unhandled ChangeType: {$ChangeType}"
+            );
+        } catch (\Exception $e) {
+            $this->getLogger()->error(
+                "Braspag Notification: PaymentId {$PaymentId} - Error: " . $e->getMessage()
+            );
+            throw $e;
         }
 
         return false;

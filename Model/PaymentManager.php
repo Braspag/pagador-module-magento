@@ -13,6 +13,7 @@ namespace Braspag\BraspagPagador\Model;
 use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory as OrderPaymentCollectionFactory;
 use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\RequestInterface as PaymentStatusRequest;
 use Braspag\Braspag\Pagador\Transaction\FacadeInterface as BraspagApi;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class PaymentManager
@@ -51,6 +52,11 @@ class PaymentManager
     protected $creditMemoManager;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @var array
      */
     protected $types = [
@@ -68,6 +74,7 @@ class PaymentManager
      * @param BraspagApi $api
      * @param PaymentStatusRequest $paymentStatusRequest
      * @param OrderPaymentCollectionFactory $orderPaymentCollectionFactory
+     * @param LoggerInterface $logger
      */
     public function __construct(
         \Magento\Sales\Model\Order\Status $orderStatusModel,
@@ -75,7 +82,8 @@ class PaymentManager
         \Braspag\BraspagPagador\Model\CreditMemoManager $creditMemoManager,
         BraspagApi $api,
         PaymentStatusRequest $paymentStatusRequest,
-        OrderPaymentCollectionFactory $orderPaymentCollectionFactory
+        OrderPaymentCollectionFactory $orderPaymentCollectionFactory,
+        LoggerInterface $logger
     ) {
         $this->setOrderStatusModel($orderStatusModel);
         $this->setInvoiceManager($invoiceManager);
@@ -83,6 +91,7 @@ class PaymentManager
         $this->setApi($api);
         $this->setPaymentStatusRequest($paymentStatusRequest);
         $this->setOrderPaymentCollectionFactory($orderPaymentCollectionFactory);
+        $this->logger = $logger;
     }
 
     /**
@@ -367,6 +376,9 @@ class PaymentManager
             ->getFirstItem();
 
         if (!$orderPayment->getId()) {
+            $this->logger->warning(
+                "Braspag PaymentManager: Order payment not found in database for PaymentId: {$paymentId}"
+            );
             return false;
         }
 
@@ -383,6 +395,9 @@ class PaymentManager
 
         $paymentInfo = $this->getApi()->checkPaymentStatus($request, $type);
         if (!$paymentInfo) {
+            $this->logger->warning(
+                "Braspag PaymentManager: API status check failed for PaymentId: {$paymentId}, Method: {$method}, Type: {$type}"
+            );
             return false;
         }
 

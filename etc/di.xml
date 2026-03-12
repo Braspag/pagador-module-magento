@@ -922,6 +922,41 @@
     <!--Notification - START -->
     <preference for="Braspag\BraspagPagador\Api\NotificationManagerInterface" type="Braspag\BraspagPagador\Model\NotificationManager" />
     <preference for="Braspag\BraspagPagador\Api\SubordinateApprovalNotificationManagerInterface" type="Braspag\BraspagPagador\Model\SubordinateApprovalNotificationManager" />
+
+    <virtualType name="BraspagNotificationLogHandler" type="Braspag\BraspagPagador\Logger\Handler\NotificationHandler" />
+
+    <virtualType name="BraspagNotificationLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">braspag_notification</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">BraspagNotificationLogHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Braspag\BraspagPagador\Model\NotificationManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagNotificationLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Braspag\BraspagPagador\Model\Notification\PaymentStatusChangedCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagNotificationLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Braspag\BraspagPagador\Model\PaymentManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagNotificationLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Braspag\BraspagPagador\Model\Notification\AntifraudStatusChangedCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagNotificationLogger</argument>
+        </arguments>
+    </type>
     <!--Notification - END -->
 
     <!--Installments - START -->
