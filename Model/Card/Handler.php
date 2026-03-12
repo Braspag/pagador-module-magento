@@ -33,7 +33,7 @@ class Handler
         try {
             return $this->apiFacade->associateBuyer($cardInstance->associateWithBuyer($cardToken, $buyerId));
         } catch (\Exception $e) {
-            throw new Exception("Something bad happened!");
+            throw new \Exception($e->getMessage());
         }
     }
 }

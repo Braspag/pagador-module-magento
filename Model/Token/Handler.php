@@ -38,11 +38,6 @@ class Handler extends AbstractHandler
             ->setExpirationYear($this->tokenBody->getExpirationYear())
             ->setSecurityCode($this->tokenBody->getSecurityCode())
             ->setCardNumber($this->tokenBody->getCardNumber());
-        try {
-            return $this->apiFacade->createToken($this->tokenInstance->createCreditcardToken($this->tokenCreditcard));
-        } catch (\Exception $e) {
-            var_dump($e->getMessage());
-            die();
-        }
+        return $this->apiFacade->createToken($this->tokenInstance->createCreditcardToken($this->tokenCreditcard));
     }
 }

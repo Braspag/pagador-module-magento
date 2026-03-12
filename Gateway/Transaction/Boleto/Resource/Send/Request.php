@@ -392,7 +392,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
             return $this->getQuoteBillingAddress()->getStreetLine($line);
         }
 
-        $this->getQuoteBillingAddress()->getData($attribute);
+        return $this->getQuoteBillingAddress()->getData($attribute);
     }
 
     /**

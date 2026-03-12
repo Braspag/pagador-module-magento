@@ -21,17 +21,17 @@ use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface
 class CardTokenManager implements CardTokenManagerInterface
 {
     /**
-     * @var
+     * @var CardTokenRepositoryInterface
      */
     protected $cardTokenRepository;
 
     /**
-     * @var
+     * @var ManagerInterface
      */
     protected $eventManager;
 
     /**
-     * @var
+     * @var SearchCriteriaBuilder
      */
     protected $searchCriteriaBuilder;
 
@@ -39,9 +39,6 @@ class CardTokenManager implements CardTokenManagerInterface
      * @var ConfigInterface
      */
     protected $config;
-
-    
-    protected $CardTokenRepository;
 
 
     /**
@@ -146,7 +143,7 @@ class CardTokenManager implements CardTokenManagerInterface
      */
     protected function getCardTokenRepository()
     {
-        return $this->CardTokenRepository;
+        return $this->cardTokenRepository;
     }
 
     /**
@@ -156,7 +153,7 @@ class CardTokenManager implements CardTokenManagerInterface
      */
     protected function setCardTokenRepository(CardTokenRepositoryInterface $cardTokenRepository)
     {
-        $this->CardTokenRepository = $cardTokenRepository;
+        $this->cardTokenRepository = $cardTokenRepository;
 
         return $this;
     }
