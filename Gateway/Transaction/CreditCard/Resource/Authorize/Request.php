@@ -239,6 +239,15 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerBirthDate()
     {
+        try {
+            $customer = $this->getQuote()->getCustomer();
+            if ($customer && $customer->getDob()) {
+                return date('Y-m-d', strtotime($customer->getDob()));
+            }
+        } catch (\Exception $e) {
+            // Customer not logged in or dob not available
+        }
+
         return null;
     }
 

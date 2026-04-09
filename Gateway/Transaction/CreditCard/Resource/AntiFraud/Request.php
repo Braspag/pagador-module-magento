@@ -88,17 +88,19 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     }
 
     /**
-     * @codeCoverageIgnore
+     * @return bool
      */
     public function getBrowserCookiesAccepted()
     {
+        return true;
     }
 
     /**
-     * @codeCoverageIgnore
+     * @return string|null
      */
     public function getBrowserEmail()
     {
+        return $this->getBillingAddress() ? $this->getBillingAddress()->getEmail() : null;
     }
 
     /**
@@ -297,6 +299,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         }
 
         return $quote->getReservedOrderId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalOrderAmount()
+    {
+        return (int) round($this->getOrderAdapter()->getGrandTotalAmount() * 100);
     }
 
     /**

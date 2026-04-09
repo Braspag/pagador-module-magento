@@ -124,6 +124,22 @@ class FingerPrint extends FingerPrintAbstract implements AntiFraudFingerPrintInt
     }
 
     /**
+     * @return string|null
+     */
+    public function getAntiFraudProvider()
+    {
+        return $this->getScopeConfig()->getValue(self::XML_AF_TYPE);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getClearSaleAppKey()
+    {
+        return $this->getScopeConfig()->getValue(self::XML_CLEARSALE_APP_KEY);
+    }
+
+    /**
      * @param $customerId
      */
     protected function getQuoteByCustomerId($customerId)

@@ -10,13 +10,59 @@
  */
 
 /**
- * @var \Braspag\BraspagPagador\Block\AntiFraud\FingerPrint $this;
+ * @var \Braspag\BraspagPagador\Block\AntiFraud\FingerPrint $block;
  */
 ?>
 
-<noscript>
-    <iframe src="<?php echo $this->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $this->getSrcParams() ?>"></iframe>
-</noscript>
+<?php if ($block->isClearSale()): ?>
 
+    <?php
+        $clearSaleAppKey = $block->escapeHtmlAttr($block->getClearSaleAppKey());
+        $clearSaleSessionId = $block->escapeHtmlAttr($block->getClearSaleSessionId());
+    ?>
 
-<?= $secureRenderer->renderTag('script', ['type' => 'text/javascript', 'src' => $this->getFingerPrint()->getSrcJsUrl() . "?" . $this->getSrcParams()], "", false); ?>
+    <?= $secureRenderer->renderTag(
+        'script',
+        ['type' => 'text/javascript'],
+        "
+        console.log('[Braspag AntiFraud] FraudAnalysis.Provider: ClearSale');
+        console.log('[Braspag AntiFraud] ClearSale.AppKey: " . $clearSaleAppKey . "');
+        console.log('[Braspag AntiFraud] FraudAnalysis.FingerPrintId: " . $clearSaleSessionId . "');
+        (function (a, b, c, d, e, f, g) {
+            a['CsdpObject'] = e; a[e] = a[e] || function () {
+            (a[e].q = a[e].q || []).push(arguments)
+            }, a[e].l = 1 * Date.now(); f = b.createElement(c),
+            g = b.getElementsByTagName(c)[0]; f.async = 1; f.src = d; g.parentNode.insertBefore(f, g)
+        })(window, document, 'script', '//device.clearsale.com.br/p/fp.js', 'csdp');
+        csdp('app', '" . $clearSaleAppKey . "');
+        csdp('sessionid', '" . $clearSaleSessionId . "');
+        console.log('[Braspag AntiFraud] ClearSale fp.js loaded');
+        ",
+        false
+    ); ?>
+
+    <noscript>
+        <img src="//device.clearsale.com.br/p/fp.png?sid=<?= $clearSaleSessionId ?>&app=<?= $clearSaleAppKey ?>&ns=1" />
+    </noscript>
+
+<?php else: ?>
+
+    <?= $secureRenderer->renderTag(
+        'script',
+        ['type' => 'text/javascript'],
+        "
+        console.log('[Braspag AntiFraud] FraudAnalysis.Provider: Cybersource');
+        console.log('[Braspag AntiFraud] Cybersource.OrgId: " . $block->escapeHtmlAttr($block->getFingerPrint()->getOrgId()) . "');
+        console.log('[Braspag AntiFraud] FraudAnalysis.FingerPrintId: " . $block->escapeHtmlAttr($block->getFingerPrint()->getSessionId()) . "');
+        console.log('[Braspag AntiFraud] Cybersource.ScriptUrl: " . $block->escapeHtmlAttr($block->getFingerPrint()->getSrcJsUrl()) . "');
+        ",
+        false
+    ); ?>
+
+    <noscript>
+        <iframe src="<?php echo $block->getFingerPrint()->getSrcJsUrl() ?>?<?php echo $block->getSrcParams() ?>"></iframe>
+    </noscript>
+
+    <?= $secureRenderer->renderTag('script', ['type' => 'text/javascript', 'src' => $block->getFingerPrint()->getSrcJsUrl() . "?" . $block->getSrcParams()], "", false); ?>
+
+<?php endif; ?>

@@ -14,12 +14,23 @@
         <label>FingerPrint</label>
         <field id="org_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
             <label>Org ID</label>
-            <comment />
+            <comment><![CDATA[Cybersource only. Leave blank when using ClearSale.]]></comment>
+            <depends>
+                <field id="braspag_braspag_antifraud/general/af_type">Cybersource</field>
+            </depends>
+        </field>
+
+        <field id="clearsale_app_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="22" translate="label" type="text">
+            <label>ClearSale AppKey</label>
+            <comment><![CDATA[ClearSale only. AppKey provided by Cielo for fingerprint collection.]]></comment>
+            <depends>
+                <field id="braspag_braspag_antifraud/general/af_type">ClearSale</field>
+            </depends>
         </field>
 
         <field id="merchant_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="text">
             <label>Merchant ID</label>
-            <comment />
+            <comment><![CDATA[Prefix for the fingerprint sessionID. Cybersource only.]]></comment>
         </field>
 
         <field id="use_order_id_to_fingerprint" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">

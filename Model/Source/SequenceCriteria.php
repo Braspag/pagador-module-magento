@@ -26,7 +26,7 @@ class SequenceCriteria implements ArrayInterface
                 'label' => __('On Success'),
             ],
             [
-                'value' => 'AuthorizeFirst',
+                'value' => 'Always',
                 'label' => __('Always')
             ]
         ];

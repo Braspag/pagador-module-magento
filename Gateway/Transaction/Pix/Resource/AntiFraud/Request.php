@@ -297,6 +297,14 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
     }
 
     /**
+     * @return int
+     */
+    public function getTotalOrderAmount()
+    {
+        return (int) round($this->getOrderAdapter()->getGrandTotalAmount() * 100);
+    }
+
+    /**
      * @inheritDoc
      */
     public function setStoreId($storeId = null)

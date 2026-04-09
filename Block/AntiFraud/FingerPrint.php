@@ -31,6 +31,17 @@ class FingerPrint extends Template
         $this->setFingerPrint($antiFraudFingerPrint);
     }
 
+    /**
+     * @return bool
+     */
+    public function isClearSale()
+    {
+        return $this->getFingerPrint()->getAntiFraudProvider() === 'ClearSale';
+    }
+
+    /**
+     * @return string
+     */
     public function getSrcParams()
     {
         $data = [
@@ -39,6 +50,22 @@ class FingerPrint extends Template
         ];
 
         return http_build_query($data);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getClearSaleAppKey()
+    {
+        return $this->getFingerPrint()->getClearSaleAppKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getClearSaleSessionId()
+    {
+        return $this->getFingerPrint()->getSessionId(true);
     }
 
     /**

@@ -22,4 +22,8 @@ interface AntiFraudFingerPrintInterface
     public function getOrgId();
 
     public function getSessionId();
+
+    public function getAntiFraudProvider();
+
+    public function getClearSaleAppKey();
 }

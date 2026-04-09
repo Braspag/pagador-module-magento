@@ -106,10 +106,20 @@ class Request implements BraspaglibRequestInterface
     }
 
     /**
-     * @codeCoverageIgnore
+     * @return string
      */
     public function getType()
     {
+        $productType = $this->getItemAdapter()->getProductType();
+
+        $typeMap = [
+            'simple' => 'Default',
+            'grouped' => 'Default',
+            'virtual' => 'Digital',
+            'downloadable' => 'Digital',
+        ];
+
+        return $typeMap[$productType] ?? 'Default';
     }
 
     /**

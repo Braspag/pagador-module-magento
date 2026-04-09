@@ -22,6 +22,8 @@ abstract class FingerPrintAbstract
     const XML_ORG_ID                    = 'braspag_braspag_antifraud/fingerprint/org_id';
     const XML_MERCHANT_ID               = 'braspag_braspag_antifraud/fingerprint/merchant_id';
     const XML_ORDER_ID_TO_FINGERPRINT   = 'braspag_braspag_antifraud/fingerprint/use_order_id_to_fingerprint';
+    const XML_AF_TYPE                   = 'braspag_braspag_antifraud/general/af_type';
+    const XML_CLEARSALE_APP_KEY         = 'braspag_braspag_antifraud/fingerprint/clearsale_app_key';
 
     protected $scopeConfig;
     protected $session;
