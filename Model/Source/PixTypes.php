@@ -18,7 +18,9 @@ class PixTypes extends \Magento\Payment\Model\Source\Cctype
         return [
             "Simulado",
             "Cielo30",
-            "Bradesco2"
+            "Cielo2",
+            "Bradesco2",
+            "BancoDoBrasil3"
         ];
     }
 }
