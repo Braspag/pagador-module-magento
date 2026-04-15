@@ -231,6 +231,9 @@
         <type id="Cielo30" order="650">
             <label>Cielo</label>
         </type>
+        <type id="Cielo2" order="651">
+            <label>Cielo 2</label>
+        </type>
 
         <!-- Voucher -->
         <type id="Alelo" order='660'>
