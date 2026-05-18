@@ -45,4 +45,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
         return null;
     }
+
+    /**
+     * @param $taxvat
+     * @return string
+     */
+    public function getCustomerEntityType($taxvat)
+    {
+        return (strlen((string) $taxvat)) > 11 ? 'CNPJ' : 'CPF';
+    }
 }
