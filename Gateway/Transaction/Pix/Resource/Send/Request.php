@@ -146,7 +146,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
         $customerIdenty = $this->getCustomerIdentity();
 
         if ($customerIdenty) {
-           return (strlen((string) preg_replace('/[^0-9]/', '', $customerIdenty)) > 11) ? 'CNPJ' : 'CPF';
+            return $this->helperData->getCustomerEntityType($customerIdenty);
         }
 
         return '';

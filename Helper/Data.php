@@ -39,10 +39,32 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function removeSpecialCharactersFromTaxvat($taxvat)
     {
-        if (isset($taxvat)) {       
+        if (isset($taxvat)) {
             return preg_replace('/[^A-Za-z0-9]/', '', $taxvat);
         }
 
         return null;
+    }
+
+    /**
+     * Determines whether a tax identification number represents a CPF
+     * (individual) or CNPJ (legal entity), based on its length.
+     *
+     * Receita Federal will introduce alphanumeric CNPJs in July/2026, so
+     * stripping non-digits before measuring length (the previous approach)
+     * would misclassify alphanumeric CNPJs as CPF. Counting the full
+     * alphanumeric string length avoids that pitfall: CPF stays at 11 chars
+     * and CNPJ at 14, whether numeric or alphanumeric.
+     *
+     * Input is sanitized internally so callers can safely pass formatted
+     * values such as "123.456.789-01" without risk of misclassification.
+     *
+     * @param string|null $taxvat
+     * @return string 'CPF' or 'CNPJ'
+     */
+    public function getCustomerEntityType($taxvat)
+    {
+        $sanitized = $this->removeSpecialCharactersFromTaxvat($taxvat);
+        return strlen((string) $sanitized) > 11 ? 'CNPJ' : 'CPF';
     }
 }
