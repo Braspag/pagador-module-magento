@@ -66,9 +66,9 @@ abstract class AbstractCommand implements CommandInterface
         RequestBuilder $requestBuilder,
         ResponseHandler $responseHandler,
         LoggerInterface $logger,
-        ValidatorInterface $requestValidator = null,
-        ValidatorInterface $responseValidator = null,
-        Transaction $transaction
+        Transaction $transaction,
+        ?ValidatorInterface $requestValidator = null,
+        ?ValidatorInterface $responseValidator = null
     ) {
         $this->apiFacade = $apiFacade;
         $this->requestBuilder = $requestBuilder;
