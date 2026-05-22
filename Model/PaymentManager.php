@@ -250,27 +250,37 @@ class PaymentManager
         }
 
         $amount = $braspagPaymentData->getPayment()['Amount'] / 100;
+        $order = $magentoPaymentData->getOrder();
 
         $magentoPaymentData->setIsTransactionPending(false);
 
-        if (
-            $createInvoice
-            && $this->getInvoiceManager()->createInvoice($magentoPaymentData->getOrder(), $amount)
-        ) {
+        if ($createInvoice) {
+            // Delegate invoice creation to Magento core. registerCaptureNotification
+            // builds the invoice via prepareInvoice()->register(), updates total_paid /
+            // total_invoiced and records the capture transaction in a single pass.
+            // Calling the custom InvoiceManager::createInvoice() here in addition would
+            // produce a second invoice (without shipping) and break the order totals.
+            // Core also handles the already-fully-invoiced edge case by recording the
+            // transaction without creating a new invoice.
             $magentoPaymentData->registerCaptureNotification($amount, true);
 
-            if (!$magentoPaymentData->getOrder()->save()) {
+            if (!$order->save()) {
                 return false;
+            }
+
+            $invoice = $magentoPaymentData->getCreatedInvoice();
+            if ($invoice) {
+                $this->getInvoiceManager()->finalizeInvoice($order, $invoice);
             }
 
             return true;
         }
 
-        $magentoPaymentData->getOrder()
+        $order
             ->addStatusHistoryComment(
                 __(
                     'Registered notification about captured amount of %1.',
-                    $magentoPaymentData->getOrder()->getBaseCurrency()->formatTxt($amount)
+                    $order->getBaseCurrency()->formatTxt($amount)
                 ) .
                 __('Transaction ID: "%1-capture"', $braspagPaymentData->getPaymentPaymentId())
             )
@@ -281,11 +291,11 @@ class PaymentManager
 
         $processingDefaultStatus = $this->getOrderStatusModel()->loadDefaultByState($processingState);
 
-        $magentoPaymentData->getOrder()
+        $order
             ->setState($processingState)
             ->setStatus($processingDefaultStatus->getStatus());
 
-        if (!$magentoPaymentData->getOrder()->save()) {
+        if (!$order->save()) {
             return false;
         }
 

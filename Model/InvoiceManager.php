@@ -203,4 +203,44 @@ class InvoiceManager
 
         return true;
     }
+
+    /**
+     * Post-creation finalization for an invoice that was already created by
+     * Magento core (e.g. via Payment::registerCaptureNotification). Sends the
+     * customer email, adds a status-history comment, moves the order to the
+     * processing state and dispatches the legacy braspag_braspagPagador_setstate_after
+     * event used by other modules.
+     *
+     * Use this instead of createInvoice() when the invoice is already being
+     * created by the core capture-notification flow, to avoid generating a
+     * duplicate invoice.
+     *
+     * @param Order $order
+     * @param Invoice $invoice
+     * @return bool
+     * @throws \Exception
+     */
+    public function finalizeInvoice(Order $order, Invoice $invoice)
+    {
+        $this->getInvoiceSender()->send($invoice);
+
+        $order
+            ->addStatusHistoryComment(
+                __('Customer notified about invoice #%1.', $invoice->getIncrementId())
+            )
+            ->setIsCustomerNotified(true)
+            ->save();
+
+        $processingState = \Magento\Sales\Model\Order::STATE_PROCESSING;
+        $processingDefaultStatus = $this->getOrderStatusModel()->loadDefaultByState($processingState);
+
+        $order
+            ->setState($processingState)
+            ->setStatus($processingDefaultStatus->getStatus());
+
+        $order->save();
+        $this->getEventManager()->dispatch('braspag_braspagPagador_setstate_after', ['order' => $order]);
+
+        return true;
+    }
 }
