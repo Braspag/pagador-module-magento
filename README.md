@@ -1,13 +1,12 @@
 # Braspag Pagador plugin for Magento 2
-Official Braspag plugin for Magento 2 build to offer frictionless payments online.
+Official Braspag plugin for Magento 2 built to offer frictionless payments online.
 
 ## Integration
-The plugin integrates with Braspag Pagador API.
+The plugin integrates with the Braspag Pagador API.
 
 ## Available Payment Methods
 
 ### Credit Card
-
 - Installments
 - Silent Order Post
 - Authenticate 3DS/VBV
@@ -15,34 +14,48 @@ The plugin integrates with Braspag Pagador API.
 - Split Payment
 - AVS
 - Checkout Card View
-    
+- AntiFraud
+
 ### Credit Card JustClick
 - Authorize Only
 - Authorize and Capture
-    
-### Debit Card
 
+### Debit Card
 - Authenticate 3DS 2.0
 - Split Payment
 - Checkout Card View
+- AntiFraud
+
+### Pix
+- QR Code
+- Split Payment
+- AntiFraud
 
 ### Boleto
-
 - Instructions
-- Assignor    
+- Assignor
 - Split Payment
 - Expirations Day
+- AntiFraud
+
+### Voucher
+- Order
+- Split Payment
+- AntiFraud
+
+### Wallet
+- Tokenized card payments
+- Split Payment
+- AntiFraud
 
 ### Split Payment
-
 - Trava de pagamentos
 - Pós-transacional
 
-
 ## Requirements
 This plugin supports:
-- PHP 5.6 version and higher.
-- Magento2 version 2.3.3 and higher.
+- PHP 7.4 to 8.4
+- Magento 2.3.3 and higher (tested up to 2.4.8)
 
 ## Installation
 You can install our plugin through Composer:
