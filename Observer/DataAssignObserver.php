@@ -3,10 +3,12 @@
 namespace Braspag\BraspagPagador\Observer;
 
 use Magento\Framework\Event\Observer;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
 use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Model\CreditCard\ProviderResolver;
 use Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as BoletoConfigProvider;
 use Braspag\BraspagPagador\Model\Payment\Transaction\Pix\Ui\ConfigProvider as PixConfigProvider;
 use Braspag\BraspagPagador\Model\Request\CardTwo;
@@ -23,15 +25,22 @@ use Braspag\BraspagPagador\Model\Request\CardTwo;
 class DataAssignObserver extends AbstractDataAssignObserver
 {
     protected $cardTokenRepository;
-    
+
     protected $cardTwo;
+
+    /**
+     * @var ProviderResolver
+     */
+    protected $providerResolver;
 
     public function __construct(
         CardTokenRepositoryInterface $cardTokenRepository,
-        CardTwo $cardTwo
+        CardTwo $cardTwo,
+        ProviderResolver $providerResolver
     ) {
         $this->setCardTokenRepository($cardTokenRepository);
         $this->cardTwo = $cardTwo;
+        $this->providerResolver = $providerResolver;
     }
 
     /**
@@ -113,7 +122,25 @@ class DataAssignObserver extends AbstractDataAssignObserver
         }
 
         if ($cardToken = $this->getCardTokenRepository()->get($additionalData->getCcToken())) {
-            $info->setCcType($cardToken->getProvider() . '-' . $cardToken->getBrand());
+            // Resolve the provider from the current admin cctypes config instead
+            // of trusting the value persisted on the token at creation time.
+            // This keeps 1-click purchases honoring the latest acquirer choice
+            // (e.g. when the merchant switches from Rede2 to Cielo30) without
+            // requiring a backfill on the braspag_card_token table.
+            $brand = (string) $cardToken->getBrand();
+            $currentProvider = $this->providerResolver->getProviderForBrand($brand);
+
+            if ($currentProvider === null) {
+                throw new LocalizedException(
+                    __(
+                        'The saved card (%1) is no longer available. '
+                        . 'Please enter a new card to continue.',
+                        $brand
+                    )
+                );
+            }
+
+            $info->setCcType($currentProvider . '-' . $brand);
             $info->setAdditionalInformation('cc_token', $additionalData->getCcToken());
             $info->setAdditionalInformation('cc_alias', $cardToken->getAlias());
         }

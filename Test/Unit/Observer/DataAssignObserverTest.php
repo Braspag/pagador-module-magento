@@ -10,12 +10,16 @@ use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Braspag\BraspagPagador\Observer\DataAssignObserver;
 use Magento\Framework\Event\Observer;
 use Braspag\BraspagPagador\Api\CardTokenRepositoryInterface;
+use Braspag\BraspagPagador\Model\CreditCard\ProviderResolver;
+use Braspag\BraspagPagador\Model\Request\CardTwo;
 
 class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
 {
     protected $_observerMock;
     protected $_methodInterfaceMock;
     protected $_cardTokenRepositoryInterfaceMock;
+    protected $_cardTwoMock;
+    protected $_providerResolverMock;
     protected $_eventMock;
     protected $_infoInterfaceMock;
     protected $_dataObjectMock;
@@ -34,6 +38,8 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
             ['getInfoInstance', 'getCode']
         );
         $this->_cardTokenRepositoryInterfaceMock = $this->createMock(CardTokenRepositoryInterface::class);
+        $this->_cardTwoMock = $this->createMock(CardTwo::class);
+        $this->_providerResolverMock = $this->createMock(ProviderResolver::class);
         $this->_eventMock = $this->createMock(Event::class);
         $this->_infoInterfaceMock = $this->getMockForAbstractClass(
             MethodInterface::class,
@@ -76,7 +82,11 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
             ->method('getCode')
             ->willReturn($codeMock);
 
-        $observer = new DataAssignObserver($this->_cardTokenRepositoryInterfaceMock);
+        $observer = new DataAssignObserver(
+            $this->_cardTokenRepositoryInterfaceMock,
+            $this->_cardTwoMock,
+            $this->_providerResolverMock
+        );
         $observer->execute($this->_observerMock);
     }
 
@@ -123,7 +133,11 @@ class DataAssignObserverTest extends \PHPUnit\Framework\TestCase
             ->method('getData')
             ->willReturn($dataMock);
 
-        $observer = new DataAssignObserver($this->_cardTokenRepositoryInterfaceMock);
+        $observer = new DataAssignObserver(
+            $this->_cardTokenRepositoryInterfaceMock,
+            $this->_cardTwoMock,
+            $this->_providerResolverMock
+        );
         $observer->execute($this->_observerMock);
     }
 }
