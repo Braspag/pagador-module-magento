@@ -255,6 +255,41 @@ class PaymentManager
         $magentoPaymentData->setIsTransactionPending(false);
 
         if ($createInvoice) {
+            // Guard against creating a second invoice when the checkout flow has
+            // already produced one (payment_action=authorize_capture path, where
+            // CheckoutSubmitAllAfterObserver invoices the order at place-order
+            // time). Without this guard, registerCaptureNotification below would
+            // generate a second broken invoice (without shipping) because the
+            // order items are already fully invoiced, and would also recompute
+            // total_paid off the wrong invoice — leaving total_due equal to the
+            // shipping amount.
+            if ($order->hasInvoices() && $order->getBaseTotalDue() <= 0) {
+                // Send the invoice email for the invoice created earlier at
+                // checkout (the CheckoutSubmitAllAfterObserver only sets the
+                // customer-notified flag but does not actually dispatch the
+                // email). Skip cancelled and already-sent invoices.
+                foreach ($order->getInvoiceCollection() as $existingInvoice) {
+                    if ($existingInvoice->getState() != \Magento\Sales\Model\Order\Invoice::STATE_CANCELED
+                        && !$existingInvoice->getEmailSent()
+                    ) {
+                        $this->getInvoiceManager()->getInvoiceSender()->send($existingInvoice);
+                        break;
+                    }
+                }
+
+                $order
+                    ->addStatusHistoryComment(
+                        __(
+                            'Registered notification about captured amount of %1. '
+                            . 'Invoice already registered at checkout.',
+                            $order->getBaseCurrency()->formatTxt($amount)
+                        ) .
+                        __('Transaction ID: "%1-capture"', $braspagPaymentData->getPaymentPaymentId())
+                    )
+                    ->save();
+                return true;
+            }
+
             // Delegate invoice creation to Magento core. registerCaptureNotification
             // builds the invoice via prepareInvoice()->register(), updates total_paid /
             // total_invoiced and records the capture transaction in a single pass.
