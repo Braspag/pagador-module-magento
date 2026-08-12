@@ -203,7 +203,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressZipCode()
     {
-        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', (string) ($this->getBillingAddress()->getPostcode() ?? ''));
     }
 
     /**
@@ -354,10 +354,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
     public function getPaymentProvider()
     {
 
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', (string) ($this->getPaymentData()->getCcType() ?? ''), 2), 2, null);
 
         if ($provider === "Braspag") {
-            $availableTypes = explode(',', $this->getConfig()->getVcTypes());
+            $availableTypes = explode(',', (string) ($this->getConfig()->getVcTypes() ?? ''));
 
             foreach ($availableTypes as $key => $availableType) {
                 $typeDetail = explode("-", $availableType);
@@ -411,7 +411,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentVoucherBrand()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', (string) ($this->getPaymentData()->getCcType() ?? ''), 2), 2, null);
 
         return $brand;
     }

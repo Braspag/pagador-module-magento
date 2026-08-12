@@ -281,7 +281,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
      */
     public function getCustomerAddressZipCode()
     {
-        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', (string) ($this->getBillingAddress()->getPostcode() ?? ''));
     }
 
     /**
@@ -330,7 +330,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
     public function getCustomerAddressPhone()
     {
 
-        $phone =  substr(preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getTelephone()), 0, 11);
+        $phone =  substr(preg_replace('/[^0-9]/', '', (string) ($this->getBillingAddress()->getTelephone() ?? '')), 0, 11);
         return ConfigInterface::COUNTRY_TELEPHONE_CODE . '' .
             substr($phone, 0, 2) . '' . substr($phone, 2, 5) . '' . substr($phone, 7);
     }
@@ -510,7 +510,7 @@ class Request implements BraspaglibRequestInterface, RequestInterface
             list($provider, $brand) = array_pad(explode('-', $ccType, 2), 2, null);
 
             if ($provider === 'Braspag') {
-                $availableTypes = explode(',', $this->getConfig()->getCcTypes());
+                $availableTypes = explode(',', (string) ($this->getConfig()->getCcTypes() ?? ''));
 
                 foreach ($availableTypes as $key => $availableType) {
                     $typeDetail = explode('-', $availableType);

@@ -31,8 +31,8 @@ class BaseHandler extends AbstractHandler implements HandlerInterface
      */
     protected function _handle($payment, $response)
     {
-        list($paymentProvider, $paymentBrand) = array_pad(explode('-', $payment->getCcType(), 2), 2, null);
-        list($responseProvider, $responseBrand) = array_pad(explode('-', $response->getPaymentCardProvider(), 2), 2, null);
+        list($paymentProvider, $paymentBrand) = array_pad(explode('-', (string) ($payment->getCcType() ?? ''), 2), 2, null);
+        list($responseProvider, $responseBrand) = array_pad(explode('-', (string) ($response->getPaymentCardProvider() ?? ''), 2), 2, null);
         $payment->setAdditionalInformation('send_provider', $paymentProvider);
         $payment->setAdditionalInformation('receive_provider', $responseProvider);
 

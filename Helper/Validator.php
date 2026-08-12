@@ -41,7 +41,7 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
         Context $context
     ) {
         $this->isSanitizeActive = $context->getScopeConfig()->getValue(self::XML_PATH_SHOULD_SANITIZE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $this->sanitizeDictionary = explode(';', $context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE));
+        $this->sanitizeDictionary = explode(';', (string) ($context->getScopeConfig()->getValue(self::XML_PATH_SANITIZE_DISTRICT_DICTIONARY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE) ?? ''));
 
 
         parent::__construct($context);

@@ -44,19 +44,19 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
 
     public function getZipCode()
     {
-        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', (string) ($this->getBillingAddress()->getPostcode() ?? ''));
     }
 
     public function getStreet()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getBillingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', (string) ($this->getBillingAddress()->getStreetLine1() ?? ''), 2), 2, null);
 
-        return trim($street);
+        return trim((string) $street);
     }
 
     public function getNumber()
     {
-        list($street,  $streetNumber) = array_pad(explode(',', $this->getShippingAddress()->getStreetLine1(), 2), 2, null);
+        list($street,  $streetNumber) = array_pad(explode(',', (string) ($this->getShippingAddress()->getStreetLine1() ?? ''), 2), 2, null);
 
         return (int) $streetNumber;
     }

@@ -96,10 +96,10 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentProvider()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', (string) ($this->getPaymentData()->getCcType() ?? ''), 2), 2, null);
 
         if ($provider === "Braspag") {
-            $availableTypes = explode(',', $this->getConfig()->getDcTypes());
+            $availableTypes = explode(',', (string) ($this->getConfig()->getDcTypes() ?? ''));
 
             foreach ($availableTypes as $key => $availableType) {
                 $typeDetail = explode("-", $availableType);
@@ -153,7 +153,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentDebitCardBrand()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', (string) ($this->getPaymentData()->getCcType() ?? ''), 2), 2, null);
 
         return $brand;
     }
@@ -165,7 +165,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
 
     public function getPaymentCreditCardBrand()
     {
-        list($provider, $brand) = array_pad(explode('-', $this->getPaymentData()->getCcType(), 2), 2, null);
+        list($provider, $brand) = array_pad(explode('-', (string) ($this->getPaymentData()->getCcType() ?? ''), 2), 2, null);
 
         return ($brand) ? $brand : 'Visa';
     }

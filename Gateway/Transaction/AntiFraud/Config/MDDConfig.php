@@ -53,7 +53,7 @@ class MDDConfig extends AbstractConfig implements MDDConfigInterface
     public function getStoreIdentity()
     {
         if ($this->_getConfig(self::XML_PATH_STORE_IDENTITY))
-             return (int) preg_replace('/[^0-9]/', '', $this->_getConfig(self::XML_PATH_STORE_IDENTITY));
+             return (int) preg_replace('/[^0-9]/', '', (string) ($this->_getConfig(self::XML_PATH_STORE_IDENTITY) ?? ''));
 
         return null;     
     }

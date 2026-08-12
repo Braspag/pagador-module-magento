@@ -204,7 +204,7 @@ class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterf
      */
     public function getCustomerAddressZipCode()
     {
-        return preg_replace('/[^0-9]/', '', $this->getBillingAddress()->getPostcode());
+        return preg_replace('/[^0-9]/', '', (string) ($this->getBillingAddress()->getPostcode() ?? ''));
     }
 
     /**

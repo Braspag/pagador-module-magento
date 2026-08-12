@@ -17,7 +17,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function removeSpecialCharacters($string)
     {
-        $string = str_replace(' ', '-', $string);
+        if ($string === null || $string === '') {
+            return (string) $string;
+        }
+        $string = str_replace(' ', '-', (string) $string);
 
         $pattern = array("'é'", "'è'", "'ë'", "'ê'", "'É'", "'È'", "'Ë'", "'Ê'", "'á'", "'ã'","'à'", "'ä'", "'â'", "'å'",
             "'Á'", "'Ã'", "'À'", "'Ä'", "'Â'", "'Å'", "'ó'", "'ò'", "'ö'", "'ô'", "'Ó'", "'Ò'", "'Ö'", "'Ô'", "'í'", "'ì'",

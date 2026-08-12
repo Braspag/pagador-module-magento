@@ -198,7 +198,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
         }
 
         return ConfigInterface::COUNTRY_TELEPHONE_CODE .
-               preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone());
+               preg_replace('/[^0-9]/', '', (string) ($this->getOrderAdapter()->getShippingAddress()->getTelephone() ?? ''));
     }
 
     public function setOrderAdapter(OrderAdapterInterface $orderAdapter)

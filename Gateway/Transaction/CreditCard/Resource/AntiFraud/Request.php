@@ -199,7 +199,7 @@ class Request implements BraspaglibRequestInterface, BraspagMagentoRequestInterf
             return '';
         }
 
-        $phone =  substr(preg_replace('/[^0-9]/', '', $this->getOrderAdapter()->getShippingAddress()->getTelephone()), 0, 11);
+        $phone =  substr(preg_replace('/[^0-9]/', '', (string) ($this->getOrderAdapter()->getShippingAddress()->getTelephone() ?? '')), 0, 11);
         
         return ConfigInterface::COUNTRY_TELEPHONE_CODE . ''.
               substr($phone, 0, 2) .''. substr($phone, 2,5) .''. substr($phone, 7);

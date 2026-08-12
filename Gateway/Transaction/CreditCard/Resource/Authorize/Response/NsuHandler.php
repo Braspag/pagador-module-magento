@@ -28,8 +28,8 @@ class NsuHandler extends AbstractHandler implements HandlerInterface
     {
         $payment->setAdditionalInformation('proof_of_sale', $response->getPaymentProofOfSale());
         $payment->setAdditionalInformation('payment_token', $response->getPaymentPaymentId());
-        list($paymentProvider, $paymentBrand) = array_pad(explode('-', $payment->getCcType(), 2), 2, null);
-        list($responseProvider, $responseBrand) = array_pad(explode('-', $response->getPaymentCardProvider(), 2), 2, null);
+        list($paymentProvider, $paymentBrand) = array_pad(explode('-', (string) ($payment->getCcType() ?? ''), 2), 2, null);
+        list($responseProvider, $responseBrand) = array_pad(explode('-', (string) ($response->getPaymentCardProvider() ?? ''), 2), 2, null);
         $payment->setAdditionalInformation('send_provider', $paymentProvider);
         $payment->setAdditionalInformation('receive_provider', $responseProvider);
 

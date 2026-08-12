@@ -48,17 +48,17 @@ class GetAddress implements Auth3DS20GetAddressInterface
         $auth3DS20AdressInformation->setBpmpiBilltoCustomerid((string)$quote->getBillingAddress()->getCustomerId());
         $auth3DS20AdressInformation->setBpmpiBilltoStreet1(implode(',', $quote->getBillingAddress()->getStreet()));
         $auth3DS20AdressInformation->setBpmpiBilltoStreet2(implode(',', $quote->getBillingAddress()->getStreet()));
-        $auth3DS20AdressInformation->setBpmpiBilltoZipcode(preg_replace('/[^0-9]/', '', $quote->getBillingAddress()->getPostcode()));
-        $auth3DS20AdressInformation->setBpmpiBilltoPhoneNumber(preg_replace('/[^0-9]/', '', $quote->getBillingAddress()->getTelephone()));
+        $auth3DS20AdressInformation->setBpmpiBilltoZipcode(preg_replace('/[^0-9]/', '', (string) ($quote->getBillingAddress()->getPostcode() ?? '')));
+        $auth3DS20AdressInformation->setBpmpiBilltoPhoneNumber(preg_replace('/[^0-9]/', '', (string) ($quote->getBillingAddress()->getTelephone() ?? '')));
         $auth3DS20AdressInformation->setBpmpiShiptoAddressee($quote->getBillingAddress()->getFirstname());
 
         $auth3DS20AdressInformation->setBpmpiShiptoAddressee($quote->getShippingAddress()->getFirstname());
-        $auth3DS20AdressInformation->setBpmpiShiptoPhonenumber(preg_replace('/[^0-9]/', '', $quote->getShippingAddress()->getTelephone()));
+        $auth3DS20AdressInformation->setBpmpiShiptoPhonenumber(preg_replace('/[^0-9]/', '', (string) ($quote->getShippingAddress()->getTelephone() ?? '')));
         $auth3DS20AdressInformation->setBpmpiShiptoEmail($quote->getShippingAddress()->getEmail());
         $auth3DS20AdressInformation->setBpmpiShiptoStreet1(implode(',', $quote->getShippingAddress()->getStreet()));
         $auth3DS20AdressInformation->setBpmpiShiptoStreet2(implode(',', $quote->getShippingAddress()->getStreet()));
-        $auth3DS20AdressInformation->setBpmpiShiptoPhonenumber(preg_replace('/[^0-9]/', '', $quote->getShippingAddress()->getTelephone()));
-        $auth3DS20AdressInformation->setBpmpiShiptoZipcode(preg_replace('/[^0-9]/', '', $quote->getShippingAddress()->getPostCode()));
+        $auth3DS20AdressInformation->setBpmpiShiptoPhonenumber(preg_replace('/[^0-9]/', '', (string) ($quote->getShippingAddress()->getTelephone() ?? '')));
+        $auth3DS20AdressInformation->setBpmpiShiptoZipcode(preg_replace('/[^0-9]/', '', (string) ($quote->getShippingAddress()->getPostCode() ?? '')));
         $auth3DS20AdressInformation->setBpmpiShiptoCity($quote->getShippingAddress()->getCity());
         $auth3DS20AdressInformation->setBpmpiShiptoCountry($quote->getShippingAddress()->getCountryId());
         $auth3DS20AdressInformation->setBpmpiShiptoState($quote->getShippingAddress()->getRegionCode());
