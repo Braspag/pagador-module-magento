@@ -7,10 +7,13 @@
 -->
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="braspag_braspag_pagador_transaction_creditcard_authentication_3ds_20" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="89">
-        <label>Authentication 3DS 2.0</label>
+        <label>Authentication 3DS 2.x (MPI V3)</label>
         <field id="authentication_3ds_20" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
             <label>Active</label>
-            <comment>Currently the Authentication 3DS 2.0 is available only for acquirer Cielo. For 2 card's is not available</comment>
+            <comment><![CDATA[
+                3DS 2.x authentication via MPI V3 — available for acquirer Cielo. Not compatible with 2-card checkout.
+                <br/><strong>Important:</strong> MPI V3 and <em>Silent Order Post</em> cannot be used together (confirmed by Braspag/Cielo). If both are enabled, this toggle is silently ignored and the checkout falls back to the SOP flow. Choose one: SOP (PCI SAQ A-EP, no 3DS) or MPI V3 (PCI SAQ D, with 3DS).
+            ]]></comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <config_path>payment/braspag_pagador_creditcard/authentication_3ds_20</config_path>
         </field>

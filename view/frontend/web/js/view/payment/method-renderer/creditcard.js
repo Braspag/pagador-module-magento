@@ -25,7 +25,7 @@ define(
         'Magento_Checkout/js/model/error-processor',
         'mage/validation',
         'mage/url',
-        'Braspag_BraspagPagador/js/model/authentication3ds20',
+        'Braspag_BraspagPagador/js/model/mpiv3',
         'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Braspag_BraspagPagador/js/model/card.view',
         'Braspag_BraspagPagador/js/model/card',
@@ -709,7 +709,11 @@ define(
                         self.bpmpiAuthEci($('.bpmpi_auth_eci').val());
                         self.bpmpiAuthVersion($('.bpmpi_auth_version').val());
                         self.bpmpiAuthReferenceId($('.bpmpi_auth_reference_id').val());
-                        self.bpmpiCcType($('.creditcard-type').val());
+                        // Legacy line calling `self.bpmpiCcType(...)` removed —
+                        // the observable was never declared in defaults, and
+                        // the value was not consumed anywhere. Left in place
+                        // it throws `TypeError: bpmpiCcType is not a function`
+                        // and blocks placeOrder from firing.
 
                         self.getPlaceOrderDeferredObject();
                         fullScreenLoader.stopLoader();
@@ -796,7 +800,7 @@ define(
                 self.bpmpiPopulateCreditcardData();
                 self.bpmpiPopulateAdditionalData();
 
-                authentication3ds20.bpmpiAuthenticate()
+                authentication3ds20.bpmpiAuthenticate('creditcard')
                     .then(function (data){
                         return false;
                     }).catch(function(){

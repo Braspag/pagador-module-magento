@@ -3,17 +3,30 @@
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="braspag_braspag_authentication3ds20_accesstokengeneration" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
         <label>Access Token Generation</label>
+        <comment><![CDATA[
+            <strong>MPI V3 credentials.</strong> The Establishment Code, Merchant Name and MCC required by the MPI V3 AUTH request are read from the Global Settings section (fields <em>Merchant Name</em>, <em>Establishment Code</em> and <em>MCC</em>). Configure them there and this section only holds the Client ID / Client Secret.
+        ]]></comment>
 
         <field id="clientid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
             <label>Client ID</label>
-            <comment>Authentication 3DS 2.0 Client ID. Contact Braspag to get your own Client ID.</comment>
+            <comment>Authentication 3DS 2.x (MPI V3) Client ID. Contact Braspag to get your own Client ID.</comment>
             <config_path>braspag_braspag/authentication3ds20_accesstokengeneration/clientid</config_path>
         </field>
 
-        <field id="clientsecret" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+        <field id="clientsecret" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="obscure">
             <label>Client Secret</label>
-            <comment>Authentication 3DS 2.0 Client Secret. Contact Braspag to get your own Client Secret.</comment>
+            <comment>Authentication 3DS 2.x (MPI V3) Client Secret. Contact Braspag to get your own Client Secret.</comment>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
             <config_path>braspag_braspag/authentication3ds20_accesstokengeneration/clientsecret</config_path>
+        </field>
+
+        <field id="debug_active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label,comment" type="select">
+            <label>Debug Log</label>
+            <comment><![CDATA[
+                When enabled, every AUTH / INIT / ENROLL / VALIDATE call is written to <code>var/log/braspag_mpi_v3.log</code> with request URL, redacted headers, body (PAN masked), HTTP status, response body and, when applicable, the parsed <code>status</code>, <code>reasonCode</code>, <code>challenge</code> and <code>authentication</code> blocks. Keep OFF in production once the integration is validated.
+            ]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>braspag_braspag/authentication3ds20_accesstokengeneration/debug_active</config_path>
         </field>
     </group>
 </include>

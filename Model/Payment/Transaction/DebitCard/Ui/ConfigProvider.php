@@ -3,6 +3,9 @@
 namespace Braspag\BraspagPagador\Model\Payment\Transaction\DebitCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
+use Braspag\BraspagPagador\Gateway\Mpi\Config\ConfigInterface as MpiV3Config;
 use Braspag\BraspagPagador\Gateway\Transaction\DebitCard\Config\ConfigInterface;
 
 /**
@@ -20,10 +23,42 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected $debitConfig;
 
+    /**
+     * @var MpiV3Config
+     */
+    private $mpiV3Config;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
     public function __construct(
-        ConfigInterface $debitConfig
+        ConfigInterface $debitConfig,
+        MpiV3Config $mpiV3Config,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->setDebitConfig($debitConfig);
+        $this->mpiV3Config = $mpiV3Config;
+        $this->scopeConfig = $scopeConfig;
+    }
+
+    /**
+     * MPI V3 and Silent Order Post are mutually exclusive per Cielo/Braspag
+     * (Ana Beatriz, 2026-09-28). See CreditCard ConfigProvider for details.
+     *
+     * @return bool
+     */
+    private function isMpiEffectivelyActive()
+    {
+        if (!$this->getDebitConfig()->isAuth3Ds20Active()) {
+            return false;
+        }
+        $sopActive = (bool) $this->scopeConfig->getValue(
+            'payment/' . self::CODE . '/silentorderpost_active',
+            ScopeInterface::SCOPE_STORE
+        );
+        return !$sopActive;
     }
 
     public function getConfig()
@@ -35,7 +70,11 @@ final class ConfigProvider implements ConfigProviderInterface
                         'active' => [self::CODE => $this->getDebitConfig()->isSuperDebitoActive()]
                     ],
                     'bpmpi_authentication' => [
-                        'active' => $this->getDebitConfig()->isAuth3Ds20Active(),
+                        // If SOP is active for this method, MPI V3 is force-off
+                        // (see isMpiEffectivelyActive docblock).
+                        'active' => $this->isMpiEffectivelyActive(),
+                        'sandbox' => $this->mpiV3Config->isSandbox(),
+                        'debug' => $this->mpiV3Config->isDebugActive(),
                         'mastercard_notify_only' => $this->getDebitConfig()->isAuth3Ds20MCOnlyNotifyActive(),
                         'authorize_on_error' => $this->getDebitConfig()->isAuth3Ds20AuthorizedOnError(),
                         'authorize_on_failure' => $this->getDebitConfig()->isAuth3Ds20AuthorizedOnFailure(),

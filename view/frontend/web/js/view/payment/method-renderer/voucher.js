@@ -26,8 +26,7 @@ define(
         // 'Braspag_BraspagPagador/js/model/authentication3ds20',
         'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Braspag_BraspagPagador/js/model/card.view',
-        'Braspag_BraspagPagador/js/model/card',
-        'Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
+        'Braspag_BraspagPagador/js/model/card'
     ],
     function (
         Component,
@@ -47,8 +46,7 @@ define(
         // authentication3ds20,
         bpmpiRenderer,
         cardView,
-        card,
-        bpMpi3ds20Conf
+        card
     ) {
         'use strict';
 

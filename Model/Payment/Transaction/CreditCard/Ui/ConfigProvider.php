@@ -3,6 +3,9 @@
 namespace Braspag\BraspagPagador\Model\Payment\Transaction\CreditCard\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
+use Braspag\BraspagPagador\Gateway\Mpi\Config\ConfigInterface as MpiV3Config;
 use Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface as CreditCardConfig;
 
 /**
@@ -20,10 +23,46 @@ final class ConfigProvider implements ConfigProviderInterface
 
     protected $creditCardConfig;
 
+    /**
+     * @var MpiV3Config
+     */
+    private $mpiV3Config;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
     public function __construct(
-        CreditCardConfig $creditCardConfig
+        CreditCardConfig $creditCardConfig,
+        MpiV3Config $mpiV3Config,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->setCreditCardConfig($creditCardConfig);
+        $this->mpiV3Config = $mpiV3Config;
+        $this->scopeConfig = $scopeConfig;
+    }
+
+    /**
+     * MPI V3 and Silent Order Post cannot be enabled at the same time —
+     * confirmed by Cielo/Braspag (Ana Beatriz, 2026-09-28). SOP replaces the
+     * card number input with an iframe hosted at Braspag, so the MPI V3
+     * frontend cannot read the PAN from the DOM to send to ENROLL. When both
+     * toggles are on in admin, we silently disable MPI V3 for this method
+     * and honor the SOP flow.
+     *
+     * @return bool
+     */
+    private function isMpiEffectivelyActive()
+    {
+        if (!$this->getCreditCardConfig()->isAuth3Ds20Active()) {
+            return false;
+        }
+        $sopActive = (bool) $this->scopeConfig->getValue(
+            'payment/' . self::CODE . '/silentorderpost_active',
+            ScopeInterface::SCOPE_STORE
+        );
+        return !$sopActive;
     }
 
     public function getConfig()
@@ -38,7 +77,11 @@ final class ConfigProvider implements ConfigProviderInterface
                         'active' => [self::CODE => boolval($this->getCreditCardConfig()->isTwoCardActive())]
                     ],
                     'bpmpi_authentication' => [
-                        'active' => $this->getCreditCardConfig()->isAuth3Ds20Active(),
+                        // If SOP is active for this method, MPI V3 is force-off
+                        // (see isMpiEffectivelyActive docblock).
+                        'active' => $this->isMpiEffectivelyActive(),
+                        'sandbox' => $this->mpiV3Config->isSandbox(),
+                        'debug' => $this->mpiV3Config->isDebugActive(),
                         'mastercard_notify_only' => $this->getCreditCardConfig()->isAuth3Ds20MCOnlyNotifyActive(),
                         'authorize_on_error' => $this->getCreditCardConfig()->isAuth3Ds20AuthorizedOnError(),
                         'authorize_on_failure' => $this->getCreditCardConfig()->isAuth3Ds20AuthorizedOnFailure(),

@@ -15,12 +15,12 @@
         </resources>
     </route>
 
-    <route url="/V1/braspag/auth3ds20/token" method="GET">
-        <service class="Braspag\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" method="getToken"/>
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
+    <!--
+        `/V1/braspag/auth3ds20/token` (V2 cookie-based flow) removed — the
+        MPI V3 replacement is `/V1/braspag/mpi/session` at the bottom of this
+        file. Any external caller still hitting the old route will receive
+        404 and needs to move to the new endpoint.
+    -->
 
     <route url="/V1/braspag/creditcard/installments" method="POST">
         <service class="Braspag\BraspagPagador\Api\InstallmentsInterface" method="getInstallments"/>
@@ -66,5 +66,41 @@
             <parameter name="cartId" force="true">%cart_id%</parameter>
         </data>
     </route>
+
+    <!-- MPI V3 - START -->
+    <!--
+        Session bootstrap: browser calls this to receive { referenceId, token }
+        and boot MPI.load() / MPI.init(). anonymous permission mirrors the
+        legacy /auth3ds20/token route so guest checkout continues to work.
+    -->
+    <route url="/V1/braspag/mpi/session" method="POST">
+        <service class="Braspag\BraspagPagador\Api\MpiV3SessionManagerInterface" method="startSession"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <!--
+        ENROLL: single step that decides frictionless vs. challenge. Browser
+        posts { cartId, browserInfo, card, installments, paymentMethod };
+        backend hydrates the full payload from the quote.
+    -->
+    <route url="/V1/braspag/mpi/enroll" method="POST">
+        <service class="Braspag\BraspagPagador\Api\MpiV3EnrollManagerInterface" method="enroll"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <!--
+        VALIDATE: only after a challenge. Browser posts { cartId, transactionId, card }.
+    -->
+    <route url="/V1/braspag/mpi/validate" method="POST">
+        <service class="Braspag\BraspagPagador\Api\MpiV3ValidateManagerInterface" method="validate"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <!-- MPI V3 - END -->
 
 </routes>

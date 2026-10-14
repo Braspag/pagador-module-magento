@@ -1,0 +1,24 @@
+<!--
+/**
+ * @author      Nexaas Team <dev@nexaas.com>
+ * @copyright   2026 Nexaas (http://www.nexaas.com)
+ * @license     http://www.nexaas.com  Copyright
+ *
+ * @link        http://www.nexaas.com
+ */
+-->
+<!--
+    MPI V3 hidden inputs.
+
+    Only the 6 fields that the V3 flow actually needs to expose to the DOM
+    remain here — every other piece of the ENROLL/VALIDATE payload is now
+    hydrated on the backend from the quote (see PayloadBuilder).
+-->
+<div id="bpmpi_data" style="display:none">
+    <input type="hidden" class="bpmpi_auth_failure_type"  value=""/>
+    <input type="hidden" class="bpmpi_auth_cavv"          value=""/>
+    <input type="hidden" class="bpmpi_auth_xid"           value=""/>
+    <input type="hidden" class="bpmpi_auth_eci"           value=""/>
+    <input type="hidden" class="bpmpi_auth_version"       value=""/>
+    <input type="hidden" class="bpmpi_auth_reference_id"  value=""/>
+</div>

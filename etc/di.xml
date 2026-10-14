@@ -11,6 +11,102 @@
 <!-- Start interface -->
     <preference for="Braspag\BraspagPagador\Model\Config\ConfigInterface" type="Braspag\BraspagPagador\Model\Config\Config" />
 <!-- End iterface-->
+
+    <!-- MPI V3 - START -->
+    <preference for="Braspag\BraspagPagador\Gateway\Mpi\Config\ConfigInterface"
+                type="Braspag\BraspagPagador\Gateway\Mpi\Config\Config"/>
+    <preference for="Braspag\BraspagPagador\Gateway\Mpi\Resource\Auth\BuilderInterface"
+                type="Braspag\BraspagPagador\Gateway\Mpi\Resource\Auth\Builder"/>
+    <preference for="Braspag\BraspagPagador\Gateway\Mpi\Resource\Init\BuilderInterface"
+                type="Braspag\BraspagPagador\Gateway\Mpi\Resource\Init\Builder"/>
+    <preference for="Braspag\BraspagPagador\Gateway\Mpi\Resource\Validate\BuilderInterface"
+                type="Braspag\BraspagPagador\Gateway\Mpi\Resource\Validate\Builder"/>
+    <preference for="Braspag\BraspagPagador\Api\MpiV3AuthTokenManagerInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\AuthTokenManager"/>
+    <preference for="Braspag\BraspagPagador\Api\MpiV3SessionManagerInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\SessionManager"/>
+    <preference for="Braspag\BraspagPagador\Api\Data\MpiV3SessionInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\Data\MpiV3Session"/>
+    <preference for="Braspag\BraspagPagador\Api\Data\MpiV3AuthenticationInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\Data\MpiV3Authentication"/>
+    <preference for="Braspag\BraspagPagador\Api\Data\MpiV3ChallengeInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\Data\MpiV3Challenge"/>
+    <preference for="Braspag\BraspagPagador\Api\Data\MpiV3EnrollResultInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\Data\MpiV3EnrollResult"/>
+    <preference for="Braspag\BraspagPagador\Api\Data\MpiV3ValidateResultInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\Data\MpiV3ValidateResult"/>
+    <preference for="Braspag\BraspagPagador\Api\MpiV3EnrollManagerInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\EnrollManager"/>
+    <preference for="Braspag\BraspagPagador\Api\MpiV3ValidateManagerInterface"
+                type="Braspag\BraspagPagador\Model\Mpi\ValidateManager"/>
+
+    <!--
+        AccessTokenCache usa o `Magento\Framework\App\CacheInterface`
+        (cache default do Magento, sempre habilitado) por autowire — não
+        precisa de argumento custom. O TTL curto do próprio AccessTokenCache
+        (5 min) + o invalidate() explícito no EnrollManager garantem que o
+        token não seja reutilizado entre checkouts.
+    -->
+
+    <!--
+        Dedicated logger for MPI V3 debug traces. Gated by the admin toggle
+        `braspag_braspag/authentication3ds20_accesstokengeneration/debug_active`
+        inside AbstractCommand — the handler still writes at DEBUG level, but
+        AbstractCommand skips the call entirely when the toggle is OFF.
+        File: var/log/braspag_mpi_v3.log
+    -->
+    <virtualType name="BraspagMpiV3LogHandler" type="Braspag\BraspagPagador\Logger\Handler\MpiV3Handler" />
+
+    <virtualType name="BraspagMpiV3Logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">braspag_mpi_v3</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">BraspagMpiV3LogHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Braspag\BraspagPagador\Gateway\Mpi\Command\AuthCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Gateway\Mpi\Command\InitCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Gateway\Mpi\Command\EnrollCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Gateway\Mpi\Command\ValidateCommand">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Model\Mpi\AuthTokenManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Model\Mpi\SessionManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Model\Mpi\EnrollManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <type name="Braspag\BraspagPagador\Model\Mpi\ValidateManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">BraspagMpiV3Logger</argument>
+        </arguments>
+    </type>
+    <!-- MPI V3 - END -->
     <type name="Braspag\BraspagPagador\Model\SplitDataProvider">
         <arguments>
             <argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
@@ -183,7 +279,7 @@
 
     <!-- Split - END -->
 
-    <!-- Auth 3DS 2.0 - START -->
+    <!-- Auth 3DS 2.x - START -->
     <preference for="Braspag\BraspagPagador\Api\Data\Auth3DS20InformationInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\Information" />
     <preference for="Braspag\BraspagPagador\Api\Data\Auth3DS20AddressInformationInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\AddressInformation" />
     <preference for="Braspag\BraspagPagador\Api\Data\Auth3DS20CartInformationInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\CartInformation" />
@@ -192,42 +288,13 @@
     <preference for="Braspag\BraspagPagador\Api\Auth3DS20GetAddressInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\GetAddress" />
     <preference for="Braspag\BraspagPagador\Api\Auth3DS20GetCartInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\GetCart" />
     <preference for="Braspag\BraspagPagador\Api\Auth3DS20UserAccountInterface" type="Braspag\BraspagPagador\Model\Auth3DS20\UserAccount" />
-    <preference for="Braspag\BraspagPagador\Api\Auth3Ds20TokenManagerInterface" type="Braspag\BraspagPagador\Model\Auth3Ds20TokenManager" />
-
-    <type name="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Config\Config">
-        <arguments>
-            <argument name="contextAdmin" xsi:type="object">Braspag\BraspagPagador\Gateway\Transaction\Base\Config\ContextAdmin</argument>
-        </arguments>
-    </type>
-
-    <!-- Auth 3DS 2.0 - Token - START -->
-    <preference for="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface" type="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Request" />
-    <preference for="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface" type="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder" />
-
-    <type name="Braspag\BraspagPagador\Model\Auth3Ds20TokenManager">
-        <arguments>
-            <argument name="request" xsi:type="object">\Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\RequestInterface</argument>
-            <argument name="tokenCommand" xsi:type="object">\Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand</argument>
-            <argument name="cookieManager" xsi:type="object">\Magento\Framework\Stdlib\CookieManagerInterface</argument>
-            <argument name="cookieMetadataFactory" xsi:type="object">\Magento\Framework\Stdlib\Cookie\CookieMetadataFactory</argument>
-            <argument name="builder" xsi:type="object">\Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\BuilderInterface</argument>
-            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
-        </arguments>
-    </type>
-
-    <type name="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Command\TokenCommand">
-        <arguments>
-            <argument name="api" xsi:type="object">\Braspag\Braspag\Pagador\Transaction\FacadeInterface</argument>
-        </arguments>
-    </type>
-
-    <type name="Braspag\BraspagPagador\Gateway\Transaction\Auth3Ds20\Resource\Token\Builder">
-        <arguments>
-            <argument name="dataObject" xsi:type="object">\Magento\Framework\DataObject</argument>
-        </arguments>
-    </type>
-    <!-- Auth 3DS 2.0 - Token - END -->
-    <!-- Auth 3DS 2.0 - END -->
+    <!--
+        Legacy V2 cookie-based token bootstrap removed — MPI V3 replaces it.
+        The remaining Auth3DS20* preferences above stay because the
+        `/V1/braspag/auth3ds20/data` route (see webapi.xml) is still consumed
+        by external introspection tooling.
+    -->
+    <!-- Auth 3DS 2.x - END -->
 
     <!-- Anti Fraud - START -->
     <preference for="Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\ConfigInterface" type="Braspag\BraspagPagador\Gateway\Transaction\AntiFraud\Config\Config" />

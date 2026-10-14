@@ -23,11 +23,10 @@ define(
         'Braspag_BraspagPagador/js/action/place-order',
         'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentorderpost',
         'Braspag_BraspagPagador/js/view/payment/method-renderer/creditcard/silentauthtoken',
-        'Braspag_BraspagPagador/js/model/authentication3ds20',
+        'Braspag_BraspagPagador/js/model/mpiv3',
         'Braspag_BraspagPagador/js/view/payment/auth3ds20/bpmpi-renderer',
         'Braspag_BraspagPagador/js/model/card.view',
-        'Braspag_BraspagPagador/js/model/card',
-        'Braspag_BraspagPagador/js/vendor/BP.Mpi.3ds20.conf'
+        'Braspag_BraspagPagador/js/model/card'
     ],
     function (
         Component,
@@ -47,8 +46,7 @@ define(
         authentication3ds20,
         bpmpiRenderer,
         cardView,
-        card,
-        bpMpi3ds20Conf
+        card
     ) {
         'use strict';
 
@@ -326,7 +324,14 @@ define(
                         }
                     ).done(
                         function (orderId) {
-                            if (SuperDebito.isActive(self.getCode())) {
+                            // Super Débito e MPI V3 cobrem o mesmo propósito
+                            // (3DS no débito) e são mutuamente exclusivos. Se
+                            // o MPI V3 está ativo (e já autenticou neste
+                            // placeOrder), não chama o fluxo legado — que
+                            // depende de uma lib vendor incompleta
+                            // (`bpsd_raiseEvent is not defined`) e travaria o
+                            // success callback.
+                            if (SuperDebito.isActive(self.getCode()) && !self.isBpmpiEnabled()) {
                                 return self.placeOrderWithSuperDebito(orderId);
                             }
 
@@ -365,7 +370,14 @@ define(
             },
 
             isBpmpiEnabled: function() {
-                return window.checkoutConfig.payment.dcform.superdebito.active['braspag_pagador_debitcard'];
+                // Reads the MPI V3 toggle (dcform.bpmpi_authentication.active),
+                // mirroring the credit renderer. The original module pointed
+                // this method at the Super Débito flag — which happened to
+                // work only because stores that enabled Super Débito also
+                // enabled 3DS, so the mis-pointed boolean was true by
+                // coincidence. Super Débito is a separate legacy flow
+                // (3DS 1.x) handled by `SuperDebito.*` below.
+                return window.checkoutConfig.payment.dcform.bpmpi_authentication.active;
             },
 
             isBpmpiMasterCardNotifyOnlyEnabled: function() {
@@ -459,7 +471,7 @@ define(
                     self.bpmpiPopulateDebitcard();
                     self.bpmpiPopulateAdditionalData();
 
-                    authentication3ds20.bpmpiAuthenticate()
+                    authentication3ds20.bpmpiAuthenticate('debitcard')
                         .then(function (data){
                             return false;
                         }).catch(function(){
