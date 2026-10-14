@@ -263,6 +263,14 @@ class PaymentManager
             // order items are already fully invoiced, and would also recompute
             // total_paid off the wrong invoice — leaving total_due equal to the
             // shipping amount.
+            //
+            // Belt-and-suspenders: even with PaymentStatusChangedCommand already
+            // forcing $createInvoice=false for synchronous capture, this final
+            // check protects against any other code path that may call this
+            // method with $createInvoice=true. Reloading the InvoiceCollection
+            // straight from the DB avoids relying on a stale in-memory cache
+            // when the Braspag notification arrives during the placeOrder race.
+            $order->getInvoiceCollection()->clear()->load();
             if ($order->hasInvoices() && $order->getBaseTotalDue() <= 0) {
                 // Send the invoice email for the invoice created earlier at
                 // checkout (the CheckoutSubmitAllAfterObserver only sets the
