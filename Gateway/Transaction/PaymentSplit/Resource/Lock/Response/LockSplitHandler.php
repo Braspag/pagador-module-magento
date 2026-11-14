@@ -20,6 +20,8 @@ use Braspag\BraspagPagador\Model\SplitDataAdapter;
  */
 class LockSplitHandler extends AbstractHandler implements HandlerInterface
 {
+    protected $objectFactory;
+
     protected $splitManager;
 
     /**

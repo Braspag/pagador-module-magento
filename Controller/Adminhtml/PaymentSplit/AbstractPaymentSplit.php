@@ -27,6 +27,8 @@ use Braspag\BraspagPagador\Model\SplitManager;
 
 abstract class AbstractPaymentSplit extends Action
 {
+    protected $_resultRedirectFactory;
+
     /**
      * Core registry
      *

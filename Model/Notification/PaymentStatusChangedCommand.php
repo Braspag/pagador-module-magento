@@ -49,7 +49,7 @@ class PaymentStatusChangedCommand
         \Braspag\BraspagPagador\Gateway\Transaction\CreditCard\Config\ConfigInterface $config,
         PaymentManager $paymentManager,
         LoggerInterface $logger,
-        ScopeConfigInterface $scopeConfig = null
+        ?ScopeConfigInterface $scopeConfig = null
     ) {
         $this->setPaymentManager($paymentManager);
         $this->setConfig($config);
