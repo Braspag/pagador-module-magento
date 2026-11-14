@@ -15,6 +15,8 @@ use Braspag\Braspag\Pagador\Transaction\BraspagFacade;
 
 class Transaction extends AbstractHandler
 {
+    protected $braspagFacade;
+
     const STATUS_TRANSACTION_NEW = 'new';
 
     const STATUS_TRANSACTION_PENDING = 'pending';

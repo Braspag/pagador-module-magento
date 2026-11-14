@@ -20,6 +20,9 @@ use Braspag\BraspagPagador\Model\Request\CardTwo;
  */
 class RequestBuilder implements BuilderInterface
 {
+    protected $config;
+    protected $requestPaymentSplit;
+
     protected $request;
 
     protected $cardTwo;

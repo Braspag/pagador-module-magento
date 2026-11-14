@@ -54,7 +54,7 @@ The plugin integrates with the Braspag Pagador API.
 
 ## Requirements
 This plugin supports:
-- PHP 7.4 to 8.4
+- PHP 7.4 to 8.5
 - Magento 2.3.3 and higher (tested up to 2.4.8)
 
 ## Installation

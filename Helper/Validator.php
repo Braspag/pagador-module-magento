@@ -71,9 +71,9 @@ class Validator extends \Magento\Framework\App\Helper\AbstractHelper
                 }
             }
             $result = implode(" ", $result);
-            $resultLength = strlen($result);
+            $resultLength = mb_strlen($result, 'UTF-8');
 
-            return ($resultLength > 50 ? substr($result, ($resultLength - 50)) : $result);
+            return ($resultLength > 50 ? mb_substr($result, $resultLength - 50, null, 'UTF-8') : $result);
         }
         return $district;
     }

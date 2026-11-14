@@ -21,6 +21,8 @@ use Braspag\BraspagPagador\Helper\Validator;
  */
 class Request implements BraspagMagentoRequestInterface, BraspaglibRequestInterface
 {
+    protected $order;
+
     /**
      * @var
      */

@@ -28,7 +28,7 @@ class Builder implements BuilderInterface
     {
         $transferO = $this->getTransferBuilder()
             ->setUri($this->getConfig()->getAccessTokenUrl())
-            ->setMethod(\Zend\Http\Request::METHOD_POST)
+            ->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST)
             ->setClientConfig([
                 'timeout' => 30
             ])->setHeaders(

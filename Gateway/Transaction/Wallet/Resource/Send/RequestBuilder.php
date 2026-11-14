@@ -20,6 +20,9 @@ use Braspag\BraspagPagador\Model\Source\PaymentSplitType;
  */
 class RequestBuilder implements BuilderInterface
 {
+    protected $config;
+    protected $requestPaymentSplit;
+
     protected $requestFactory;
     protected $orderRepository;
 

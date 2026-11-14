@@ -10,6 +10,9 @@ use Braspag\BraspagPagador\Gateway\Transaction\Base\Resource\PaymentStatus\Reque
 
 class CardTwo extends \Magento\Framework\DataObject
 {
+    protected $api;
+    protected $paymentRequest;
+
 
     protected $requestBuilder;
 

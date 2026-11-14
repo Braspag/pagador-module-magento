@@ -15,6 +15,8 @@ use Braspag\BraspagPagador\Model\Payment\Transaction\Boleto\Ui\ConfigProvider as
 
 class PaymentSplitTransactionPost
 {
+    protected $configBoletoInterface;
+
 
     protected $logger;
     protected $splitManager;
